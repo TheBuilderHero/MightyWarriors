@@ -1,7 +1,11 @@
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
 int main(){
-    cout << "Hello World";
+    string name;
+    cout << "Hello World" << endl << "Enter Name: ";
+    cin >> name;
+    cout << name;
 }
