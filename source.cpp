@@ -18,6 +18,88 @@
 
 using namespace std;
 
+
+//this function is intended to pull out the delimiters from a message and the data associated with each request
+string decipher(char messageFromClient[]){
+    string delimiter = "~"; //a character that marks the beginning or end of a unit of data
+    string message = messageFromClient; // change the message into a string
+
+    string item1, item2, item3, item4, item5, item6, item7; // declare the variables that are being used to store the message from the client
+    // the above variables may later be replaced with a more wide veriety of variables however, for testing we are using all strings
+    string s = messageFromClient;
+    string str_file_content;
+    string token, output;
+    int loopPass = 0;
+    size_t pos = 0; // position variable for removing the delimiters to view the message
+    while ((pos = s.find(delimiter)) != std::string::npos) {
+        token = s.substr(0, pos);
+        output = token;
+        str_file_content += std::string(token); // we do not need to add spaces between the information for now so I removed: + std::string(" ")
+        s.erase(0, pos + delimiter.length());
+        if (loopPass == 1) {
+            //first item after delimiter
+            if (output.length() > 0) item1 = output; // we many need to change the variable to an int with stoi(output) later but right now we just want a string version
+        } else if (loopPass == 2) {
+            //second item after delimiter
+            if (output.length() > 0) item2 = output;
+        } else if (loopPass == 3) {
+            //third item after delimiter
+            if (output.length() > 0) item3 = output;
+        } else if (loopPass == 4) {
+            //forth item after delimiter
+            if (output.length() > 0) item4 = output;
+        } else if (loopPass == 5) {
+            //fith item after delimiter
+            if (output.length() > 0) item5 = output;
+        } else if (loopPass == 6) {
+            //sixth item after delimiter
+            if (output.length() > 0) item6 = output;
+        } else if (loopPass == 7) {
+            //seventh item after delimiter
+            if (output.length() > 0) item7 = output;
+        }
+        loopPass++;
+    }
+    return str_file_content;
+}
+
+//this functions purpose it to add the delimiters to given items 
+string cipher(string item1 = "", string item2= "", string item3= "", string item4= "", string item5= "", string item6= "", string item7= ""){ // the default values have been set to "" in case no input is given
+    int numberOfItems = 7; //max number of items that we can cipher
+    string delimiter = "~"; //a character that marks the beginning or end of a unit of data
+
+    string str_file_content;
+    int loopPass = 1; // start the loop at 1 so that there is no extra spaces
+    while (loopPass != numberOfItems) {
+        str_file_content += delimiter; // this will add the seperating delimiter before the a given item
+        if (loopPass == 1) {
+            //first item after delimiter
+            if (item1.length() > 0) str_file_content += item1;
+        } else if (loopPass == 2) {
+            //second item after delimiter
+            if (item2.length() > 0) str_file_content += item2;
+        } else if (loopPass == 3) {
+            //third item after delimiter
+            if (item3.length() > 0) str_file_content += item3;
+        } else if (loopPass == 4) {
+            //second item after delimiter
+            if (item2.length() > 0) str_file_content += item4;
+        } else if (loopPass == 5) {
+            //third item after delimiter
+            if (item3.length() > 0) str_file_content += item5;
+        } else if (loopPass == 6) {
+            //second item after delimiter
+            if (item2.length() > 0) str_file_content += item6;
+        } else if (loopPass == 7) {
+            //third item after delimiter
+            if (item3.length() > 0) str_file_content += item7;
+        }
+        str_file_content += delimiter; // this will add the seperating delimiter after the given item
+        loopPass++;
+    }
+    return str_file_content;
+}
+
 class ReachOutToServer{
 public:
     string message;
@@ -67,6 +149,9 @@ public:
           /// Moved to top: char buf[4096];
 
         message = aMessage;
+        message = cipher(message); // we are going to need a decision tree put in place to determine what data is being sent and thus what item slot to send it within.
+        //for now we are just going to use the above to test.
+
         bool secondtimethrough = false;
         int timesthrough = 0;
         //message = "3.5";
@@ -78,9 +163,13 @@ public:
                 int bytesRecived = recv(sock, buf, 4096, 0);
                 if (bytesRecived > 0) {
                     
+                    //decipher the message from the server
+
+                    string output = decipher(buf);
+
                     //Echo response to console  //uncomment only for troubleshooting:
-                    // 
-                    cout << "SERVER> " << string(buf, 0, bytesRecived) << endl;
+                     
+                    cout << "SERVER> " << output << endl; // before we were using cipher we used string(buf, 0, bytesRecived) as the output
 
                     ss << buf;
                     s = ss.str();
