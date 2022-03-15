@@ -36,7 +36,7 @@ class Decipher {
     //this function is intended to pull out the delimiters from a message and the data associated with each request
     string decipher(char messageFromClient[]){
         
-        string message = messageFromClient; // change the message into a string
+        //string message = messageFromClient; // change the message into a string
 
         
         // the above variables may later be replaced with a more wide veriety of variables however, for testing we are using all strings
@@ -111,9 +111,9 @@ string cipher(int typeOfRequest = 0, string username= "", string item3= "", stri
             if (item7.length() > 0) str_file_content += item7;
             break;
         }
-        str_file_content += delimiter; // this will add the seperating delimiter after the given item
         loopPass++;
     }
+    str_file_content += delimiter; // this will add the seperating delimiter after all the data
     return str_file_content;
 }
 
@@ -208,9 +208,12 @@ public:
         switch (decode.responseType){
             case 1:
             //the server has check to see if the username was valid or not.
-            return to_string(decode.responseType);
+            return decode.item2;
             break;
             //others will be added to setup the usage of other features like pulling data and cteating accounts
+            case 2: //user creation
+            return s;
+            break;
 
             default:
             return s;
@@ -229,9 +232,7 @@ void createNewAccount(){
     ReachOutToServer server;
     //ask user for the username they would like to use
     string username;
-    cout.flush();
     cout << "What would you like your new account username to be?" << endl << "Please type a valid username: ";
-    cout.flush();
     cin >> username;
 
     //check to make sure the username is valid and not already taken
@@ -246,15 +247,21 @@ void createNewAccount(){
             case 0:
             //the username is invalid so restart the process
             cout << "The username is not valid Please enter a different username. (server)" << endl;
+            system("pause");
+            createNewAccount();
             break;
             case 1:
             //username is valid
-            string createAccoutnCheck;
+            string createAccountCheck;
             cout << "The username is valid and you can use it as your username." << endl << "Would you like to continue and create an account with this username? (yes or no)" << endl << "> ";
-            cin >> createAccoutnCheck;
-            if(createAccoutnCheck == "yes"){
-                cout << "We will now create the account";
+            cin >> createAccountCheck;
+            if(createAccountCheck == "yes"){
+                cout << "We will now create the account" << endl;
                 system("pause");  //input function for creating account
+                server.sendToServer(cipher(2, username, "testing account creation..."));
+            } else if (createAccountCheck == "no"){
+                cout << "Account will not be created." << endl;
+                system("pause");
             } else {
                 cout << "Input not recognized." << endl;
                 system("pause");
