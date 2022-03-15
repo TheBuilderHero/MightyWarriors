@@ -229,23 +229,23 @@ void createNewAccount(){
     ReachOutToServer server;
     //ask user for the username they would like to use
     string username;
+    cout.flush();
     cout << "What would you like your new account username to be?" << endl << "Please type a valid username: ";
+    cout.flush();
     cin >> username;
 
     //check to make sure the username is valid and not already taken
-    if (username.find(delimiter) >= 0) {
+    if (username.find(delimiter) != std::string::npos) { // make sure the username is not using the delimiter character
         system("cls");
-        cout << "The username is not valid Please enter a different username." << endl;
+        cout << "The username is not valid Please enter a different username. (local)" << endl;
         system("pause");
         createNewAccount();
     } else {
-        cout << endl << endl << "The value is: " << username.find(delimiter);
-        system("pause");
         valid = stoi(server.sendToServer(cipher(1, username))); // the response for this will either be 1 or 0 as a string (1 meaning the username is valid, 0 meaning the username is taken)
         switch (valid){
             case 0:
             //the username is invalid so restart the process
-            cout << "The username is not valid Please enter a different username." << endl;
+            cout << "The username is not valid Please enter a different username. (server)" << endl;
             break;
             case 1:
             //username is valid
@@ -254,6 +254,7 @@ void createNewAccount(){
             cin >> createAccoutnCheck;
             if(createAccoutnCheck == "yes"){
                 cout << "We will now create the account";
+                system("pause");  //input function for creating account
             } else {
                 cout << "Input not recognized." << endl;
                 system("pause");
