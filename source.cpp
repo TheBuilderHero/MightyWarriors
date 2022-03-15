@@ -36,27 +36,28 @@ string decipher(char messageFromClient[]){
         output = token;
         str_file_content += std::string(token); // we do not need to add spaces between the information for now so I removed: + std::string(" ")
         s.erase(0, pos + delimiter.length());
-        if (loopPass == 1) {
-            //first item after delimiter
+        switch (loopPass){
+            case 1://the first item enclosed in delimiters
             if (output.length() > 0) item1 = output; // we many need to change the variable to an int with stoi(output) later but right now we just want a string version
-        } else if (loopPass == 2) {
-            //second item after delimiter
-            if (output.length() > 0) item2 = output;
-        } else if (loopPass == 3) {
-            //third item after delimiter
-            if (output.length() > 0) item3 = output;
-        } else if (loopPass == 4) {
-            //forth item after delimiter
-            if (output.length() > 0) item4 = output;
-        } else if (loopPass == 5) {
-            //fith item after delimiter
-            if (output.length() > 0) item5 = output;
-        } else if (loopPass == 6) {
-            //sixth item after delimiter
-            if (output.length() > 0) item6 = output;
-        } else if (loopPass == 7) {
-            //seventh item after delimiter
-            if (output.length() > 0) item7 = output;
+            break;
+            case 2://the second item enclosed in delimiters
+            if (output.length() > 0) item2 = output; 
+            break;
+            case 3://the third item enclosed in delimiters
+            if (output.length() > 0) item3 = output; 
+            break;
+            case 4://the forth item enclosed in delimiters
+            if (output.length() > 0) item4 = output; 
+            break;
+            case 5://the fith item enclosed in delimiters
+            if (output.length() > 0) item5 = output; 
+            break;
+            case 6://the sixth item enclosed in delimiters
+            if (output.length() > 0) item6 = output; 
+            break;
+            case 7://the seventh item enclosed in delimiters
+            if (output.length() > 0) item7 = output; 
+            break;
         }
         loopPass++;
     }
@@ -72,27 +73,28 @@ string cipher(string item1 = "", string item2= "", string item3= "", string item
     int loopPass = 1; // start the loop at 1 so that there is no extra spaces
     while (loopPass != numberOfItems) {
         str_file_content += delimiter; // this will add the seperating delimiter before the a given item
-        if (loopPass == 1) {
-            //first item after delimiter
+        switch (loopPass){
+            case 1:
             if (item1.length() > 0) str_file_content += item1;
-        } else if (loopPass == 2) {
-            //second item after delimiter
+            break;
+            case 2:
             if (item2.length() > 0) str_file_content += item2;
-        } else if (loopPass == 3) {
-            //third item after delimiter
+            break;
+            case 3:
             if (item3.length() > 0) str_file_content += item3;
-        } else if (loopPass == 4) {
-            //second item after delimiter
-            if (item2.length() > 0) str_file_content += item4;
-        } else if (loopPass == 5) {
-            //third item after delimiter
-            if (item3.length() > 0) str_file_content += item5;
-        } else if (loopPass == 6) {
-            //second item after delimiter
-            if (item2.length() > 0) str_file_content += item6;
-        } else if (loopPass == 7) {
-            //third item after delimiter
-            if (item3.length() > 0) str_file_content += item7;
+            break;
+            case 4:
+            if (item4.length() > 0) str_file_content += item4;
+            break;
+            case 5:
+            if (item5.length() > 0) str_file_content += item5;
+            break;
+            case 6:
+            if (item6.length() > 0) str_file_content += item6;
+            break;
+            case 7:
+            if (item7.length() > 0) str_file_content += item7;
+            break;
         }
         str_file_content += delimiter; // this will add the seperating delimiter after the given item
         loopPass++;
@@ -205,6 +207,8 @@ int main(){
     
     //ask user for the message they wish to send
     cout << "Hello User (type \"exit\" to close this program)" << endl << "Enter messageToServer: ";
+    getline(cin, messageToServer);
+    server.sendToServer(messageToServer);
     getline(cin, messageToServer);
     server.sendToServer(messageToServer);
 
