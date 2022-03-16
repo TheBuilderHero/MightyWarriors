@@ -1,7 +1,7 @@
 	Races
     		Each will have a passive strength and later we will add active ability (because of this it is okay if the stats are not all the same because the plan would be that the ability makes up for that difference)
         	Human 
-			- Stats?
+			- Stats:
         	Elf 
 			- Stats?
         	Dino 
@@ -34,7 +34,7 @@
 
 	Enemies
 		Stats
-			-name
+			-name: ~names will be pulled from r/BossFight. some alterations may be necessary.~
 			-level
 			-magic resistance
 			-armor
