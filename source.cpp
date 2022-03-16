@@ -9,6 +9,7 @@
 #include <ws2tcpip.h>
 #include <climits>
 #include <WinSock2.h>
+#include <iomanip>
 
 
 //Probably will need to add this later if cin starts acting up
@@ -226,23 +227,90 @@ public:
 
 };
 
-void logonScreen(){
+void logonScreen(int type);
+void menu(string username){
+    system("cls");
+    int value;
+    cout << setfill(' ') << setw(44) << "Menu of options:\nChange Password" << setfill(' ') << setw(25) << "(type number \"1\")" << endl;
+    cout << "Exit" << setfill(' ') << setw(39) <<"(type number \"0\")\n> ";
+    if(cin >> value){
+        switch (value)
+        {
+        case 1:
+            //change password
+            logonScreen(2);
+            break;
+        case 0:
+            exit(1);
+            break;
+        }
+    } else {
+        cout << "\nPlease enter a valid number." << endl;
+        system("pause");
+        system("cls");
+        menu(username);
+    }
+}
+
+void changePass(string username){
+    ReachOutToServer server;
+    string passwordNew;
+    string passwordConf;
+    cout << "Please enter the new password for your account\n> ";
+    cin >> passwordNew;
+    cout << "Please enter the new password again for your account\n> ";
+    cin >> passwordConf;
+    if (passwordNew == passwordConf){
+        server.sendToServer(cipher(4, username, passwordNew));
+        menu(username);
+    } else {
+        cout << "Your passwords did not match, please try again..." << endl;
+        system("pause");
+        system("cls");
+        changePass(username);
+    }
+    
+}
+
+void logonScreen(int type = 1){ //defualt is case 1 - that is a standard logon... Case 2 is change password logon
     ReachOutToServer server;
     string usernameE;
     string passwordE;
-    cout << "You are at the logon screen" << endl << "Please enter the your username\n> ";
-    cin >> usernameE;
-    cout << "Please enter the password for the account\n> ";
-    cin >> passwordE;
-    int validLogon = stoi(server.sendToServer(cipher(3, usernameE, passwordE)));
-    if (validLogon == 1){
-        cout << "Logon is valid" << endl;
-        system("pause");
-        //logon is valid
-    } else {
-        cout << "Invalid Username or Password..." << endl;
-        system("pause");
-        //logon is invalid
+    int validLogon;
+    switch (type){
+        case 1:
+            cout << "You are at the logon screen" << endl << "Please enter the your username\n> ";
+            cin >> usernameE;
+            cout << "Please enter the password for the account\n> ";
+            cin >> passwordE;
+            validLogon = stoi(server.sendToServer(cipher(3, usernameE, passwordE)));
+            if (validLogon == 1){//logon is valid
+                cout << "Logon is valid" << endl;
+                system("pause");
+                menu(usernameE);
+            } else {
+                cout << "Invalid Username or Password..." << endl;
+                system("pause");
+                //logon is invalid
+            }
+            break;
+        case 2: //change password verification
+            system("cls");
+            cout << "You are at the Change password logon screen" << endl << "Please enter the your username\n> ";
+            cin >> usernameE;
+            cout << "Please enter the current password for the account\n> ";
+            cin >> passwordE;
+            validLogon = stoi(server.sendToServer(cipher(3, usernameE, passwordE)));
+            if (validLogon == 1){//logon is valid
+                cout << "Logon is valid" << endl;
+                system("pause");
+                changePass(usernameE);
+            } else {
+                cout << "Invalid Username or Password..." << endl;
+                system("pause");
+                //logon is invalid
+            }
+            break;
     }
 }
 
@@ -279,8 +347,9 @@ void createNewAccount(){
             cin >> createAccountCheck;
             if(createAccountCheck == "yes"){
                 cout << "We will now create the account" << endl;
-                system("pause");  //input function for creating account
                 server.sendToServer(cipher(2, username, "testing account creation..."));
+                system("cls");
+                logonScreen();
             } else if (createAccountCheck == "no"){
                 cout << "Account will not be created." << endl;
                 system("pause");
