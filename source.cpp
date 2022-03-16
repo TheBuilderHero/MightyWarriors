@@ -127,7 +127,7 @@ public:
 
     string sendToServer(string aMessage) {
         Decipher decode; // declare a new Decipher class
-        string ipAddress = "192.168.1.15";  //IP of server192.168.1.13  // ip of home 174.86.47.26  // change this back
+        string ipAddress = "174.86.47.26";  //IP of server192.168.1.13  // ip of home 174.86.47.26  // change this back
         int port = 7000;                    //Listening Port # of Server
         std::string s;
         std::stringstream ss;
@@ -194,7 +194,7 @@ public:
             }
             if (secondtimethrough != true) {
                 secondtimethrough = true;
-                system("pause");
+                //system("pause"); //removed because it seems to be working fine sending and recieving data without it in place
             }
             else {
                 timesthrough++;
@@ -227,18 +227,24 @@ public:
 
 };
 
-void logonScreen(int type);
+void logonScreen(int type = 1);
 void menu(string username){
     system("cls");
     int value;
     cout << setfill(' ') << setw(44) << "Menu of options:\nChange Password" << setfill(' ') << setw(25) << "(type number \"1\")" << endl;
+    cout << "Logout" << setfill(' ') << setw(34) <<"(type number \"2\")" << endl;
     cout << "Exit" << setfill(' ') << setw(39) <<"(type number \"0\")\n> ";
+    
     if(cin >> value){
         switch (value)
         {
         case 1:
             //change password
             logonScreen(2);
+            break;
+        case 2:
+            system("cls");
+            logonScreen();
             break;
         case 0:
             exit(1);
@@ -258,8 +264,12 @@ void changePass(string username){
     string passwordConf;
     cout << "Please enter the new password for your account\n> ";
     cin >> passwordNew;
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
     cout << "Please enter the new password again for your account\n> ";
     cin >> passwordConf;
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
     if (passwordNew == passwordConf){
         server.sendToServer(cipher(4, username, passwordNew));
         menu(username);
@@ -272,7 +282,7 @@ void changePass(string username){
     
 }
 
-void logonScreen(int type = 1){ //defualt is case 1 - that is a standard logon... Case 2 is change password logon
+void logonScreen(int type){ //defualt is case 1 - that is a standard logon... Case 2 is change password logon
     ReachOutToServer server;
     string usernameE;
     string passwordE;
@@ -281,12 +291,14 @@ void logonScreen(int type = 1){ //defualt is case 1 - that is a standard logon..
         case 1:
             cout << "You are at the logon screen" << endl << "Please enter the your username\n> ";
             cin >> usernameE;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
             cout << "Please enter the password for the account\n> ";
             cin >> passwordE;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
             validLogon = stoi(server.sendToServer(cipher(3, usernameE, passwordE)));
             if (validLogon == 1){//logon is valid
-                cout << "Logon is valid" << endl;
-                system("pause");
                 menu(usernameE);
             } else {
                 cout << "Invalid Username or Password..." << endl;
@@ -298,12 +310,15 @@ void logonScreen(int type = 1){ //defualt is case 1 - that is a standard logon..
             system("cls");
             cout << "You are at the Change password logon screen" << endl << "Please enter the your username\n> ";
             cin >> usernameE;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
             cout << "Please enter the current password for the account\n> ";
             cin >> passwordE;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
             validLogon = stoi(server.sendToServer(cipher(3, usernameE, passwordE)));
             if (validLogon == 1){//logon is valid
-                cout << "Logon is valid" << endl;
-                system("pause");
+                system("cls");
                 changePass(usernameE);
             } else {
                 cout << "Invalid Username or Password..." << endl;
@@ -322,12 +337,14 @@ void createNewAccount(){
     string username;
     cout << "What would you like your new account username to be?" << endl << "Please type a valid username: ";
     cin >> username;
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
     system("cls");
 
     //check to make sure the username is valid and not already taken
     if (username.find(delimiter) != std::string::npos) { // make sure the username is not using the delimiter character
         system("cls");
-        cout << "The username is not valid Please enter a different username. (local)" << endl;
+        cout << "The username is not valid Please enter a different username." << endl;
         system("pause");
         createNewAccount();
     } else {
@@ -335,7 +352,7 @@ void createNewAccount(){
         switch (valid){
             case 0:
             //the username is invalid so restart the process
-            cout << "The username is not valid Please enter a different username. (server)" << endl;
+            cout << "The username is not valid Please enter a different username." << endl;
             system("pause");
             system("cls");
             createNewAccount();
@@ -373,10 +390,8 @@ void newOrExistingAccout(){ // asks and runs through everything for new accounts
     //if yes bring them to the logon screen
     if(answer == "yes"){
         system("cls");
-        cout << "You have an acount" << endl << "We will now take you to the logon screen." << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
-        system("pause");//pause the window so the user can read the message, then they can press any key to continue.
         logonScreen();
     } else if (answer == "no") {//if no start the signup prossess
         system("cls");
