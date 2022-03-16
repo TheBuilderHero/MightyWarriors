@@ -205,6 +205,7 @@ public:
         //Gracefully close down everything
         closesocket(sock);
         WSACleanup();
+        decode.decipher(buf);
         switch (decode.responseType){
             case 1:
             //the server has check to see if the username was valid or not.
@@ -213,6 +214,9 @@ public:
             //others will be added to setup the usage of other features like pulling data and cteating accounts
             case 2: //user creation
             return s;
+            break;
+            case 3: //logon reutrn from the server
+            return decode.item2;
             break;
 
             default:
@@ -223,7 +227,23 @@ public:
 };
 
 void logonScreen(){
-    cout << "You are at the logon screen" << endl;
+    ReachOutToServer server;
+    string usernameE;
+    string passwordE;
+    cout << "You are at the logon screen" << endl << "Please enter the your username\n> ";
+    cin >> usernameE;
+    cout << "Please enter the password for the account\n> ";
+    cin >> passwordE;
+    int validLogon = stoi(server.sendToServer(cipher(3, usernameE, passwordE)));
+    if (validLogon == 1){
+        cout << "Logon is valid" << endl;
+        system("pause");
+        //logon is valid
+    } else {
+        cout << "Invalid Username or Password..." << endl;
+        system("pause");
+        //logon is invalid
+    }
 }
 
 void createNewAccount(){
@@ -234,6 +254,7 @@ void createNewAccount(){
     string username;
     cout << "What would you like your new account username to be?" << endl << "Please type a valid username: ";
     cin >> username;
+    system("cls");
 
     //check to make sure the username is valid and not already taken
     if (username.find(delimiter) != std::string::npos) { // make sure the username is not using the delimiter character
@@ -248,6 +269,7 @@ void createNewAccount(){
             //the username is invalid so restart the process
             cout << "The username is not valid Please enter a different username. (server)" << endl;
             system("pause");
+            system("cls");
             createNewAccount();
             break;
             case 1:
@@ -262,6 +284,7 @@ void createNewAccount(){
             } else if (createAccountCheck == "no"){
                 cout << "Account will not be created." << endl;
                 system("pause");
+                createNewAccount();
             } else {
                 cout << "Input not recognized." << endl;
                 system("pause");
