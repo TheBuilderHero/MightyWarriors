@@ -258,6 +258,36 @@ void menu(string username){
     }
 }
 
+void adminMenu (string username){
+    system("cls");
+    int value;
+    cout << setfill(' ') << setw(44) << "Menu of options:\nChange Password" << setfill(' ') << setw(25) << "(type number \"1\")" << endl;
+    cout << "Logout" << setfill(' ') << setw(34) <<"(type number \"2\")" << endl;
+    cout << "Exit" << setfill(' ') << setw(39) <<"(type number \"0\")\n> ";
+    
+    if(cin >> value){
+        switch (value)
+        {
+        case 1:
+            //change password
+            logonScreen(2);
+            break;
+        case 2:
+            system("cls");
+            logonScreen();
+            break;
+        case 0:
+            exit(1);
+            break;
+        }
+    } else {
+        cout << "\nPlease enter a valid number." << endl;
+        system("pause");
+        system("cls");
+        menu(username);
+    }
+}
+
 void changePass(string username){
     ReachOutToServer server;
     string passwordNew;
@@ -320,6 +350,24 @@ void logonScreen(int type){ //defualt is case 1 - that is a standard logon... Ca
             if (validLogon == 1){//logon is valid
                 system("cls");
                 changePass(usernameE);
+            } else {
+                cout << "Invalid Username or Password..." << endl;
+                system("pause");
+                //logon is invalid
+            }
+            break;
+        case 3: // adminbypass panel
+            cout << "You are at the admin bypass panel" << endl << "Please enter the admin username\n> ";
+            cin >> usernameE;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
+            cout << "Please enter the password for the account\n> ";
+            cin >> passwordE;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
+            validLogon = stoi(server.sendToServer(cipher(3, usernameE, passwordE)));
+            if (validLogon == 1){//logon is valid
+                adminMenu(usernameE);
             } else {
                 cout << "Invalid Username or Password..." << endl;
                 system("pause");
@@ -400,6 +448,11 @@ void newOrExistingAccout(){ // asks and runs through everything for new accounts
         cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
         system("pause");//pause the window so the user can read the message, then they can press any key to continue.
         createNewAccount(); // take user to the function for creatiing accounts 
+    } else if (answer == "adminbypass"){
+        system("cls");
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
+        logonScreen(3);
     } else {
         cout << "Your answer was not yes or no." << endl << "Please try again." << endl;
         cin.clear();
