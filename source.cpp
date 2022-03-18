@@ -185,8 +185,8 @@ public:
                     string output = decode.decipher(buf);
 
                     //Echo response to console  //uncomment only for troubleshooting:
-                     
-                    cout << "SERVER> " << output << endl; // before we were using cipher we used string(buf, 0, bytesRecived) as the output
+                    //cout << "SERVER> " << output << endl; 
+                    //before we were using cipher we used string(buf, 0, bytesRecived) as the output
 
                     ss << buf;
                     s = ss.str();
@@ -279,6 +279,11 @@ void adminMenu (string username){
         case 0:
             exit(1);
             break;
+        case 14:
+            system("cls");
+            cout << "Dakota loves Beautiful!" << endl;
+            system("pause");
+            break;
         }
     } else {
         cout << "\nPlease enter a valid number." << endl;
@@ -289,6 +294,7 @@ void adminMenu (string username){
 }
 
 void changePass(string username){
+    system("cls");
     ReachOutToServer server;
     string passwordNew;
     string passwordConf;
@@ -312,14 +318,17 @@ void changePass(string username){
     
 }
 
+
+void newOrExistingAccout();
 void logonScreen(int type){ //defualt is case 1 - that is a standard logon... Case 2 is change password logon
+    system("cls");
     ReachOutToServer server;
     string usernameE;
     string passwordE;
     int validLogon;
     switch (type){
         case 1:
-            cout << "You are at the logon screen" << endl << "Please enter the your username\n> ";
+            cout << "You are at the logon screen" << endl << "Please enter your username\n> ";
             cin >> usernameE;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
@@ -334,15 +343,16 @@ void logonScreen(int type){ //defualt is case 1 - that is a standard logon... Ca
                 cout << "Invalid Username or Password..." << endl;
                 system("pause");
                 //logon is invalid
+                newOrExistingAccout();
             }
             break;
         case 2: //change password verification
             system("cls");
-            cout << "You are at the Change password logon screen" << endl << "Please enter the your username\n> ";
+            cout << "Please confirm your current credentials" << endl << "Please enter your username\n> ";
             cin >> usernameE;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
-            cout << "Please enter the current password for the account\n> ";
+            cout << "Please enter the CURRENT password for the account\n> ";
             cin >> passwordE;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
@@ -354,6 +364,7 @@ void logonScreen(int type){ //defualt is case 1 - that is a standard logon... Ca
                 cout << "Invalid Username or Password..." << endl;
                 system("pause");
                 //logon is invalid
+                menu(usernameE);
             }
             break;
         case 3: // adminbypass panel
@@ -372,6 +383,7 @@ void logonScreen(int type){ //defualt is case 1 - that is a standard logon... Ca
                 cout << "Invalid Username or Password..." << endl;
                 system("pause");
                 //logon is invalid
+                newOrExistingAccout();
             }
             break;
     }
@@ -383,7 +395,7 @@ void createNewAccount(){
     ReachOutToServer server;
     //ask user for the username they would like to use
     string username;
-    cout << "What would you like your new account username to be?" << endl << "Please type a valid username: ";
+    cout << "What would you like the username of your new account to be?" << endl << "Please type a valid username.\n> ";
     cin >> username;
     cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
@@ -392,7 +404,7 @@ void createNewAccount(){
     //check to make sure the username is valid and not already taken
     if (username.find(delimiter) != std::string::npos || username.find("&") != std::string::npos || username.find("=") != std::string::npos || username.find("'") != std::string::npos || username.find("-") != std::string::npos|| username.find("+") != std::string::npos|| username.find(",") != std::string::npos|| username.find("<") != std::string::npos|| username.find(">") != std::string::npos|| username.find("..") != std::string::npos) { // make sure the username is not using the delimiter and a few other characters //this list was taken from https://support.google.com/mail/answer/9211434?hl=en
         system("cls");
-        cout << "The username is not valid Please enter a different username." << endl;
+        cout << "The username " << username << " is not valid Please enter a different username." << endl;
         system("pause");
         createNewAccount();
     } else {
@@ -400,7 +412,7 @@ void createNewAccount(){
         switch (valid){
             case 0:
             //the username is invalid so restart the process
-            cout << "The username is not valid Please enter a different username." << endl;
+            cout << "The username " << username << " is not valid. Please enter a different username." << endl;
             system("pause");
             system("cls");
             createNewAccount();
@@ -408,7 +420,7 @@ void createNewAccount(){
             case 1:
             //username is valid
             string createAccountCheck;
-            cout << "The username is valid and you can use it as your username." << endl << "Would you like to continue and create an account with this username? (yes or no)" << endl << "> ";
+            cout << "The username " << username << " is valid and you can use it as your username." << endl << "Would you like to continue and create an account with this username? (yes or no)" << endl << "> ";
             cin >> createAccountCheck;
             if(createAccountCheck == "yes"){
                 cout << "We will now create the account" << endl;
@@ -419,11 +431,11 @@ void createNewAccount(){
             } else if (createAccountCheck == "no"){
                 cout << "Account will not be created." << endl;
                 system("pause");
-                createNewAccount();
+                newOrExistingAccout();
             } else {
                 cout << "Input not recognized." << endl;
                 system("pause");
-                createNewAccount();
+                newOrExistingAccout();
             }
             break;
         }
@@ -432,8 +444,9 @@ void createNewAccount(){
 
 void newOrExistingAccout(){ // asks and runs through everything for new accounts and if existing brings the user to the logon screen.
     //ask the user if they have an account with MightyWarrior game
+    system("cls");
     string answer;
-    cout << "Do you have an accout yet? (yes or no)" << endl;
+    cout << "Do you have an account yet? (yes or no)" << endl;
     cin >> answer;
     
     //if yes bring them to the logon screen
@@ -444,7 +457,7 @@ void newOrExistingAccout(){ // asks and runs through everything for new accounts
         logonScreen();
     } else if (answer == "no") {//if no start the signup prossess
         system("cls");
-        cout << "You do not have an account" << endl << "Lets start the procss of creating a new account." << endl;
+        cout << "Lets start the procss of creating a new account." << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
         system("pause");//pause the window so the user can read the message, then they can press any key to continue.
@@ -455,7 +468,7 @@ void newOrExistingAccout(){ // asks and runs through everything for new accounts
         cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
         logonScreen(3);
     } else {
-        cout << "Your answer was not yes or no." << endl << "Please try again." << endl;
+        cout << "Your answer was not \"yes\" or \"no\"." << endl << "Please try again." << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n'); // clear out cin buffer
         system("pause");//pause the window so the user can read the message, then they can press any key to continue.
