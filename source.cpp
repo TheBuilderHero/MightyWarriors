@@ -390,7 +390,7 @@ void createNewAccount(){
     system("cls");
 
     //check to make sure the username is valid and not already taken
-    if (username.find(delimiter) != std::string::npos) { // make sure the username is not using the delimiter character
+    if (username.find(delimiter) != std::string::npos || username.find("&") != std::string::npos || username.find("=") != std::string::npos || username.find("'") != std::string::npos || username.find("-") != std::string::npos|| username.find("+") != std::string::npos|| username.find(",") != std::string::npos|| username.find("<") != std::string::npos|| username.find(">") != std::string::npos|| username.find("..") != std::string::npos) { // make sure the username is not using the delimiter and a few other characters //this list was taken from https://support.google.com/mail/answer/9211434?hl=en
         system("cls");
         cout << "The username is not valid Please enter a different username." << endl;
         system("pause");
@@ -414,7 +414,8 @@ void createNewAccount(){
                 cout << "We will now create the account" << endl;
                 server.sendToServer(cipher(2, username, "testing account creation..."));
                 system("cls");
-                logonScreen();
+                //characterCreation(); // need to create this function
+                logonScreen(); // gonna need to run through the character creation before sign in
             } else if (createAccountCheck == "no"){
                 cout << "Account will not be created." << endl;
                 system("pause");
@@ -460,7 +461,6 @@ void newOrExistingAccout(){ // asks and runs through everything for new accounts
         system("pause");//pause the window so the user can read the message, then they can press any key to continue.
         newOrExistingAccout(); // take user to beguining of this function again
     }
-
 }
 
 int main(){
