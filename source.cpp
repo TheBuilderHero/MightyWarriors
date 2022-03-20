@@ -1,18 +1,21 @@
 #include <iostream>
-//#include <vector>
 #include <ctime>
 #include <cstdlib>
 #include <limits>
 #include <string>
 #include <fstream>
-//#include <sstream>
-//#include <ws2tcpip.h>
 #include <climits>
-//#include <WinSock2.h>
 #include <iomanip>
 
 #include "ReachOutToServer.h"
 #include "Cipher.h"
+
+//********************************************
+int gameVersion     = 1;
+int gameMajorBuild  = 0;
+int gameMinorBuild  = 0;
+int gamePatch       = 0;
+//********************************************
 
 
 //Probably will need to add this later if cin starts acting up
@@ -112,7 +115,7 @@ void changePass(string username){
     cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
     if (passwordNew == passwordConf){
-        server.sendToServer(code.cipher(4, username, passwordNew));
+        server.sendToServer(code.cipher("4", username, passwordNew));
         menu(username);
     } else {
         cout << "Your passwords did not match, please try again..." << endl;
@@ -141,7 +144,7 @@ void logonScreen(int type){ //defualt is case 1 - that is a standard logon... Ca
             cin >> passwordE;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
-            validLogon = stoi(server.sendToServer(code.cipher(3, usernameE, passwordE)));
+            validLogon = stoi(server.sendToServer(code.cipher("3", usernameE, passwordE)));
             if (validLogon == 1){//logon is valid
                 menu(usernameE);
             } else {
@@ -161,7 +164,7 @@ void logonScreen(int type){ //defualt is case 1 - that is a standard logon... Ca
             cin >> passwordE;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
-            validLogon = stoi(server.sendToServer(code.cipher(3, usernameE, passwordE)));
+            validLogon = stoi(server.sendToServer(code.cipher("3", usernameE, passwordE)));
             if (validLogon == 1){//logon is valid
                 system("cls");
                 changePass(usernameE);
@@ -181,7 +184,7 @@ void logonScreen(int type){ //defualt is case 1 - that is a standard logon... Ca
             cin >> passwordE;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
-            validLogon = stoi(server.sendToServer(code.cipher(3, usernameE, passwordE)));
+            validLogon = stoi(server.sendToServer(code.cipher("3", usernameE, passwordE)));
             if (validLogon == 1){//logon is valid
                 adminMenu(usernameE);
             } else {
@@ -200,7 +203,7 @@ void createNewAccount(){
     ReachOutToServer server;//declare server object to use sendserver function to check if server has someone by this username
 
     Cipher code; //declare the Cipher class so that I can use the functions cipher and decipher
-    
+
     //ask user for the username they would like to use
     string username;
     cout << "What would you like the username of your new account to be?" << endl << "Please type a valid username.\n> ";
@@ -216,7 +219,7 @@ void createNewAccount(){
         system("pause");
         createNewAccount();
     } else {
-        valid = stoi(server.sendToServer(code.cipher(1, username))); // the response for this will either be 1 or 0 as a string (1 meaning the username is valid, 0 meaning the username is taken)
+        valid = stoi(server.sendToServer(code.cipher("1", username))); // the response for this will either be 1 or 0 as a string (1 meaning the username is valid, 0 meaning the username is taken)
         switch (valid){
             case 0:
             //the username is invalid so restart the process
@@ -232,7 +235,7 @@ void createNewAccount(){
             cin >> createAccountCheck;
             if(createAccountCheck == "yes"){
                 cout << "We will now create the account" << endl;
-                server.sendToServer(code.cipher(2, username, "testing account creation..."));
+                server.sendToServer(code.cipher("2", username, "testing account creation..."));
                 system("cls");
                 //characterCreation(); // need to create this function
                 logonScreen(); // gonna need to run through the character creation before sign in
@@ -285,9 +288,15 @@ void newOrExistingAccout(){ // asks and runs through everything for new accounts
 }
 
 int main(){
+    ReachOutToServer server;
     //Before doing anything else... request required client version from server.
+    if (server.sendToServer(code.cipher("0", "", to_string(gameVersion), to_string(gameMajorBuild), to_string(gameMinorBuild), to_string(gamePatch))) == "true"){
+        //ask whether the user has an account or not
+        newOrExistingAccout();
+    } else {//if version check fails we inform user and close the client
+        cout << "You are not running the needed version.  Please update to the latest version and try again." << endl;
+        system("pause");
+    }
     
-    //ask whether the user has an account or not
-    newOrExistingAccout();
     return 0;
 }

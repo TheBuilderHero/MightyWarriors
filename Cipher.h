@@ -12,5 +12,5 @@ class Cipher {
 
     string decipher(char messageFromClient[]);//this function is intended to pull out the delimiters from a message and the data associated with each request
 
-    string cipher(int typeOfRequest = 0, string username= "", string item3= "", string item4= "", string item5= "", string item6= "", string item7= "");// the default values have been set to "" in case no input is given
+    string cipher(string typeOfRequest, string username= "", string item3= "", string item4= "", string item5= "", string item6= "", string item7= "");// the default values have been set to "" in case no input is given
 };

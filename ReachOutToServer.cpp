@@ -10,7 +10,7 @@ using namespace std;
 
 
 string ReachOutToServer::sendToServer(string aMessage) {
-    Cipher decode; // declare a new Decipher class
+    Cipher code; // declare a new Decipher class
     string ipAddress = "174.86.47.26";  //IP of server192.168.1.13  // ip of home 174.86.47.26  // change this back
     int port = 7000;                    //Listening Port # of Server
     std::string s;
@@ -66,7 +66,7 @@ string ReachOutToServer::sendToServer(string aMessage) {
                 
                 //decipher the message from the server
                 
-                string output = decode.decipher(buf);
+                string output = code.decipher(buf);
 
                 //Echo response to console  //uncomment only for troubleshooting:
                 //cout << "SERVER> " << output << endl; 
@@ -90,18 +90,22 @@ string ReachOutToServer::sendToServer(string aMessage) {
     //Gracefully close down everything
     closesocket(sock);
     WSACleanup();
-    decode.decipher(buf);
-    switch (decode.responseType){
+    code.decipher(buf);
+    switch (code.responseType){
         case 1:
         //the server has check to see if the username was valid or not.
-        return decode.item2;
+        return code.item2;
         break;
         //others will be added to setup the usage of other features like pulling data and cteating accounts
         case 2: //user creation
         return s;
         break;
         case 3: //logon reutrn from the server
-        return decode.item2;
+        return code.item2;
+        break;
+
+        case 0: //Client version validity check
+        return code.item2;
         break;
 
         default:

@@ -51,7 +51,7 @@ string Cipher::decipher(char messageFromClient[]){
 }
 
 //this functions purpose it to add the delimiters to given items 
-string Cipher::cipher(int typeOfRequest, string username, string item3, string item4, string item5, string item6, string item7){ // the default values have been set to "" in case no input is given
+string Cipher::cipher(string typeOfRequest, string username, string item3, string item4, string item5, string item6, string item7){ // the default values have been set to "" in case no input is given
     int numberOfItems = 7; //max number of items that we can cipher
     string delimiter = "~"; //a character that marks the beginning or end of a unit of data
 
@@ -61,7 +61,7 @@ string Cipher::cipher(int typeOfRequest, string username, string item3, string i
         str_file_content += delimiter; // this will add the seperating delimiter before the a given item
         switch (loopPass){
             case 1:
-            if (typeOfRequest > 0) str_file_content += to_string(typeOfRequest);
+            if (typeOfRequest.length() > 0) str_file_content += typeOfRequest;
             break;
             case 2:
             if (username.length() > 0) str_file_content += username;
