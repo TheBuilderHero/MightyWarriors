@@ -9,6 +9,7 @@
 
 #include "ReachOutToServer.h"
 #include "Cipher.h"
+#include "Account.h"
 
 #undef min // these are needed for the cin.ignore statments to clear out the buffer for new data.
 #undef max 
@@ -192,6 +193,7 @@ void createNewAccount(){ //runs through the code to create a new account
     int valid; // is the username valid or not (1 meaning the username is valid, 0 meaning the username is taken)
     ReachOutToServer server;//declare server object to use sendserver function to check if server has someone by this username
     Cipher code; //declare the Cipher class so that I can use the functions cipher and decipher
+    Account account;
     string username; //declare the local username for the user creating their account
 
     //ask user for the username they would like to use
@@ -226,8 +228,10 @@ void createNewAccount(){ //runs through the code to create a new account
                 cout << "We will now create the account" << endl;
                 server.sendToServer(code.cipher("2", username, "testing account creation..."));
                 system("cls");
-                //characterCreation(); // need to create this function
-                logonScreen(); // gonna need to run through the character creation before sign in
+                account.createCharacter(); // need to create this function
+                //logonScreen(); //move this to the end of character cration
+                // gonna need to run through the character creation before sign in
+
             } else if (createAccountCheck == "no"){
                 cout << "Account will not be created." << endl;
                 system("pause");

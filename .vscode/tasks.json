@@ -10,6 +10,7 @@
                 "${file}",
                 "Cipher.cpp",
                 "ReachOutToServer.cpp",
+                "Account.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 " -lws2_32",
