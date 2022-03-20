@@ -93,22 +93,22 @@ string ReachOutToServer::sendToServer(string aMessage) {
     code.decipher(buf);
     switch (code.responseType){
         case 1:
-        //the server has check to see if the username was valid or not.
-        return code.item2;
-        break;
-        //others will be added to setup the usage of other features like pulling data and cteating accounts
+            //the server has check to see if the username was valid or not.
+            return code.item2;
+            break;
+            //others will be added to setup the usage of other features like pulling data and cteating accounts
         case 2: //user creation
-        return s;
-        break;
+            return s;
+            break;
         case 3: //logon reutrn from the server
-        return code.item2;
-        break;
+            return code.item2;
+            break;
 
         case 0: //Client version validity check
-        return code.item2;
-        break;
+            return code.item2;
+            break;
 
         default:
-        return s;
+            return s;
     }
 }

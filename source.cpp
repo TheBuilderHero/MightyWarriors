@@ -281,13 +281,20 @@ void newOrExistingAccout(){ // asks and runs through everything for new accounts
 }
 
 int main(){
+    //declare a new instance of ReachOutToServer called server
     ReachOutToServer server;
+    //check to see if the version the client is running is allowed to continue - the reponse is stored in "serverVersionResponse"
+    string serverVersionResponse = server.sendToServer(code.cipher("0", "", to_string(gameVersion), to_string(gameMajorBuild), to_string(gameMinorBuild), to_string(gamePatch)));
+    if (serverVersionResponse.length() > 0) serverVersionResponse = "Failed"; //If the server does not respond then the server must not be online.
     //Before doing anything else... request required client version from server.
-    if (server.sendToServer(code.cipher("0", "", to_string(gameVersion), to_string(gameMajorBuild), to_string(gameMinorBuild), to_string(gamePatch))) == "true"){
+    if (serverVersionResponse == "true"){
         //ask whether the user has an account or not
         newOrExistingAccout();
-    } else {//if version check fails we inform user and close the client
-        cout << "You are not running the needed version.  Please update to the latest version and try again." << endl;
+    } else if (serverVersionResponse == "Failed") { //If the client is unable to connect to the server inform the client
+        cout << "The Server is currently Offline for either maintanance or other reasons..." << endl << "Please try again later..." << endl;
+        system("pause");
+    } else{//if version check fails we inform user and close the client
+        cout << "You are not running the needed version. Please update to the latest version and try again." << endl;
         system("pause");
     }
     
