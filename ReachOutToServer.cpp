@@ -45,7 +45,7 @@ string ReachOutToServer::sendToServer(string aMessage) {
         cerr << "Can't connect to server, Err #" << WSAGetLastError() << endl;
         closesocket(sock);
         WSACleanup();
-        return "failed";
+        return "FailedConnect";
     }
 
     //Do-Wile loop to send and recieve data

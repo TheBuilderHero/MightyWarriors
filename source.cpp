@@ -285,12 +285,13 @@ int main(){
     ReachOutToServer server;
     //check to see if the version the client is running is allowed to continue - the reponse is stored in "serverVersionResponse"
     string serverVersionResponse = server.sendToServer(code.cipher("0", "", to_string(gameVersion), to_string(gameMajorBuild), to_string(gameMinorBuild), to_string(gamePatch)));
-    if (serverVersionResponse.length() > 0) serverVersionResponse = "Failed"; //If the server does not respond then the server must not be online.
+    //cout << "length: " << serverVersionResponse.length() << " :" << endl;
+    //if (serverVersionResponse.length() <= 0) serverVersionResponse = "FailedConnect"; //If the server does not respond then the server must not be online.
     //Before doing anything else... request required client version from server.
     if (serverVersionResponse == "true"){
         //ask whether the user has an account or not
         newOrExistingAccout();
-    } else if (serverVersionResponse == "Failed") { //If the client is unable to connect to the server inform the client
+    } else if (serverVersionResponse == "FailedConnect") { //If the client is unable to connect to the server inform the client
         cout << "The Server is currently Offline for either maintanance or other reasons..." << endl << "Please try again later..." << endl;
         system("pause");
     } else{//if version check fails we inform user and close the client
