@@ -10,6 +10,12 @@
 #include "ReachOutToServer.h"
 #include "Cipher.h"
 
+#undef min // these are needed for the cin.ignore statments to clear out the buffer for new data.
+#undef max 
+
+#pragma comment(lib, "ws2_32")   //to be able to use sockets
+#pragma comment(lib, "advapi32")
+
 //********************************************
 const int gameVersion     = 1;
 const int gameMajorBuild  = 0;
@@ -17,19 +23,11 @@ const int gameMinorBuild  = 0;
 const int gamePatch       = 0;
 //********************************************
 
-#undef min // these are needed for the cin.ignore statments to clear out the buffer for new data.
-#undef max 
-
-//to be able to use sockets
-#pragma comment(lib, "ws2_32")
-#pragma comment(lib, "advapi32")
-
-using namespace std;
-
-Cipher code;
+using namespace std; //so I dont have to type "std::"
+Cipher code; //declare the new instance of Cipher class
 
 void logonScreen(int type = 1);
-void menu(string username){
+void menu(string username){ //bring up the menu for the passing in the username
     system("cls");
     int value;
     cout << setfill(' ') << setw(44) << "Menu of options:\nChange Password" << setfill(' ') << setw(25) << "(type number \"1\")" << endl;
@@ -59,7 +57,7 @@ void menu(string username){
     }
 }
 
-void adminMenu (string username){
+void adminMenu (string username){ //The admin menu that will have more advanced options later
     system("cls");
     int value;
     cout << setfill(' ') << setw(44) << "Menu of options:\nChange Password" << setfill(' ') << setw(25) << "(type number \"1\")" << endl;
@@ -94,7 +92,7 @@ void adminMenu (string username){
     }
 }
 
-void changePass(string username){
+void changePass(string username){ //changes the users password
     system("cls");
     ReachOutToServer server;
     string passwordNew;
@@ -190,15 +188,13 @@ void logonScreen(int type){ //defualt is case 1 - that is a standard logon... Ca
     }
 }
 
-void createNewAccount(){
+void createNewAccount(){ //runs through the code to create a new account
     int valid; // is the username valid or not (1 meaning the username is valid, 0 meaning the username is taken)
-    
     ReachOutToServer server;//declare server object to use sendserver function to check if server has someone by this username
-
     Cipher code; //declare the Cipher class so that I can use the functions cipher and decipher
+    string username; //declare the local username for the user creating their account
 
     //ask user for the username they would like to use
-    string username;
     cout << "What would you like the username of your new account to be?" << endl << "Please type a valid username.\n> ";
     cin >> username;
     cin.clear();
@@ -281,16 +277,12 @@ void newOrExistingAccout(){ // asks and runs through everything for new accounts
 }
 
 int main(){
-    //declare a new instance of ReachOutToServer called server
-    ReachOutToServer server;
-    //check to see if the version the client is running is allowed to continue - the reponse is stored in "serverVersionResponse"
-    string serverVersionResponse = server.sendToServer(code.cipher("0", "", to_string(gameVersion), to_string(gameMajorBuild), to_string(gameMinorBuild), to_string(gamePatch)));
-    //cout << "length: " << serverVersionResponse.length() << " :" << endl;
-    //if (serverVersionResponse.length() <= 0) serverVersionResponse = "FailedConnect"; //If the server does not respond then the server must not be online.
+    ReachOutToServer server; //declare a new instance of ReachOutToServer called server
+    string serverVersionResponse = server.sendToServer(code.cipher("0", "", to_string(gameVersion), to_string(gameMajorBuild), to_string(gameMinorBuild), to_string(gamePatch)));//check to see if the version the client is running is allowed to continue - the reponse is stored in "serverVersionResponse"
     //Before doing anything else... request required client version from server.
-    if (serverVersionResponse == "true"){
-        //ask whether the user has an account or not
-        newOrExistingAccout();
+    if (serverVersionResponse == "true"){ //if it is true then the program will start
+        //This is the start of the program
+        newOrExistingAccout(); //ask whether the user has an account or not
     } else if (serverVersionResponse == "FailedConnect") { //If the client is unable to connect to the server inform the client
         cout << "The Server is currently Offline for either maintanance or other reasons..." << endl << "Please try again later..." << endl;
         system("pause");
