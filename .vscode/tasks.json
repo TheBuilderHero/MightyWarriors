@@ -8,10 +8,12 @@
                 "-fdiagnostics-color=always",
                 "-g",
                 "${file}",
+                "Cipher.cpp",
+                "ReachOutToServer.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 " -lws2_32",
-                " -ladvapi32",
+                " -ladvapi32"
             ],
             "options": {
                 "cwd": "${fileDirname}"
