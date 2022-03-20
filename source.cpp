@@ -11,18 +11,11 @@
 #include "Cipher.h"
 
 //********************************************
-int gameVersion     = 1;
-int gameMajorBuild  = 0;
-int gameMinorBuild  = 0;
-int gamePatch       = 0;
+const int gameVersion     = 1;
+const int gameMajorBuild  = 0;
+const int gameMinorBuild  = 0;
+const int gamePatch       = 0;
 //********************************************
-
-
-//Probably will need to add this later if cin starts acting up
-/*
-cin.clear();
-cin.ignore(numeric_limits<streamsize>::max(), '\n');
-*/
 
 #undef min // these are needed for the cin.ignore statments to clear out the buffer for new data.
 #undef max 
