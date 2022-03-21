@@ -228,7 +228,7 @@ void createNewAccount(){ //runs through the code to create a new account
                 cout << "We will now create the account" << endl;
                 server.sendToServer(code.cipher("2", username, "testing account creation..."));
                 system("cls");
-                account.createCharacter(); // need to create this function
+                account.createCharacter(username); // need to create this function
                 //logonScreen(); //move this to the end of character cration
                 // gonna need to run through the character creation before sign in
 

@@ -103,6 +103,10 @@ string ReachOutToServer::sendToServer(string aMessage) {
         case 3: //logon reutrn from the server
             return code.item2;
             break;
+        case 4:
+            return code.item2;
+            break;
+
 
         case 0: //Client version validity check
             return code.item2;
