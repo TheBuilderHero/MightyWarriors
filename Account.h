@@ -14,4 +14,14 @@ class Account {
         void setMagicResistance(std::string username);
         void createCharacter(std::string username);
 
+        int getHealth(std::string username);
+        int getAttack(std::string username);
+        int getArmor(std::string username);
+        int getMagicResistance(std::string username);
+        void displayStats(std::string username);
+
+        void newOrExistingAccout();
+        void createNewAccount();
+        void logonScreen(int type = 1); //this allows us to use the logon screen function at the end of this function and pass in the defualt value of 1
+
 };

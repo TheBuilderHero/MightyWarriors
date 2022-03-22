@@ -91,6 +91,7 @@ string ReachOutToServer::sendToServer(string aMessage) {
     closesocket(sock);
     WSACleanup();
     code.decipher(buf);
+    string statInfo;
     switch (code.responseType){
         case 1:
             //the server has check to see if the username was valid or not.
@@ -105,6 +106,18 @@ string ReachOutToServer::sendToServer(string aMessage) {
             break;
         case 4:
             return code.item2;
+            break;
+        case 5: //this is going to be used to get the stats of the user stored on the server
+            statInfo = code.delimiter;
+            statInfo += code.item2;
+            statInfo += code.delimiter;
+            statInfo += code.item3;
+            statInfo += code.delimiter;
+            statInfo += code.item4;
+            statInfo += code.delimiter;
+            statInfo += code.item5;
+            statInfo += code.delimiter;
+            return statInfo; //returns the deliminated version of the data from server
             break;
 
 
