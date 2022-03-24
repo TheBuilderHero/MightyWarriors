@@ -105,11 +105,29 @@ void Account::createCharacter(string username){ //running through the stat choos
     }
     //Need to write the stats to file so that they are stored to be opened again later.
     //if the code makes it to this point then the user is done and will go to main menu.
+    system("cls");
     cout << "Your stat points have been to set to the following: " << endl << "Health: " << health << endl << "Attack: " << attack << endl << "Armor: " << armor << endl << "Magic Resistance: " << magicResistance << endl;
     system("pause");
     string wasAbleToSave = server.sendToServer(code.cipher("5", username, to_string(health), to_string(attack), to_string(armor), to_string(magicResistance)));
     if( wasAbleToSave == "wasAbleToSave") {
-        logonScreen();
+        string answer;
+        //if yes bring them to the logon screen
+        while (answer != "yes" || answer != "no"){ //confirm that the user is okay with their inital choice of stats.
+            cout << endl << "Are you satisfied with the above stats? (yes or no)\n>";
+            cin >> answer;
+            if(answer == "yes"){
+                logonScreen();
+            } else if (answer == "no") { //if they are not then we will start the process again.
+                createCharacter(username);
+            }
+            system("cls");
+            cout << "Your answer was not recognized.  Please re-enter your answer." << endl;
+            system("pause");
+            system("cls");
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
+
+        }
         // HasGoneThroughInitalSetup = true; //sets the value to true because the user has successfully added the 3 inital setup points to their Character.
     }
     cout << "Something went wrong... Please run through the stats proccess again." << endl;
