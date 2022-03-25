@@ -69,6 +69,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
 }
 
 void Menu::adminMenu (string username){ //The admin menu that will have more advanced options later
+    ReachOutToServer server;
     string usernameE;
     system("cls");
     int value;

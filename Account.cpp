@@ -160,10 +160,23 @@ int Account::getMagicResistance(std::string username){ //reuturns the users curr
 }
 
 void Account::displayStats(std::string username, int bypass ,string usernameA){
-    cout << "Your stats are as follows: " << endl << "Health: " << setfill(' ') << setw(34) << getHealth(username) << endl << "Attack: " << setfill(' ') << setw(34) << getAttack(username) << endl << "Armor: " << setfill(' ') << setw(35) << getArmor(username) << endl << "Magic Resistance: " << setfill(' ') << setw(24) << getMagicResistance(username) << endl;
-    system("pause");
-    if (bypass == 0) menuClass.menu(username); //standard user
-    if (bypass == 1) menuClass.adminMenu(usernameA); //admin account
+    Cipher code;
+    ReachOutToServer server;
+    if (bypass == 0) { //standard user
+        cout << "Your stats are as follows: " << endl << "Health: " << setfill(' ') << setw(34) << getHealth(username) << endl << "Attack: " << setfill(' ') << setw(34) << getAttack(username) << endl << "Armor: " << setfill(' ') << setw(35) << getArmor(username) << endl << "Magic Resistance: " << setfill(' ') << setw(24) << getMagicResistance(username) << endl;
+        system("pause");
+    } 
+    if (bypass == 1) { //admin account
+        if(stoi(server.sendToServer(code.cipher("1", username))) == 0) {
+            cout << "Your stats are as follows: " << endl << "Health: " << setfill(' ') << setw(34) << getHealth(username) << endl << "Attack: " << setfill(' ') << setw(34) << getAttack(username) << endl << "Armor: " << setfill(' ') << setw(35) << getArmor(username) << endl << "Magic Resistance: " << setfill(' ') << setw(24) << getMagicResistance(username) << endl;
+            system("pause");
+        } else {
+            cout << "You did not enter a valid user which has stats to view..." << endl;
+            system("pause");
+        }
+        menuClass.adminMenu(usernameA);
+    }
+    
 }
 
 void Account::logonScreen(int type){ //defualt is case 1 - that is a standard logon... Case 2 is change password logon
