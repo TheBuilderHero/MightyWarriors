@@ -18,7 +18,7 @@ class Account {
         int getAttack(std::string username);
         int getArmor(std::string username);
         int getMagicResistance(std::string username);
-        void displayStats(std::string username);
+        void displayStats(std::string username, int bypass = 0, std::string usernameA = ""); //by default bypass is 0 for standard user
 
         void newOrExistingAccout();
         void createNewAccount();

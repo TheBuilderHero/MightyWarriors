@@ -4,17 +4,20 @@
 #include "ReachOutToServer.h"
 #include "Cipher.h"
 #include "Account.h"
+#include "Menu.h"
 
+Menu menu;
+//Change the version number in the menu.h header file.
 //********************************************
-const int gameVersion     = 1;
-const int gameMajorBuild  = 0;
-const int gameMinorBuild  = 0;
-const int gamePatch       = 0;
+const int gameVersion     = menu.gameVersion;
+const int gameMajorBuild  = menu.gameMajorBuild;
+const int gameMinorBuild  = menu.gameMinorBuild;
+const int gamePatch       = menu.gamePatch;
 //********************************************
 
 using namespace std; //so I dont have to type "std::"
 
-int main(){
+int main(){ //Starts the program if the clients version is compatable with the server's version
     ReachOutToServer server; //declare a new instance of ReachOutToServer called server
     Account account; //declare a new instance of the Account class
     Cipher code;
@@ -26,10 +29,9 @@ int main(){
     } else if (serverVersionResponse == "FailedConnect") { //If the client is unable to connect to the server inform the client
         cout << "The Server is currently Offline for either maintanance or other reasons..." << endl << "Please try again later..." << endl;
         system("pause");
-    } else{//if version check fails we inform user and close the client
+    } else{//if version check fails we inform user and close the client because their current version is not acceptable on the server side.
         cout << "You are not running the needed version. Please update to the latest version and try again." << endl;
         system("pause");
     }
-    
     return 0;
 }

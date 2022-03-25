@@ -117,7 +117,7 @@ string ReachOutToServer::sendToServer(string aMessage) {
             statInfo += code.delimiter;
             statInfo += code.item5;
             statInfo += code.delimiter;
-            return statInfo; //returns the deliminated version of the data from server
+            return statInfo; //returns the deliminated version of the data from server.  This is then proccessed by the decipherS function making these item1 - 4
             break;
 
 

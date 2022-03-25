@@ -159,10 +159,11 @@ int Account::getMagicResistance(std::string username){ //reuturns the users curr
     return stoi(code.item4);
 }
 
-void Account::displayStats(std::string username){
+void Account::displayStats(std::string username, int bypass ,string usernameA){
     cout << "Your stats are as follows: " << endl << "Health: " << setfill(' ') << setw(34) << getHealth(username) << endl << "Attack: " << setfill(' ') << setw(34) << getAttack(username) << endl << "Armor: " << setfill(' ') << setw(35) << getArmor(username) << endl << "Magic Resistance: " << setfill(' ') << setw(24) << getMagicResistance(username) << endl;
     system("pause");
-    menuClass.menu(username);
+    if (bypass == 0) menuClass.menu(username); //standard user
+    if (bypass == 1) menuClass.adminMenu(usernameA); //admin account
 }
 
 void Account::logonScreen(int type){ //defualt is case 1 - that is a standard logon... Case 2 is change password logon
