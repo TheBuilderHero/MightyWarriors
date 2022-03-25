@@ -91,7 +91,7 @@ void Menu::changePass(string username){ //changes the users password
     ReachOutToServer server;
     string passwordNew;
     string passwordConf;
-    cout << "Please enter the new password for your account\n> ";
+    cout << "Please enter the new password for your account (Note, new account's defualt password is 0000)\n> ";
     cin >> passwordNew;
     cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer

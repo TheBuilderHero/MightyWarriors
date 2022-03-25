@@ -21,7 +21,7 @@ The purpose of this file to to manage the user account and Character setup
 
 
 
-void Account::setHealth(std::string username){ //inital choise of health stats
+void Account::setHealth(std::string username){ //initial choice of health stats
     int healthS = 0;
     cout << "Enter the number of points you would like to add to your Health stat: ";
     cin >> healthS;
@@ -36,7 +36,7 @@ void Account::setHealth(std::string username){ //inital choise of health stats
         createCharacter(username);
     }
 }
-void Account::setAttack(std::string username){ //inistal choice of Attack stats
+void Account::setAttack(std::string username){ //initial choice of Attack stats
     int attackS = 0;
     cout << "Enter the number of points you would like to add to your Attack stat: ";
     cin >> attackS;
@@ -112,12 +112,12 @@ void Account::createCharacter(string username){ //running through the stat choos
     if( wasAbleToSave == "wasAbleToSave") {
         string answer;
         //if yes bring them to the logon screen
-        while (answer != "yes" || answer != "no"){ //confirm that the user is okay with their inital choice of stats.
-            cout << endl << "Are you satisfied with the above stats? (yes or no)\n>";
+        while (answer != "y" || answer != "Y" || answer != "n" || answer != "N"){ //confirm that the user is okay with their inital choice of stats.
+            cout << endl << "Are you satisfied with the above stats? (Y/N)\n>";
             cin >> answer;
-            if(answer == "yes"){
-                logonScreen();
-            } else if (answer == "no") { //if they are not then we will start the process again.
+            if(answer == "y" || answer == "Y"){
+                menuClass.changePass(username); //before sending them to the logon screen they need to set their new account's password.
+            } else if (answer == "n" || answer == "N") { //if they are not then we will start the process again.
                 createCharacter(username);
             }
             system("cls");
@@ -134,28 +134,33 @@ void Account::createCharacter(string username){ //running through the stat choos
     createCharacter(username);
 }
 
-int getHealth(std::string username){
-    return 0;
-}
-int getAttack(std::string username){
-    return 0;
-}
-int getArmor(std::string username){
-    return 0;
-}
-int getMagicResistance(std::string username){
-    return 0;
-}
-void Account::displayStats(std::string username){
-    string health, attack, armor, magicResistance;
+int Account::getHealth(std::string username){ //reuturns the users current Health stat
     ReachOutToServer server;
     Cipher code;
-    code.decipherS(server.sendToServer(code.cipher("6", username))); //
-    health = code.item1;//stoi(code.item2);
-    attack = code.item2;//stoi(code.item3);
-    armor = code.item3;//stoi(code.item4);
-    magicResistance = code.item4;//stoi(code.item5);
-    cout << "Your stats are as follows: " << endl << "Health: " << setfill(' ') << setw(34) << health << endl << "Attack: " << setfill(' ') << setw(34) << attack << endl << "Armor: " << setfill(' ') << setw(35) << armor << endl << "Magic Resistance: " << setfill(' ') << setw(24) << magicResistance << endl;
+    code.decipherS(server.sendToServer(code.cipher("6", username)));
+    return stoi(code.item1);
+}
+int Account::getAttack(std::string username){ //reuturns the users current Attack stat
+    ReachOutToServer server;
+    Cipher code;
+    code.decipherS(server.sendToServer(code.cipher("6", username)));
+    return stoi(code.item2);
+}
+int Account::getArmor(std::string username){ //reuturns the users current Armor stat
+    ReachOutToServer server;
+    Cipher code;
+    code.decipherS(server.sendToServer(code.cipher("6", username))); 
+    return stoi(code.item3);
+}
+int Account::getMagicResistance(std::string username){ //reuturns the users current MagicResistance stat
+    ReachOutToServer server;
+    Cipher code;
+    code.decipherS(server.sendToServer(code.cipher("6", username)));
+    return stoi(code.item4);
+}
+
+void Account::displayStats(std::string username){
+    cout << "Your stats are as follows: " << endl << "Health: " << setfill(' ') << setw(34) << getHealth(username) << endl << "Attack: " << setfill(' ') << setw(34) << getAttack(username) << endl << "Armor: " << setfill(' ') << setw(35) << getArmor(username) << endl << "Magic Resistance: " << setfill(' ') << setw(24) << getMagicResistance(username) << endl;
     system("pause");
     menuClass.menu(username);
 }
@@ -230,7 +235,7 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
     }
 }
 
-void Account::createNewAccount(){ //runs through the code to create a new account
+void Account::createNewAccount(){ //runs through the code to create a new user account from scratch
     int valid; // is the username valid or not (1 meaning the username is valid, 0 meaning the username is taken)
     ReachOutToServer server;//declare server object to use sendserver function to check if server has someone by this username
     Cipher code; //declare the Cipher class so that I can use the functions cipher and decipher
@@ -263,9 +268,9 @@ void Account::createNewAccount(){ //runs through the code to create a new accoun
             case 1:
             //username is valid
             string createAccountCheck;
-            cout << "The username " << username << " is valid and you can use it as your username." << endl << "Would you like to continue and create an account with this username? (yes or no)" << endl << "> ";
+            cout << "The username " << username << " is valid and you can use it as your username." << endl << "Would you like to continue and create an account with this username? (Y/N)" << endl << "> ";
             cin >> createAccountCheck;
-            if(createAccountCheck == "yes"){
+            if(createAccountCheck == "y" || createAccountCheck == "Y"){
                 cout << "We will now create the account" << endl;
                 server.sendToServer(code.cipher("2", username, "testing account creation..."));
                 system("cls");
@@ -273,7 +278,7 @@ void Account::createNewAccount(){ //runs through the code to create a new accoun
                 //logonScreen(); //move this to the end of character cration
                 // gonna need to run through the character creation before sign in
 
-            } else if (createAccountCheck == "no"){
+            } else if (createAccountCheck == "N" || createAccountCheck == "n"){
                 cout << "Account will not be created." << endl;
                 system("pause");
                 newOrExistingAccout();
@@ -292,16 +297,16 @@ void Account::newOrExistingAccout(){ // asks and runs through everything for new
     //ask the user if they have an account with MightyWarrior game
     system("cls");
     string answer;
-    cout << "Do you have an account yet? (yes or no)" << endl;
+    cout << "Do you have an account yet? (Y/N)" << endl;
     cin >> answer;
     
     //if yes bring them to the logon screen
-    if(answer == "yes"){
+    if(answer == "y" || answer == "Y"){
         system("cls");
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
         logonScreen();
-    } else if (answer == "no") {//if no start the signup prossess
+    } else if (answer == "n" || answer == "N") {//if no start the signup prossess
         system("cls");
         cout << "Lets start the procss of creating a new account." << endl;
         cin.clear();
@@ -314,7 +319,7 @@ void Account::newOrExistingAccout(){ // asks and runs through everything for new
         cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
         logonScreen(3);
     } else {
-        cout << "Your answer was not \"yes\" or \"no\"." << endl << "Please try again." << endl;
+        cout << "Your answer was not \"Y\" or \"N\"." << endl << "Please try again." << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n'); // clear out cin buffer
         system("pause");//pause the window so the user can read the message, then they can press any key to continue.
