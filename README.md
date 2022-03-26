@@ -3,7 +3,7 @@
         	Human 
 			- Stats:
         	Elf 
-			- Stats?
+			- Stats
         	Dino 
 			- Stats?
         	Dryad 
@@ -42,6 +42,16 @@
 		Enemy drops
 			-XP  >> amount of XP from kill
 			-items >> chance of item (very low for standard mosters but higher for bosses)
+				10 enemy classes:
+				-basic
+				-easy
+				-mild
+				-medium
+				-sub-moderate
+				-super-moderate
+				-difficult
+				-hard
+				-death
 
 
 The main TASKS that we need right now are: 
