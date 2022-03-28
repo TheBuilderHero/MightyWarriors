@@ -33,7 +33,7 @@ void Account::setHealth(std::string username){ //initial choice of health stats
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
         health = attack = armor = magicResistance = 0;
         system("pause");
-        createCharacter(username);
+        createPlayer(username);
     }
 }
 void Account::setAttack(std::string username){ //initial choice of Attack stats
@@ -48,7 +48,7 @@ void Account::setAttack(std::string username){ //initial choice of Attack stats
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
         health = attack = armor = magicResistance = 0;
         system("pause");
-        createCharacter(username);
+        createPlayer(username);
     }
 }
 void Account::setArmor(std::string username){ //initial choice of Armor stats
@@ -63,7 +63,7 @@ void Account::setArmor(std::string username){ //initial choice of Armor stats
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
         health = attack = armor = magicResistance = 0;
         system("pause");
-        createCharacter(username);
+        createPlayer(username);
     }
 }
 void Account::setMagicResistance(std::string username){ //initial choice of Magic Resistance stats
@@ -78,60 +78,122 @@ void Account::setMagicResistance(std::string username){ //initial choice of Magi
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
         health = attack = armor = magicResistance = 0;
         system("pause");
-        createCharacter(username);
+        createPlayer(username);
     }
 }
 
-void Account::createCharacter(string username){ //running through the stat choosing - This is the inital user setup
+void Account::createPlayer(string username){ //This is the inital user setup (should run through Race selection and Kit selection) and this should all be saved to the server
     ReachOutToServer server;
     Cipher code;
-    remainingStatPoints = 3;
-    system("cls");
-    cout << "(1ST - Health, 2ND - Attack, 3RD - Armor, 4TH - Magic Resistance)" << endl << "You have 3 points that can be distributed among the above stats" << endl;
+
+    cout << "Welcome to Character creation!" << endl;
     system("pause");
     system("cls");
-    cout << "(1ST - Health, 2ND - Attack, 3RD - Armor, 4TH - Magic Resistance)" << endl << "You have 3 points that can be distributed among the above stats" << endl << endl << "Please enter the number of points to add to each stat." << endl << endl;
-    setHealth(username);
-    if (remainingStatPoints > 0) setAttack(username);
-    if (remainingStatPoints > 0) setArmor(username);
-    if (remainingStatPoints > 0) setMagicResistance(username);
-    if (remainingStatPoints > 0) { //if the user did not use all their stat points we will restart the proccess
-        cout << remainingStatPoints << endl;
+    int raceChoice = 0;
+    char answer;
+    int exitNow = 0;// 0 for false :: 1 for true
+    while(!exitNow){ //while the user has not selected one of the five options it will continue to ask them for an aswer.
         system("cls");
-        cout << "You did not use all your Stat Points..." << endl << "Restarting this proccess so you can complete this task.";
-        system("pause");
-        health = attack = armor = magicResistance = 0; //reset all to 0
-        createCharacter(username);
-    }
-    //Need to write the stats to file so that they are stored to be opened again later.
-    //if the code makes it to this point then the user is done and will go to main menu.
-    system("cls");
-    cout << "Your stat points have been to set to the following: " << endl << "Health: " << health << endl << "Attack: " << attack << endl << "Armor: " << armor << endl << "Magic Resistance: " << magicResistance << endl;
-    system("pause");
-    string wasAbleToSave = server.sendToServer(code.cipher("5", username, to_string(health), to_string(attack), to_string(armor), to_string(magicResistance)));
-    if( wasAbleToSave == "wasAbleToSave") {
-        string answer;
-        //if yes bring them to the logon screen
-        while (answer != "y" || answer != "Y" || answer != "n" || answer != "N"){ //confirm that the user is okay with their inital choice of stats.
-            cout << endl << "Are you satisfied with the above stats? (Y/N)\n>";
-            cin >> answer;
-            if(answer == "y" || answer == "Y"){
-                menuClass.changePass(username); //before sending them to the logon screen they need to set their new account's password.
-            } else if (answer == "n" || answer == "N") { //if they are not then we will start the process again.
-                createCharacter(username);
-            }
-            system("cls");
-            cout << "Your answer was not recognized.  Please re-enter your answer." << endl;
+        cout << endl << "First step of the process is to choose the race of your Character" << endl;
+        cout << "Please type the number corresponding to one of the races from the list below (Note, this cannot be changed later!): "<< endl << endl;
+        cout << "1" << setfill(' ') << setw(14) << "Human" << endl;
+        cout << "-" << setfill(' ') << setw(49) << "- Human's gain +1 to all stats" << endl;
+        cout << "2" << setfill(' ') << setw(14) << "Ghost" << endl;
+        cout << "-" << setfill(' ') << setw(49) << "- Human's gain +1 to all stats" << endl;
+        cout << "3" << setfill(' ') << setw(14) << "Dino" << endl;
+        cout << "-" << setfill(' ') << setw(49) << "- Human's gain +1 to all stats" << endl;
+        cout << "4" << setfill(' ') << setw(14) << "Elf" << endl;
+        cout << "-" << setfill(' ') << setw(49) << "- Human's gain +1 to all stats" << endl;
+        cout << "5" << setfill(' ') << setw(14) << "Dryad" << endl;
+        cout << "-" << setfill(' ') << setw(49) << "- Human's gain +1 to all stats" << endl;
+        cout << ">";
+        cin >> raceChoice;
+        if (raceChoice <= 0 || raceChoice > 5) {
+            cout << "You have entered an invalid input, Please try again." << endl;
+            raceChoice = 0;
             system("pause");
             system("cls");
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
-
+        } else {
+            int answered = 0; // 0 for false :: 1 for true
+            while(!answered) { //validate the chosen race
+                cout << "Your race has been set to option number " << raceChoice << ". Would you like to accept this and continue?(Y/N)" << endl << ">";
+                cin >> answer;
+                if (answer != 'n' && answer !='N' && answer !='y' && answer !='Y') { //if they did not enter y, Y, n, or, N then we will tell them what they input is invalid and retry.
+                    cout << "Unrecognized input." << "   Please enter a valid input." << endl;
+                    system("pause");
+                    system("cls");
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
+                } else if (answer =='y' || answer =='Y') { //if they are statisfied with their choice it will move on and exit both while loops
+                    answered = 1;
+                    exitNow = 1;
+                } else { //if they are not satisfied with their choice it will exit the loop of asking them if they are stisfied and reask about the race which they want to select.
+                    answered = 1;
+                }
+            }
         }
-        // HasGoneThroughInitalSetup = true; //sets the value to true because the user has successfully added the 3 inital setup points to their Character.
     }
-    cout << "Something went wrong... Please run through the stats proccess again." << endl;
-    createCharacter(username);
+    system("cls");
+    //Now that the race has been chosen and validated move on to kit selection
+    cout << "Now it is time to select your Kit" << endl;
+    system("pause");
+    int kitChoice = 0;
+    exitNow = false;
+    while(!exitNow){ //while the user has not selected one of the four kit options it will continue to ask them for an aswer to kitChoice.
+        system("cls");
+        cout << endl << "Second step of the process is to choose the kit of your Character" << endl;
+        cout << "Please type the number corresponding to one of the kits from the list below (Note, this cannot be changed later!): "<< endl << endl;
+        cout << "1" << setfill(' ') << setw(14) << "Tank" << endl;
+        cout << "-" << setfill(' ') << setw(77) << "- Tanks gain +3 to Armor, Magic Resistance, and Health stats" << endl;
+        cout << "2" << setfill(' ') << setw(17) << "Assasin" << endl;
+        cout << "-" << setfill(' ') << setw(50) << "- Assasins gain +5 to Attack stat" << endl;
+        cout << "3" << setfill(' ') << setw(16) << "Archer" << endl;
+        cout << "-" << setfill(' ') << setw(81) << "- Archers gain +2 on Attack and +1 on Armor and Magic Resistance" << endl;
+        cout << "3" << setfill(' ') << setw(14) << "Mage" << endl;
+        cout << "-" << setfill(' ') << setw(70) << "- Mages gain +2 on Ability and +3 on Magic Resistance" << endl;
+        cout << ">";
+        cin >> kitChoice;
+        if (raceChoice <= 0 || raceChoice > 3) {
+            cout << "You have entered an invalid input, Please try again." << endl;
+            raceChoice = 0;
+            system("pause");
+            system("cls");
+        } else {
+            int answered = 0; // 0 for false :: 1 for true
+            while(!answered) { //validate the chosen race
+                cout << "Your kit has been set to option number " << kitChoice << ". Would you like to accept this and continue?(Y/N)" << endl << ">";
+                cin >> answer;
+                if (answer != 'n' && answer !='N' && answer !='y' && answer !='Y') { //if they did not enter y, Y, n, or, N then we will tell them what they input is invalid and retry.
+                    cout << "Unrecognized input." << "   Please enter a valid input." << endl;
+                    system("pause");
+                    system("cls");
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
+                } else if (answer =='y' || answer =='Y') { //if they are statisfied with their choice it will move on and exit both while loops
+                    answered = 1;
+                    exitNow = 1;
+                } else { //if they are not satisfied with their choice it will exit the loop of asking them if they are stisfied and reask about the race which they want to select.
+                    answered = 1;
+                }
+            }
+        }
+    }
+    //
+    //-Kyle - Please review the following
+    //
+    //Code for saving stat data to server:
+    //setHealth(username); // these set[stat] functions need to be reconfigured to us the above information which the user entered to determine the stats which they now have.
+    //setAttack(username);
+    //setArmor(username);
+    //setMagicResistance(username);
+    string wasAbleToSave = server.sendToServer(code.cipher("5", username, to_string(health), to_string(attack), to_string(armor), to_string(magicResistance))); //This should send it to the server to be saved properly in the [username].stat file
+    
+
+
+    system("cls");
+    cout << "You have complete the Player setup Proccess." << endl << "You are now being redirected to the change password screen." << endl;
+    system("pause");
+    menuClass.changePass(username); //before sending them to the logon screen they need to set their new account's password.
 }
 
 int Account::getHealth(std::string username){ //reuturns the users current Health stat
@@ -288,7 +350,7 @@ void Account::createNewAccount(){ //runs through the code to create a new user a
                 cout << "We will now create the account" << endl;
                 server.sendToServer(code.cipher("2", username, "testing account creation..."));
                 system("cls");
-                account.createCharacter(username); // need to create this function
+                account.createPlayer(username); // need to create this function
                 //logonScreen(); //move this to the end of character cration
                 // gonna need to run through the character creation before sign in
 

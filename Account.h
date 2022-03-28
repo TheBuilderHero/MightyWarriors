@@ -12,7 +12,7 @@ class Account {
         void setAttack(std::string username);
         void setArmor(std::string username);
         void setMagicResistance(std::string username);
-        void createCharacter(std::string username);
+        void createPlayer(std::string username);
 
         int getHealth(std::string username);
         int getAttack(std::string username);
