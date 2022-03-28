@@ -91,7 +91,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
     system("cls");
     int raceChoice = 0;
     char answer;
-    int exitNow = 0;// 0 for false :: 1 for true
+    bool exitNow = false;
     while(!exitNow){ //while the user has not selected one of the five options it will continue to ask them for an aswer.
         system("cls");
         cout << endl << "First step of the process is to choose the race of your Character" << endl;
@@ -114,7 +114,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
             system("pause");
             system("cls");
         } else {
-            int answered = 0; // 0 for false :: 1 for true
+            bool answered = false;
             while(!answered) { //validate the chosen race
                 cout << "Your race has been set to option number " << raceChoice << ". Would you like to accept this and continue?(Y/N)" << endl << ">";
                 cin >> answer;
@@ -125,10 +125,10 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
                 } else if (answer =='y' || answer =='Y') { //if they are statisfied with their choice it will move on and exit both while loops
-                    answered = 1;
-                    exitNow = 1;
+                    answered = true;
+                    exitNow = true;
                 } else { //if they are not satisfied with their choice it will exit the loop of asking them if they are stisfied and reask about the race which they want to select.
-                    answered = 1;
+                    answered = true;
                 }
             }
         }
