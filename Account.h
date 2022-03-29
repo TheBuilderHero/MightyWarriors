@@ -23,5 +23,7 @@ class Account {
         void newOrExistingAccout();
         void createNewAccount();
         void logonScreen(int type = 1); //this allows us to use the logon screen function at the end of this function and pass in the defualt value of 1
+        void introStory(std::string username);
+        std::string storyTree(int i1);
 
 };

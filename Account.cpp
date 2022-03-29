@@ -3,6 +3,8 @@
 #include <climits>
 #include <limits>
 #include <iomanip>
+#include <cstdlib> //this and ctime are for the random number generator
+#include <ctime> 
 
 #include "Account.h"
 #include "ReachOutToServer.h"
@@ -191,9 +193,10 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
 
 
     system("cls");
-    cout << "You have complete the Player setup Proccess." << endl << "You are now being redirected to the change password screen." << endl;
+    cout << "You have complete the Player setup Proccess." << endl;
     system("pause");
-    menuClass.changePass(username); //before sending them to the logon screen they need to set their new account's password.
+
+    introStory(username); //send the user to the intro story
 }
 
 int Account::getHealth(std::string username){ //reuturns the users current Health stat
@@ -350,9 +353,7 @@ void Account::createNewAccount(){ //runs through the code to create a new user a
                 cout << "We will now create the account" << endl;
                 server.sendToServer(code.cipher("2", username, "testing account creation..."));
                 system("cls");
-                account.createPlayer(username); // need to create this function
-                //logonScreen(); //move this to the end of character cration
-                // gonna need to run through the character creation before sign in
+                account.createPlayer(username); // creates the Character for the user to use in the game
 
             } else if (createAccountCheck == "N" || createAccountCheck == "n"){
                 cout << "Account will not be created." << endl;
@@ -401,4 +402,36 @@ void Account::newOrExistingAccout(){ // asks and runs through everything for new
         system("pause");//pause the window so the user can read the message, then they can press any key to continue.
         newOrExistingAccout(); // take user to beguining of this function again
     }
+}
+
+void Account::introStory(string username){ //this random story generation should probably be moved onto the server.
+    system("cls");
+    srand((unsigned)time(0)); //takes a seed for the random number based on the time
+    int i;
+    i = (rand()%3)+1;
+
+    cout << "Welcome to the game Mighty Warriors!" << endl 
+    << storyTree(i) << endl;
+    system("pause");
+
+    menuClass.changePass(username); //before sending them to the logon screen they need to set their new account's password.
+}
+
+string Account::storyTree(int i1){ // i1 is just a placement value for the actual determing value that should be added to make this more random in chance for story line.
+    string output;
+    //need to make this all fetched from the server.
+    switch(i1){
+        case 1:
+            output = "[Story 1 for user to read about their Character based on input about it]";
+            break;
+        case 2:
+            output = "[Story 2 for user to read about their Character based on input about it]";
+            break;
+        case 3:
+            output = "[Story 3 for user to read about their Character based on input about it]";
+            break;
+        default:
+            output = "[Story default for user to read about their Character based on input about it]";
+    }
+    return output;
 }
