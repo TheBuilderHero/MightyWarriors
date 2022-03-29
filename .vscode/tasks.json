@@ -12,6 +12,7 @@
                 "ReachOutToServer.cpp",
                 "Account.cpp",
                 "Menu.cpp",
+                "Battle.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 " -lws2_32",

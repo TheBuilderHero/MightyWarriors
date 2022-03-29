@@ -5,6 +5,7 @@
 #include "Cipher.h"
 #include "Account.h"
 #include "Menu.h"
+#include "Battle.h"
 
 Menu menu;
 //Change the version number in the menu.h header file.
