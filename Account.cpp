@@ -407,20 +407,20 @@ void Account::newOrExistingAccout(){ // asks and runs through everything for new
 void Account::introStory(string username){ //this random story generation should probably be moved onto the server.
     system("cls");
     srand((unsigned)time(0)); //takes a seed for the random number based on the time
-    int i;
-    i = (rand()%3)+1;
+    int randomStoryChoice;
+    randomStoryChoice = (rand()%3)+1;
 
     cout << "Welcome to the game Mighty Warriors!" << endl 
-    << storyTree(i) << endl;
+    << storyTree(randomStoryChoice) << endl;
     system("pause");
 
     menuClass.changePass(username); //before sending them to the logon screen they need to set their new account's password.
 }
 
-string Account::storyTree(int i1){ // i1 is just a placement value for the actual determing value that should be added to make this more random in chance for story line.
+string Account::storyTree(int randomStoryChoice){ // i1 is just a placement value for the actual determing value that should be added to make this more random in chance for story line.
     string output;
     //need to make this all fetched from the server.
-    switch(i1){
+    switch(randomStoryChoice){
         case 1:
             output = "[Story 1 for user to read about their Character based on input about it]";
             break;

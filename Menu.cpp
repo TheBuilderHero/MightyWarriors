@@ -64,6 +64,8 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         cout << "\nPlease enter a valid number." << endl;
         system("pause");
         system("cls");
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
         menu(username);
     }
 }
@@ -125,14 +127,34 @@ void Menu::changePass(string username){ //changes the users password
     ReachOutToServer server;
     string passwordNew;
     string passwordConf;
-    cout << "Please enter a new password for your account\n> ";
-    cin >> passwordNew;
-    cin.clear();
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
+    bool validPassword = false;
+    char nonValidPasswordCharacters[] = {'~', '!', '?', '`', '\'', '\"', '\\', '(', ')', '{', '}', '\[', ']', '|', '`','!','$','%','^','&','*','<',',','>',':',';','#','_','-','+','=','@','.','"','"'};
+    while (!validPassword) {
+        cout << "Please enter a new password for your account\n> ";
+        cin >> passwordNew; //get the user's new password
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
+        int len = sizeof(nonValidPasswordCharacters)/sizeof(nonValidPasswordCharacters[0]); //length of array of non valid password Charaters
+        for (int lengthOfArray = len; lengthOfArray >= 0; lengthOfArray--){ //loop through all the nonValidPasswordCharacters to make sure the user is not trying to use any of them.
+            if (passwordNew.find(nonValidPasswordCharacters[lengthOfArray]) != std::string::npos || passwordNew.length() < 4 || passwordNew.find(username) != std::string::npos) {
+                //found the character
+                //password is invalid
+                validPassword = false;
+                cout << "The password you entered is invalid, Please try a different password." << endl << "Note, the password cannot contain: (){}[]|`¬¦! \"£$%^&*\"<>:;#~_-+=,@." << endl << "The password must also be atleast 4 charaters in length and not the same as your username." << endl;
+                break;
+            } else {
+                //password does not contain character
+                validPassword = true;
+            }
+        }
+        system("pause");
+        system("cls");
+    }
     cout << "Please enter a new password again for your account\n> ";
     cin >> passwordConf;
     cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
+        
     if (passwordNew == passwordConf){
         server.sendToServer(code.cipher("4", username, passwordNew));
         menu(username);
@@ -142,5 +164,6 @@ void Menu::changePass(string username){ //changes the users password
         system("cls");
         changePass(username);
     }
+    
     
 }
