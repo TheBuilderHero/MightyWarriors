@@ -6,8 +6,3 @@ class Battle{//This class will have all the functions needed for the algorythms 
     public:
     
 };
-
-class Location{//This class will have a list of all the different locations which a person battle within the game
-    public:
-    
-};
