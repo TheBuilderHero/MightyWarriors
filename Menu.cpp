@@ -7,6 +7,7 @@
 #include "ReachOutToServer.h"
 #include "Cipher.h"
 #include "Menu.h"
+#include "Battle.h"
 
 #undef min // these are needed for the cin.ignore statments to clear out the buffer for new data.
 #undef max 
@@ -14,6 +15,7 @@
 using namespace std;
 Cipher code; //declare the new instance of Cipher class
 Account account;
+Battle battle;
 
 void Menu::getGameVersion(){
     cout << "Client Version: " << to_string(gameVersion) << "." << to_string(gameMajorBuild) << "." << to_string(gameMinorBuild) << "." << to_string(gamePatch) << endl;
@@ -23,41 +25,54 @@ void Menu::getGameVersion(){
 void Menu::menu(string username){ //bring up the menu for the passing in the username
     system("cls");
     int value;
-    cout << setfill(' ') << setw(44) << "Menu of options:" << 
-    endl << "Change Password" << setfill(' ') << setw(25) << "(type number \"1\")" << endl;
-    cout << "Logout" << setfill(' ') << setw(34) <<"(type number \"2\")" << endl;
-    cout << "Stats" << setfill(' ') << setw(35) <<"(type number \"3\")" << endl;
-    cout << "Info" << setfill(' ') << setw(36) <<"(type number \"4\")" << endl;
-    cout << "Exit" << setfill(' ') << setw(39) <<"(type number \"0\")\n> ";
+    cout << setfill(' ') << setw(61) << "Menu of options:" << 
+    endl << setfill(' ') << setw(48) << "Change Password" << setfill(' ') << setw(25) << "(type number \"1\")" << endl;
+    cout << setfill(' ') << setw(39) << "Logout" << setfill(' ') << setw(34) <<"(type number \"2\")" << endl;
+    cout << setfill(' ') << setw(38) << "Stats" << setfill(' ') << setw(35) <<"(type number \"3\")" << endl;
+    cout << setfill(' ') << setw(37) << "Info" << setfill(' ') << setw(36) <<"(type number \"4\")" << endl;
+    cout << setfill(' ') << setw(39) << "Battle" << setfill(' ') << setw(34) <<"(type number \"5\")" << endl;
+    cout << setfill(' ') << setw(37) << "Exit" << setfill(' ') << setw(36) <<"(type number \"0\")" << 
+    endl << setfill(' ') << setw(35) << "> ";
     
     if(cin >> value){
         switch (value)
         {
-        case 1:
+        case 1: //change password
             //change password
             account.logonScreen(2);
             break;
-        case 2:
+        case 2://logout
             system("cls");
             account.logonScreen();
             break;
-        case 3:
+        case 3://display stats
             system("cls");
             account.displayStats(username);
             menu(username);
             break;
-        case 4:
+        case 4://display version and info
             system("cls");
             getGameVersion();
             menu(username);
             break;
+        case 5: //start battle
+            system("cls");
+            battle.startBattle(username);//start battle code will go here.
+            break;
         case 0:
             exit(1);
+            break;
+        case 10:
+            system("cls");
+            cout << "October is a Beautiful month to get Married!" << endl;
+            system("pause");
+            menu(username);
             break;
         case 14:
             system("cls");
             cout << "Dakota loves Beautiful!" << endl;
             system("pause");
+            menu(username);
             break;
         }
     } else {
