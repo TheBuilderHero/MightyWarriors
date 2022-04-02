@@ -18,6 +18,14 @@
 			- very sharp short sword with less armor(What do these stats look like?)
         	Archer
 			- a bow with light armor - maybe more then the assasin though (What do these stats look like?)
+			
+		Wizard? Is there magic?
+		Ninja - Ranged assassin? Poison attacks, dodging, but very low health?
+		Maybe tank has two varieties, like a gladiator with lots of health but low armor 
+			and a paladin or something with normal health and very high armor
+		Engineer - gets bonuses to crafting but everything else is average
+		- - - Richard
+		
 
     	Weapon moding
         	Make it so that we can make weapons able to created
@@ -31,6 +39,12 @@
 			-determine the equation we will use for this.
             	For leveling you get to pick stats for each level
 			-just 1 or should this change over time?
+			
+		- A solid experience equation is 1000*level. But it just needs to scale with the experience you get. 
+		How many monsters killed, traps disarmed, items crafted before level up?
+		- Stat points should increase every few levels. E.g. level 1-5, +1 stat point; level 6-10, +2 stat points.
+		Otherwise getting to a very high level only makes you a tiny bit more powerful (like 100 damage leveling up to 101)
+		- - - Richard
 
 	Enemies
 		Stats
@@ -39,6 +53,11 @@
 			-magic resistance
 			-armor
 			-attack
+			
+			-health
+			-brains
+			-creativity (for weapon modding)
+			- - - Richard
 		Enemy drops
 			-XP  >> amount of XP from kill
 			-items >> chance of item (very low for standard mosters but higher for bosses)
@@ -64,3 +83,5 @@ Battle class (which will include the function for fighting the monster)
 Stats, Names, Weapon info, and other item and enemy related information. - Dominic
 
 There are probably more.  But those are what I have on my mind right now.
+
+I just added some initial ideas. Feel free to delete them if they're offensive lol - - - Richard
