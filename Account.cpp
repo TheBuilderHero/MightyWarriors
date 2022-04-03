@@ -203,7 +203,7 @@ int Account::getHealth(std::string username){ //reuturns the users current Healt
     ReachOutToServer server;
     Cipher code;
     code.decipherS(server.sendToServer(code.cipher("6", username)));
-    return stoi(code.item1);
+    return stoi(code.itemS1);
 }
 int Account::getAttack(std::string username){ //reuturns the users current Attack stat
     ReachOutToServer server;

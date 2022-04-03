@@ -43,6 +43,15 @@ string Cipher::decipher(char messageFromClient[]){
             break;
             case 7://the seventh item enclosed in delimiters
             if (output.length() > 0) item7 = output; 
+            break; 
+            case 8://the eighth item enclosed in delimiters
+            if (output.length() > 0) item8 = output; 
+            break;
+            case 9://the ninth item enclosed in delimiters
+            if (output.length() > 0) item9 = output; 
+            break;
+            case 10://the tenth item enclosed in delimiters
+            if (output.length() > 0) item10 = output; 
             break;
         }
         loopPass++;
@@ -69,25 +78,34 @@ string Cipher::decipherS(string messageFromClient){
         s.erase(0, pos + delimiter.length());
         switch (loopPass){
             case 1://the first item enclosed in delimiters
-            if (output.length() > 0) item1 = output; // we many need to change the variable to an int with stoi(output) later but right now we just want a string version
+            if (output.length() > 0) itemS1 = output; // we many need to change the variable to an int with stoi(output) later but right now we just want a string version
             break;
             case 2://the second item enclosed in delimiters
-            if (output.length() > 0) item2 = output; 
+            if (output.length() > 0) itemS2 = output; 
             break;
             case 3://the third item enclosed in delimiters
-            if (output.length() > 0) item3 = output; 
+            if (output.length() > 0) itemS3 = output; 
             break;
             case 4://the forth item enclosed in delimiters
-            if (output.length() > 0) item4 = output; 
+            if (output.length() > 0) itemS4 = output; 
             break;
             case 5://the fith item enclosed in delimiters
-            if (output.length() > 0) item5 = output; 
+            if (output.length() > 0) itemS5 = output; 
             break;
             case 6://the sixth item enclosed in delimiters
-            if (output.length() > 0) item6 = output; 
+            if (output.length() > 0) itemS6 = output; 
             break;
             case 7://the seventh item enclosed in delimiters
-            if (output.length() > 0) item7 = output; 
+            if (output.length() > 0) itemS7 = output; 
+            break;
+            case 8://the eighth item enclosed in delimiters
+            if (output.length() > 0) itemS8 = output; 
+            break;
+            case 9://the ninth item enclosed in delimiters
+            if (output.length() > 0) itemS9 = output; 
+            break;
+            case 10://the tenth item enclosed in delimiters
+            if (output.length() > 0) itemS10 = output; 
             break;
         }
         loopPass++;
@@ -96,8 +114,8 @@ string Cipher::decipherS(string messageFromClient){
 }
 
 //this functions purpose it to add the delimiters to given items 
-string Cipher::cipher(string typeOfRequest, string username, string item3, string item4, string item5, string item6, string item7){ // the default values have been set to "" in case no input is given
-    int numberOfItems = 7; //max number of items that we can cipher
+string Cipher::cipher(string typeOfRequest, string username, string item3, string item4, string item5, string item6, string item7, string item8, string item9, string item10){ // the default values have been set to "" in case no input is given
+    int numberOfItems = 10; //max number of items that we can cipher
     string delimiter = "~"; //a character that marks the beginning or end of a unit of data
 
     string str_file_content;
@@ -125,6 +143,15 @@ string Cipher::cipher(string typeOfRequest, string username, string item3, strin
             break;
             case 7:
             if (item7.length() > 0) str_file_content += item7;
+            break;
+            case 8:
+            if (item8.length() > 0) str_file_content += item8;
+            break;
+            case 9:
+            if (item9.length() > 0) str_file_content += item9;
+            break;
+            case 10:
+            if (item10.length() > 0) str_file_content += item10;
             break;
         }
         loopPass++;

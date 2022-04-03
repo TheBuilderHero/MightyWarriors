@@ -14,10 +14,14 @@ Menu classMenu;
 using namespace std;
 
 void Battle::startBattle(string username){
+    ReachOutToServer server;
+    Cipher code;
+    code.decipherS(server.sendToServer(code.cipher("6", username))); //request the current stats of this user from the server
     int playerHealth, enemyHealth;
     string answer;
     bool fightWon, fightLost;
-    playerHealth = enemyHealth = 20;
+    enemyHealth = 20;
+    playerHealth = stoi(code.itemS1);
     fightWon = fightLost = false; //set both lost and won to false
     //NEED TO BE DONE//pull info from the server to get the Player's Character info
     //NEED TO BE DONE//pull data fro mteh server regarding the enemy to fight
