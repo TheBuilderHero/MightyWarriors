@@ -74,6 +74,12 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
             system("pause");
             menu(username);
             break;
+        default:
+            system("cls");
+            cout << "Invalid input, Please try again..." << endl;
+            system("pause");
+            menu(username);
+            break;
         }
     } else {
         cout << "\nPlease enter a valid number." << endl;
