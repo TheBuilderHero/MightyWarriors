@@ -14,17 +14,21 @@ Menu classMenu;
 using namespace std;
 
 void Battle::startBattle(string username){
-    ReachOutToServer server;
-    Cipher code;
-    code.decipherS(server.sendToServer(code.cipher("6", username))); //request the current stats of this user from the server
     int playerHealth, enemyHealth;
     string answer;
     bool fightWon, fightLost;
+    ReachOutToServer server;
+    Cipher code;
+    //**************************
+    //Initalize all variables
+    code.decipherS(server.sendToServer(code.cipher("6", username))); //request the current stats of this user from the server //pull info from the server to get the Player's Character info
     enemyHealth = 20;
-    playerHealth = stoi(code.itemS1);
+    playerHealth = stoi(code.itemS1); //set player health
     fightWon = fightLost = false; //set both lost and won to false
-    //NEED TO BE DONE//pull info from the server to get the Player's Character info
-    //NEED TO BE DONE//pull data fro mteh server regarding the enemy to fight
+    code.decipherS(server.sendToServer(code.cipher("7", username))); //request the current stats of a enemy from the server //pull data from the server regarding the enemy to fight
+    enemyHealth = stoi(code.itemS1); //set enemy health
+    //**************************
+    //Start Battle
     system("cls");
     cout << "Starting Battle simulation..." << endl; //tell user that the battle is starting
     system("pause");
