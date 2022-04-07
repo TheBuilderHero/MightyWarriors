@@ -105,10 +105,8 @@
 				-basic 
 				-mild
 				-medium
-					Mutant Elf
 				-hot - 45
 				-hard - 15
-					Void Cat
 				-death - 5
 
 
