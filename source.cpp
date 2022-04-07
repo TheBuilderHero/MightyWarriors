@@ -19,6 +19,23 @@ const int gamePatch       = menu.gamePatch;
 using namespace std; //so I dont have to type "std::"
 
 int main(){ //Starts the program if the clients version is compatable with the server's version
+/* // Working Key Press Test
+while (1)
+{
+    if (GetKeyState('R') < 0) {
+        cout << "R" << endl;
+    }
+    if (GetKeyState('E') < 0) {
+        cout << "E" << endl;
+    }
+    if (GetKeyState('W') < 0) {
+        cout << "W" << endl;
+    }
+    if (GetKeyState('Q') < 0) {
+        cout << "Q" << endl;
+    }
+}
+*/
     string answer;
     ReachOutToServer server; //declare a new instance of ReachOutToServer called server
     Account account; //declare a new instance of the Account class
