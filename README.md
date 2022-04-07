@@ -1,15 +1,55 @@
 	Races
     		Each will have a passive strength and later we will add active ability (because of this it is okay if the stats are not all the same because the plan would be that the ability makes up for that difference)
+
         	Human 
-			- Stats:
+			- stats:
+				health - 100
+				armor - 10
+				Magic Resistance - 5
+				Magic Damage - 1
+   				Agility - 10
+    			Physical Damage - 5
+    			Stealth - 5
+
         	Elf 
-			- Stats
+			- Stats:
+				baseHealth - 100
+    			Armor - 5
+    			Magic Resistance - 10
+   				Magic Damage - 15
+    			Agility - 25
+    			Physical Damage - 5
+    			Stealth - 10
+
         	Dino 
-			- Stats?
+			- Stats:
+				Health - 100
+    			Armor - 15
+    			Magic Resistance - 5
+    			Magic Damage - 20
+    			Agility - 8
+    			Physical Damage - 15
+    			Stealth - 1
+
         	Dryad 
-			- Stats?
+			- Stats:
+				Health - 100
+    			Armor - 5
+    			MagicResistance - 20
+    			Magic Damage - 20
+    			Agility - 20
+    			Physical Damage - 5
+    			Stealth - 10
+
         	Ghost 
-			- Stats?
+			- Stats:
+				Health - 100
+    			Armor - 2
+    			Magic Resistance - 20
+    			Magic Damage - 20
+    			Agility - 15
+    			Physical Damage - 5
+    			Stealth - 30
 
 	Kits
         	Tank 	
@@ -62,15 +102,12 @@
 			-XP  >> amount of XP from kill
 			-items >> chance of item (very low for standard mosters but higher for bosses)
 				10 enemy classes:
-				-basic
-				-easy
+				-basic 
 				-mild
 				-medium
-				-sub-moderate
-				-super-moderate
-				-difficult
-				-hard
-				-death
+				-hot - 45
+				-hard - 15
+				-death - 5
 
 
 The main TASKS that we need right now are: 
