@@ -62,15 +62,14 @@
 			-XP  >> amount of XP from kill
 			-items >> chance of item (very low for standard mosters but higher for bosses)
 				10 enemy classes:
-				-basic
-				-easy
+				-basic 
 				-mild
 				-medium
-				-sub-moderate
-				-super-moderate
-				-difficult
-				-hard
-				-death
+					Mutant Elf
+				-hot - 45
+				-hard - 15
+					Void Cat
+				-death - 5
 
 
 The main TASKS that we need right now are: 
