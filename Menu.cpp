@@ -2,6 +2,7 @@
 #include <iostream>
 #include <iomanip>
 #include <limits>
+#include <stdio.h>
 
 #include "Account.h"
 #include "ReachOutToServer.h"
@@ -110,10 +111,15 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         {
         case 1: //change password
             //change password
+            system("cls");
+            cout << "Taking you to the change password screen." << endl; //this is here to fix the issue with cin buffer taking the last key pressed and putting it at the start of the new cin.
+            system("pause");
             account.logonScreen(2);
             break;
         case 2://logout
             system("cls");
+            cout << "You are now logging out." << endl;
+            system("pause");
             account.logonScreen();
             break;
         case 3://display stats
@@ -189,35 +195,35 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
             twoKeyPressedLastLoop = true;
             value = 2;
             break;
-        } else if (GetKeyState('2') >= 0){ // else 1 not pressed
+        } else if (GetKeyState('2') >= 0){ // else 2 not pressed
             twoKeyPressedLastLoop = false;
         }
-        if (GetKeyState('3') < 0 && !threeKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+        if (GetKeyState('3') < 0 && !threeKeyPressedLastLoop) { //checks to make sure that the 3 key is pressed and makes sure it was not pressed last check
             threeKeyPressedLastLoop = true;
             value = 3;
             break;
-        } else if (GetKeyState('3') >= 0){ // else 1 not pressed
+        } else if (GetKeyState('3') >= 0){ // else 3 not pressed
             threeKeyPressedLastLoop = false;
         }
-        if (GetKeyState('4') < 0 && !fourKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+        if (GetKeyState('4') < 0 && !fourKeyPressedLastLoop) { //checks to make sure that the 4 key is pressed and makes sure it was not pressed last check
             fourKeyPressedLastLoop = true;
             value = 4;
             break;
-        } else if (GetKeyState('4') >= 0){ // else 1 not pressed
+        } else if (GetKeyState('4') >= 0){ // else 4 not pressed
             fourKeyPressedLastLoop = false;
         }
-        if (GetKeyState('5') < 0 && !fiveKeyPressedLastLoop) { //checks to make sure that the 3 key is pressed and makes sure it was not pressed last check
+        if (GetKeyState('5') < 0 && !fiveKeyPressedLastLoop) { //checks to make sure that the 5 key is pressed and makes sure it was not pressed last check
             fiveKeyPressedLastLoop = true;
             value = 5;
             break;
-        } else if (GetKeyState('Q') >= 0){ // else 1 not pressed
+        } else if (GetKeyState('5') >= 0){ // else 5 not pressed
             fiveKeyPressedLastLoop = false;
         }
-        if (GetKeyState('0') < 0 && !zeroKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+        if (GetKeyState('0') < 0 && !zeroKeyPressedLastLoop) { //checks to make sure that the 0 key is pressed and makes sure it was not pressed last check
             zeroKeyPressedLastLoop = true;
             value = 0;
             break;
-        } else if (GetKeyState('0') >= 0){ // else 1 not pressed
+        } else if (GetKeyState('0') >= 0){ // else 0 not pressed
             zeroKeyPressedLastLoop = false;
         }
 
@@ -240,20 +246,25 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         {
         case 1: //change password
             //change password
+            system("cls");
+            cout << "Taking you to the change password screen." << endl;
+            system("pause");
             account.logonScreen(2);
             break;
         case 2://logout
             system("cls");
+            cout << "You are now logging out." << endl;
+            system("pause");
             account.logonScreen();
             break;
         case 3://display stats
-            //cin.clear();
-            //cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
-            //cin.clear();
-            //cin.ignore();
             system("cls");
-            cout << "Please enter the username of the user for which you would like to view stats.\n>";
+            cout << "Taking you to the screen for viewing stats" << endl;
+            system("pause");
+            system("cls");
+            cout << "Please enter the username of the user for which you would like to view stats." << endl << ">";
             cin >> usernameE;
+            system("pause");
             account.displayStats(usernameE, 1, username);
             usernameE = "";
             menu(username);
@@ -294,45 +305,6 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         system("cls");
         adminMenu(username);
     }
-    /*if(cin >> value){
-        switch (value)
-        {
-        case 1:
-            //change password
-            account.logonScreen(2);
-            break;
-        case 2:
-            system("cls");
-            account.logonScreen();
-            break;
-        case 3:
-            system("cls");
-            cout << "Please enter the username of the user for which you would like to view stats.\n>";
-            cin >> usernameE;
-            account.displayStats(usernameE, 1, username);
-            usernameE = "";
-            menu(username);
-            break;
-        case 4:
-            system("cls");
-            getGameVersion();
-            menu(username);
-            break;
-        case 0:
-            exit(1);
-            break;
-        case 14:
-            system("cls");
-            cout << "Dakota loves Beautiful!" << endl;
-            system("pause");
-            break;
-        }
-    } else {
-        cout << "\nPlease enter a valid number." << endl;
-        system("pause");
-        system("cls");
-        menu(username);
-    }*/
 }
 
 void Menu::changePass(string username){ //changes the users password
