@@ -105,65 +105,55 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
             kKeyPressedLastLoop = false;
         }
     }
-    //cin >> 
-    if(value){
-        switch (value)
-        {
-        case 1: //change password
-            //change password
-            system("cls");
-            cout << "Taking you to the change password screen." << endl; //this is here to fix the issue with cin buffer taking the last key pressed and putting it at the start of the new cin.
-            system("pause");
-            account.logonScreen(2);
-            break;
-        case 2://logout
-            system("cls");
-            cout << "You are now logging out." << endl;
-            system("pause");
-            account.logonScreen();
-            break;
-        case 3://display stats
-            system("cls");
-            account.displayStats(username);
-            menu(username);
-            break;
-        case 4://display version and info
-            system("cls");
-            getGameVersion();
-            menu(username);
-            break;
-        case 5: //start battle
-            system("cls");
-            battle.startBattle(username);//start battle code will go here.
-            break;
-        case 0:
-            exit(1);
-            break;
-        case 14:
-            system("cls");
-            cout << "October is a Beautiful month to get Married!" << endl;
-            cout << "Dakota loves Beautiful!" << endl;
-            system("pause");
-            menu(username);
-            break;
-        case 15:
-            system("cls");
-            adminMenu(username);
-            break;
-        default:
-            system("cls");
-            cout << "Invalid input, Please try again..." << endl;
-            system("pause");
-            menu(username);
-            break;
-        }
-    } else {
-        cout << "\nPlease enter a valid number." << endl;
-        system("pause");
+    switch (value)
+    {
+    case 0:
+        exit(1);
+        break;
+    case 1: //change password
+        //change password
         system("cls");
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
+        cout << "Taking you to the change password screen." << endl; //this is here to fix the issue with cin buffer taking the last key pressed and putting it at the start of the new cin.
+        system("pause");
+        account.logonScreen(2);
+        break;
+    case 2://logout
+        system("cls");
+        cout << "You are now logging out." << endl;
+        system("pause");
+        account.logonScreen();
+        break;
+    case 3://display stats
+        system("cls");
+        account.displayStats(username);
         menu(username);
+        break;
+    case 4://display version and info
+        system("cls");
+        getGameVersion();
+        menu(username);
+        break;
+    case 5: //start battle
+        system("cls");
+        battle.startBattle(username);//start battle code will go here.
+        break;
+    case 14:
+        system("cls");
+        cout << "October is a Beautiful month to get Married!" << endl;
+        cout << "Dakota loves Beautiful!" << endl;
+        system("pause");
+        menu(username);
+        break;
+    case 15:
+        system("cls");
+        adminMenu(username);
+        break;
+    default:
+        system("cls");
+        cout << "Invalid input, Please try again..." << endl;
+        system("pause");
+        menu(username);
+        break;
     }
 }
 
@@ -247,65 +237,57 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
             aKeyPressedLastLoop = false;
         }
     }
-    
-    if(value){
-        switch (value)
-        {
-        case 1: //change password
-            //change password
-            system("cls");
-            cout << "Taking you to the change password screen." << endl;
-            system("pause");
-            account.logonScreen(2);
-            break;
-        case 2://logout
-            system("cls");
-            cout << "You are now logging out." << endl;
-            system("pause");
-            account.logonScreen();
-            break;
-        case 3://display stats
-            system("cls");
-            cout << "Taking you to the screen for viewing stats" << endl;
-            system("pause");
-            system("cls");
-            cout << "Please enter the username of the user for which you would like to view stats." << endl << ">";
-            cin >> usernameE;
-            account.displayStats(usernameE, 1, username);
-            usernameE = "";
-            adminMenu(username);
-            break;
-        case 4://display version and info
-            system("cls");
-            getGameVersion();
-            adminMenu(username);
-            break;
-        case 5: //start battle
-            system("cls");
-            battle.startBattle(username);//start battle code will go here.
-            break;
-        case 0: //exit program
-            exit(1);
-            break;
-        case 14:
-            system("cls");
-            cout << "October is a Beautiful month to get Married!" << endl;
-            cout << "Dakota loves Beautiful!" << endl;
-            system("pause");
-            adminMenu(username);
-            break;
-        default:
-            system("cls");
-            cout << "Invalid input, Please try again..." << endl;
-            system("pause");
-            adminMenu(username);
-            break;
-        }
-    } else {
-        cout << "\nPlease enter a valid number." << endl;
+    switch (value)
+    {
+    case 0: //exit program
+        exit(0);
+        break;
+    case 1: //change password
+        //change password
+        system("cls");
+        cout << "Taking you to the change password screen." << endl;
+        system("pause");
+        account.logonScreen(2);
+        break;
+    case 2://logout
+        system("cls");
+        cout << "You are now logging out." << endl;
+        system("pause");
+        account.logonScreen();
+        break;
+    case 3://display stats
+        system("cls");
+        cout << "Taking you to the screen for viewing stats" << endl;
         system("pause");
         system("cls");
+        cout << "Please enter the username of the user for which you would like to view stats." << endl << ">";
+        cin >> usernameE;
+        account.displayStats(usernameE, 1, username);
+        usernameE = "";
         adminMenu(username);
+        break;
+    case 4://display version and info
+        system("cls");
+        getGameVersion();
+        adminMenu(username);
+        break;
+    case 5: //start battle
+        system("cls");
+        battle.startBattle(username);//start battle code will go here.
+        break;
+    case 14:
+        system("cls");
+        cout << "October is a Beautiful month to get Married!" << endl;
+        cout << "Dakota loves Beautiful!" << endl;
+        system("pause");
+        adminMenu(username);
+        break;
+    default:
+        system("cls");
+        cout << "Invalid input, Please try again..." << endl;
+        system("pause");
+        adminMenu(username);
+        break;
     }
 }
 
