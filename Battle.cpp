@@ -46,8 +46,8 @@ void Battle::startBattle(string username){
         cout << setfill(' ') << setw(41) << "Attack 2" << setfill(' ') << setw(25) <<"(type number \"W\")" << endl;
         cout << setfill(' ') << setw(41) << "Attack 3" << setfill(' ') << setw(25) <<"(type number \"E\")" << endl;
         cout << setfill(' ') << setw(41) << "Attack 4" << setfill(' ') << setw(25) <<"(type number \"R\")" << endl;
-        cout << setfill(' ') << setw(41) << "Attack 5" << setfill(' ') << setw(25) <<"(type number \"5\")" << endl;
-        cout << setfill(' ') << setw(41) << "Attack 6" << setfill(' ') << setw(25) <<"(type number \"6\")" << endl;; 
+        //cout << setfill(' ') << setw(41) << "Attack 5" << setfill(' ') << setw(25) <<"(type number \"5\")" << endl;
+        //cout << setfill(' ') << setw(41) << "Attack 6" << setfill(' ') << setw(25) <<"(type number \"6\")" << endl; 
         //<< setfill(' ') << setw(35) << "> ";
         
          // Working Key Press Test

@@ -184,6 +184,7 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
     cout << setfill(' ') << setw(37) << "Exit" << setfill(' ') << setw(36) <<"(type number \"0\")" << endl;
     
     while (1){
+        //change password
         if (GetKeyState('1') < 0 && !oneKeyPressedLastLoop) { //checks to make sure that the 1 key is pressed and makes sure it was not pressed last check
             oneKeyPressedLastLoop = true;
             value = 1;
@@ -191,6 +192,7 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         } else if (GetKeyState('1') >= 0){ // else 1 not pressed
             oneKeyPressedLastLoop = false;
         }
+        //Logout
         if (GetKeyState('2') < 0 && !twoKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
             twoKeyPressedLastLoop = true;
             value = 2;
@@ -198,6 +200,7 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         } else if (GetKeyState('2') >= 0){ // else 2 not pressed
             twoKeyPressedLastLoop = false;
         }
+        //Stats of any user
         if (GetKeyState('3') < 0 && !threeKeyPressedLastLoop) { //checks to make sure that the 3 key is pressed and makes sure it was not pressed last check
             threeKeyPressedLastLoop = true;
             value = 3;
@@ -205,6 +208,7 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         } else if (GetKeyState('3') >= 0){ // else 3 not pressed
             threeKeyPressedLastLoop = false;
         }
+        //Info - game version
         if (GetKeyState('4') < 0 && !fourKeyPressedLastLoop) { //checks to make sure that the 4 key is pressed and makes sure it was not pressed last check
             fourKeyPressedLastLoop = true;
             value = 4;
@@ -212,6 +216,7 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         } else if (GetKeyState('4') >= 0){ // else 4 not pressed
             fourKeyPressedLastLoop = false;
         }
+        //Battle start
         if (GetKeyState('5') < 0 && !fiveKeyPressedLastLoop) { //checks to make sure that the 5 key is pressed and makes sure it was not pressed last check
             fiveKeyPressedLastLoop = true;
             value = 5;
@@ -219,6 +224,7 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         } else if (GetKeyState('5') >= 0){ // else 5 not pressed
             fiveKeyPressedLastLoop = false;
         }
+        //Exit program
         if (GetKeyState('0') < 0 && !zeroKeyPressedLastLoop) { //checks to make sure that the 0 key is pressed and makes sure it was not pressed last check
             zeroKeyPressedLastLoop = true;
             value = 0;
@@ -227,7 +233,8 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
             zeroKeyPressedLastLoop = false;
         }
 
-        //hidden features:
+        //hidden feature: 
+        //Nina's surprise
         if (GetKeyState('N') < 0 && GetKeyState('I') < 0 && GetKeyState('A') < 0) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
             nKeyPressedLastLoop = true;
             iKeyPressedLastLoop = true;
@@ -264,10 +271,9 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
             system("cls");
             cout << "Please enter the username of the user for which you would like to view stats." << endl << ">";
             cin >> usernameE;
-            system("pause");
             account.displayStats(usernameE, 1, username);
             usernameE = "";
-            menu(username);
+            adminMenu(username);
             break;
         case 4://display version and info
             system("cls");
@@ -278,7 +284,7 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
             system("cls");
             battle.startBattle(username);//start battle code will go here.
             break;
-        case 0:
+        case 0: //exit program
             exit(1);
             break;
         case 14:
@@ -286,10 +292,6 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
             cout << "October is a Beautiful month to get Married!" << endl;
             cout << "Dakota loves Beautiful!" << endl;
             system("pause");
-            adminMenu(username);
-            break;
-        case 15:
-            system("cls");
             adminMenu(username);
             break;
         default:

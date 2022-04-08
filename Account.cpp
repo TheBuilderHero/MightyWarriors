@@ -188,10 +188,8 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
     //setAttack(username);
     //setArmor(username);
     //setMagicResistance(username);
-    string wasAbleToSave = server.sendToServer(code.cipher("5", username, to_string(health), to_string(attack), to_string(armor), to_string(magicResistance))); //This should send it to the server to be saved properly in the [username].stat file
-    
-
-
+    string wasAbleToSave = server.sendToServer(code.cipher("5", username, to_string(health), to_string(attack), to_string(armor), to_string(magicResistance), to_string(agility),
+     to_string(stealth))); //These send the data to the server to be saved properly in the [username].stat file
     system("cls");
     cout << "You have complete the Player setup Proccess." << endl;
     system("pause");
@@ -209,31 +207,35 @@ int Account::getAttack(std::string username){ //reuturns the users current Attac
     ReachOutToServer server;
     Cipher code;
     code.decipherS(server.sendToServer(code.cipher("6", username)));
-    return stoi(code.item2);
+    return stoi(code.itemS2);
 }
 int Account::getArmor(std::string username){ //reuturns the users current Armor stat
     ReachOutToServer server;
     Cipher code;
     code.decipherS(server.sendToServer(code.cipher("6", username))); 
-    return stoi(code.item3);
+    return stoi(code.itemS3);
 }
 int Account::getMagicResistance(std::string username){ //reuturns the users current MagicResistance stat
     ReachOutToServer server;
     Cipher code;
     code.decipherS(server.sendToServer(code.cipher("6", username)));
-    return stoi(code.item4);
+    return stoi(code.itemS4);
 }
 
 void Account::displayStats(std::string username, int bypass ,string usernameA){
     Cipher code;
     ReachOutToServer server;
     if (bypass == 0) { //standard user
-        cout << "Your stats are as follows: " << endl << "Health: " << setfill(' ') << setw(34) << getHealth(username) << endl << "Attack: " << setfill(' ') << setw(34) << getAttack(username) << endl << "Armor: " << setfill(' ') << setw(35) << getArmor(username) << endl << "Magic Resistance: " << setfill(' ') << setw(24) << getMagicResistance(username) << endl;
+        cout << "Your stats are as follows: " << endl << "Health: " << setfill(' ') << setw(34) << getHealth(username) << endl << "Attack: " << setfill(' ') << setw(34) << 
+        getAttack(username) << endl << "Armor: " << setfill(' ') << setw(35) << getArmor(username) << endl << "Magic Resistance: " << setfill(' ') << setw(24) << 
+        getMagicResistance(username) << endl;
         system("pause");
     } 
     if (bypass == 1) { //admin account
         if(stoi(server.sendToServer(code.cipher("1", username))) == 0) {
-            cout << "Your stats are as follows: " << endl << "Health: " << setfill(' ') << setw(34) << getHealth(username) << endl << "Attack: " << setfill(' ') << setw(34) << getAttack(username) << endl << "Armor: " << setfill(' ') << setw(35) << getArmor(username) << endl << "Magic Resistance: " << setfill(' ') << setw(24) << getMagicResistance(username) << endl;
+            cout << "Your stats are as follows: " << endl << "Health: " << setfill(' ') << setw(34) << getHealth(username) << endl << "Attack: " << setfill(' ') << setw(34) << 
+            getAttack(username) << endl << "Armor: " << setfill(' ') << setw(35) << getArmor(username) << endl << "Magic Resistance: " << setfill(' ') << setw(24) << 
+            getMagicResistance(username) << endl;
             system("pause");
         } else {
             cout << "You did not enter a valid user which has stats to view..." << endl;

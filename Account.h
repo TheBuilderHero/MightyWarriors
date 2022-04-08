@@ -7,7 +7,7 @@ class Account {
         bool HasGoneThroughInitalSetup; //this will be used to make sure they have added the inital 3 stat points - This needs to be defualted to false in the user account creation on the server.
         std::string username;
         int remainingStatPoints;
-        int health = 0, attack = 0, armor = 0, magicResistance = 0;
+        int health = 0, attack = 0, armor = 0, magicResistance = 0, agility = 0, stealth = 0;
         void setHealth(std::string username);
         void setAttack(std::string username);
         void setArmor(std::string username);
