@@ -14,6 +14,7 @@ Menu classMenu;
 using namespace std;
 
 void Battle::startBattle(string username){
+    bool qKeyPressedLastLoop = false, wKeyPressedLastLoop = false, eKeyPressedLastLoop = false, rKeyPressedLastLoop = false;
     int playerHealth, enemyHealth;
     string answer;
     bool fightWon, fightLost;
@@ -41,52 +42,62 @@ void Battle::startBattle(string username){
         int combatVal = 0;
         cout << endl << setfill(' ') << setw(30) << "Player Health: " << playerHealth << setfill(' ') << setw(50) << "Enemy Health: " << enemyHealth << endl; //print the current stats of both the enemy and the Player
         cout << endl << endl << endl << setfill(' ') << setw(63) << "Please choose an attack option" <<//give the user a list of options to choose from in order to fight the enemy
-        endl << setfill(' ') << setw(41) << "Attack 1" << setfill(' ') << setw(25) <<"(type number \"1\")" << endl;
-        cout << setfill(' ') << setw(41) << "Attack 2" << setfill(' ') << setw(25) <<"(type number \"2\")" << endl;
-        cout << setfill(' ') << setw(41) << "Attack 3" << setfill(' ') << setw(25) <<"(type number \"3\")" << endl;
-        cout << setfill(' ') << setw(41) << "Attack 4" << setfill(' ') << setw(25) <<"(type number \"4\")" << endl;
+        endl << setfill(' ') << setw(41) << "Attack 1" << setfill(' ') << setw(25) <<"(type number \"Q\")" << endl;
+        cout << setfill(' ') << setw(41) << "Attack 2" << setfill(' ') << setw(25) <<"(type number \"W\")" << endl;
+        cout << setfill(' ') << setw(41) << "Attack 3" << setfill(' ') << setw(25) <<"(type number \"E\")" << endl;
+        cout << setfill(' ') << setw(41) << "Attack 4" << setfill(' ') << setw(25) <<"(type number \"R\")" << endl;
         cout << setfill(' ') << setw(41) << "Attack 5" << setfill(' ') << setw(25) <<"(type number \"5\")" << endl;
-        cout << setfill(' ') << setw(41) << "Attack 6" << setfill(' ') << setw(25) <<"(type number \"6\")" << endl 
-        << setfill(' ') << setw(35) << "> ";
-        cin >> combatVal;
-        switch (combatVal){
-            case 1: // attack option 1
-                enemyHealth -= 1;
+        cout << setfill(' ') << setw(41) << "Attack 6" << setfill(' ') << setw(25) <<"(type number \"6\")" << endl;; 
+        //<< setfill(' ') << setw(35) << "> ";
+        
+         // Working Key Press Test
+        while (1) //continues to run until broken out.
+        {
+            if (GetKeyState('R') < 0 && rKeyPressedLastLoop == false) {//checks to make sure that the key is pressed and makes sure it was not pressed last check
+                enemyHealth -= 100;
+                rKeyPressedLastLoop = true;
                 break;
-            case 2:
-                enemyHealth = 0;
-                break;
-            case 3:
+            } else if (GetKeyState('R') >= 0){// else R not pressed
+                rKeyPressedLastLoop = false;
+            }
+            if (GetKeyState('E') < 0 && eKeyPressedLastLoop == false) {//checks to make sure that the key is pressed and makes sure it was not pressed last check
                 playerHealth -= 1;
+                eKeyPressedLastLoop = true;
                 break;
-            case 4:
-                playerHealth = 0;
+            } else if (GetKeyState('E') >= 0){// else E not pressed
+                eKeyPressedLastLoop = false;
+            }
+            if (GetKeyState('W') < 0 && wKeyPressedLastLoop == false) {//checks to make sure that the key is pressed and makes sure it was not pressed last check
+                playerHealth -= 10;
+                wKeyPressedLastLoop = true;
                 break;
-            case 5:
+            } else if (GetKeyState('W') >= 0){// else W not pressed
+                wKeyPressedLastLoop = false;
+            }
+            if (GetKeyState('Q') < 0 && !qKeyPressedLastLoop) { //checks to make sure that the key is pressed and makes sure it was not pressed last check
+                enemyHealth -= 1;
+                qKeyPressedLastLoop = true;
                 break;
-            case 6:
-                break;
-            default:
-                system("cls");
-                cout << "You entered an invalid number... Please try again..." << endl;
-                system("pause");
-                system("cls");
+            } else if (GetKeyState('Q') >= 0){ // else Q not pressed
+                qKeyPressedLastLoop = false;
+            }
         }
+        
         if (playerHealth <= 0) {
             fightLost = true;
         } else if (enemyHealth <= 0){
             fightWon = true;
         }
-        cin.clear();
-        cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
     }
     //print out the result of the fight
     if (fightWon) { //the player has won the fight
-        cout << "You won the Battle!" << endl;
+        system("cls");
+        cout <<  setfill(' ') << setw(57) << "You won the Battle!" << endl;
         system("pause");
         system("cls");
     } else if (fightLost){ //the enemy has won the fight
-        cout << "You Lost the Battle!" << endl;
+        system("cls");
+        cout <<  setfill(' ') << setw(58) << "You Lost the Battle!" << endl;
         system("pause");
         system("cls");
     } /*else { //the fight was a tie //not possible

@@ -24,6 +24,9 @@ void Menu::getGameVersion(){
 
 void Menu::menu(string username){ //bring up the menu for the passing in the username
     system("cls");
+    bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, fiveKeyPressedLastLoop = false, 
+    zeroKeyPressedLastLoop = false, nKeyPressedLastLoop = false, iKeyPressedLastLoop = false, aKeyPressedLastLoop = false, controlKeyPressedLastLoop = false, 
+    altKeyPressedLastLoop = false ,kKeyPressedLastLoop = false;
     int value;
     cout << setfill(' ') << setw(61) << "Menu of options:" << 
     endl << setfill(' ') << setw(48) << "Change Password" << setfill(' ') << setw(25) << "(type number \"1\")" << endl;
@@ -31,10 +34,78 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
     cout << setfill(' ') << setw(38) << "Stats" << setfill(' ') << setw(35) <<"(type number \"3\")" << endl;
     cout << setfill(' ') << setw(37) << "Info" << setfill(' ') << setw(36) <<"(type number \"4\")" << endl;
     cout << setfill(' ') << setw(39) << "Battle" << setfill(' ') << setw(34) <<"(type number \"5\")" << endl;
-    cout << setfill(' ') << setw(37) << "Exit" << setfill(' ') << setw(36) <<"(type number \"0\")" << 
-    endl << setfill(' ') << setw(35) << "> ";
-    
-    if(cin >> value){
+    cout << setfill(' ') << setw(37) << "Exit" << setfill(' ') << setw(36) <<"(type number \"0\")" << endl;// << setfill(' ') << setw(35) << "> ";
+    while (1){
+        if (GetKeyState('1') < 0 && !oneKeyPressedLastLoop) { //checks to make sure that the 1 key is pressed and makes sure it was not pressed last check
+            oneKeyPressedLastLoop = true;
+            value = 1;
+            break;
+        } else if (GetKeyState('1') >= 0){ // else 1 not pressed
+            oneKeyPressedLastLoop = false;
+        }
+        if (GetKeyState('2') < 0 && !twoKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+            twoKeyPressedLastLoop = true;
+            value = 2;
+            break;
+        } else if (GetKeyState('2') >= 0){ // else 1 not pressed
+            twoKeyPressedLastLoop = false;
+        }
+        if (GetKeyState('3') < 0 && !threeKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+            threeKeyPressedLastLoop = true;
+            value = 3;
+            break;
+        } else if (GetKeyState('3') >= 0){ // else 1 not pressed
+            threeKeyPressedLastLoop = false;
+        }
+        if (GetKeyState('4') < 0 && !fourKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+            fourKeyPressedLastLoop = true;
+            value = 4;
+            break;
+        } else if (GetKeyState('4') >= 0){ // else 1 not pressed
+            fourKeyPressedLastLoop = false;
+        }
+        if (GetKeyState('5') < 0 && !fiveKeyPressedLastLoop) { //checks to make sure that the 3 key is pressed and makes sure it was not pressed last check
+            fiveKeyPressedLastLoop = true;
+            value = 5;
+            break;
+        } else if (GetKeyState('Q') >= 0){ // else 1 not pressed
+            fiveKeyPressedLastLoop = false;
+        }
+        if (GetKeyState('0') < 0 && !zeroKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+            zeroKeyPressedLastLoop = true;
+            value = 0;
+            break;
+        } else if (GetKeyState('0') >= 0){ // else 1 not pressed
+            zeroKeyPressedLastLoop = false;
+        }
+
+        //hidden features:
+        if (GetKeyState('N') < 0 && GetKeyState('I') < 0 && GetKeyState('A') < 0) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+            nKeyPressedLastLoop = true;
+            iKeyPressedLastLoop = true;
+            aKeyPressedLastLoop = true;
+            value = 14;
+            break;
+        } else if (GetKeyState('N') >= 0 || GetKeyState('I') >= 0 || GetKeyState('A') >= 0){ // else 1 not pressed
+            nKeyPressedLastLoop = false;
+            iKeyPressedLastLoop = false;
+            aKeyPressedLastLoop = false;
+        }
+        //admin menu:
+        if (GetKeyState(VK_CONTROL) < 0 && GetKeyState(VK_MENU) < 0 && GetKeyState('K') < 0) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+            controlKeyPressedLastLoop = true;
+            altKeyPressedLastLoop = true;
+            kKeyPressedLastLoop = true;
+            value = 15;
+            break;
+        } else if (GetKeyState(VK_CONTROL) >= 0 || GetKeyState(VK_MENU) >= 0 || GetKeyState('K') >= 0){ // else 1 not pressed
+            controlKeyPressedLastLoop = false;
+            altKeyPressedLastLoop = false;
+            kKeyPressedLastLoop = false;
+        }
+    }
+    //cin >> 
+    if(value){
         switch (value)
         {
         case 1: //change password
@@ -62,17 +133,16 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         case 0:
             exit(1);
             break;
-        case 10:
-            system("cls");
-            cout << "October is a Beautiful month to get Married!" << endl;
-            system("pause");
-            menu(username);
-            break;
         case 14:
             system("cls");
+            cout << "October is a Beautiful month to get Married!" << endl;
             cout << "Dakota loves Beautiful!" << endl;
             system("pause");
             menu(username);
+            break;
+        case 15:
+            system("cls");
+            adminMenu(username);
             break;
         default:
             system("cls");
@@ -96,13 +166,135 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
     string usernameE;
     system("cls");
     int value;
-    cout << setfill(' ') << setw(44) << "Menu of options:\nChange Password" << setfill(' ') << setw(25) << "(type number \"1\")" << endl;
-    cout << "Logout" << setfill(' ') << setw(34) <<"(type number \"2\")" << endl;
-    cout << "Stats" << setfill(' ') << setw(35) <<"(type number \"3\")" << endl;
-    cout << "Info" << setfill(' ') << setw(36) <<"(type number \"4\")" << endl;
-    cout << "Exit" << setfill(' ') << setw(39) <<"(type number \"0\")\n> ";
+    bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, fiveKeyPressedLastLoop = false, 
+    zeroKeyPressedLastLoop = false, nKeyPressedLastLoop = false, iKeyPressedLastLoop = false, aKeyPressedLastLoop = false, controlKeyPressedLastLoop = false, 
+    altKeyPressedLastLoop = false ,kKeyPressedLastLoop = false;
+    cout << setfill(' ') << setw(65) << "Admin Menu of options:" << 
+    endl << setfill(' ') << setw(48) << "Change Password" << setfill(' ') << setw(25) << "(type number \"1\")" << endl;
+    cout << setfill(' ') << setw(39) << "Logout" << setfill(' ') << setw(34) <<"(type number \"2\")" << endl;
+    cout << setfill(' ') << setw(38) << "Stats" << setfill(' ') << setw(35) <<"(type number \"3\")" << endl;
+    cout << setfill(' ') << setw(37) << "Info" << setfill(' ') << setw(36) <<"(type number \"4\")" << endl;
+    cout << setfill(' ') << setw(39) << "Battle" << setfill(' ') << setw(34) <<"(type number \"5\")" << endl;
+    cout << setfill(' ') << setw(37) << "Exit" << setfill(' ') << setw(36) <<"(type number \"0\")" << endl;
     
-    if(cin >> value){
+    while (1){
+        if (GetKeyState('1') < 0 && !oneKeyPressedLastLoop) { //checks to make sure that the 1 key is pressed and makes sure it was not pressed last check
+            oneKeyPressedLastLoop = true;
+            value = 1;
+            break;
+        } else if (GetKeyState('1') >= 0){ // else 1 not pressed
+            oneKeyPressedLastLoop = false;
+        }
+        if (GetKeyState('2') < 0 && !twoKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+            twoKeyPressedLastLoop = true;
+            value = 2;
+            break;
+        } else if (GetKeyState('2') >= 0){ // else 1 not pressed
+            twoKeyPressedLastLoop = false;
+        }
+        if (GetKeyState('3') < 0 && !threeKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+            threeKeyPressedLastLoop = true;
+            value = 3;
+            break;
+        } else if (GetKeyState('3') >= 0){ // else 1 not pressed
+            threeKeyPressedLastLoop = false;
+        }
+        if (GetKeyState('4') < 0 && !fourKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+            fourKeyPressedLastLoop = true;
+            value = 4;
+            break;
+        } else if (GetKeyState('4') >= 0){ // else 1 not pressed
+            fourKeyPressedLastLoop = false;
+        }
+        if (GetKeyState('5') < 0 && !fiveKeyPressedLastLoop) { //checks to make sure that the 3 key is pressed and makes sure it was not pressed last check
+            fiveKeyPressedLastLoop = true;
+            value = 5;
+            break;
+        } else if (GetKeyState('Q') >= 0){ // else 1 not pressed
+            fiveKeyPressedLastLoop = false;
+        }
+        if (GetKeyState('0') < 0 && !zeroKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+            zeroKeyPressedLastLoop = true;
+            value = 0;
+            break;
+        } else if (GetKeyState('0') >= 0){ // else 1 not pressed
+            zeroKeyPressedLastLoop = false;
+        }
+
+        //hidden features:
+        if (GetKeyState('N') < 0 && GetKeyState('I') < 0 && GetKeyState('A') < 0) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+            nKeyPressedLastLoop = true;
+            iKeyPressedLastLoop = true;
+            aKeyPressedLastLoop = true;
+            value = 14;
+            break;
+        } else if (GetKeyState('N') >= 0 || GetKeyState('I') >= 0 || GetKeyState('A') >= 0){ // else 1 not pressed
+            nKeyPressedLastLoop = false;
+            iKeyPressedLastLoop = false;
+            aKeyPressedLastLoop = false;
+        }
+    }
+    
+    if(value){
+        switch (value)
+        {
+        case 1: //change password
+            //change password
+            account.logonScreen(2);
+            break;
+        case 2://logout
+            system("cls");
+            account.logonScreen();
+            break;
+        case 3://display stats
+            //cin.clear();
+            //cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
+            //cin.clear();
+            //cin.ignore();
+            system("cls");
+            cout << "Please enter the username of the user for which you would like to view stats.\n>";
+            cin >> usernameE;
+            account.displayStats(usernameE, 1, username);
+            usernameE = "";
+            menu(username);
+            break;
+        case 4://display version and info
+            system("cls");
+            getGameVersion();
+            adminMenu(username);
+            break;
+        case 5: //start battle
+            system("cls");
+            battle.startBattle(username);//start battle code will go here.
+            break;
+        case 0:
+            exit(1);
+            break;
+        case 14:
+            system("cls");
+            cout << "October is a Beautiful month to get Married!" << endl;
+            cout << "Dakota loves Beautiful!" << endl;
+            system("pause");
+            adminMenu(username);
+            break;
+        case 15:
+            system("cls");
+            adminMenu(username);
+            break;
+        default:
+            system("cls");
+            cout << "Invalid input, Please try again..." << endl;
+            system("pause");
+            adminMenu(username);
+            break;
+        }
+    } else {
+        cout << "\nPlease enter a valid number." << endl;
+        system("pause");
+        system("cls");
+        adminMenu(username);
+    }
+    /*if(cin >> value){
         switch (value)
         {
         case 1:
@@ -140,7 +332,7 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         system("pause");
         system("cls");
         menu(username);
-    }
+    }*/
 }
 
 void Menu::changePass(string username){ //changes the users password
