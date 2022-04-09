@@ -151,13 +151,13 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
         cout << "-" << setfill(' ') << setw(50) << "- Assasins gain +5 to Attack stat" << endl;
         cout << "3" << setfill(' ') << setw(16) << "Archer" << endl;
         cout << "-" << setfill(' ') << setw(81) << "- Archers gain +2 on Attack and +1 on Armor and Magic Resistance" << endl;
-        cout << "3" << setfill(' ') << setw(14) << "Mage" << endl;
+        cout << "4" << setfill(' ') << setw(14) << "Mage" << endl;
         cout << "-" << setfill(' ') << setw(70) << "- Mages gain +2 on Ability and +3 on Magic Resistance" << endl;
         cout << ">";
         cin >> kitChoice;
-        if (raceChoice <= 0 || raceChoice > 3) {
+        if (kitChoice <= 0 || kitChoice > 4) {
             cout << "You have entered an invalid input, Please try again." << endl;
-            raceChoice = 0;
+            kitChoice = 0;
             system("pause");
             system("cls");
         } else {
@@ -183,13 +183,11 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
     //
     //-Kyle - Please review the following
     //
-    //Code for saving stat data to server:
-    //setHealth(username); // these set[stat] functions need to be reconfigured to us the above information which the user entered to determine the stats which they now have.
-    //setAttack(username);
-    //setArmor(username);
-    //setMagicResistance(username);
+    server.sendToServer(code.cipher("8", username, to_string(raceChoice), to_string(kitChoice))); //write race and kit to .dat file on server
+
+    //add it an inital stat personalization
     string wasAbleToSave = server.sendToServer(code.cipher("5", username, to_string(health), to_string(attack), to_string(armor), to_string(magicResistance), to_string(agility),
-     to_string(stealth))); //These send the data to the server to be saved properly in the [username].stat file
+    to_string(stealth))); //These send the data to the server to be saved properly in the [username].stat file
     system("cls");
     cout << "You have complete the Player setup Proccess." << endl;
     system("pause");
@@ -353,7 +351,7 @@ void Account::createNewAccount(){ //runs through the code to create a new user a
             cin >> createAccountCheck;
             if(createAccountCheck == "y" || createAccountCheck == "Y"){
                 cout << "We will now create the account" << endl;
-                server.sendToServer(code.cipher("2", username, "testing account creation..."));
+                server.sendToServer(code.cipher("2", username));
                 system("cls");
                 account.createPlayer(username); // creates the Character for the user to use in the game
 
