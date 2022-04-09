@@ -203,23 +203,23 @@ int Account::getHealth(std::string username){ //reuturns the users current Healt
     code.decipherS(server.sendToServer(code.cipher("6", username)));
     return stoi(code.itemS1);
 }
-int Account::getAttack(std::string username){ //reuturns the users current Attack stat
+int Account::getPhysicalDamage(std::string username){ //reuturns the users current Attack stat
     ReachOutToServer server;
     Cipher code;
     code.decipherS(server.sendToServer(code.cipher("6", username)));
-    return stoi(code.itemS2);
+    return stoi(code.itemS4);
 }
 int Account::getArmor(std::string username){ //reuturns the users current Armor stat
     ReachOutToServer server;
     Cipher code;
     code.decipherS(server.sendToServer(code.cipher("6", username))); 
-    return stoi(code.itemS3);
+    return stoi(code.itemS2);
 }
 int Account::getMagicResistance(std::string username){ //reuturns the users current MagicResistance stat
     ReachOutToServer server;
     Cipher code;
     code.decipherS(server.sendToServer(code.cipher("6", username)));
-    return stoi(code.itemS4);
+    return stoi(code.itemS3);
 }
 
 void Account::displayStats(std::string username, int bypass ,string usernameA){
@@ -227,14 +227,14 @@ void Account::displayStats(std::string username, int bypass ,string usernameA){
     ReachOutToServer server;
     if (bypass == 0) { //standard user
         cout << "Your stats are as follows: " << endl << "Health: " << setfill(' ') << setw(34) << getHealth(username) << endl << "Attack: " << setfill(' ') << setw(34) << 
-        getAttack(username) << endl << "Armor: " << setfill(' ') << setw(35) << getArmor(username) << endl << "Magic Resistance: " << setfill(' ') << setw(24) << 
+        getPhysicalDamage(username) << endl << "Armor: " << setfill(' ') << setw(35) << getArmor(username) << endl << "Magic Resistance: " << setfill(' ') << setw(24) << 
         getMagicResistance(username) << endl;
         system("pause");
     } 
     if (bypass == 1) { //admin account
         if(stoi(server.sendToServer(code.cipher("1", username))) == 0) {
             cout << "Your stats are as follows: " << endl << "Health: " << setfill(' ') << setw(34) << getHealth(username) << endl << "Attack: " << setfill(' ') << setw(34) << 
-            getAttack(username) << endl << "Armor: " << setfill(' ') << setw(35) << getArmor(username) << endl << "Magic Resistance: " << setfill(' ') << setw(24) << 
+            getPhysicalDamage(username) << endl << "Armor: " << setfill(' ') << setw(35) << getArmor(username) << endl << "Magic Resistance: " << setfill(' ') << setw(24) << 
             getMagicResistance(username) << endl;
             system("pause");
         } else {
