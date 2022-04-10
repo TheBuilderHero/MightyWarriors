@@ -96,6 +96,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
     bool exitNow = false;
     while(!exitNow){ //while the user has not selected one of the five options it will continue to ask them for an aswer.
         system("cls");
+        raceChoice = 0;
         cout << endl << "First step of the process is to choose the race of your Character" << endl;
         cout << "Please type the number corresponding to one of the races from the list below (Note, this cannot be changed later!): "<< endl << endl;
         cout << "1" << setfill(' ') << setw(14) << "Human" << endl;
@@ -143,6 +144,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
     exitNow = false;
     while(!exitNow){ //while the user has not selected one of the four kit options it will continue to ask them for an aswer to kitChoice.
         system("cls");
+        kitChoice = 0;
         cout << endl << "Second step of the process is to choose the kit of your Character" << endl;
         cout << "Please type the number corresponding to one of the kits from the list below (Note, this cannot be changed later!): "<< endl << endl;
         cout << "1" << setfill(' ') << setw(14) << "Tank" << endl;
