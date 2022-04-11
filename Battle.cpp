@@ -16,6 +16,7 @@ using namespace std;
 void Battle::startBattle(string username){
     bool qKeyPressedLastLoop = false, wKeyPressedLastLoop = false, eKeyPressedLastLoop = false, rKeyPressedLastLoop = false;
     int playerHealth, enemyHealth;
+    string qOption = "1", wOption = "2", eOption = "3", rOption = "4";
     string answer;
     bool fightWon, fightLost;
     ReachOutToServer server;
@@ -28,6 +29,7 @@ void Battle::startBattle(string username){
     fightWon = fightLost = false; //set both lost and won to false
     code.decipherS(server.sendToServer(code.cipher("7", username))); //request the current stats of a enemy from the server //pull data from the server regarding the enemy to fight
     enemyHealth = stoi(code.itemS2); //set enemy health
+    string enemyName = code.itemS1;
     //**************************
     //Start Battle
     system("cls");
@@ -40,7 +42,7 @@ void Battle::startBattle(string username){
     while (!fightWon && !fightLost){//loop through displaying the stats and having the player pick options until the fight is won or lost
         system("cls");
         int combatVal = 0;
-        cout << endl << setfill(' ') << setw(30 - username.length()) << username  << setfill(' ') << setw(65 - code.itemS1.length()) << code.itemS1 << endl; //print the current stats of both the enemy and the Player
+        cout << endl << setfill(' ') << setw(30 - username.length()) << username  << setfill(' ') << setw(65 - enemyName.length()) << enemyName << endl; //print the current stats of both the enemy and the Player
         cout << endl << setfill(' ') << setw(30) << "Player Health: " << playerHealth << setfill(' ') << setw(50) << "Enemy Health: " << enemyHealth << endl; //print the current stats of both the enemy and the Player
         cout << endl << endl << endl << setfill(' ') << setw(63) << "Please choose an attack option" <<//give the user a list of options to choose from in order to fight the enemy
         endl << setfill(' ') << setw(41) << "Attack 1" << setfill(' ') << setw(25) <<"(type number \"Q\")" << endl;
@@ -51,7 +53,7 @@ void Battle::startBattle(string username){
         while (1) //continues to run until broken out.
         {
             if (GetKeyState('R') < 0 && rKeyPressedLastLoop == false) {//checks to make sure that the key is pressed and makes sure it was not pressed last check
-                enemyHealth -= 100;
+                enemyHealth -= stoi(server.sendToServer(code.cipher("9", username, enemyName, rOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
                 rKeyPressedLastLoop = true;
                 break;
             } else if (GetKeyState('R') >= 0){// else R not pressed
@@ -72,7 +74,7 @@ void Battle::startBattle(string username){
                 wKeyPressedLastLoop = false;
             }
             if (GetKeyState('Q') < 0 && !qKeyPressedLastLoop) { //checks to make sure that the key is pressed and makes sure it was not pressed last check
-                enemyHealth -= 1;
+                enemyHealth -= stoi(server.sendToServer(code.cipher("9", username, enemyName, qOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
                 qKeyPressedLastLoop = true;
                 break;
             } else if (GetKeyState('Q') >= 0){ // else Q not pressed

@@ -104,7 +104,7 @@ string ReachOutToServer::sendToServer(string aMessage) {
         case 3: //logon reutrn from the server
             return code.item2;
             break;
-        case 4:
+        case 4: //more than one purpose - added the purpose of returning battle attack values
             return code.item2;
             break;
         case 5: //this is going to be used to get the stats of the user stored on the server
@@ -124,8 +124,6 @@ string ReachOutToServer::sendToServer(string aMessage) {
             return statInfo; //returns the deliminated version of the data from server.  This info can then be proccessed by the function decipherS function making us able to call on itemS1 - 6
             //That is is just trying to say call the function decipherS() on sendToServer() so that you can use the output.
             break;
-
-
         case 0: //Client version validity check
             return code.item2;
             break;
