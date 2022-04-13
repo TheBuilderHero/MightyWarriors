@@ -25,11 +25,11 @@ void Battle::startBattle(string username){
     //Initalize all variables
     code.decipherS(server.sendToServer(code.cipher("6", username))); //request the current stats of this user from the server //pull info from the server to get the Player's Character info
     enemyHealth = 20;
-    playerHealth = stoi(code.itemS2); //set player health
+    playerHealth = stoi(code.getItemS(2)); //set player health
     fightWon = fightLost = false; //set both lost and won to false
     code.decipherS(server.sendToServer(code.cipher("7", username))); //request the current stats of a enemy from the server //pull data from the server regarding the enemy to fight
-    enemyHealth = stoi(code.itemS2); //set enemy health
-    string enemyName = code.itemS1;
+    enemyHealth = stoi(code.getItemS(2)); //set enemy health
+    string enemyName = code.getItemS(1);
     //**************************
     //Start Battle
     system("cls");

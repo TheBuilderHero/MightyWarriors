@@ -159,3 +159,80 @@ string Cipher::cipher(string typeOfRequest, string username, string item3, strin
     str_file_content += delimiter; // this will add the seperating delimiter after all the data
     return str_file_content;
 }
+
+string Cipher::getItem(int itemNumberToReturn){
+    switch (itemNumberToReturn)
+    {
+    case 2:
+        return item2;
+        break;
+    case 3:
+        return item3;
+        break;
+    case 4:
+        return item4;
+        break;
+    case 5:
+        return item5;
+        break;
+    case 6:
+        return item6;
+        break;
+    case 7:
+        return item7;
+        break;
+    case 8:
+        return item8;
+        break;
+    case 9:
+        return item9;
+        break;
+    case 10:
+        return item10;
+        break;
+    
+    default:
+    return "Default Output Given";
+        break;
+    }
+}
+
+string Cipher::getItemS(int itemNumberToReturn){
+    switch (itemNumberToReturn)
+    {
+    case 1:
+        return itemS1;
+        break;   
+    case 2:
+        return itemS2;
+        break;
+    case 3:
+        return itemS3;
+        break;
+    case 4:
+        return itemS4;
+        break;
+    case 5:
+        return itemS5;
+        break;
+    case 6:
+        return itemS6;
+        break;
+    case 7:
+        return itemS7;
+        break;
+    case 8:
+        return itemS8;
+        break;
+    case 9:
+        return itemS9;
+        break;
+    case 10:
+        return itemS10;
+        break;
+    
+    default:
+        return "Default Output Given";
+        break;
+    }
+}

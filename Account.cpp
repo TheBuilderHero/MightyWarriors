@@ -201,25 +201,25 @@ int Account::getHealth(std::string username){ //reuturns the users current Healt
     ReachOutToServer server;
     Cipher code;
     code.decipherS(server.sendToServer(code.cipher("6", username)));
-    return stoi(code.itemS1);
+    return stoi(code.getItemS(1));
 }
 int Account::getPhysicalDamage(std::string username){ //reuturns the users current Attack stat
     ReachOutToServer server;
     Cipher code;
     code.decipherS(server.sendToServer(code.cipher("6", username)));
-    return stoi(code.itemS4);
+    return stoi(code.getItemS(4));
 }
 int Account::getArmor(std::string username){ //reuturns the users current Armor stat
     ReachOutToServer server;
     Cipher code;
     code.decipherS(server.sendToServer(code.cipher("6", username))); 
-    return stoi(code.itemS2);
+    return stoi(code.getItemS(2));
 }
 int Account::getMagicResistance(std::string username){ //reuturns the users current MagicResistance stat
     ReachOutToServer server;
     Cipher code;
     code.decipherS(server.sendToServer(code.cipher("6", username)));
-    return stoi(code.itemS3);
+    return stoi(code.getItemS(3));
 }
 
 void Account::displayStats(std::string username, int bypass ,string usernameA){
@@ -331,7 +331,7 @@ void Account::createNewAccount(){ //runs through the code to create a new user a
     system("cls");
 
     //check to make sure the username is valid and not already taken
-    if (username.find(code.delimiter) != std::string::npos || username.find("&") != std::string::npos || username.find("=") != std::string::npos || username.find("'") != std::string::npos || username.find("-") != std::string::npos|| username.find("+") != std::string::npos|| username.find(",") != std::string::npos|| username.find("<") != std::string::npos|| username.find(">") != std::string::npos|| username.find("..") != std::string::npos) { // make sure the username is not using the delimiter and a few other characters //this list was taken from https://support.google.com/mail/answer/9211434?hl=en
+    if (username.find(code.getDelimiter()) != std::string::npos || username.find("&") != std::string::npos || username.find("=") != std::string::npos || username.find("'") != std::string::npos || username.find("-") != std::string::npos|| username.find("+") != std::string::npos|| username.find(",") != std::string::npos|| username.find("<") != std::string::npos|| username.find(">") != std::string::npos|| username.find("..") != std::string::npos) { // make sure the username is not using the delimiter and a few other characters //this list was taken from https://support.google.com/mail/answer/9211434?hl=en
         system("cls");
         cout << "The username " << username << " is not valid Please enter a different username." << endl;
         system("pause");

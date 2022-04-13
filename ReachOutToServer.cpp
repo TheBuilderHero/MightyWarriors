@@ -92,40 +92,40 @@ string ReachOutToServer::sendToServer(string aMessage) {
     WSACleanup();
     code.decipher(buf);
     string statInfo;
-    switch (code.responseType){
+    switch (code.getResponseType()){
         case 1:
             //the server has check to see if the username was valid or not.
-            return code.item2;
+            return code.getItem(2);
             break;
             //others will be added to setup the usage of other features like pulling data and cteating accounts
         case 2: //user creation
             return s;
             break;
         case 3: //logon reutrn from the server
-            return code.item2;
+            return code.getItem(2);
             break;
         case 4: //more than one purpose - added the purpose of returning battle attack values
-            return code.item2;
+            return code.getItem(2);
             break;
         case 5: //this is going to be used to get the stats of the user stored on the server
-            statInfo = code.delimiter;
-            statInfo += code.item2;
-            statInfo += code.delimiter;
-            statInfo += code.item3;
-            statInfo += code.delimiter;
-            statInfo += code.item4;
-            statInfo += code.delimiter;
-            statInfo += code.item5;
-            statInfo += code.delimiter;
-            statInfo += code.item6;
-            statInfo += code.delimiter;
-            statInfo += code.item7;
-            statInfo += code.delimiter;
+            statInfo = code.getDelimiter();
+            statInfo += code.getItem(2);
+            statInfo += code.getDelimiter();
+            statInfo += code.getItem(3);
+            statInfo += code.getDelimiter();
+            statInfo += code.getItem(4);
+            statInfo += code.getDelimiter();
+            statInfo += code.getItem(5);
+            statInfo += code.getDelimiter();
+            statInfo += code.getItem(6);
+            statInfo += code.getDelimiter();
+            statInfo += code.getItem(7);
+            statInfo += code.getDelimiter();
             return statInfo; //returns the deliminated version of the data from server.  This info can then be proccessed by the function decipherS function making us able to call on itemS1 - 6
             //That is is just trying to say call the function decipherS() on sendToServer() so that you can use the output.
             break;
         case 0: //Client version validity check
-            return code.item2;
+            return code.getItem(2);
             break;
 
         default:
