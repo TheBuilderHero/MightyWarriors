@@ -42,7 +42,7 @@ void Battle::startBattle(string username){
     while (!fightWon && !fightLost){//loop through displaying the stats and having the player pick options until the fight is won or lost
         system("cls");
         int combatVal = 0;
-        cout << endl << setfill(' ') << setw(30 - username.length()) << username  << setfill(' ') << setw(65 - enemyName.length()) << enemyName << endl; //print the current stats of both the enemy and the Player
+        cout << endl << setfill(' ') << setw(20 + username.length()) << username  << setfill(' ') << setw(47 + enemyName.length()) << enemyName << endl; //print the current stats of both the enemy and the Player
         cout << endl << setfill(' ') << setw(30) << "Player Health: " << playerHealth << setfill(' ') << setw(50) << "Enemy Health: " << enemyHealth << endl; //print the current stats of both the enemy and the Player
         cout << endl << endl << endl << setfill(' ') << setw(63) << "Please choose an attack option" <<//give the user a list of options to choose from in order to fight the enemy
         endl << setfill(' ') << setw(41) << "Attack 1" << setfill(' ') << setw(25) <<"(type number \"Q\")" << endl;
