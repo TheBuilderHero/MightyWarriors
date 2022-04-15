@@ -60,14 +60,14 @@ void Battle::startBattle(string username){
                 rKeyPressedLastLoop = false;
             }
             if (GetKeyState('E') < 0 && eKeyPressedLastLoop == false) {//checks to make sure that the key is pressed and makes sure it was not pressed last check
-                playerHealth -= 1;
+                enemyHealth -= stoi(server.sendToServer(code.cipher("9", username, enemyName, eOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
                 eKeyPressedLastLoop = true;
                 break;
             } else if (GetKeyState('E') >= 0){// else E not pressed
                 eKeyPressedLastLoop = false;
             }
             if (GetKeyState('W') < 0 && wKeyPressedLastLoop == false) {//checks to make sure that the key is pressed and makes sure it was not pressed last check
-                playerHealth -= 10;
+                enemyHealth -= stoi(server.sendToServer(code.cipher("9", username, enemyName, wOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
                 wKeyPressedLastLoop = true;
                 break;
             } else if (GetKeyState('W') >= 0){// else W not pressed
