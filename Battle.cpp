@@ -25,7 +25,7 @@ void Battle::startBattle(string username){
     //Initalize all variables
     code.decipherS(server.sendToServer(code.cipher("6", username))); //request the current stats of this user from the server //pull info from the server to get the Player's Character info
     enemyHealth = 20;
-    playerHealth = stoi(code.getItemS(2)); //set player health
+    playerHealth = stoi(code.getItemS(1)); //set player health
     fightWon = fightLost = false; //set both lost and won to false
     code.decipherS(server.sendToServer(code.cipher("7", username))); //request the current stats of a enemy from the server //pull data from the server regarding the enemy to fight
     enemyHealth = stoi(code.getItemS(2)); //set enemy health
@@ -81,11 +81,32 @@ void Battle::startBattle(string username){
                 qKeyPressedLastLoop = false;
             }
         }
-        
+        //check if enemy is dead:
+        if (enemyHealth <= 0){
+            fightWon = true;
+            break;
+        }
+
+        //reprint the stats and info:
+        system("cls");
+        cout << endl << setfill(' ') << setw(20 + username.length()) << username  << setfill(' ') << setw(47 + enemyName.length()) << enemyName << endl; //print the current stats of both the enemy and the Player
+        cout << endl << setfill(' ') << setw(30) << "Player Health: " << playerHealth << setfill(' ') << setw(50) << "Enemy Health: " << enemyHealth << endl; //print the current stats of both the enemy and the Player
+        cout << endl << endl << endl << setfill(' ') << setw(63) << "Please choose an attack option" <<//give the user a list of options to choose from in order to fight the enemy
+        endl << setfill(' ') << setw(41) << "Attack 1" << setfill(' ') << setw(25) <<"(type number \"Q\")" << endl;
+        cout << setfill(' ') << setw(41) << "Attack 2" << setfill(' ') << setw(25) <<"(type number \"W\")" << endl;
+        cout << setfill(' ') << setw(41) << "Attack 3" << setfill(' ') << setw(25) <<"(type number \"E\")" << endl;
+        cout << setfill(' ') << setw(41) << "Attack 4" << setfill(' ') << setw(25) <<"(type number \"R\")" << endl;
+
+        //Enemy's turn to attack:
+        int enemyAttack = stoi(server.sendToServer(code.cipher("10", username, enemyName, qOption)));
+        cout << "The enemies attack hits you for " << enemyAttack << " damage" << endl;
+        system("pause");
+        playerHealth -= enemyAttack;
+        enemyAttack = 0;
+
         if (playerHealth <= 0) {
             fightLost = true;
-        } else if (enemyHealth <= 0){
-            fightWon = true;
+            break;
         }
     }
     //print out the result of the fight
