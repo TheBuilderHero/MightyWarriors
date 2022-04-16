@@ -13,10 +13,21 @@ Menu classMenu;
 
 using namespace std;
 
+void Battle::optionsOutput(string username, string enemyName, int playerHealth, int enemyHealth){
+    cout << endl << setfill(' ') << setw(20 + username.length()) << username  << setfill(' ') << setw(47 + enemyName.length()) << enemyName << endl; //print the current stats of both the enemy and the Player
+    cout << endl << setfill(' ') << setw(30) << "Player Health: " << playerHealth << setfill(' ') << setw(50) << "Enemy Health: " << enemyHealth << endl; //print the current stats of both the enemy and the Player
+    cout << endl << endl << endl << setfill(' ') << setw(63) << "Please choose an attack option" <<//give the user a list of options to choose from in order to fight the enemy
+    endl << setfill(' ') << setw(41) << "Attack 1" << setfill(' ') << setw(25) <<"(type number \"Q\")" << endl;
+    cout << setfill(' ') << setw(38) << "Block" << setfill(' ') << setw(28) <<"(type number \"W\")" << endl;
+    cout << setfill(' ') << setw(40) << "Utility" << setfill(' ') << setw(26) <<"(type number \"E\")" << endl;
+    cout << setfill(' ') << setw(48) << "Ultimate Attack" << setfill(' ') << setw(18) <<"(type number \"R\")" << endl;
+}
+
 void Battle::startBattle(string username){
     bool qKeyPressedLastLoop = false, wKeyPressedLastLoop = false, eKeyPressedLastLoop = false, rKeyPressedLastLoop = false;
     bool playerBlocking = false, enemyBlocking = false;
     int playerHealth, enemyHealth;
+    int ultimateUses = 1;
     string qOption = "1", wOption = "2", eOption = "3", rOption = "4";
     string answer;
     bool fightWon, fightLost;
@@ -44,20 +55,20 @@ void Battle::startBattle(string username){
         system("cls");
         int combatVal = 0;
         int playerAttack = 0;
-        cout << endl << setfill(' ') << setw(20 + username.length()) << username  << setfill(' ') << setw(47 + enemyName.length()) << enemyName << endl; //print the current stats of both the enemy and the Player
-        cout << endl << setfill(' ') << setw(30) << "Player Health: " << playerHealth << setfill(' ') << setw(50) << "Enemy Health: " << enemyHealth << endl; //print the current stats of both the enemy and the Player
-        cout << endl << endl << endl << setfill(' ') << setw(63) << "Please choose an attack option" <<//give the user a list of options to choose from in order to fight the enemy
-        endl << setfill(' ') << setw(41) << "Attack 1" << setfill(' ') << setw(25) <<"(type number \"Q\")" << endl;
-        cout << setfill(' ') << setw(38) << "Block" << setfill(' ') << setw(28) <<"(type number \"W\")" << endl;
-        cout << setfill(' ') << setw(40) << "Utility" << setfill(' ') << setw(26) <<"(type number \"E\")" << endl;
-        cout << setfill(' ') << setw(48) << "Ultimate Attack" << setfill(' ') << setw(18) <<"(type number \"R\")" << endl;
+        optionsOutput(username, enemyName, playerHealth, enemyHealth); //outputs the options for battle
         
         while (1) //continues to run until broken out.
         {
-            if (GetKeyState('R') < 0 && rKeyPressedLastLoop == false) {//checks to make sure that the key is pressed and makes sure it was not pressed last check
+            if (GetKeyState('R') < 0 && !rKeyPressedLastLoop && ultimateUses > 0) {//checks to make sure that the key is pressed and makes sure it was not pressed last check
                 enemyHealth -= playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, rOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
+                ultimateUses--; //take away one of the ult uses.
                 rKeyPressedLastLoop = true;
                 break;
+            } else if (GetKeyState('R') < 0 && !rKeyPressedLastLoop && ultimateUses <= 0) {
+                cout << "You do nothave anymore ultimate uses..." << endl;
+                system("pause");
+                system("cls");
+                optionsOutput(username, enemyName, playerHealth, enemyHealth); //re output the options for battle after clearing the terminal
             } else if (GetKeyState('R') >= 0){// else R not pressed
                 rKeyPressedLastLoop = false;
             }
@@ -77,7 +88,7 @@ void Battle::startBattle(string username){
             } else if (GetKeyState('W') >= 0){// else W not pressed
                 wKeyPressedLastLoop = false;
             }
-            if (GetKeyState('Q') < 0 && !qKeyPressedLastLoop) { //checks to make sure that the key is pressed and makes sure it was not pressed last check
+            if (GetKeyState('Q') < 0 && !qKeyPressedLastLoop) { //checks to make sure that the key is pressed and makes sure it was not pressed last check - also check ultimate uses
                 enemyHealth -= playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, qOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
                 qKeyPressedLastLoop = true;
                 break;
@@ -96,13 +107,7 @@ void Battle::startBattle(string username){
 
         //reprint the stats and info:
         system("cls");
-        cout << endl << setfill(' ') << setw(20 + username.length()) << username  << setfill(' ') << setw(47 + enemyName.length()) << enemyName << endl; //print the current stats of both the enemy and the Player
-        cout << endl << setfill(' ') << setw(30) << "Player Health: " << playerHealth << setfill(' ') << setw(50) << "Enemy Health: " << enemyHealth << endl; //print the current stats of both the enemy and the Player
-        cout << endl << endl << endl << setfill(' ') << setw(63) << "Please choose an attack option" <<//give the user a list of options to choose from in order to fight the enemy
-        endl << setfill(' ') << setw(41) << "Attack 1" << setfill(' ') << setw(25) <<"(type number \"Q\")" << endl;
-        cout << setfill(' ') << setw(38) << "Block" << setfill(' ') << setw(28) <<"(type number \"W\")" << endl;
-        cout << setfill(' ') << setw(40) << "Utility" << setfill(' ') << setw(26) <<"(type number \"E\")" << endl;
-        cout << setfill(' ') << setw(48) << "Ultimate Attack" << setfill(' ') << setw(18) <<"(type number \"R\")" << endl;
+        optionsOutput(username, enemyName, playerHealth, enemyHealth);
 
         //Enemy's turn to attack:
         int enemyAttack = stoi(server.sendToServer(code.cipher("10", username, enemyName, qOption, to_string(playerBlocking))));
