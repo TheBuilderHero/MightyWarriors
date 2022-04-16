@@ -15,6 +15,7 @@ using namespace std;
 
 void Battle::startBattle(string username){
     bool qKeyPressedLastLoop = false, wKeyPressedLastLoop = false, eKeyPressedLastLoop = false, rKeyPressedLastLoop = false;
+    bool playerBlocking = false, enemyBlocking = false;
     int playerHealth, enemyHealth;
     string qOption = "1", wOption = "2", eOption = "3", rOption = "4";
     string answer;
@@ -42,45 +43,51 @@ void Battle::startBattle(string username){
     while (!fightWon && !fightLost){//loop through displaying the stats and having the player pick options until the fight is won or lost
         system("cls");
         int combatVal = 0;
+        int playerAttack = 0;
         cout << endl << setfill(' ') << setw(20 + username.length()) << username  << setfill(' ') << setw(47 + enemyName.length()) << enemyName << endl; //print the current stats of both the enemy and the Player
         cout << endl << setfill(' ') << setw(30) << "Player Health: " << playerHealth << setfill(' ') << setw(50) << "Enemy Health: " << enemyHealth << endl; //print the current stats of both the enemy and the Player
         cout << endl << endl << endl << setfill(' ') << setw(63) << "Please choose an attack option" <<//give the user a list of options to choose from in order to fight the enemy
         endl << setfill(' ') << setw(41) << "Attack 1" << setfill(' ') << setw(25) <<"(type number \"Q\")" << endl;
-        cout << setfill(' ') << setw(41) << "Attack 2" << setfill(' ') << setw(25) <<"(type number \"W\")" << endl;
-        cout << setfill(' ') << setw(41) << "Attack 3" << setfill(' ') << setw(25) <<"(type number \"E\")" << endl;
-        cout << setfill(' ') << setw(41) << "Attack 4" << setfill(' ') << setw(25) <<"(type number \"R\")" << endl;
+        cout << setfill(' ') << setw(38) << "Block" << setfill(' ') << setw(28) <<"(type number \"W\")" << endl;
+        cout << setfill(' ') << setw(40) << "Utility" << setfill(' ') << setw(26) <<"(type number \"E\")" << endl;
+        cout << setfill(' ') << setw(48) << "Ultimate Attack" << setfill(' ') << setw(18) <<"(type number \"R\")" << endl;
         
         while (1) //continues to run until broken out.
         {
             if (GetKeyState('R') < 0 && rKeyPressedLastLoop == false) {//checks to make sure that the key is pressed and makes sure it was not pressed last check
-                enemyHealth -= stoi(server.sendToServer(code.cipher("9", username, enemyName, rOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
+                enemyHealth -= playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, rOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
                 rKeyPressedLastLoop = true;
                 break;
             } else if (GetKeyState('R') >= 0){// else R not pressed
                 rKeyPressedLastLoop = false;
             }
             if (GetKeyState('E') < 0 && eKeyPressedLastLoop == false) {//checks to make sure that the key is pressed and makes sure it was not pressed last check
-                enemyHealth -= stoi(server.sendToServer(code.cipher("9", username, enemyName, eOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
+                enemyHealth -= playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, eOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
                 eKeyPressedLastLoop = true;
                 break;
             } else if (GetKeyState('E') >= 0){// else E not pressed
                 eKeyPressedLastLoop = false;
             }
             if (GetKeyState('W') < 0 && wKeyPressedLastLoop == false) {//checks to make sure that the key is pressed and makes sure it was not pressed last check
-                enemyHealth -= stoi(server.sendToServer(code.cipher("9", username, enemyName, wOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
+                //This ability now blocks instead of inflicts damage
+                playerBlocking = true;
+                //enemyHealth -= stoi(server.sendToServer(code.cipher("9", username, enemyName, wOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
                 wKeyPressedLastLoop = true;
                 break;
             } else if (GetKeyState('W') >= 0){// else W not pressed
                 wKeyPressedLastLoop = false;
             }
             if (GetKeyState('Q') < 0 && !qKeyPressedLastLoop) { //checks to make sure that the key is pressed and makes sure it was not pressed last check
-                enemyHealth -= stoi(server.sendToServer(code.cipher("9", username, enemyName, qOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
+                enemyHealth -= playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, qOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
                 qKeyPressedLastLoop = true;
                 break;
             } else if (GetKeyState('Q') >= 0){ // else Q not pressed
                 qKeyPressedLastLoop = false;
             }
         }
+        cout << "Your attack hits the enemy for " << playerAttack << " damage" << endl;
+        system("pause");
+
         //check if enemy is dead:
         if (enemyHealth <= 0){
             fightWon = true;
@@ -93,12 +100,12 @@ void Battle::startBattle(string username){
         cout << endl << setfill(' ') << setw(30) << "Player Health: " << playerHealth << setfill(' ') << setw(50) << "Enemy Health: " << enemyHealth << endl; //print the current stats of both the enemy and the Player
         cout << endl << endl << endl << setfill(' ') << setw(63) << "Please choose an attack option" <<//give the user a list of options to choose from in order to fight the enemy
         endl << setfill(' ') << setw(41) << "Attack 1" << setfill(' ') << setw(25) <<"(type number \"Q\")" << endl;
-        cout << setfill(' ') << setw(41) << "Attack 2" << setfill(' ') << setw(25) <<"(type number \"W\")" << endl;
-        cout << setfill(' ') << setw(41) << "Attack 3" << setfill(' ') << setw(25) <<"(type number \"E\")" << endl;
-        cout << setfill(' ') << setw(41) << "Attack 4" << setfill(' ') << setw(25) <<"(type number \"R\")" << endl;
+        cout << setfill(' ') << setw(38) << "Block" << setfill(' ') << setw(28) <<"(type number \"W\")" << endl;
+        cout << setfill(' ') << setw(40) << "Utility" << setfill(' ') << setw(26) <<"(type number \"E\")" << endl;
+        cout << setfill(' ') << setw(48) << "Ultimate Attack" << setfill(' ') << setw(18) <<"(type number \"R\")" << endl;
 
         //Enemy's turn to attack:
-        int enemyAttack = stoi(server.sendToServer(code.cipher("10", username, enemyName, qOption)));
+        int enemyAttack = stoi(server.sendToServer(code.cipher("10", username, enemyName, qOption, to_string(playerBlocking))));
         cout << "The enemies attack hits you for " << enemyAttack << " damage" << endl;
         system("pause");
         playerHealth -= enemyAttack;
