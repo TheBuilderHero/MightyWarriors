@@ -221,14 +221,48 @@ int Account::getMagicResistance(std::string username){ //reuturns the users curr
     code.decipherS(server.sendToServer(code.cipher("6", username)));
     return stoi(code.getItemS(3));
 }
+int Account::getMagicDamage(std::string username){ //reuturns the users current MagicDamage stat
+    ReachOutToServer server;
+    Cipher code;
+    code.decipherS(server.sendToServer(code.cipher("6", username)));
+    return stoi(code.getItemS(5));
+}
+int Account::getAgility(std::string username){ //reuturns the users current Agility stat
+    ReachOutToServer server;
+    Cipher code;
+    code.decipherS(server.sendToServer(code.cipher("6", username)));
+    return stoi(code.getItemS(6));
+}
+int Account::getStealth(std::string username){ //reuturns the users current Stealth stat
+    ReachOutToServer server;
+    Cipher code;
+    code.decipherS(server.sendToServer(code.cipher("6", username)));
+    return stoi(code.getItemS(7));
+}
+int Account::getStamina(std::string username){ //reuturns the users current Stamina stat
+    ReachOutToServer server;
+    Cipher code;
+    code.decipherS(server.sendToServer(code.cipher("6", username)));
+    return stoi(code.getItemS(8));
+}
+int Account::getMana(std::string username){ //reuturns the users current Mana stat
+    ReachOutToServer server;
+    Cipher code;
+    code.decipherS(server.sendToServer(code.cipher("6", username)));
+    return stoi(code.getItemS(9));
+}
 
 void Account::displayStats(std::string username, int bypass ,string usernameA){
     Cipher code;
     ReachOutToServer server;
     if (bypass == 0) { //standard user
-        cout << "Your stats are as follows: " << endl << "Health: " << setfill(' ') << setw(34) << getHealth(username) << endl << "Attack: " << setfill(' ') << setw(34) << 
-        getPhysicalDamage(username) << endl << "Armor: " << setfill(' ') << setw(35) << getArmor(username) << endl << "Magic Resistance: " << setfill(' ') << setw(24) << 
-        getMagicResistance(username) << endl;
+        cout << "Your stats are as follows: " << endl << setfill('=') << setw(42) << "=" << endl << "Health: " << setfill(' ') << setw(34) << getHealth(username) << endl << setfill('-') 
+        << setw(42) << "-" << endl << "Armor: " << setfill(' ') << setw(35) << getArmor(username) << endl << setfill('-') << setw(42) << "-" << endl << "Magic Resistance: " << setfill(' ') 
+        << setw(24) << getMagicResistance(username) << endl << setfill('-') << setw(42) << "-" << endl << "Physical Damage: " << setfill(' ') << setw(25) << getPhysicalDamage(username) 
+        << endl << setfill('-') << setw(42) << "-" << endl << "Magic Damage: " << setfill(' ') << setw(28) << getMagicDamage(username) << endl << setfill('-') << setw(42) << "-" << endl 
+        << "Agility: " << setfill(' ') << setw(33) << getAgility(username) << endl << setfill('-') << setw(42) << "-" << endl << "Stealth: " << setfill(' ') << setw(33) << getStealth(username) 
+        << endl << setfill('-') << setw(42) << "-" << endl << "Stamina: " << setfill(' ') << setw(33) << getStamina(username) << endl << setfill('-') << setw(42) << "-" << endl << "Mana: " 
+        << setfill(' ') << setw(36) << getMana(username) << endl << setfill('-') << setw(42) << "-" << endl; //This cout statement prints out all the stats for the user to see.
         system("pause");
     } 
     if (bypass == 1) { //admin account

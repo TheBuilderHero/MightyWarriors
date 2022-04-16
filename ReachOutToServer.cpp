@@ -121,6 +121,12 @@ string ReachOutToServer::sendToServer(string aMessage) {
             statInfo += code.getDelimiter();
             statInfo += code.getItem(7);
             statInfo += code.getDelimiter();
+            statInfo += code.getItem(8);
+            statInfo += code.getDelimiter();
+            statInfo += code.getItem(9);
+            statInfo += code.getDelimiter();
+            statInfo += code.getItem(10);
+            statInfo += code.getDelimiter();
             return statInfo; //returns the deliminated version of the data from server.  This info can then be proccessed by the function decipherS function making us able to call on itemS1 - 6
             //That is is just trying to say call the function decipherS() on sendToServer() so that you can use the output.
             break;
