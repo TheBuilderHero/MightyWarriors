@@ -28,27 +28,12 @@ void Account::setHealth(std::string username){ //initial choice of health stats
     cout << "Enter the number of points you would like to add to your Health stat: ";
     cin >> healthS;
     if (healthS <= remainingStatPoints) {
-        health = healthS;
+        initHealth = healthS;
         remainingStatPoints -= healthS;
     } else {
         system("cls");
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
-        health = attack = armor = magicResistance = 0;
-        system("pause");
-        createPlayer(username);
-    }
-}
-void Account::setAttack(std::string username){ //initial choice of Attack stats
-    int attackS = 0;
-    cout << "Enter the number of points you would like to add to your Attack stat: ";
-    cin >> attackS;
-    if (attackS <= remainingStatPoints) {
-        attack = attackS;
-        remainingStatPoints -= attackS;
-    } else {
-        system("cls");
-        cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
-        health = attack = armor = magicResistance = 0;
+        initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initMana = 0;
         system("pause");
         createPlayer(username);
     }
@@ -58,12 +43,12 @@ void Account::setArmor(std::string username){ //initial choice of Armor stats
     cout << "Enter the number of points you would like to add to your Armor stat: ";
     cin >> armorS;
     if (armorS <= remainingStatPoints) {
-        armor = armorS;
+        initArmor = armorS;
         remainingStatPoints -= armorS;
     } else {
         system("cls");
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
-        health = attack = armor = magicResistance = 0;
+        initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initMana = 0;
         system("pause");
         createPlayer(username);
     }
@@ -73,12 +58,102 @@ void Account::setMagicResistance(std::string username){ //initial choice of Magi
     cout << "Enter the number of points you would like to add to your Magic Resistance stat: ";
     cin >> magicResistanceS;
     if (magicResistanceS <= remainingStatPoints) {
-        magicResistance = magicResistanceS;
+        initMagicResistance = magicResistanceS;
         remainingStatPoints -= magicResistanceS;
     } else {
         system("cls");
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
-        health = attack = armor = magicResistance = 0;
+        initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initMana = 0;
+        system("pause");
+        createPlayer(username);
+    }
+}
+void Account::setPhysicalDamage(std::string username){ //initial choice of PhysicalDamage stats
+    int attackS = 0;
+    cout << "Enter the number of points you would like to add to your PhysicalDamage stat: ";
+    cin >> attackS;
+    if (attackS <= remainingStatPoints) {
+        initPhysicalDamage = attackS;
+        remainingStatPoints -= attackS;
+    } else {
+        system("cls");
+        cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
+        initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initMana = 0;
+        system("pause");
+        createPlayer(username);
+    }
+}
+void Account::setMagicDamage(std::string username){ //initial choice of MagicDamage stats
+    int magicDamageS = 0;
+    cout << "Enter the number of points you would like to add to your MagicDamage stat: ";
+    cin >> magicDamageS;
+    if (magicDamageS <= remainingStatPoints) {
+        initMagicDamage = magicDamageS;
+        remainingStatPoints -= magicDamageS;
+    } else {
+        system("cls");
+        cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
+        initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initMana = 0;
+        system("pause");
+        createPlayer(username);
+    }
+}
+void Account::setAgility(std::string username){ //initial choice of Agility stats
+    int agilityS = 0;
+    cout << "Enter the number of points you would like to add to your Agility stat: ";
+    cin >> agilityS;
+    if (agilityS <= remainingStatPoints) {
+        initAgility = agilityS;
+        remainingStatPoints -= agilityS;
+    } else {
+        system("cls");
+        cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
+        initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initMana = 0;
+        system("pause");
+        createPlayer(username);
+    }
+}
+void Account::setStealth(std::string username){ //initial choice of Stealth stats
+    int stealthS = 0;
+    cout << "Enter the number of points you would like to add to your Stealth stat: ";
+    cin >> stealthS;
+    if (stealthS <= remainingStatPoints) {
+        initStealth = stealthS;
+        remainingStatPoints -= stealthS;
+    } else {
+        system("cls");
+        cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
+        initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initMana = 0;
+        system("pause");
+        createPlayer(username);
+    }
+}
+void Account::setStamina(std::string username){ //initial choice of Stamina stats
+    int staminaS = 0;
+    cout << "Enter the number of points you would like to add to your Stamina stat: ";
+    cin >> staminaS;
+    if (staminaS <= remainingStatPoints) {
+        initStamina = staminaS;
+        remainingStatPoints -= staminaS;
+    } else {
+        system("cls");
+        cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
+        initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initMana = 0;
+        system("pause");
+        createPlayer(username);
+    }
+}
+void Account::setMana(std::string username){ //initial choice of Mana stats
+    int manaS = 0;
+    cout << "Enter the number of points you would like to add to your Mana stat: ";
+    cin >> manaS;
+    if (manaS <= remainingStatPoints) {
+        initMana = manaS;
+        remainingStatPoints -= manaS;
+    } else {
+        system("cls");
+        cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
+        initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initMana = 0;
         system("pause");
         createPlayer(username);
     }
@@ -188,8 +263,8 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
     server.sendToServer(code.cipher("8", username, to_string(raceChoice), to_string(kitChoice))); //write race and kit to .dat file on server
 
     //add it an inital stat personalization
-    string wasAbleToSave = server.sendToServer(code.cipher("5", username, to_string(health), to_string(attack), to_string(armor), to_string(magicResistance), to_string(agility),
-    to_string(stealth))); //These send the data to the server to be saved properly in the [username].stat file
+    string wasAbleToSave = server.sendToServer(code.cipher("5", username, to_string(initHealth), to_string(initArmor), to_string(initMagicResistance), to_string(initPhysicalDamage), to_string(initMagicDamage), to_string(initAgility),
+    to_string(initStealth), to_string(initStamina), to_string(initMana))); //These send the data to the server to be saved properly in the [username].stat file
     system("cls");
     cout << "You have complete the Player setup Proccess." << endl;
     system("pause");

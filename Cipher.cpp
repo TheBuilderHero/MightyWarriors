@@ -53,6 +53,12 @@ string Cipher::decipher(char messageFromClient[]){
             case 10://the tenth item enclosed in delimiters
             if (output.length() > 0) item10 = output; 
             break;
+            case 11://the eleventh item enclosed in delimiters
+            if (output.length() > 0) item11 = output; 
+            break;
+            case 12://the twelth item enclosed in delimiters
+            if (output.length() > 0) item12 = output; 
+            break;
         }
         loopPass++;
     }
@@ -114,13 +120,13 @@ string Cipher::decipherS(string messageFromClient){
 }
 
 //this functions purpose it to add the delimiters to given items 
-string Cipher::cipher(string typeOfRequest, string username, string item3, string item4, string item5, string item6, string item7, string item8, string item9, string item10){ // the default values have been set to "" in case no input is given
-    int numberOfItems = 10; //max number of items that we can cipher
+string Cipher::cipher(string typeOfRequest, string username, string item3, string item4, string item5, string item6, string item7, string item8, string item9, string item10, string item11, string item12){ // the default values have been set to "" in case no input is given
+    int numberOfItems = 12; //max number of items that we can cipher
     string delimiter = "~"; //a character that marks the beginning or end of a unit of data
 
     string str_file_content;
     int loopPass = 1; // start the loop at 1 so that there is no extra spaces
-    while (loopPass != numberOfItems) {
+    while (loopPass <= numberOfItems) {
         str_file_content += delimiter; // this will add the seperating delimiter before the a given item
         switch (loopPass){
             case 1:
@@ -152,6 +158,12 @@ string Cipher::cipher(string typeOfRequest, string username, string item3, strin
             break;
             case 10:
             if (item10.length() > 0) str_file_content += item10;
+            break;
+            case 11:
+            if (item11.length() > 0) str_file_content += item11;
+            break;
+            case 12:
+            if (item12.length() > 0) str_file_content += item12;
             break;
         }
         loopPass++;
@@ -189,6 +201,12 @@ string Cipher::getItem(int itemNumberToReturn){
         break;
     case 10:
         return item10;
+        break;
+    case 11:
+        return item11;
+        break;
+    case 12:
+        return item12;
         break;
     
     default:
