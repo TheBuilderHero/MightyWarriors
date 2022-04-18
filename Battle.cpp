@@ -111,7 +111,7 @@ void Battle::startBattle(string username){
         optionsOutput(username, enemyName, playerHealth, enemyHealth);
 
         //Enemy's turn to attack:
-        int enemyAttack = stoi(server.sendToServer(code.cipher("10", username, enemyName, qOption, to_string(playerBlocking))));
+        int enemyAttack = stoi(server.sendToServer(code.cipher("10", username, enemyName, to_string(playerBlocking))));
         cout << "The enemies attack hits you for " << enemyAttack << " damage" << endl;
         system("pause");
         playerHealth -= enemyAttack;
