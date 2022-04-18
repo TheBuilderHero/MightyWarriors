@@ -86,6 +86,7 @@ void Battle::startBattle(string username){
                 wKeyPressedLastLoop = true;
                 break;
             } else if (GetKeyState('W') >= 0){// else W not pressed
+                playerBlocking = false;
                 wKeyPressedLastLoop = false;
             }
             if (GetKeyState('Q') < 0 && !qKeyPressedLastLoop) { //checks to make sure that the key is pressed and makes sure it was not pressed last check - also check ultimate uses
