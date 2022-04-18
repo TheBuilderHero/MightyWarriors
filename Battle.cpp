@@ -55,12 +55,17 @@ void Battle::startBattle(string username){
         system("cls");
         int combatVal = 0;
         int playerAttack = 0;
+        int enemyBlocking = 0;
         optionsOutput(username, enemyName, playerHealth, enemyHealth); //outputs the options for battle
         
         while (1) //continues to run until broken out.
         {
             if (GetKeyState('R') < 0 && !rKeyPressedLastLoop && ultimateUses > 0) {//checks to make sure that the key is pressed and makes sure it was not pressed last check
-                enemyHealth -= playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, rOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
+                playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, rOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
+                code.decipherS(server.sendToServer(code.cipher("11"))); //ask if enemy is blocking next attack and get BLOCK_REDUCTION_VALUE from server
+                enemyBlocking = stoi(code.getItemS(1)); //set enemyBlocking from server
+                if (!enemyBlocking) enemyHealth -= playerAttack; //if the enemy is not blocking do full damage otherwise reduce it by the BLOCK_REDUCTION_VALUE sent over by the server.
+                if (enemyBlocking) enemyHealth -= (playerAttack *= stod(code.getItemS(2))); //reduce attack by BLOCK_REDUCTION_VALUE
                 ultimateUses--; //take away one of the ult uses.
                 rKeyPressedLastLoop = true;
                 break;
@@ -73,7 +78,12 @@ void Battle::startBattle(string username){
                 rKeyPressedLastLoop = false;
             }
             if (GetKeyState('E') < 0 && eKeyPressedLastLoop == false) {//checks to make sure that the key is pressed and makes sure it was not pressed last check
-                enemyHealth -= playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, eOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
+                playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, eOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
+                code.decipherS(server.sendToServer(code.cipher("11"))); //ask if enemy is blocking next attack and get BLOCK_REDUCTION_VALUE from server
+                enemyBlocking = stoi(code.getItemS(1)); //set enemyBlocking from server
+                if (!enemyBlocking) enemyHealth -= playerAttack; //if the enemy is not blocking do full damage otherwise reduce it by the BLOCK_REDUCTION_VALUE sent over by the server.
+                if (enemyBlocking) enemyHealth -= (playerAttack *= stod(code.getItemS(2))); //reduce attack by BLOCK_REDUCTION_VALUE
+                enemyHealth -= playerAttack;
                 eKeyPressedLastLoop = true;
                 break;
             } else if (GetKeyState('E') >= 0){// else E not pressed
@@ -82,7 +92,13 @@ void Battle::startBattle(string username){
             if (GetKeyState('W') < 0 && wKeyPressedLastLoop == false) {//checks to make sure that the key is pressed and makes sure it was not pressed last check
                 //This ability now blocks instead of inflicts damage
                 playerBlocking = true;
-                //enemyHealth -= stoi(server.sendToServer(code.cipher("9", username, enemyName, wOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
+                //The following commenet out was for the damage aspect of this ability:
+                    /*playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, wOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
+                    code.decipherS(server.sendToServer(code.cipher("11"))); //ask if enemy is blocking next attack and get BLOCK_REDUCTION_VALUE from server
+                    enemyBlocking = stoi(code.getItemS(1)); //set enemyBlocking from server
+                    if (!enemyBlocking) enemyHealth -= playerAttack; //if the enemy is not blocking do full damage otherwise reduce it by the BLOCK_REDUCTION_VALUE sent over by the server.
+                    if (enemyBlocking) enemyHealth -= (playerAttack *= stod(code.getItemS(2))); //reduce attack by BLOCK_REDUCTION_VALUE
+                    enemyHealth -= playerAttack;*/
                 wKeyPressedLastLoop = true;
                 break;
             } else if (GetKeyState('W') >= 0){// else W not pressed
@@ -90,7 +106,12 @@ void Battle::startBattle(string username){
                 wKeyPressedLastLoop = false;
             }
             if (GetKeyState('Q') < 0 && !qKeyPressedLastLoop) { //checks to make sure that the key is pressed and makes sure it was not pressed last check - also check ultimate uses
-                enemyHealth -= playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, qOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
+                playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, qOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
+                code.decipherS(server.sendToServer(code.cipher("11"))); //ask if enemy is blocking next attack and get BLOCK_REDUCTION_VALUE from server
+                enemyBlocking = stoi(code.getItemS(1)); //set enemyBlocking from server
+                if (!enemyBlocking) enemyHealth -= playerAttack; //if the enemy is not blocking do full damage otherwise reduce it by the BLOCK_REDUCTION_VALUE sent over by the server.
+                if (enemyBlocking) enemyHealth -= (playerAttack *= stod(code.getItemS(2))); //reduce attack by BLOCK_REDUCTION_VALUE
+                enemyHealth -= playerAttack;
                 qKeyPressedLastLoop = true;
                 break;
             } else if (GetKeyState('Q') >= 0){ // else Q not pressed
@@ -112,6 +133,7 @@ void Battle::startBattle(string username){
 
         //Enemy's turn to attack:
         int enemyAttack = stoi(server.sendToServer(code.cipher("10", username, enemyName, to_string(playerBlocking))));
+        enemyAttack = (enemyBlocking) ? 0 : enemyAttack; //set attack to 0 damage if enemy is blocking
         cout << "The enemies attack hits you for " << enemyAttack << " damage" << endl;
         system("pause");
         playerHealth -= enemyAttack;
