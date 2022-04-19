@@ -29,6 +29,8 @@ class Account {
         int getStealth(std::string username);
         int getStamina(std::string username);
         int getMana(std::string username);
+        std::string getMagicDamgeAbilities(std::string username);
+        std::string getPhysicalDamgeAbilities(std::string username);
         void displayStats(std::string username, int bypass = 0, std::string usernameA = ""); //by default bypass is 0 for standard user
 
         void newOrExistingAccout();
