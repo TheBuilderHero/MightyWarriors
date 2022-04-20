@@ -164,7 +164,7 @@ void Battle::startBattle(string username){
     }
 
     //NEED TO BE DONE//give user xp along with other, if fight was won.
-    
+    server.sendToServer(code.cipher("14", username, "1", "10"));
     
     cout << "Would you like to Battle again? (Y/N)\n>";
     cin >> answer;
