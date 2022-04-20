@@ -23,42 +23,12 @@ void Battle::optionsOutput(string username, string enemyName, int playerHealth, 
     cout << setfill(' ') << setw(48) << "Ultimate Attack" << setfill(' ') << setw(18) <<"(type number \"R\")" << endl;
 }
 
-void Battle::startBattle(string username){
-    bool qKeyPressedLastLoop = false, wKeyPressedLastLoop = false, eKeyPressedLastLoop = false, rKeyPressedLastLoop = false;
-    bool playerBlocking = false, enemyBlocking = false;
-    int playerHealth, enemyHealth;
-    int ultimateUses = 1;
-    string qOption = "1", wOption = "2", eOption = "3", rOption = "4";
-    string answer;
-    bool fightWon, fightLost;
+//loops till the player presses one of Q W E R
+void Battle::waitForButtonPress(string &username, string &enemyName, bool &qKeyPressedLastLoop, bool &wKeyPressedLastLoop, bool &eKeyPressedLastLoop, bool &rKeyPressedLastLoop, bool &playerBlocking, int &playerHealth, int &enemyHealth, int &ultimateUses, int &combatVal, int &playerAttack, int &enemyBlocking){
     ReachOutToServer server;
     Cipher code;
-    //**************************
-    //Initalize all variables
-    code.decipherS(server.sendToServer(code.cipher("6", username))); //request the current stats of this user from the server //pull info from the server to get the Player's Character info
-    enemyHealth = 20;
-    playerHealth = stoi(code.getItemS(1)); //set player health
-    fightWon = fightLost = false; //set both lost and won to false
-    code.decipherS(server.sendToServer(code.cipher("7", username))); //request the current stats of a enemy from the server //pull data from the server regarding the enemy to fight
-    enemyHealth = stoi(code.getItemS(2)); //set enemy health
-    string enemyName = code.getItemS(1);
-    //**************************
-    //Start Battle
-    system("cls");
-    cout << "Starting Battle simulation..." << endl; //tell user that the battle is starting
-    system("pause");
-    system("cls");
-    //inform user who they are fighting
-    cout << "Time for you to fight the worst... most evil... monster... ever... on... earth..." << endl << "Dominic!!!!!!!!" << endl;
-    system("pause");
-    while (!fightWon && !fightLost){//loop through displaying the stats and having the player pick options until the fight is won or lost
-        system("cls");
-        int combatVal = 0;
-        int playerAttack = 0;
-        int enemyBlocking = 0;
-        optionsOutput(username, enemyName, playerHealth, enemyHealth); //outputs the options for battle
-        
-        while (1) //continues to run until broken out.
+    string qOption = "1", wOption = "2", eOption = "3", rOption = "4";
+    while (1) //continues to run until broken out.
         {
             if (GetKeyState('R') < 0 && !rKeyPressedLastLoop && ultimateUses > 0) {//checks to make sure that the key is pressed and makes sure it was not pressed last check
                 playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, rOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
@@ -116,6 +86,44 @@ void Battle::startBattle(string username){
                 qKeyPressedLastLoop = false;
             }
         }
+}
+
+void Battle::startBattle(string username){
+    bool qKeyPressedLastLoop = false, wKeyPressedLastLoop = false, eKeyPressedLastLoop = false, rKeyPressedLastLoop = false;
+    bool playerBlocking = false;
+    int playerHealth, enemyHealth;
+    int ultimateUses = 1;
+    string answer;
+    bool fightWon, fightLost;
+    ReachOutToServer server;
+    Cipher code;
+    //**************************
+    //Initalize all variables
+    code.decipherS(server.sendToServer(code.cipher("6", username))); //request the current stats of this user from the server //pull info from the server to get the Player's Character info
+    playerHealth = stoi(code.getItemS(1)); //set player health
+    fightWon = fightLost = false; //set both lost and won to false
+    code.decipherS(server.sendToServer(code.cipher("7", username))); //request the current stats of a enemy from the server //pull data from the server regarding the enemy to fight
+    enemyHealth = stoi(code.getItemS(2)); //set enemy health
+    string enemyName = code.getItemS(1);
+    //**************************
+    //Start Battle
+    system("cls");
+    cout << "Starting Battle simulation..." << endl; //tell user that the battle is starting
+    system("pause");
+    system("cls");
+    //inform user who they are fighting
+    cout << "Time for you to fight " << enemyName << "!!!" << endl;
+    system("pause");
+    while (!fightWon && !fightLost){//loop through displaying the stats and having the player pick options until the fight is won or lost
+        system("cls");
+        int combatVal = 0;
+        int playerAttack = 0;
+        int enemyBlocking = 0;
+        optionsOutput(username, enemyName, playerHealth, enemyHealth); //outputs the options for battle
+        
+        //loops till the player presses one of Q W E R
+        waitForButtonPress(username,enemyName,qKeyPressedLastLoop,wKeyPressedLastLoop,eKeyPressedLastLoop,rKeyPressedLastLoop,playerBlocking,playerHealth,enemyHealth,ultimateUses,combatVal,playerAttack,enemyBlocking);
+        
         cout << "Your attack hits the enemy for " << playerAttack << " damage" << endl;
         system("pause");
 
@@ -153,13 +161,10 @@ void Battle::startBattle(string username){
         cout <<  setfill(' ') << setw(58) << "You Lost the Battle!" << endl;
         system("pause");
         system("cls");
-    } /*else { //the fight was a tie //not possible
-        cout << "Battle was an impossible tie..??!" << endl;
-        system("pause");
-        system("cls");
-    }*/
+    }
 
     //NEED TO BE DONE//give user xp along with other, if fight was won.
+    
     
     cout << "Would you like to Battle again? (Y/N)\n>";
     cin >> answer;
