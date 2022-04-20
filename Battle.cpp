@@ -83,7 +83,6 @@ void Battle::startBattle(string username){
                 enemyBlocking = stoi(code.getItemS(1)); //set enemyBlocking from server
                 if (!enemyBlocking) enemyHealth -= playerAttack; //if the enemy is not blocking do full damage otherwise reduce it by the BLOCK_REDUCTION_VALUE sent over by the server.
                 if (enemyBlocking) enemyHealth -= (playerAttack *= stod(code.getItemS(2))); //reduce attack by BLOCK_REDUCTION_VALUE
-                enemyHealth -= playerAttack;
                 eKeyPressedLastLoop = true;
                 break;
             } else if (GetKeyState('E') >= 0){// else E not pressed
@@ -111,7 +110,6 @@ void Battle::startBattle(string username){
                 enemyBlocking = stoi(code.getItemS(1)); //set enemyBlocking from server
                 if (!enemyBlocking) enemyHealth -= playerAttack; //if the enemy is not blocking do full damage otherwise reduce it by the BLOCK_REDUCTION_VALUE sent over by the server.
                 if (enemyBlocking) enemyHealth -= (playerAttack *= stod(code.getItemS(2))); //reduce attack by BLOCK_REDUCTION_VALUE
-                enemyHealth -= playerAttack;
                 qKeyPressedLastLoop = true;
                 break;
             } else if (GetKeyState('Q') >= 0){ // else Q not pressed
