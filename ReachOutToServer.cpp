@@ -104,7 +104,7 @@ string ReachOutToServer::sendToServer(string aMessage) {
         case 3: //logon reutrn from the server
             return code.getItem(2);
             break;
-        case 4: //more than one purpose - added the purpose of returning battle attack values
+        case 4: //more than one purpose - added the purpose of returning battle attack values and level of player
             return code.getItem(2);
             break;
         case 5: //this is going to be used to get the stats of the user stored on the server

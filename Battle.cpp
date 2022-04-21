@@ -153,7 +153,10 @@ void Battle::startBattle(string username){
     //print out the result of the fight
     if (fightWon) { //the player has won the fight
         system("cls");
+        //increase user xp, since fight was won.
+        string playerLevel = server.sendToServer(code.cipher("14", username, enemyName, "WillNeedToFeedBackEnemyLevel")); //this will need to send the enemy level later on.
         cout <<  setfill(' ') << setw(57) << "You won the Battle!" << endl;
+        cout <<  setfill(' ') << setw((77 - 16) - playerLevel.length()) << "Your level is: " << playerLevel << endl; 
         system("pause");
         system("cls");
     } else if (fightLost){ //the enemy has won the fight
@@ -163,8 +166,7 @@ void Battle::startBattle(string username){
         system("cls");
     }
 
-    //NEED TO BE DONE//give user xp along with other, if fight was won.
-    server.sendToServer(code.cipher("14", username, "1", "10"));
+
     
     cout << "Would you like to Battle again? (Y/N)\n>";
     cin >> answer;
