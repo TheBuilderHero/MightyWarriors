@@ -453,23 +453,30 @@ void Account::displayStats(std::string username, int bypass ,string usernameA){
     } 
     if (bypass == 1) { //admin account
         if(stoi(server.sendToServer(code.cipher("1", username))) == 0) {
-        string physicalAbilities = getPhysicalDamgeAbilities(username);
-        string magicalAbilites = getMagicDamgeAbilities(username);
-        string raceOutput = "Player Race: " + getRace(username);
-        string kitOutput = "Player Kit: " + getKit(username);
-        cout << "The stats for the username "<< endl << setfill('=') << setw(92) << "=" << endl 
-        << "Health: " << setfill(' ') << setw(34) << getHealth(username) 
-        << setw(5 + raceOutput.length()) << raceOutput << endl << setfill('-') << setw(42) << "-" << endl 
-        << "Armor: " << setfill(' ') << setw(35) << getArmor(username) 
-        << setw(5 + kitOutput.length()) << kitOutput << endl << setfill('-') << setw(42) << "-" << endl 
-        << "Magic Resistance: " << setfill(' ') << setw(24) << getMagicResistance(username) << endl << setfill('-') << setw(42) << "-" << endl 
-        << "Physical Damage: " << setfill(' ') << setw(25) << getPhysicalDamage(username) << setfill(' ') << setw(5 + physicalAbilities.length()) << physicalAbilities << endl << setfill('-') << setw(42) << "-" << endl 
-        << "Magic Damage: " << setfill(' ') << setw(28) << getMagicDamage(username) << setfill(' ') << setw(5 + magicalAbilites.length()) << magicalAbilites << endl << setfill('-') << setw(42) << "-" << endl 
-        << "Agility: " << setfill(' ') << setw(33) << getAgility(username) << endl << setfill('-') << setw(42) << "-" << endl 
-        << "Stealth: " << setfill(' ') << setw(33) << getStealth(username) << endl << setfill('-') << setw(42) << "-" << endl 
-        << "Stamina: " << setfill(' ') << setw(33) << getStamina(username) << endl << setfill('-') << setw(42) << "-" << endl 
-        << "Mana: " << setfill(' ') << setw(36) << getMana(username) << endl << setfill('-') << setw(42) << "-" << endl; //This cout statement prints out all the stats for the user to see.
-        system("pause");
+            string physicalAbilities = getPhysicalDamgeAbilities(username);
+            string magicalAbilites = getMagicDamgeAbilities(username);
+            string raceOutput = "Player Race: " + getRace(username);
+            string kitOutput = "Player Kit: " + getKit(username);
+            stringstream currentXP, totalXP;
+            currentXP << fixed << setprecision(0) << getCurrentXPForNextLevel(username); //format the XP
+            totalXP << fixed << setprecision(0) << getTotalXPForNextLevel(username); //format the XP
+            string currentXPFormatted = currentXP.str();
+            string totalXPFormatted = totalXP.str();
+            string playerLevelInfo = "Player Level: " + to_string(getLevel(username)) +  " With " + currentXPFormatted + "XP of " + totalXPFormatted + "XP";
+            cout << "Your stats are as follows: " << endl << setfill('=') << setw(92) << "=" << endl 
+            << "Health: " << setfill(' ') << setw(34) << getHealth(username) 
+            << setw(5 + playerLevelInfo.length()) << playerLevelInfo << endl << setfill('-') << setw(42) << "-" << setfill(' ') 
+            << setw(5 + raceOutput.length()) << raceOutput << endl 
+            << "Armor: " << setfill(' ') << setw(35) << getArmor(username) 
+            << setw(5 + kitOutput.length()) << kitOutput << endl << setfill('-') << setw(42) << "-" << endl 
+            << "Magic Resistance: " << setfill(' ') << setw(24) << getMagicResistance(username) << endl << setfill('-') << setw(42) << "-" << endl 
+            << "Physical Damage: " << setfill(' ') << setw(25) << getPhysicalDamage(username) << setfill(' ') << setw(5 + physicalAbilities.length()) << physicalAbilities << endl << setfill('-') << setw(42) << "-" << endl 
+            << "Magic Damage: " << setfill(' ') << setw(28) << getMagicDamage(username) << setfill(' ') << setw(5 + magicalAbilites.length()) << magicalAbilites << endl << setfill('-') << setw(42) << "-" << endl 
+            << "Agility: " << setfill(' ') << setw(33) << getAgility(username) << endl << setfill('-') << setw(42) << "-" << endl 
+            << "Stealth: " << setfill(' ') << setw(33) << getStealth(username) << endl << setfill('-') << setw(42) << "-" << endl 
+            << "Stamina: " << setfill(' ') << setw(33) << getStamina(username) << endl << setfill('-') << setw(42) << "-" << endl 
+            << "Mana: " << setfill(' ') << setw(36) << getMana(username) << endl << setfill('-') << setw(42) << "-" << endl; //This cout statement prints out all the stats for the user to see.
+            system("pause");
         } else {
             cout << "You did not enter a valid user which has stats to view..." << endl;
             system("pause");
