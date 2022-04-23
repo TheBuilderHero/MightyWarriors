@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <cstdlib> //this and ctime are for the random number generator
 #include <ctime> 
+#include <sstream> //for the use of the cout being better with double numbers
 
 #include "Account.h"
 #include "ReachOutToServer.h"
@@ -362,6 +363,27 @@ string Account::getRace(std::string username){ //returns the players race
     code.decipherS(server.sendToServer(code.cipher("13", username)));
     return code.getItemS(1);
 }
+int Account::getLevel(std::string username){
+    Cipher code;
+    ReachOutToServer server;
+    code.decipherS(server.sendToServer(code.cipher("15", username))); //this gets the player's level from the server
+    string playerLevel = code.getItemS(1);
+    return stoi(playerLevel);
+}
+double Account::getCurrentXPForNextLevel(std::string username){
+    Cipher code;
+    ReachOutToServer server;
+    code.decipherS(server.sendToServer(code.cipher("15", username))); //this gets the total needed XP from the server
+    string currentXPForNextLevel = code.getItemS(2);
+    return stod(currentXPForNextLevel);
+}
+double Account::getTotalXPForNextLevel(std::string username){
+    Cipher code;
+    ReachOutToServer server;
+    code.decipherS(server.sendToServer(code.cipher("15", username))); //this gets the total needed XP from the server
+    string totalXPForNextLevel = code.getItemS(3);
+    return stod(totalXPForNextLevel);
+}
 
 void Account::displayStats(std::string username, int bypass ,string usernameA){
     Cipher code;
@@ -371,9 +393,16 @@ void Account::displayStats(std::string username, int bypass ,string usernameA){
         string magicalAbilites = getMagicDamgeAbilities(username);
         string raceOutput = "Player Race: " + getRace(username);
         string kitOutput = "Player Kit: " + getKit(username);
+        stringstream currentXP, totalXP;
+        currentXP << fixed << setprecision(0) << getCurrentXPForNextLevel(username); //format the XP
+        totalXP << fixed << setprecision(0) << getTotalXPForNextLevel(username); //format the XP
+        string currentXPFormatted = currentXP.str();
+        string totalXPFormatted = totalXP.str();
+        string playerLevelInfo = "Player Level: " + to_string(getLevel(username)) +  " With " + currentXPFormatted + "XP of " + totalXPFormatted + "XP";
         cout << "Your stats are as follows: " << endl << setfill('=') << setw(92) << "=" << endl 
         << "Health: " << setfill(' ') << setw(34) << getHealth(username) 
-        << setw(5 + raceOutput.length()) << raceOutput << endl << setfill('-') << setw(42) << "-" << endl 
+        << setw(5 + playerLevelInfo.length()) << playerLevelInfo << endl << setfill('-') << setw(42) << "-" << setfill(' ') 
+        << setw(5 + raceOutput.length()) << raceOutput << endl 
         << "Armor: " << setfill(' ') << setw(35) << getArmor(username) 
         << setw(5 + kitOutput.length()) << kitOutput << endl << setfill('-') << setw(42) << "-" << endl 
         << "Magic Resistance: " << setfill(' ') << setw(24) << getMagicResistance(username) << endl << setfill('-') << setw(42) << "-" << endl 

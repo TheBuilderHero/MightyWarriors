@@ -33,6 +33,9 @@ class Account {
         std::string getPhysicalDamgeAbilities(std::string username);
         std::string getKit(std::string username);
         std::string getRace(std::string username);
+        int getLevel(std::string username);
+        double getCurrentXPForNextLevel(std::string username);
+        double getTotalXPForNextLevel(std::string username);
         void displayStats(std::string username, int bypass = 0, std::string usernameA = ""); //by default bypass is 0 for standard user
 
         void newOrExistingAccout();
