@@ -97,8 +97,10 @@ void Battle::startBattle(string username){
     bool fightWon, fightLost;
     ReachOutToServer server;
     Cipher code;
+    Account account;
     //**************************
     //Initalize all variables
+    int playerLevelAtStartOfFight = account.getLevel(username);
     code.decipherS(server.sendToServer(code.cipher("6", username))); //request the current stats of this user from the server //pull info from the server to get the Player's Character info
     playerHealth = stoi(code.getItemS(1)); //set player health
     fightWon = fightLost = false; //set both lost and won to false
@@ -156,8 +158,13 @@ void Battle::startBattle(string username){
         //increase user xp, since fight was won.
         string playerLevel = server.sendToServer(code.cipher("14", username, enemyName, "WillNeedToFeedBackEnemyLevel")); //this will need to send the enemy level later on.
         cout <<  setfill(' ') << setw(57) << "You won the Battle!" << endl;
-        cout <<  setfill(' ') << setw((77 - 16) - playerLevel.length()) << "Your level is: " << playerLevel << endl; 
+        cout <<  setfill(' ') << setw((77 - 16) - playerLevel.length()) << "Your level is: " << playerLevel << endl;
         system("pause");
+        system("cls"); 
+        int currentPlayerLevel = account.getLevel(username);
+        if(playerLevelAtStartOfFight < currentPlayerLevel){ //runs the level update for stats
+            account.levelUp(username, currentPlayerLevel);
+        }
         system("cls");
     } else if (fightLost){ //the enemy has won the fight
         system("cls");
