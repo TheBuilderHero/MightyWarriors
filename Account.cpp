@@ -495,10 +495,11 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
     int validLogon;
     switch (type){
         case 1:
-            cout << "You are at the logon screen" << endl << "Please enter your username\n> ";
+            cout << "You are at the logon screen" << endl << "Please enter your username or type \"no\" if you do not have an account\n> ";
             cin >> usernameE;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
+            if(usernameE == newaccountMenu1 || usernameE == newaccountMenu2 || usernameE == newaccountMenu3 || usernameE == newaccountMenu4) createNewAccount();
             cout << "Please enter the password for the account\n> ";
             cin >> passwordE;
             cin.clear();
@@ -510,7 +511,7 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
                 cout << "Invalid Username or Password..." << endl;
                 system("pause");
                 //logon is invalid
-                newOrExistingAccout();
+                logonScreen();
             }
             break;
         case 2: //change password verification
@@ -531,7 +532,7 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
                 cout << "Invalid Username or Password..." << endl;
                 system("pause");
                 //logon is invalid
-                menuClass.menu(usernameE);
+                logonScreen(); // try again
             }
             break;
         case 3: // adminbypass panel
@@ -550,7 +551,7 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
                 cout << "Invalid Username or Password..." << endl;
                 system("pause");
                 //logon is invalid
-                newOrExistingAccout();
+                logonScreen();
             }
             break;
     }
@@ -564,6 +565,7 @@ void Account::createNewAccount(){ //runs through the code to create a new user a
     string username; //declare the local username for the user creating their account
 
     //ask user for the username they would like to use
+    system("cls");
     cout << "What would you like the username of your new account to be?" << endl << "Please type a valid username.\n> ";
     cin >> username;
     cin.clear();
@@ -575,16 +577,17 @@ void Account::createNewAccount(){ //runs through the code to create a new user a
         system("cls");
         cout << "The username " << username << " is not valid Please enter a different username." << endl;
         system("pause");
-        createNewAccount();
+        logonScreen();
     } else {
         valid = stoi(server.sendToServer(code.cipher("1", username))); // the response for this will either be 1 or 0 as a string (1 meaning the username is valid, 0 meaning the username is taken)
+        if (username == newaccountMenu1 || username == newaccountMenu2 || username == newaccountMenu3 || username == newaccountMenu4) valid = 0; //set valid to false if they try to use no in any of the forms
         switch (valid){
             case 0:
             //the username is invalid so restart the process
             cout << "The username " << username << " is not valid. Please enter a different username." << endl;
             system("pause");
             system("cls");
-            createNewAccount();
+            logonScreen();
             break;
             case 1:
             //username is valid
@@ -600,11 +603,11 @@ void Account::createNewAccount(){ //runs through the code to create a new user a
             } else if (createAccountCheck == "N" || createAccountCheck == "n"){
                 cout << "Account will not be created." << endl;
                 system("pause");
-                newOrExistingAccout();
+                logonScreen();
             } else {
                 cout << "Input not recognized." << endl;
                 system("pause");
-                newOrExistingAccout();
+                logonScreen();
             }
             break;
         }
@@ -627,10 +630,8 @@ void Account::newOrExistingAccout(){ // asks and runs through everything for new
         logonScreen();
     } else if (answer == "n" || answer == "N") {//if no start the signup prossess
         system("cls");
-        cout << "Lets start the procss of creating a new account." << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
-        system("pause");//pause the window so the user can read the message, then they can press any key to continue.
         createNewAccount(); // take user to the function for creatiing accounts 
     } else if (answer == "adminbypass"){
         system("cls");

@@ -31,16 +31,15 @@ int main(){ //Starts the program if the clients version is compatable with the s
         //Before doing anything else... request required client version from server.
         if (runningCurrentVersion == "true"){ //if we are running the current version then the program will start
             //This is the start of the program
-            account.newOrExistingAccout(); //ask whether the user has an account or not
+            account.logonScreen(); //ask whether the user has an account or not
         } else if (runningCurrentVersion == "FailedConnect") { //If the client is unable to connect to the server inform the client
             cout << "The Server is currently Offline for either maintanance or other reasons..." << endl << "Would you like to try connecting again? (Y/N) [Attempt: " << attempts << "]\n>";
-            cin >> answer;
+            answer = menu.yesOrNo();
             while (!(answer == "n" || answer == "N" || answer == "y" || answer == "Y")) { 
                 cout << endl << answer << endl;
                 //answer = 'A';// set the answer variable to some other value on the start of each loop.
-                cout << "Your input was not recognized." << endl << "Would you like to try connecting again? (Y/N) [Attempt: " << attempts << "]\n>";
-                cin >> answer;
-                
+                cout << "Your input was not recognized." << endl << "Would you like to try connecting again? (Y/N) [Attempt: " << attempts << "]";
+                answer = menu.yesOrNo();
             }
         } else{//if version check fails we inform user and close the client because their current version is not acceptable on the server side.
             cout << "You are not running the needed version. Please update to the latest version and try again." << endl;

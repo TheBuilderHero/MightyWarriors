@@ -14,6 +14,7 @@ Menu classMenu;
 using namespace std;
 
 void Battle::optionsOutput(string username, string enemyName, int playerHealth, int enemyHealth){
+    system("cls");
     cout << endl << setfill(' ') << setw(20 + username.length()) << username  << setfill(' ') << setw(47 + enemyName.length()) << enemyName << endl; //print the current stats of both the enemy and the Player
     cout << endl << setfill(' ') << setw(30) << "Player Health: " << playerHealth << setfill(' ') << setw(50) << "Enemy Health: " << enemyHealth << endl; //print the current stats of both the enemy and the Player
     cout << endl << endl << endl << setfill(' ') << setw(63) << "Please choose an attack option" <<//give the user a list of options to choose from in order to fight the enemy
@@ -108,16 +109,8 @@ void Battle::startBattle(string username){
     enemyHealth = stoi(code.getItemS(2)); //set enemy health
     string enemyName = code.getItemS(1);
     //**************************
-    //Start Battle
-    system("cls");
-    cout << "Starting Battle simulation..." << endl; //tell user that the battle is starting
-    system("pause");
-    system("cls");
-    //inform user who they are fighting
-    cout << "Time for you to fight " << enemyName << "!!!" << endl;
-    system("pause");
+    //Start Battle clearing the screen
     while (!fightWon && !fightLost){//loop through displaying the stats and having the player pick options until the fight is won or lost
-        system("cls");
         int combatVal = 0;
         int playerAttack = 0;
         int enemyBlocking = 0;
@@ -176,12 +169,12 @@ void Battle::startBattle(string username){
 
     
     cout << "Would you like to Battle again? (Y/N)\n>";
-    cin >> answer;
+    answer = classMenu.yesOrNo();
     while (!(answer == "n" || answer == "N" || answer == "y" || answer == "Y")) { //ask player if they want to battle more or go back to main menu.
         cout << endl << answer << endl;
         //answer = 'A';// set the answer variable to some other value on the start of each loop.
-        cout << "Your input was not recognized." << endl << "Would you like to Battle again? (Y/N)\n>";
-        cin >> answer;
+        cout << "Your input was not recognized." << endl << "Would you like to Battle again? (Y/N)";
+        answer = classMenu.yesOrNo();
     }
     if (answer == "y" || answer == "Y"){
         startBattle(username);//run battle again

@@ -12,4 +12,6 @@ class Menu {
         void menu(std::string username);
         void adminMenu (std::string username);
         void changePass(std::string username);
+        char yesOrNo();
+        void ClearConsoleInputBuffer();
 };

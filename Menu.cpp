@@ -18,6 +18,14 @@ Cipher code; //declare the new instance of Cipher class
 Account account;
 Battle battle;
 
+void Menu::ClearConsoleInputBuffer()
+{
+    PINPUT_RECORD ClearingVar1 = new INPUT_RECORD[256];
+    DWORD ClearingVar2;
+    ReadConsoleInput(GetStdHandle(STD_INPUT_HANDLE),ClearingVar1,256,&ClearingVar2);
+    delete[] ClearingVar1;
+}
+
 void Menu::getGameVersion(){
     cout << "Client Version: " << to_string(gameVersion) << "." << to_string(gameMajorBuild) << "." << to_string(gameMinorBuild) << "." << to_string(gamePatch) << endl;
     system("pause");
@@ -113,32 +121,34 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
     case 1: //change password
         //change password
         system("cls");
-        cout << "Taking you to the change password screen." << endl; //this is here to fix the issue with cin buffer taking the last key pressed and putting it at the start of the new cin.
-        system("pause");
+        ClearConsoleInputBuffer();
         account.logonScreen(2);
         break;
     case 2://logout
         system("cls");
-        cout << "You are now logging out." << endl;
-        system("pause");
+        ClearConsoleInputBuffer();
         account.logonScreen();
         break;
     case 3://display stats
         system("cls");
+        ClearConsoleInputBuffer();
         account.displayStats(username);
         menu(username);
         break;
     case 4://display version and info
         system("cls");
+        ClearConsoleInputBuffer();
         getGameVersion();
         menu(username);
         break;
     case 5: //start battle
         system("cls");
+        ClearConsoleInputBuffer();
         battle.startBattle(username);//start battle code will go here.
         break;
     case 14:
         system("cls");
+        ClearConsoleInputBuffer();
         cout << "October is a Beautiful month to get Married!" << endl;
         cout << "Dakota loves Beautiful!" << endl;
         system("pause");
@@ -146,10 +156,12 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         break;
     case 15:
         system("cls");
+        ClearConsoleInputBuffer();
         adminMenu(username);
         break;
     default:
         system("cls");
+        ClearConsoleInputBuffer();
         cout << "Invalid input, Please try again..." << endl;
         system("pause");
         menu(username);
@@ -316,7 +328,6 @@ void Menu::changePass(string username){ //changes the users password
                 validPassword = true;
             }
         }
-        system("pause");
         system("cls");
     }
     cout << "Please enter a new password again for your account\n> ";
@@ -335,4 +346,24 @@ void Menu::changePass(string username){ //changes the users password
     }
     
     
+}
+
+char Menu::yesOrNo(){ //waits for a user to click the y or n key
+    bool yKeyPressedLastLoop = false;
+    bool nKeyPressedLastLoop = false;
+    while (1){
+        if (GetKeyState('Y') < 0 || GetKeyState('y') < 0 && !yKeyPressedLastLoop) { //checks to make sure that the 3 key is pressed and makes sure it was not pressed last check
+            yKeyPressedLastLoop = true;
+            return 'y';
+        } else if (GetKeyState('y') >= 0 || GetKeyState('Y') >= 0){ // else 1 not pressed
+            yKeyPressedLastLoop = false;
+        }
+        if (GetKeyState('N') < 0 || GetKeyState('n') < 0 && !nKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+            nKeyPressedLastLoop = true;
+            return 'n';
+        } else if (GetKeyState('n') >= 0 || GetKeyState('n') >= 0){ // else 1 not pressed
+            nKeyPressedLastLoop = false;
+        }
+    }
+    ClearConsoleInputBuffer();
 }
