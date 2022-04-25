@@ -30,6 +30,7 @@ int main(){ //Starts the program if the clients version is compatable with the s
         string runningCurrentVersion = server.sendToServer(code.cipher("0", "", to_string(gameVersion), to_string(gameMajorBuild), to_string(gameMinorBuild), to_string(gamePatch)));//check to see if the version the client is running is allowed to continue - the reponse is stored in "runningCurrentVersion"
         //Before doing anything else... request required client version from server.
         if (runningCurrentVersion == "true"){ //if we are running the current version then the program will start
+            menu.ClearConsoleInputBuffer();//clear keyboard input from the yesNo prompt - this seems to remove the keyboard input
             //This is the start of the program
             account.logonScreen(); //ask whether the user has an account or not
         } else if (runningCurrentVersion == "FailedConnect") { //If the client is unable to connect to the server inform the client

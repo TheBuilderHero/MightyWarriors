@@ -354,12 +354,14 @@ char Menu::yesOrNo(){ //waits for a user to click the y or n key
     while (1){
         if (GetKeyState('Y') < 0 || GetKeyState('y') < 0 && !yKeyPressedLastLoop) { //checks to make sure that the 3 key is pressed and makes sure it was not pressed last check
             yKeyPressedLastLoop = true;
+            ClearConsoleInputBuffer();
             return 'y';
         } else if (GetKeyState('y') >= 0 || GetKeyState('Y') >= 0){ // else 1 not pressed
             yKeyPressedLastLoop = false;
         }
         if (GetKeyState('N') < 0 || GetKeyState('n') < 0 && !nKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
             nKeyPressedLastLoop = true;
+            ClearConsoleInputBuffer();
             return 'n';
         } else if (GetKeyState('n') >= 0 || GetKeyState('n') >= 0){ // else 1 not pressed
             nKeyPressedLastLoop = false;
