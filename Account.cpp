@@ -188,6 +188,8 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
         cout << ">";
         cin >> raceChoice;
         if (raceChoice <= 0 || raceChoice > 5) {
+            cin.clear(); //this and the next resolve issues with infinitely looping invalid
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
             cout << "You have entered an invalid input, Please try again." << endl;
             raceChoice = 0;
             system("pause");
@@ -234,6 +236,8 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
         cout << ">";
         cin >> kitChoice;
         if (kitChoice <= 0 || kitChoice > 4) {
+            cin.clear(); //this and the next resolve issues with infinitely looping invalid
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
             cout << "You have entered an invalid input, Please try again." << endl;
             kitChoice = 0;
             system("pause");
