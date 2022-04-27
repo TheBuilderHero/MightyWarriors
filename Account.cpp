@@ -173,18 +173,18 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
     while(!exitNow){ //while the user has not selected one of the five options it will continue to ask them for an aswer.
         system("cls");
         raceChoice = 0;
-        cout << endl << "First step of the process is to choose the race of your Character" << endl;
-        cout << "Please type the number corresponding to one of the races from the list below (Note, this cannot be changed later!): "<< endl << endl;
+        cout << endl << "Select your Character's race:" << endl;
+        cout << "Please type the number corresponding to one of the races listed below (Note, this cannot be changed later!): "<< endl << endl;
         cout << "1" << setfill(' ') << setw(14) << "Human" << endl;
-        cout << "-" << setfill(' ') << setw(49) << "- Human's gain +1 to all stats" << endl;
+        cout << "-" << setfill(' ') << setw(49) << "- Humans get a random bonus stat for each battle" << endl;
         cout << "2" << setfill(' ') << setw(14) << "Ghost" << endl;
-        cout << "-" << setfill(' ') << setw(49) << "- Human's gain +1 to all stats" << endl;
+        cout << "-" << setfill(' ') << setw(49) << "- Ghosts have a chance to etherealize, ignoring attacks" << endl;
         cout << "3" << setfill(' ') << setw(14) << "Dino" << endl;
-        cout << "-" << setfill(' ') << setw(49) << "- Human's gain +1 to all stats" << endl;
+        cout << "-" << setfill(' ') << setw(49) << "- You can play as a Dinosaur!!!" << endl;
         cout << "4" << setfill(' ') << setw(14) << "Elf" << endl;
-        cout << "-" << setfill(' ') << setw(49) << "- Human's gain +1 to all stats" << endl;
+        cout << "-" << setfill(' ') << setw(49) << "- Elves have a chance for an extra attack" << endl;
         cout << "5" << setfill(' ') << setw(14) << "Dryad" << endl;
-        cout << "-" << setfill(' ') << setw(49) << "- Human's gain +1 to all stats" << endl;
+        cout << "-" << setfill(' ') << setw(49) << "- Dryads can reflect abilities back on an attacker" << endl;
         cout << ">";
         cin >> raceChoice;
         if (raceChoice <= 0 || raceChoice > 5) {
@@ -195,9 +195,30 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
             system("pause");
             system("cls");
         } else {
+            string raceName;
+            switch(raceChoice){
+                case 1:
+                    raceName = "Human";
+                    break;
+                case 2:
+                    raceName = "Ghost";
+                    break;
+                case 3:
+                    raceName = "Dino";
+                    break;
+                case 4:
+                    raceName = "Elf";
+                    break;
+                case 5:
+                    raceName = "Dryad";
+                    break;
+                default:
+                    raceName = "not chosen";
+                    break;
+            }
             bool answered = false;
             while(!answered) { //validate the chosen race
-                cout << "Your race has been set to option number " << raceChoice << ". Would you like to accept this and continue?(Y/N)" << endl << ">";
+                cout << "Your race has been set to " << raceName << ". Would you like to accept this and continue?(Y/N)" << endl << ">";
                 cin >> answer;
                 if (answer != 'n' && answer !='N' && answer !='y' && answer !='Y') { //if they did not enter y, Y, n, or, N then we will tell them what they input is invalid and retry.
                     cout << "Unrecognized input." << "   Please enter a valid input." << endl;
@@ -223,19 +244,21 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
     while(!exitNow){ //while the user has not selected one of the four kit options it will continue to ask them for an aswer to kitChoice.
         system("cls");
         kitChoice = 0;
-        cout << endl << "Second step of the process is to choose the kit of your Character" << endl;
+        cout << endl << "Select your Character's kit:" << endl;
         cout << "Please type the number corresponding to one of the kits from the list below (Note, this cannot be changed later!): "<< endl << endl;
         cout << "1" << setfill(' ') << setw(14) << "Tank" << endl;
         cout << "-" << setfill(' ') << setw(77) << "- Tanks gain +3 to Armor, Magic Resistance, and Health stats" << endl;
-        cout << "2" << setfill(' ') << setw(17) << "Assasin" << endl;
-        cout << "-" << setfill(' ') << setw(50) << "- Assasins gain +5 to Attack stat" << endl;
+        cout << "2" << setfill(' ') << setw(17) << "Assassin" << endl;
+        cout << "-" << setfill(' ') << setw(50) << "- Assassins gain +5 to Attack stat" << endl;
         cout << "3" << setfill(' ') << setw(16) << "Archer" << endl;
         cout << "-" << setfill(' ') << setw(81) << "- Archers gain +2 on Attack and +1 on Armor and Magic Resistance" << endl;
         cout << "4" << setfill(' ') << setw(14) << "Mage" << endl;
         cout << "-" << setfill(' ') << setw(70) << "- Mages gain +2 on Ability and +3 on Magic Resistance" << endl;
+        cout << "5" << setfill(' ') << setw(14) << "Ninja" << endl;
+        cout << "-" << setfill(' ') << setw(70) << "- Ninjas gain +2 on Ability and +3 on Magic Resistance" << endl;
         cout << ">";
         cin >> kitChoice;
-        if (kitChoice <= 0 || kitChoice > 4) {
+        if (kitChoice <= 0 || kitChoice > 5) {
             cin.clear(); //this and the next resolve issues with infinitely looping invalid
             cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
             cout << "You have entered an invalid input, Please try again." << endl;
@@ -243,9 +266,30 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
             system("pause");
             system("cls");
         } else {
+            string kitName;
+            switch(raceChoice){
+                case 1:
+                    kitName = "Tank";
+                    break;
+                case 2:
+                    kitName = "Assassin";
+                    break;
+                case 3:
+                    kitName = "Archer";
+                    break;
+                case 4:
+                    kitName = "Mage";
+                    break;
+                case 5:
+                    kitName = "Ninja";
+                    break;
+                default:
+                    kitName = "not chosen";
+                    break;
+            }
             int answered = 0; // 0 for false :: 1 for true
             while(!answered) { //validate the chosen race
-                cout << "Your kit has been set to option number " << kitChoice << ". Would you like to accept this and continue?(Y/N)" << endl << ">";
+                cout << "Your kit has been set to " << kitName << ". Would you like to accept this and continue?(Y/N)" << endl << ">";
                 cin >> answer;
                 if (answer != 'n' && answer !='N' && answer !='y' && answer !='Y') { //if they did not enter y, Y, n, or, N then we will tell them what they input is invalid and retry.
                     cout << "Unrecognized input." << "   Please enter a valid input." << endl;
