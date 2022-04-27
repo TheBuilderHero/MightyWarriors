@@ -176,15 +176,15 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
         cout << endl << "Select your Character's race:" << endl;
         cout << "Please type the number corresponding to one of the races listed below (Note, this cannot be changed later!): "<< endl << endl;
         cout << "1 - Human" << endl;
-        cout << "-" << setfill(' ') << setw(10) << "- Humans get a random bonus stat for each battle" << endl;
-        cout << "2" << setw(20) << "Ghost" << endl;
-        cout << "-" << setfill(' ') << setw(10) << "- Ghosts have a chance to etherealize, ignoring attacks" << endl;
-        cout << "3" << setw(20) << "Dino" << endl;
-        cout << "-" << setfill(' ') << setw(10) << "- You can play as a Dinosaur!!!" << endl;
-        cout << "4" << setw(20) << "Elf" << endl;
-        cout << "-" << setfill(' ') << setw(10) << "- Elves have a chance for an extra attack" << endl;
-        cout << "5" << setw(20) << "Dryad" << endl;
-        cout << "-" << setfill(' ') << setw(10) << "- Dryads can reflect abilities back on an attacker" << endl;
+        cout << " - - Humans get a random bonus stat for each battle" << endl;
+        cout << "2 - Ghost" << endl;
+        cout << " - - Ghosts have a chance to etherealize, ignoring attacks" << endl;
+        cout << "3 - Dino" << endl;
+        cout << " - - You can play as a Dinosaur!!!" << endl;
+        cout << "4 - Elf" << endl;
+        cout << " - - Elves have a chance for an extra attack" << endl;
+        cout << "5 - Dryad" << endl;
+        cout << " - - Dryads can reflect abilities back on an attacker" << endl;
         cout << ">";
         cin >> raceChoice;
         if (raceChoice <= 0 || raceChoice > 5) {
@@ -246,16 +246,16 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
         kitChoice = 0;
         cout << endl << "Select your Character's kit:" << endl;
         cout << "Please type the number corresponding to one of the kits from the list below (Note, this cannot be changed later!): "<< endl << endl;
-        cout << "1" << setfill(' ') << setw(15) << "Tank" << endl;
-        cout << "-" << setfill(' ') << setw(10) << "- Tanks gain +3 to Armor, Magic Resistance, and Health" << endl;
-        cout << "2" << setfill(' ') << setw(15) << "Assassin" << endl;
-        cout << "-" << setfill(' ') << setw(10) << "- Assassins gain +5 on Attack" << endl;
-        cout << "3" << setfill(' ') << setw(15) << "Archer" << endl;
-        cout << "-" << setfill(' ') << setw(10) << "- Archers gain +2 on Attack and +1 on Armor and Magic Resistance" << endl;
-        cout << "4" << setfill(' ') << setw(15) << "Mage" << endl;
-        cout << "-" << setfill(' ') << setw(10) << "- Mages gain +2 on Ability and +3 on Magic Resistance" << endl;
-        cout << "5" << setfill(' ') << setw(15) << "Ninja" << endl;
-        cout << "-" << setfill(' ') << setw(10) << "- Ninjas gain +2 on Attack and +3 on Agility and Stealth" << endl;
+        cout << "1 - Tank" << endl;
+        cout << " - - Tanks gain +3 to Armor, Magic Resistance, and Health" << endl;
+        cout << "2 - Assassin" << endl;
+        cout << " - - Assassins gain +5 on Attack" << endl;
+        cout << "3 - Archer" << endl;
+        cout << " - - Archers gain +2 on Attack and +1 on Armor and Magic Resistance" << endl;
+        cout << "4 - Mage" << endl;
+        cout << " - - Mages gain +2 on Ability and +3 on Magic Resistance" << endl;
+        cout << "5 - Ninja" << endl;
+        cout << " - - Ninjas gain +2 on Attack and +3 on Agility and Stealth" << endl;
         cout << ">";
         cin >> kitChoice;
         if (kitChoice <= 0 || kitChoice > 5) {
@@ -267,7 +267,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
             system("cls");
         } else {
             string kitName;
-            switch(raceChoice){
+            switch(kitChoice){
                 case 1:
                     kitName = "Tank";
                     break;
