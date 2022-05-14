@@ -151,7 +151,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         system("cls");
         ClearConsoleInputBuffer();
         display(3,3,"October is a Beautiful month to get Married!");
-        display(3,4,"Dakota loves Beautiful!");
+        display(3,4,"Dakota loves Beautiful!", false);
         system("pause");
         menu(username);
         break;
@@ -163,7 +163,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
     default:
         system("cls");
         ClearConsoleInputBuffer();
-        display(3, 3, "Invalid input, Please try again...");
+        display(3, 3, "Invalid input, Please try again...", false);
         system("pause");
         menu(username);
         break;
@@ -184,7 +184,7 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
     display(32, 4, "Stats");                display(53, 4, "(type number \"3\")");
     display(32, 5, "Info");                 display(53, 5, "(type number \"4\")");
     display(32, 6, "Battle");               display(53, 6, "(type number \"5\")");
-    display(32, 7, "Exit");                 display(53, 7, "(type number \"6\")");
+    display(32, 7, "Exit");                 display(53, 7, "(type number \"6\")", false);
     
     while (1){
         //change password
@@ -258,22 +258,16 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
     case 1: //change password
         //change password
         system("cls");
-        cout << "Taking you to the change password screen." << endl;
-        system("pause");
         account.logonScreen(2);
         break;
     case 2://logout
         system("cls");
-        cout << "You are now logging out." << endl;
-        system("pause");
         account.logonScreen();
         break;
     case 3://display stats
         system("cls");
-        cout << "Taking you to the screen for viewing stats" << endl;
-        system("pause");
-        system("cls");
-        cout << "Please enter the username of the user for which you would like to view stats." << endl << ">";
+        display(3,3,"Please enter the username of the user for which you would like to view stats.");
+        display(3,4,">",false,false);
         cin >> usernameE;
         account.displayStats(usernameE, 1, username);
         usernameE = "";
@@ -290,14 +284,14 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         break;
     case 14:
         system("cls");
-        cout << "October is a Beautiful month to get Married!" << endl;
-        cout << "Dakota loves Beautiful!" << endl;
+        display(3,3,"October is a Beautiful month to get Married!");
+        display(3,4,"Dakota loves Beautiful!", false);
         system("pause");
         adminMenu(username);
         break;
     default:
         system("cls");
-        cout << "Invalid input, Please try again..." << endl;
+        display(3,3,"Invalid input, Please try again...", false);
         system("pause");
         adminMenu(username);
         break;
@@ -312,7 +306,8 @@ void Menu::changePass(string username){ //changes the users password
     bool validPassword = false;
     char nonValidPasswordCharacters[] = {'~', '!', '?', '`', '\'', '\"', '\\', '(', ')', '{', '}', '\[', ']', '|', '`','!','$','%','^','&','*','<',',','>',':',';','#','_','-','+','=','@','.','"','"'};
     while (!validPassword) {
-        cout << "Please enter a new password for your account\n> ";
+        display(3,3,"Please enter a new password for your account");
+        display(3,4,"> ", false, false);
         cin >> passwordNew; //get the user's new password
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
@@ -322,7 +317,9 @@ void Menu::changePass(string username){ //changes the users password
                 //found the character
                 //password is invalid
                 validPassword = false;
-                cout << "The password you entered is invalid, Please try a different password." << endl << "Note, the password cannot contain: (){}[]|`¬¦! \"£$%^&*\"<>:;#~_-+=,@." << endl << "The password must also be atleast 4 charaters in length and not the same as your username." << endl;
+                display(3,3,"The password you entered is invalid, Please try a different password.");
+                display(3,4,"Note, the password cannot contain: (){}[]|`¬¦! \"£$%^&*\"<>:;#~_-+=,@.");
+                display(3,5,"The password must also be atleast 4 charaters in length and not the same as your username.");
                 break;
             } else {
                 //password does not contain character
@@ -331,7 +328,8 @@ void Menu::changePass(string username){ //changes the users password
         }
         system("cls");
     }
-    cout << "Please enter a new password again for your account\n> ";
+    display(3,3,"Please enter a new password again for your account");
+    display(3,4,"> ",false,false);
     cin >> passwordConf;
     cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
@@ -340,7 +338,7 @@ void Menu::changePass(string username){ //changes the users password
         server.sendToServer(code.cipher("4", username, passwordNew));
         menu(username);
     } else {
-        cout << "Your passwords did not match, please try again..." << endl;
+        display(3,3,"Your passwords did not match, please try again...", false);
         system("pause");
         system("cls");
         changePass(username);
@@ -371,7 +369,7 @@ char Menu::yesOrNo(){ //waits for a user to click the y or n key
     ClearConsoleInputBuffer();
 }
 
-void Menu::display(int column, int row, string outputString, bool resetCursorPosition) { //sets the display position of the text on the consol (allowing to display anywhere on the consol)
+void Menu::display(int column, int row, string outputString, bool resetCursorPosition, bool addExtraRow) { //sets the display position of the text on the consol (allowing to display anywhere on the consol)
 	HANDLE screen = GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD position;
 
@@ -386,9 +384,15 @@ void Menu::display(int column, int row, string outputString, bool resetCursorPos
         position.Y = 0; //row
         SetConsoleCursorPosition(screen, position);
     } else { //set the position to the row following the current
-        position.X = column; //column
-        position.Y = ++row; //row
-        SetConsoleCursorPosition(screen, position);
+        if(addExtraRow){
+            position.X = column; //column
+            position.Y = ++row; //row
+            SetConsoleCursorPosition(screen, position);
+        } else {
+            position.X = ++column; //column
+            position.Y = row; //row
+            SetConsoleCursorPosition(screen, position);
+        }
     }
 }
 
