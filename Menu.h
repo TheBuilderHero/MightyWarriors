@@ -14,4 +14,6 @@ class Menu {
         void changePass(std::string username);
         char yesOrNo();
         void ClearConsoleInputBuffer();
+        void display(int column, int row, std::string outputString, bool resetCursorPosition = true);
+        std::string numberFormatting(double decimalNumber, int numberOfDecimals);
 };

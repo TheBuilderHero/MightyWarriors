@@ -3,6 +3,7 @@
 #include <iomanip>
 #include <limits>
 #include <stdio.h>
+#include <sstream>
 
 #include "Account.h"
 #include "ReachOutToServer.h"
@@ -27,7 +28,7 @@ void Menu::ClearConsoleInputBuffer()
 }
 
 void Menu::getGameVersion(){
-    cout << "Client Version: " << to_string(gameVersion) << "." << to_string(gameMajorBuild) << "." << to_string(gameMinorBuild) << "." << to_string(gamePatch) << endl;
+    display(3, 3, "Client Version: " + to_string(gameVersion) + "." + to_string(gameMajorBuild) + "." + to_string(gameMinorBuild) + "." + to_string(gamePatch), false);
     system("pause");
 }
 
@@ -37,13 +38,13 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
     zeroKeyPressedLastLoop = false, nKeyPressedLastLoop = false, iKeyPressedLastLoop = false, aKeyPressedLastLoop = false, controlKeyPressedLastLoop = false, 
     altKeyPressedLastLoop = false ,kKeyPressedLastLoop = false;
     int value;
-    cout << setfill(' ') << setw(61) << "Menu of options:" << 
-    endl << setfill(' ') << setw(48) << "Change Password" << setfill(' ') << setw(25) << "(type number \"1\")" << endl;
-    cout << setfill(' ') << setw(39) << "Logout" << setfill(' ') << setw(34) <<"(type number \"2\")" << endl;
-    cout << setfill(' ') << setw(38) << "Stats" << setfill(' ') << setw(35) <<"(type number \"3\")" << endl;
-    cout << setfill(' ') << setw(37) << "Info" << setfill(' ') << setw(36) <<"(type number \"4\")" << endl;
-    cout << setfill(' ') << setw(39) << "Battle" << setfill(' ') << setw(34) <<"(type number \"5\")" << endl;
-    cout << setfill(' ') << setw(37) << "Exit" << setfill(' ') << setw(36) <<"(type number \"0\")" << endl;// << setfill(' ') << setw(35) << "> ";
+    display(44, 1, "Menu of options:");
+    display(32, 2, "Change Password");      display(53, 2, "(type number \"1\")");
+    display(32, 3, "Logout");               display(53, 3, "(type number \"2\")");
+    display(32, 4, "Stats");                display(53, 4, "(type number \"3\")");
+    display(32, 5, "Info");                 display(53, 5, "(type number \"4\")");
+    display(32, 6, "Battle");               display(53, 6, "(type number \"5\")");
+    display(32, 7, "Exit");                 display(53, 7, "(type number \"6\")");
     while (1){
         if (GetKeyState('1') < 0 && !oneKeyPressedLastLoop) { //checks to make sure that the 1 key is pressed and makes sure it was not pressed last check
             oneKeyPressedLastLoop = true;
@@ -149,8 +150,8 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
     case 14:
         system("cls");
         ClearConsoleInputBuffer();
-        cout << "October is a Beautiful month to get Married!" << endl;
-        cout << "Dakota loves Beautiful!" << endl;
+        display(3,3,"October is a Beautiful month to get Married!");
+        display(3,4,"Dakota loves Beautiful!");
         system("pause");
         menu(username);
         break;
@@ -162,7 +163,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
     default:
         system("cls");
         ClearConsoleInputBuffer();
-        cout << "Invalid input, Please try again..." << endl;
+        display(3, 3, "Invalid input, Please try again...");
         system("pause");
         menu(username);
         break;
@@ -177,13 +178,13 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
     bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, fiveKeyPressedLastLoop = false, 
     zeroKeyPressedLastLoop = false, nKeyPressedLastLoop = false, iKeyPressedLastLoop = false, aKeyPressedLastLoop = false, controlKeyPressedLastLoop = false, 
     altKeyPressedLastLoop = false ,kKeyPressedLastLoop = false;
-    cout << setfill(' ') << setw(65) << "Admin Menu of options:" << 
-    endl << setfill(' ') << setw(48) << "Change Password" << setfill(' ') << setw(25) << "(type number \"1\")" << endl;
-    cout << setfill(' ') << setw(39) << "Logout" << setfill(' ') << setw(34) <<"(type number \"2\")" << endl;
-    cout << setfill(' ') << setw(38) << "Stats" << setfill(' ') << setw(35) <<"(type number \"3\")" << endl;
-    cout << setfill(' ') << setw(37) << "Info" << setfill(' ') << setw(36) <<"(type number \"4\")" << endl;
-    cout << setfill(' ') << setw(39) << "Battle" << setfill(' ') << setw(34) <<"(type number \"5\")" << endl;
-    cout << setfill(' ') << setw(37) << "Exit" << setfill(' ') << setw(36) <<"(type number \"0\")" << endl;
+    display(44, 1, "Admin Menu of options:");
+    display(32, 2, "Change Password");      display(53, 2, "(type number \"1\")");
+    display(32, 3, "Logout");               display(53, 3, "(type number \"2\")");
+    display(32, 4, "Stats");                display(53, 4, "(type number \"3\")");
+    display(32, 5, "Info");                 display(53, 5, "(type number \"4\")");
+    display(32, 6, "Battle");               display(53, 6, "(type number \"5\")");
+    display(32, 7, "Exit");                 display(53, 7, "(type number \"6\")");
     
     while (1){
         //change password
@@ -368,4 +369,33 @@ char Menu::yesOrNo(){ //waits for a user to click the y or n key
         }
     }
     ClearConsoleInputBuffer();
+}
+
+void Menu::display(int column, int row, string outputString, bool resetCursorPosition) { //sets the display position of the text on the consol (allowing to display anywhere on the consol)
+	HANDLE screen = GetStdHandle(STD_OUTPUT_HANDLE);
+	COORD position;
+
+	position.X = column; //column
+	position.Y = row; //row
+
+	SetConsoleCursorPosition(screen, position);
+	cout << outputString;
+
+    if (resetCursorPosition) {//rest the position to 0, 0 to prevent issues in other text:
+        position.X = 0; //column
+        position.Y = 0; //row
+        SetConsoleCursorPosition(screen, position);
+    } else { //set the position to the row following the current
+        position.X = column; //column
+        position.Y = ++row; //row
+        SetConsoleCursorPosition(screen, position);
+    }
+}
+
+string Menu::numberFormatting(double decimalNumber, int numberOfDecimals) { //formats a decimal value to a given number of decimal places and returns it in string form
+	stringstream formattedNumber;
+	string formatNumberOutput;
+	formattedNumber << setprecision(numberOfDecimals) << fixed << showpoint << decimalNumber;
+	formattedNumber >> formatNumberOutput;
+	return formatNumberOutput;
 }
