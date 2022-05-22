@@ -318,7 +318,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
     cout << "You have complete the Player setup Proccess." << endl;
     system("pause");
 
-    introStory(username); //send the user to the intro story
+    introStory(raceChoice, username); //send the user to the intro story
 }
 void Account::levelUp(std::string username, int numOfStatPoints){
     Cipher code;
@@ -695,34 +695,112 @@ void Account::newOrExistingAccout(){ // asks and runs through everything for new
     }
 }
 
-void Account::introStory(string username){ //this random story generation should probably be moved onto the server.
+void Account::introStory(int raceChoice, string username){ //this random story generation should probably be moved onto the server.
     system("cls");
     srand((unsigned)time(0)); //takes a seed for the random number based on the time
     int randomStoryChoice;
     randomStoryChoice = (rand()%3)+1;
 
     cout << "Welcome to the game Mighty Warriors!" << endl 
-    << storyTree(randomStoryChoice) << endl;
+    << storyTree(raceChoice, randomStoryChoice) << endl;
     system("pause");
 
     menuClass.changePass(username); //before sending them to the logon screen they need to set their new account's password.
 }
 
-string Account::storyTree(int randomStoryChoice){ // i1 is just a placement value for the actual determing value that should be added to make this more random in chance for story line.
+string Account::storyTree(int raceChoice, int randomStoryChoice){ // i1 is just a placement value for the actual determing value that should be added to make this more random in chance for story line.
     string output;
     //need to make this all fetched from the server.
-    switch(randomStoryChoice){
-        case 1:
-            output = "[Story 1 for user to read about their Character based on input about it]";
+    switch(raceChoice){
+        case 1: //Human
+        {
+            switch(randomStoryChoice){
+                case 1:
+                    output = "in the year 3001, forces of mutants began appearing all over the world. the human race was faced with sudden stife and death. beginning in the city of hooligans, void cat, and his most trusted generals, The Gamer, The Builder, Quak, and Jonny, made their way through the land and destroyed whoever opposed their rule. after they successfully conquered the largest city, humanity had little hope left. they knew that in order to rid the land of this menice, they would have to reach out to the other four races for help. but humanity was prideful. would the other races help?..... your task is to recruit the other four races in the battle against the mutants and to rid the land of radiation.";
+                    break;
+                case 2:
+                    output = "[Story 2 for user to read about their Character based on input about it]";
+                    break;
+                case 3:
+                    output = "[Story 3 for user to read about their Character based on input about it]";
+                    break;
+                default:
+                    output = "[Story default for user to read about their Character based on input about it]";
+                }
             break;
-        case 2:
-            output = "[Story 2 for user to read about their Character based on input about it]";
+        }
+        case 2: //Ghost
+        {
+            switch(randomStoryChoice){
+                case 1:
+                    output = "3001. the ghosts had been living....? for centuries without worry. they didnt bother anyone, an no one bothered them, without reason of course. that is until the mutants ravaged... the rundown houses and \"empty\" streets of the ghost towns around leaving radiation that even effected and affected the Ghosts. angry and disturbed, the ghosts made their move. they began attacking any camp they could. unfortunatly the radioactive weapons quickly quelled the revolt. desperate for help, the ghosts are sending you to get the other races together. your task is to recruit the other four races in the battle against the mutantsand to rid the land of radiation.";
+                    break;
+                case 2:
+                    output = "[Story 2 for user to read about their Character based on input about it]";
+                    break;
+                case 3:
+                    output = "[Story 3 for user to read about their Character based on input about it]";
+                    break;
+                default:
+                    output = "[Story default for user to read about their Character based on input about it]";
+                }
             break;
-        case 3:
-            output = "[Story 3 for user to read about their Character based on input about it]";
+        }
+        case 3: //Dino
+        {
+            switch(randomStoryChoice){
+                case 1:
+                    output = "in the year 3001... dinos cant talk. but if they could they'd ask you for help. they are sending you out because the mutants are invading. the four Generals of the mutant army are marching quickly on the dino empire... your task is to recruit the other four races in the battle against the mutants and to rid the land of radiation.";
+                    break;
+                case 2:
+                    output = "[Story 2 for user to read about their Character based on input about it]";
+                    break;
+                case 3:
+                    output = "[Story 3 for user to read about their Character based on input about it]";
+                    break;
+                default:
+                    output = "[Story default for user to read about their Character based on input about it]";
+                }
             break;
+        }
+        case 4: //Elf
+        {
+            switch(randomStoryChoice){
+                case 1:
+                    output = "the year 3001. an army of mutants marches on the last stronghold of elves. General Quak and General Jonny have taken all but the best cities, burning and pillaging as they went. the elven race has had its armies reduced by half. the ensuing battle results in a draw. though not a win, it gave hope to the dwindling moral of the elven soldiers. finally there was a way out. the elven commander wasted no time. he is sending you as a emisary to the other races... your task is to recruit the other four races in the battle against the mutants and to rid the land of radiation.";
+                    break;
+                case 2:
+                    output = "[Story 2 for user to read about their Character based on input about it]";
+                    break;
+                case 3:
+                    output = "[Story 3 for user to read about their Character based on input about it]";
+                    break;
+                default:
+                    output = "[Story default for user to read about their Character based on input about it]";
+                }
+            break;
+        }
+        case 5: //Dryad
+        {
+            switch(randomStoryChoice){
+                case 1:
+                    output = "what year is it? 3001? trees have long slow lives so it can be hard to remember the year... until void cat started to take over the world. one by one, the forests of the dryads were burnt with radiation. in their place the mutants placed a radioactive army. on and on they marched. as the number of dryads dwindled, they did the one thing they vowed they wouldnt... they reached out to the other races. they are sending you. your task is to recruit the other four races in the battle against the mutants and to rid the land of radiation.";
+                    break;
+                case 2:
+                    output = "[Story 2 for user to read about their Character based on input about it]";
+                    break;
+                case 3:
+                    output = "[Story 3 for user to read about their Character based on input about it]";
+                    break;
+                default:
+                    output = "[Story default for user to read about their Character based on input about it]";
+                }
+            break;
+        }
         default:
-            output = "[Story default for user to read about their Character based on input about it]";
+            output = "Failed story pull";
+            break;
     }
+
     return output;
 }
