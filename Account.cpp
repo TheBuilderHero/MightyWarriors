@@ -218,8 +218,9 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
             }
             bool answered = false;
             while(!answered) { //validate the chosen race
+                Menu menu;
                 cout << "Your race has been set to " << raceName << ". Would you like to accept this and continue?(Y/N)" << endl << ">";
-                cin >> answer;
+                answer = menu.yesOrNo();
                 if (answer != 'n' && answer !='N' && answer !='y' && answer !='Y') { //if they did not enter y, Y, n, or, N then we will tell them what they input is invalid and retry.
                     cout << "Unrecognized input." << "   Please enter a valid input." << endl;
                     system("pause");
@@ -237,8 +238,6 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
     }
     system("cls");
     //Now that the race has been chosen and validated move on to kit selection
-    cout << "Now it is time to select your Kit" << endl;
-    system("pause");
     int kitChoice = 0;
     exitNow = false;
     while(!exitNow){ //while the user has not selected one of the four kit options it will continue to ask them for an aswer to kitChoice.
@@ -289,8 +288,9 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
             }
             int answered = 0; // 0 for false :: 1 for true
             while(!answered) { //validate the chosen race
+                Menu menu;
                 cout << "Your kit has been set to " << kitName << ". Would you like to accept this and continue?(Y/N)" << endl << ">";
-                cin >> answer;
+                answer = menu.yesOrNo();
                 if (answer != 'n' && answer !='N' && answer !='y' && answer !='Y') { //if they did not enter y, Y, n, or, N then we will tell them what they input is invalid and retry.
                     cout << "Unrecognized input." << "   Please enter a valid input." << endl;
                     system("pause");
@@ -306,19 +306,98 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
             }
         }
     }
-    //
-    //-Kyle - Please review the following
-    //
-    server.sendToServer(code.cipher("8", username, to_string(raceChoice), to_string(kitChoice))); //write race and kit to .dat file on server
+
+
+    //Setup Player Weapon:
+    system("cls");
+    int weaponChoice = 0;
+    exitNow = false;
+    while(!exitNow){ //while the user has not selected one of the weapon options it will continue to ask them for an answer to weaponChoice.
+        system("cls");
+        weaponChoice = 0;
+        cout << endl << "Select your Character's weapon:" << endl;
+        cout << "Please type the number corresponding to one of the kits from the list below (Note, this cannot be changed later!): "<< endl << endl;
+        cout << "1 - Sword" << endl;
+        cout << " - - +20 Physical Damage" << endl;
+        cout << "2 - Bow" << endl;
+        cout << " - - +12 Physical Damage" << endl;
+        cout << "3 - Dagger" << endl;
+        cout << " - - +12 Physical Damage" << endl;
+        cout << "4 - Fire Rune" << endl;
+        cout << " - - +18 Magic Damage and +3 Physical Damage" << endl;
+        cout << "5 - Wind Rune" << endl;
+        cout << " - - +14 Magic Damage and +6 Physical Damage" << endl;
+        cout << "6 - Ice Spike" << endl;
+        cout << " - - +36 Magic Damage and +16 Physical Damage" << endl;
+        cout << "7 - Black Book" << endl;
+        cout << " - - +8 Magic Damage and +8 Physical Damage and +5 PsychicDamage" << endl;
+        cout << ">";
+        cin >> weaponChoice;
+        if (weaponChoice <= 0 || weaponChoice > 7) {
+            cin.clear(); //this and the next resolve issues with infinitely looping invalid
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
+            cout << "You have entered an invalid input, Please try again." << endl;
+            weaponChoice = 0;
+            system("pause");
+            system("cls");
+        } else {
+            string weaponName;
+            switch(weaponChoice){
+                case 1:
+                    weaponName = "Sword";
+                    break;
+                case 2:
+                    weaponName = "Bow";
+                    break;
+                case 3:
+                    weaponName = "Dagger";
+                    break;
+                case 4:
+                    weaponName = "Fire Rune";
+                    break;
+                case 5:
+                    weaponName = "Wind Rune";
+                    break;
+                case 6:
+                    weaponName = "Ice Spike";
+                    break;
+                case 7:
+                    weaponName = "Black Book";
+                    break;
+                default:
+                    weaponName = "not chosen";
+                    break;
+            }
+            int answered = 0; // 0 for false :: 1 for true
+            while(!answered) { //validate the chosen race
+                Menu menu;
+                cout << "Your Weapon has been set to " << weaponName << ". Would you like to accept this and continue?(Y/N)" << endl << "";
+                answer = menu.yesOrNo();
+                if (answer != 'n' && answer !='N' && answer !='y' && answer !='Y') { //if they did not enter y, Y, n, or, N then we will tell them what they input is invalid and retry.
+                    cout << "Unrecognized input." << "   Please enter a valid input." << endl;
+                    system("pause");
+                    system("cls");
+                    cin.clear();
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
+                } else if (answer =='y' || answer =='Y') { //if they are statisfied with their choice it will move on and exit both while loops
+                    answered = 1;
+                    exitNow = 1;
+                } else { //if they are not satisfied with their choice it will exit the loop of asking them if they are stisfied and reask about the race which they want to select.
+                    answered = 1;
+                }
+            }
+        }
+    }
+
+
+    server.sendToServer(code.cipher("8", username, to_string(raceChoice), to_string(kitChoice), to_string(weaponChoice))); //write race and kit to .dat file on server
 
     //add it an inital stat personalization
     string wasAbleToSave = server.sendToServer(code.cipher("5", username, to_string(initHealth), to_string(initArmor), to_string(initMagicResistance), to_string(initPhysicalDamage), to_string(initMagicDamage), to_string(initAgility),
     to_string(initStealth), to_string(initStamina), to_string(initMana))); //These send the data to the server to be saved properly in the [username].stat file
     system("cls");
-    cout << "You have complete the Player setup Proccess." << endl;
-    system("pause");
-
     introStory(raceChoice, username); //send the user to the intro story
+    menuClass.changePass(username); //before sending them to the logon screen they need to set their new account's password.
 }
 void Account::levelUp(std::string username, int numOfStatPoints){
     Cipher code;
@@ -460,6 +539,12 @@ string Account::getRace(std::string username){ //returns the players race
     code.decipherS(server.sendToServer(code.cipher("13", username)));
     return code.getItemS(1);
 }
+string Account::getWeapon(std::string username){
+    Cipher code;
+    ReachOutToServer server;
+    code.decipherS(server.sendToServer(code.cipher("13", username)));
+    return code.getItemS(3);
+}
 int Account::getLevel(std::string username){
     Cipher code;
     ReachOutToServer server;
@@ -490,6 +575,7 @@ void Account::displayStats(std::string username, int bypass ,string usernameA){
         string magicalAbilites = getMagicDamgeAbilities(username);
         string raceOutput = "Player Race: " + getRace(username);
         string kitOutput = "Player Kit: " + getKit(username);
+        string weaponOutput = "Player Weapon: " + getWeapon(username);
         stringstream currentXP, totalXP;
         currentXP << fixed << setprecision(0) << getCurrentXPForNextLevel(username); //format the XP
         totalXP << fixed << setprecision(0) << getTotalXPForNextLevel(username); //format the XP
@@ -501,7 +587,8 @@ void Account::displayStats(std::string username, int bypass ,string usernameA){
         << setw(5 + playerLevelInfo.length()) << playerLevelInfo << endl << setfill('-') << setw(42) << "-" << setfill(' ') 
         << setw(5 + raceOutput.length()) << raceOutput << endl 
         << "Armor: " << setfill(' ') << setw(35) << getArmor(username) 
-        << setw(5 + kitOutput.length()) << kitOutput << endl << setfill('-') << setw(42) << "-" << endl 
+        << setw(5 + kitOutput.length()) << kitOutput << endl << setfill('-') << setw(42) << "-" << setfill(' ') 
+        << setw(5 + weaponOutput.length()) << weaponOutput << endl 
         << "Magic Resistance: " << setfill(' ') << setw(24) << getMagicResistance(username) << endl << setfill('-') << setw(42) << "-" << endl 
         << "Physical Damage: " << setfill(' ') << setw(25) << getPhysicalDamageString(username) << setfill(' ') << setw(5 + physicalAbilities.length()) << physicalAbilities << endl << setfill('-') << setw(42) << "-" << endl 
         << "Magic Damage: " << setfill(' ') << setw(28) << getMagicDamageString(username) << setfill(' ') << setw(5 + magicalAbilites.length()) << magicalAbilites << endl << setfill('-') << setw(42) << "-" << endl 
@@ -716,8 +803,6 @@ void Account::introStory(int raceChoice, string username){ //this random story g
     cout << "Welcome to the game Mighty Warriors!" << endl 
     << storyTree(raceChoice, randomStoryChoice) << endl;
     system("pause");
-
-    menuClass.changePass(username); //before sending them to the logon screen they need to set their new account's password.
 }
 
 string Account::storyTree(int raceChoice, int randomStoryChoice){ // i1 is just a placement value for the actual determing value that should be added to make this more random in chance for story line.

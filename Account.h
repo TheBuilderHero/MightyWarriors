@@ -37,6 +37,7 @@ class Account {
         std::string getPhysicalDamgeAbilities(std::string username);
         std::string getKit(std::string username);
         std::string getRace(std::string username);
+        std::string getWeapon(std::string username);
         int getLevel(std::string username);
         double getCurrentXPForNextLevel(std::string username);
         double getTotalXPForNextLevel(std::string username);

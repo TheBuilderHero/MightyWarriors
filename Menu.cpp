@@ -44,7 +44,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
     display(32, 4, "Stats");                display(53, 4, "(type number \"3\")");
     display(32, 5, "Info");                 display(53, 5, "(type number \"4\")");
     display(32, 6, "Battle");               display(53, 6, "(type number \"5\")");
-    display(32, 7, "Exit");                 display(53, 7, "(type number \"6\")");
+    display(32, 7, "Exit");                 display(53, 7, "(type number \"0\")");
     while (1){
         if (GetKeyState('1') < 0 && !oneKeyPressedLastLoop) { //checks to make sure that the 1 key is pressed and makes sure it was not pressed last check
             oneKeyPressedLastLoop = true;
@@ -184,7 +184,7 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
     display(32, 4, "Stats");                display(53, 4, "(type number \"3\")");
     display(32, 5, "Info");                 display(53, 5, "(type number \"4\")");
     display(32, 6, "Battle");               display(53, 6, "(type number \"5\")");
-    display(32, 7, "Exit");                 display(53, 7, "(type number \"6\")", false);
+    display(32, 7, "Exit");                 display(53, 7, "(type number \"0\")", false);
     
     while (1){
         //change password
