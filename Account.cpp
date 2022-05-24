@@ -364,11 +364,17 @@ int Account::getHealth(std::string username){ //reuturns the users current Healt
     code.decipherS(server.sendToServer(code.cipher("6", username)));
     return stoi(code.getItemS(1));
 }
-int Account::getPhysicalDamage(std::string username){ //reuturns the users current Attack stat
+int Account::getPhysicalDamage(std::string username){ //returns attack damage for an attack
     ReachOutToServer server;
     Cipher code;
     code.decipherS(server.sendToServer(code.cipher("6", username)));
     return stoi(code.getItemS(4));
+}
+string Account::getPhysicalDamageString(std::string username){ //reuturns the users current Attack stat range instead of an amount of damage for attacks
+    ReachOutToServer server;
+    Cipher code;
+    code.decipherS(server.sendToServer(code.cipher("6", username)));
+    return code.getItemS(4);
 }
 int Account::getArmor(std::string username){ //reuturns the users current Armor stat
     ReachOutToServer server;
@@ -382,11 +388,17 @@ int Account::getMagicResistance(std::string username){ //reuturns the users curr
     code.decipherS(server.sendToServer(code.cipher("6", username)));
     return stoi(code.getItemS(3));
 }
-int Account::getMagicDamage(std::string username){ //reuturns the users current MagicDamage stat
+int Account::getMagicDamage(std::string username){ //returns magic damage for an attack
     ReachOutToServer server;
     Cipher code;
     code.decipherS(server.sendToServer(code.cipher("6", username)));
     return stoi(code.getItemS(5));
+}
+string Account::getMagicDamageString(std::string username){ //reuturns the users current Attack stat range instead of an amount of damage for attacks
+    ReachOutToServer server;
+    Cipher code;
+    code.decipherS(server.sendToServer(code.cipher("6", username)));
+    return code.getItemS(5);
 }
 int Account::getAgility(std::string username){ //reuturns the users current Agility stat
     ReachOutToServer server;
@@ -491,8 +503,8 @@ void Account::displayStats(std::string username, int bypass ,string usernameA){
         << "Armor: " << setfill(' ') << setw(35) << getArmor(username) 
         << setw(5 + kitOutput.length()) << kitOutput << endl << setfill('-') << setw(42) << "-" << endl 
         << "Magic Resistance: " << setfill(' ') << setw(24) << getMagicResistance(username) << endl << setfill('-') << setw(42) << "-" << endl 
-        << "Physical Damage: " << setfill(' ') << setw(25) << getPhysicalDamage(username) << setfill(' ') << setw(5 + physicalAbilities.length()) << physicalAbilities << endl << setfill('-') << setw(42) << "-" << endl 
-        << "Magic Damage: " << setfill(' ') << setw(28) << getMagicDamage(username) << setfill(' ') << setw(5 + magicalAbilites.length()) << magicalAbilites << endl << setfill('-') << setw(42) << "-" << endl 
+        << "Physical Damage: " << setfill(' ') << setw(25) << getPhysicalDamageString(username) << setfill(' ') << setw(5 + physicalAbilities.length()) << physicalAbilities << endl << setfill('-') << setw(42) << "-" << endl 
+        << "Magic Damage: " << setfill(' ') << setw(28) << getMagicDamageString(username) << setfill(' ') << setw(5 + magicalAbilites.length()) << magicalAbilites << endl << setfill('-') << setw(42) << "-" << endl 
         << "Agility: " << setfill(' ') << setw(33) << getAgility(username) << endl << setfill('-') << setw(42) << "-" << endl 
         << "Stealth: " << setfill(' ') << setw(33) << getStealth(username) << endl << setfill('-') << setw(42) << "-" << endl 
         << "Stamina: " << setfill(' ') << setw(33) << getStamina(username) << endl << setfill('-') << setw(42) << "-" << endl 

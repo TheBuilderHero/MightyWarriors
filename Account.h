@@ -26,7 +26,9 @@ class Account {
         int getArmor(std::string username);
         int getMagicResistance(std::string username);
         int getPhysicalDamage(std::string username);
+        std::string getPhysicalDamageString(std::string username);
         int getMagicDamage(std::string username);
+        std::string getMagicDamageString(std::string username);
         int getAgility(std::string username);
         int getStealth(std::string username);
         int getStamina(std::string username);
