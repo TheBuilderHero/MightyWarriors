@@ -736,11 +736,12 @@ void Account::createNewAccount(){ //runs through the code to create a new user a
             system("cls");
             logonScreen();
             break;
-            case 1:
+            case 1:{
             //username is valid
+            Menu menu;
             string createAccountCheck;
             cout << "The username " << username << " is valid and you can use it as your username." << endl << "Would you like to continue and create an account with this username? (Y/N)" << endl << "> ";
-            cin >> createAccountCheck;
+            createAccountCheck = menu.yesOrNo();
             if(createAccountCheck == "y" || createAccountCheck == "Y"){
                 cout << "We will now create the account" << endl;
                 server.sendToServer(code.cipher("2", username));
@@ -757,6 +758,7 @@ void Account::createNewAccount(){ //runs through the code to create a new user a
                 logonScreen();
             }
             break;
+            }
         }
     }
 }
