@@ -13,6 +13,7 @@
                 "Account.cpp",
                 "Menu.cpp",
                 "Battle.cpp",
+                "Map.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 " -lws2_32",

@@ -13,6 +13,7 @@ class Menu {
         void adminMenu (std::string username);
         void changePass(std::string username);
         char yesOrNo();
+        int numberPressWait(int maxRange, bool hasZeroOption = false);
         void ClearConsoleInputBuffer();
         void display(int column, int row, std::string outputString, bool resetCursorPosition = true, bool addExtraRow = true);
         std::string numberFormatting(double decimalNumber, int numberOfDecimals);

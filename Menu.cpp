@@ -10,6 +10,7 @@
 #include "Cipher.h"
 #include "Menu.h"
 #include "Battle.h"
+#include "Map.h"
 
 #undef min // these are needed for the cin.ignore statments to clear out the buffer for new data.
 #undef max 
@@ -48,45 +49,46 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
     while (1){
         if (GetKeyState('1') < 0 && !oneKeyPressedLastLoop) { //checks to make sure that the 1 key is pressed and makes sure it was not pressed last check
             oneKeyPressedLastLoop = true;
+        } else if (GetKeyState('1') >= 0 && oneKeyPressedLastLoop){ // else 1 not pressed
+            oneKeyPressedLastLoop = false;
             value = 1;
             break;
-        } else if (GetKeyState('1') >= 0){ // else 1 not pressed
-            oneKeyPressedLastLoop = false;
         }
         if (GetKeyState('2') < 0 && !twoKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
             twoKeyPressedLastLoop = true;
+        } else if (GetKeyState('2') >= 0 && twoKeyPressedLastLoop){ // else 1 not pressed
+            twoKeyPressedLastLoop = false;
             value = 2;
             break;
-        } else if (GetKeyState('2') >= 0){ // else 1 not pressed
-            twoKeyPressedLastLoop = false;
         }
         if (GetKeyState('3') < 0 && !threeKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
             threeKeyPressedLastLoop = true;
+        } else if (GetKeyState('3') >= 0 && threeKeyPressedLastLoop){ // else 1 not pressed
+            threeKeyPressedLastLoop = false;
             value = 3;
             break;
-        } else if (GetKeyState('3') >= 0){ // else 1 not pressed
-            threeKeyPressedLastLoop = false;
         }
         if (GetKeyState('4') < 0 && !fourKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
             fourKeyPressedLastLoop = true;
+            
+        } else if (GetKeyState('4') >= 0 && fourKeyPressedLastLoop){ // else 1 not pressed
+            fourKeyPressedLastLoop = false;
             value = 4;
             break;
-        } else if (GetKeyState('4') >= 0){ // else 1 not pressed
-            fourKeyPressedLastLoop = false;
         }
         if (GetKeyState('5') < 0 && !fiveKeyPressedLastLoop) { //checks to make sure that the 3 key is pressed and makes sure it was not pressed last check
             fiveKeyPressedLastLoop = true;
+        } else if (GetKeyState('5') >= 0 && fiveKeyPressedLastLoop){ // else 1 not pressed
             value = 5;
-            break;
-        } else if (GetKeyState('Q') >= 0){ // else 1 not pressed
             fiveKeyPressedLastLoop = false;
+            break;
         }
         if (GetKeyState('0') < 0 && !zeroKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
             zeroKeyPressedLastLoop = true;
+        } else if (GetKeyState('0') >= 0 && zeroKeyPressedLastLoop){ // else 1 not pressed
+            zeroKeyPressedLastLoop = false;
             value = 0;
             break;
-        } else if (GetKeyState('0') >= 0){ // else 1 not pressed
-            zeroKeyPressedLastLoop = false;
         }
 
         //hidden features:
@@ -142,11 +144,16 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         getGameVersion();
         menu(username);
         break;
-    case 5: //start battle
+    case 5:{ //"Go Questing"//map for traveling and questing 
+        Map map;
+        map.listAvalibleLocations(username);
+    
+            /*//start battle
         system("cls");
         ClearConsoleInputBuffer();
-        battle.startBattle(username);//start battle code will go here.
+        battle.startBattle(username);//start battle code will go here.*/
         break;
+    }
     case 14:
         system("cls");
         ClearConsoleInputBuffer();
@@ -190,50 +197,50 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         //change password
         if (GetKeyState('1') < 0 && !oneKeyPressedLastLoop) { //checks to make sure that the 1 key is pressed and makes sure it was not pressed last check
             oneKeyPressedLastLoop = true;
+        } else if (GetKeyState('1') >= 0 && oneKeyPressedLastLoop){ // else 1 not pressed
+            oneKeyPressedLastLoop = false;
             value = 1;
             break;
-        } else if (GetKeyState('1') >= 0){ // else 1 not pressed
-            oneKeyPressedLastLoop = false;
         }
         //Logout
         if (GetKeyState('2') < 0 && !twoKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
             twoKeyPressedLastLoop = true;
+        } else if (GetKeyState('2') >= 0 && twoKeyPressedLastLoop){ // else 2 not pressed
+            twoKeyPressedLastLoop = false;
             value = 2;
             break;
-        } else if (GetKeyState('2') >= 0){ // else 2 not pressed
-            twoKeyPressedLastLoop = false;
         }
         //Stats of any user
         if (GetKeyState('3') < 0 && !threeKeyPressedLastLoop) { //checks to make sure that the 3 key is pressed and makes sure it was not pressed last check
             threeKeyPressedLastLoop = true;
+        } else if (GetKeyState('3') >= 0 && threeKeyPressedLastLoop){ // else 3 not pressed
+            threeKeyPressedLastLoop = false;
             value = 3;
             break;
-        } else if (GetKeyState('3') >= 0){ // else 3 not pressed
-            threeKeyPressedLastLoop = false;
         }
         //Info - game version
         if (GetKeyState('4') < 0 && !fourKeyPressedLastLoop) { //checks to make sure that the 4 key is pressed and makes sure it was not pressed last check
             fourKeyPressedLastLoop = true;
+        } else if (GetKeyState('4') >= 0 && fourKeyPressedLastLoop){ // else 4 not pressed
+            fourKeyPressedLastLoop = false;
             value = 4;
             break;
-        } else if (GetKeyState('4') >= 0){ // else 4 not pressed
-            fourKeyPressedLastLoop = false;
         }
         //Battle start
         if (GetKeyState('5') < 0 && !fiveKeyPressedLastLoop) { //checks to make sure that the 5 key is pressed and makes sure it was not pressed last check
             fiveKeyPressedLastLoop = true;
+        } else if (GetKeyState('5') >= 0 && fiveKeyPressedLastLoop){ // else 5 not pressed
+            fiveKeyPressedLastLoop = false;
             value = 5;
             break;
-        } else if (GetKeyState('5') >= 0){ // else 5 not pressed
-            fiveKeyPressedLastLoop = false;
         }
         //Exit program
         if (GetKeyState('0') < 0 && !zeroKeyPressedLastLoop) { //checks to make sure that the 0 key is pressed and makes sure it was not pressed last check
             zeroKeyPressedLastLoop = true;
+        } else if (GetKeyState('0') >= 0 && zeroKeyPressedLastLoop){ // else 0 not pressed
+            zeroKeyPressedLastLoop = false;
             value = 0;
             break;
-        } else if (GetKeyState('0') >= 0){ // else 0 not pressed
-            zeroKeyPressedLastLoop = false;
         }
 
         //hidden feature: 
@@ -367,6 +374,99 @@ char Menu::yesOrNo(){ //waits for a user to click the y or n key
         }
     }
     ClearConsoleInputBuffer();
+}
+int Menu::numberPressWait(int maxRange, bool hasZeroOption){ //returns a value based on the key pressed
+    bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, fiveKeyPressedLastLoop = false, sixKeyPressedLastLoop = false,sevenKeyPressedLastLoop = false,eightKeyPressedLastLoop = false,nineKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false;
+    while (1){
+        if (GetKeyState('1') < 0 && !oneKeyPressedLastLoop) { //checks to make sure that the 1 key is pressed and makes sure it was not pressed last check
+            oneKeyPressedLastLoop = true;
+        } else if (GetKeyState('1') >= 0 && oneKeyPressedLastLoop){ // else 1 not pressed
+            oneKeyPressedLastLoop = false;
+            return 1;
+            break;
+        }
+        if(maxRange > 1){
+            if (GetKeyState('2') < 0 && !twoKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+                twoKeyPressedLastLoop = true;
+            } else if (GetKeyState('2') >= 0 && twoKeyPressedLastLoop){ // else 2 not pressed
+                twoKeyPressedLastLoop = false;
+                return 2;
+                break;
+            }
+        }
+        if(maxRange > 2){
+            if (GetKeyState('3') < 0 && !threeKeyPressedLastLoop) { //checks to make sure that the 3 key is pressed and makes sure it was not pressed last check
+                threeKeyPressedLastLoop = true;
+            } else if (GetKeyState('3') >= 0 && threeKeyPressedLastLoop){ // else 3 not pressed
+                threeKeyPressedLastLoop = false;
+                return 3;
+                break;
+            }
+        }
+        if(maxRange > 3){
+            if (GetKeyState('4') < 0 && !fourKeyPressedLastLoop) { //checks to make sure that the 4 key is pressed and makes sure it was not pressed last check
+                fourKeyPressedLastLoop = true;
+            } else if (GetKeyState('4') >= 0 && fourKeyPressedLastLoop){ // else 4 not pressed
+                fourKeyPressedLastLoop = false;
+                return 4;
+                break;
+            }
+        }
+        if(maxRange > 4){
+            if (GetKeyState('5') < 0 && !fiveKeyPressedLastLoop) { //checks to make sure that the 5 key is pressed and makes sure it was not pressed last check
+                fiveKeyPressedLastLoop = true;
+            } else if (GetKeyState('5') >= 0 && fiveKeyPressedLastLoop){ // else 5 not pressed
+                fiveKeyPressedLastLoop = false;
+                return 5;
+                break;
+            }
+        }
+        if(maxRange > 5){
+            if (GetKeyState('6') < 0 && !sixKeyPressedLastLoop) { //checks to make sure that the 6 key is pressed and makes sure it was not pressed last check
+                sixKeyPressedLastLoop = true;
+            } else if (GetKeyState('6') >= 0 && sixKeyPressedLastLoop){ // else 6 not pressed
+                sixKeyPressedLastLoop = false;
+                return 6;
+                break;
+            }
+        }
+        if(maxRange > 6){
+            if (GetKeyState('7') < 0 && !sevenKeyPressedLastLoop) { //checks to make sure that the 7 key is pressed and makes sure it was not pressed last check
+                sevenKeyPressedLastLoop = true;
+            } else if (GetKeyState('7') >= 0 && sevenKeyPressedLastLoop){ // else 7 not pressed
+                sevenKeyPressedLastLoop = false;
+                return 7;
+                break;
+            }
+        }
+        if(maxRange > 7){
+            if (GetKeyState('8') < 0 && !eightKeyPressedLastLoop) { //checks to make sure that the 8 key is pressed and makes sure it was not pressed last check
+                eightKeyPressedLastLoop = true;
+            } else if (GetKeyState('8') >= 0 && eightKeyPressedLastLoop){ // else 8 not pressed
+                eightKeyPressedLastLoop = false;
+                return 8;
+                break;
+            }
+        }
+        if(maxRange > 8){
+            if (GetKeyState('9') < 0 && !nineKeyPressedLastLoop) { //checks to make sure that the 9 key is pressed and makes sure it was not pressed last check
+                nineKeyPressedLastLoop = true;
+            } else if (GetKeyState('9') >= 0 && nineKeyPressedLastLoop){ // else 9 not pressed
+                nineKeyPressedLastLoop = false;
+                return 9;
+                break;
+            }
+        }
+        if (hasZeroOption == true){
+            if (GetKeyState('0') < 0 && !zeroKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+                zeroKeyPressedLastLoop = true;
+            } else if (GetKeyState('0') >= 0 && zeroKeyPressedLastLoop){ // else 1 not pressed
+                zeroKeyPressedLastLoop = false;
+                return  0;
+                break;
+            }
+        }
+    }
 }
 
 void Menu::display(int column, int row, string outputString, bool resetCursorPosition, bool addExtraRow) { //sets the display position of the text on the consol (allowing to display anywhere on the consol)
