@@ -43,6 +43,7 @@ class Account {
         double getTotalXPForNextLevel(std::string username);
         void displayStats(std::string username, int bypass = 0, std::string usernameA = ""); //by default bypass is 0 for standard user
         int getQuest1Progress(std::string username);
+        void setQuest1Progress(std::string username, int step);
 
         void newOrExistingAccout();
         void createNewAccount();

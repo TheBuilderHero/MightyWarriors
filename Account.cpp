@@ -571,6 +571,10 @@ double Account::getTotalXPForNextLevel(std::string username){
 int Account::getQuest1Progress(std::string username){
     return 0;
 }
+//Dakota please add code to save player quest progress
+void Account::setQuest1Progress(std::string username, int step){
+    
+}
 
 void Account::displayStats(std::string username, int bypass ,string usernameA){
     Cipher code;
