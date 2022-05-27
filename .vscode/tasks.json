@@ -14,6 +14,7 @@
                 "Menu.cpp",
                 "Battle.cpp",
                 "Map.cpp",
+                "Quests.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 " -lws2_32",

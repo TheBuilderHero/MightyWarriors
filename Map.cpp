@@ -4,6 +4,7 @@
 #include "Menu.h"
 #include "Account.h"
 #include "Battle.h"
+#include "Quests.h"
 
 using namespace std;
 
@@ -55,21 +56,28 @@ void Map::listAvalibleLocations(string username){
     if (answer == 0){
         menu.menu(username);
     } else{
+        Quests quests;
         switch(answer){ //need battle groups for this to work:
             case 1:
-                system("cls");
+                quests.getAvailableQuests(username, 1);
+                /*system("cls");
                 menu.ClearConsoleInputBuffer();
                 battle.startBattle(username);
-                break;
+                break;*/
             case 2:
+                quests.getAvailableQuests(username, 2);
                 break;
             case 3:
+                quests.getAvailableQuests(username, 3);
                 break;
             case 4:
+                quests.getAvailableQuests(username, 4);
                 break;
             case 5:
+                quests.getAvailableQuests(username, 5);
                 break;
             case 6:
+                quests.getAvailableQuests(username, 6);
                 break;
             case 7:
                 break;

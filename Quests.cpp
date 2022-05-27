@@ -6,9 +6,7 @@
 #include "Account.h"
 using namespace std;
 
-Account account;
-
-void getQuestDescription(string username, int quest){
+void Quests::getQuestDescription(string username, int quest){
     int quest1Step = account.getQuest1Progress(username);
     switch(quest){
         case 1:
@@ -78,7 +76,7 @@ void getQuestDescription(string username, int quest){
     }
 }
 
-void getQuestLog(string username, int quest){
+void Quests::getQuestLog(string username, int quest){
     int quest1Step = account.getQuest1Progress(username);
     string output = "";
     switch(quest){
@@ -116,8 +114,8 @@ void getQuestLog(string username, int quest){
     system("cls");
 }
 
-void getAvailableQuests(string username, int location){
-    Account account;
+void Quests::getAvailableQuests(string username, int location){
+    //Account account; //multiple definitions causing issues
     int quest1Step = account.getQuest1Progress(username);
     bool noQuests = true;
 
@@ -178,7 +176,7 @@ void getAvailableQuests(string username, int location){
     system("cls");
 }
 
-void doQuest(string username, int location, int quest){
+void Quests::doQuest(string username, int location, int quest){
     int quest1Step = account.getQuest1Progress(username);
     bool noQuests = true;
 
@@ -227,7 +225,7 @@ void doQuest(string username, int location, int quest){
     }
 }
 
-void quest1(string username, int step){
+void Quests::quest1(string username, int step){
     Battle battle;
     switch(step){
         case 0:
