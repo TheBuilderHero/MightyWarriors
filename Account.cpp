@@ -567,6 +567,11 @@ double Account::getTotalXPForNextLevel(std::string username){
     return stod(totalXPForNextLevel);
 }
 
+//Dakota please add a variable and code for this
+int Account::getQuest1Progress(std::string username){
+    return 0;
+}
+
 void Account::displayStats(std::string username, int bypass ,string usernameA){
     Cipher code;
     ReachOutToServer server;
