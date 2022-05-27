@@ -35,18 +35,23 @@ void Menu::getGameVersion(){
 
 void Menu::menu(string username){ //bring up the menu for the passing in the username
     system("cls");
-    bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, fiveKeyPressedLastLoop = false, 
-    zeroKeyPressedLastLoop = false, nKeyPressedLastLoop = false, iKeyPressedLastLoop = false, aKeyPressedLastLoop = false, controlKeyPressedLastLoop = false, 
-    altKeyPressedLastLoop = false ,kKeyPressedLastLoop = false;
+    bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false,
+    nKeyPressedLastLoop = false, iKeyPressedLastLoop = false, aKeyPressedLastLoop = false, 
+    controlKeyPressedLastLoop = false, altKeyPressedLastLoop = false ,kKeyPressedLastLoop = false;
     int value;
-    display(44, 1, "Menu of options:");
-    display(32, 2, "Change Password");      display(53, 2, "(type number \"1\")");
-    display(32, 3, "Logout");               display(53, 3, "(type number \"2\")");
-    display(32, 4, "Stats");                display(53, 4, "(type number \"3\")");
-    display(32, 5, "Info");                 display(53, 5, "(type number \"4\")");
-    display(32, 6, "Go Questing");          display(53, 6, "(type number \"5\")");
-    display(32, 7, "Exit");                 display(53, 7, "(type number \"0\")");
+    display(50, 1, "Menu");
+    display(32, 2, "Go Questing");          display(53, 2, "(Press \"1\")");
+    display(32, 3, "Stats");                display(53, 3, "(Press \"2\")");
+    display(32, 4, "Account Info");         display(53, 4, "(Press \"3\")");
+    display(32, 5, "Exit");                 display(53, 5, "(Press \"0\")");
     while (1){
+        if (GetKeyState('0') < 0 && !zeroKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+            zeroKeyPressedLastLoop = true;
+        } else if (GetKeyState('0') >= 0 && zeroKeyPressedLastLoop){ // else 1 not pressed
+            zeroKeyPressedLastLoop = false;
+            value = 0;
+            break;
+        }
         if (GetKeyState('1') < 0 && !oneKeyPressedLastLoop) { //checks to make sure that the 1 key is pressed and makes sure it was not pressed last check
             oneKeyPressedLastLoop = true;
         } else if (GetKeyState('1') >= 0 && oneKeyPressedLastLoop){ // else 1 not pressed
@@ -66,28 +71,6 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         } else if (GetKeyState('3') >= 0 && threeKeyPressedLastLoop){ // else 1 not pressed
             threeKeyPressedLastLoop = false;
             value = 3;
-            break;
-        }
-        if (GetKeyState('4') < 0 && !fourKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
-            fourKeyPressedLastLoop = true;
-            
-        } else if (GetKeyState('4') >= 0 && fourKeyPressedLastLoop){ // else 1 not pressed
-            fourKeyPressedLastLoop = false;
-            value = 4;
-            break;
-        }
-        if (GetKeyState('5') < 0 && !fiveKeyPressedLastLoop) { //checks to make sure that the 3 key is pressed and makes sure it was not pressed last check
-            fiveKeyPressedLastLoop = true;
-        } else if (GetKeyState('5') >= 0 && fiveKeyPressedLastLoop){ // else 1 not pressed
-            value = 5;
-            fiveKeyPressedLastLoop = false;
-            break;
-        }
-        if (GetKeyState('0') < 0 && !zeroKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
-            zeroKeyPressedLastLoop = true;
-        } else if (GetKeyState('0') >= 0 && zeroKeyPressedLastLoop){ // else 1 not pressed
-            zeroKeyPressedLastLoop = false;
-            value = 0;
             break;
         }
 
@@ -121,32 +104,19 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
     case 0:
         exit(1);
         break;
-    case 1: //change password
-        //change password
-        system("cls");
-        ClearConsoleInputBuffer();
-        account.logonScreen(2);
+    case 1:{ //"Go Questing"//map for traveling and questing 
+        Map map;
+        map.listAvalibleLocations(username);
         break;
-    case 2://logout
-        system("cls");
-        ClearConsoleInputBuffer();
-        account.logonScreen();
-        break;
-    case 3://display stats
+    }
+    case 2://display stats
         system("cls");
         ClearConsoleInputBuffer();
         account.displayStats(username);
         menu(username);
         break;
-    case 4://display version and info
-        system("cls");
-        ClearConsoleInputBuffer();
-        getGameVersion();
-        menu(username);
-        break;
-    case 5:{ //"Go Questing"//map for traveling and questing 
-        Map map;
-        map.listAvalibleLocations(username);
+    case 3:{
+        accountInfo(username);
         break;
     }
     case 14:
@@ -168,6 +138,47 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         display(3, 3, "Invalid input, Please try again...", false);
         system("pause");
         menu(username);
+        break;
+    }
+}
+
+void Menu::accountInfo(string username){
+    int answer;
+    system("cls");
+    display(44, 1, "Accout Info");
+    display(32, 2, "Change Password");      display(53, 2, "(Press \"1\")");
+    display(32, 3, "Logout");               display(53, 3, "(Press \"2\")");
+    display(32, 4, "Info");                 display(53, 4, "(Press \"3\")");
+    display(32, 5, "Back to Main Menu");    display(53, 5, "(Press \"0\")");
+    answer = numberPressWait(3, true);
+    switch (answer)
+    {
+    case 0: //back to main menu
+        menu(username);
+        break;
+    case 1: //change password
+        //change password
+        system("cls");
+        ClearConsoleInputBuffer();
+        account.logonScreen(2);
+        break;
+    case 2://logout
+        system("cls");
+        ClearConsoleInputBuffer();
+        account.logonScreen();
+        break;
+    case 3://display version and info
+        system("cls");
+        ClearConsoleInputBuffer();
+        getGameVersion();
+        menu(username);
+        break;
+    default:
+        system("cls");
+        ClearConsoleInputBuffer();
+        display(3, 3, "Invalid input, Please try again...", false);
+        system("pause");
+        accountInfo(username);
         break;
     }
 }

@@ -10,6 +10,7 @@ class Menu {
         const int gamePatch       = 0;
         void getGameVersion();
         void menu(std::string username);
+        void accountInfo(std::string username);
         void adminMenu (std::string username);
         void changePass(std::string username);
         char yesOrNo();

@@ -644,6 +644,7 @@ void Account::displayStats(std::string username, int bypass ,string usernameA){
 
 void Account::logonScreen(int type){ //defualt is case 1 - that is a standard logon... Case 2 is change password logon
     Cipher code;
+    Menu menu;
     system("cls");
     ReachOutToServer server;
     string usernameE;
@@ -651,12 +652,15 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
     int validLogon;
     switch (type){
         case 1:
-            cout << "You are at the logon screen" << endl << "Please enter your username or type \"no\" if you do not have an account\n> ";
+            menu.display(37, 1, "Logon Screen");
+            menu.display(12, 2, "Please enter your username or type \"no\" if you do not have an account");
+            menu.display(37, 3, "> ", false, false);
             cin >> usernameE;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
             if(usernameE == newaccountMenu1 || usernameE == newaccountMenu2 || usernameE == newaccountMenu3 || usernameE == newaccountMenu4) createNewAccount();
-            cout << "Please enter the password for the account\n> ";
+            menu.display(12, 4, "Please enter the password for the account");
+            menu.display(37, 5, "> ", false, false);
             cin >> passwordE;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
@@ -664,7 +668,7 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
             if (validLogon == 1){//logon is valid
                 menuClass.menu(usernameE);
             } else {
-                cout << "Invalid Username or Password..." << endl;
+                menu.display(12, 0, "Invalid Username or Password...");
                 system("pause");
                 //logon is invalid
                 logonScreen();
