@@ -11,6 +11,8 @@
 #include "Menu.h"
 #include "Battle.h"
 #include "Map.h"
+#include "WorldMap.h"
+#include "Quests.h"
 
 #undef min // these are needed for the cin.ignore statments to clear out the buffer for new data.
 #undef max 
@@ -35,15 +37,16 @@ void Menu::getGameVersion(){
 
 void Menu::menu(string username){ //bring up the menu for the passing in the username
     system("cls");
-    bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false,
+    bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false,
     nKeyPressedLastLoop = false, iKeyPressedLastLoop = false, aKeyPressedLastLoop = false, 
     controlKeyPressedLastLoop = false, altKeyPressedLastLoop = false ,kKeyPressedLastLoop = false;
     int value;
     display(50, 1, "Menu");
     display(32, 2, "Go Questing");          display(53, 2, "(Press \"1\")");
-    display(32, 3, "Stats");                display(53, 3, "(Press \"2\")");
-    display(32, 4, "Account Info");         display(53, 4, "(Press \"3\")");
-    display(32, 5, "Exit");                 display(53, 5, "(Press \"0\")");
+    display(32, 3, "Travel");               display(53, 3, "(Press \"2\")");
+    display(32, 4, "Stats");                display(53, 4, "(Press \"3\")");
+    display(32, 5, "Account Info");         display(53, 5, "(Press \"4\")");
+    display(32, 6, "Exit");                 display(53, 6, "(Press \"0\")");
     while (1){
         if (GetKeyState('0') < 0 && !zeroKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
             zeroKeyPressedLastLoop = true;
@@ -71,6 +74,13 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         } else if (GetKeyState('3') >= 0 && threeKeyPressedLastLoop){ // else 1 not pressed
             threeKeyPressedLastLoop = false;
             value = 3;
+            break;
+        }
+        if (GetKeyState('4') < 0 && !fourKeyPressedLastLoop) { //checks to make sure that the 4 key is pressed and makes sure it was not pressed last check
+            fourKeyPressedLastLoop = true;
+        } else if (GetKeyState('4') >= 0 && fourKeyPressedLastLoop){ // else 4 not pressed
+            fourKeyPressedLastLoop = false;
+            value = 4;
             break;
         }
 
@@ -105,17 +115,23 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         exit(1);
         break;
     case 1:{ //"Go Questing"//map for traveling and questing 
+            //We probably need a separate questing menu
         Map map;
         map.listAvalibleLocations(username);
         break;
     }
-    case 2://display stats
+    case 2://travel option
+        system("cls");
+        ClearConsoleInputBuffer();
+        travelMenu(username);
+        break;
+    case 3://display stats
         system("cls");
         ClearConsoleInputBuffer();
         account.displayStats(username);
         menu(username);
         break;
-    case 3:{
+    case 4:{
         accountInfo(username);
         break;
     }
@@ -124,6 +140,112 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         ClearConsoleInputBuffer();
         display(3,3,"October is a Beautiful month to get Married!");
         display(3,4,"Dakota loves Beautiful!", false);
+        system("pause");
+        menu(username);
+        break;
+    case 15:
+        system("cls");
+        ClearConsoleInputBuffer();
+        adminMenu(username);
+        break;
+    default:
+        system("cls");
+        ClearConsoleInputBuffer();
+        display(3, 3, "Invalid input, Please try again...", false);
+        system("pause");
+        menu(username);
+        break;
+    }
+}
+
+void Menu::travelMenu(string username){ //bring up the menu for travel
+    system("cls");
+    WorldMap worldMap;
+    bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false,
+    nKeyPressedLastLoop = false, iKeyPressedLastLoop = false, aKeyPressedLastLoop = false, 
+    controlKeyPressedLastLoop = false, altKeyPressedLastLoop = false ,kKeyPressedLastLoop = false;
+    int value;
+    display(50, 1, "Travel");
+    display(32, 2, worldMap.getMapDescription(1));//Dakota please help me load the user's current location
+    display(32, 3, "Go North");             display(53, 3, "(Press \"1\")");
+    display(32, 4, "Go East");              display(53, 4, "(Press \"2\")");
+    display(32, 5, "Go South");             display(53, 5, "(Press \"3\")");
+    display(32, 6, "Go West");              display(53, 6, "(Press \"4\")");
+    display(32, 7, "Return to Menu");       display(53, 7, "(Press \"0\")");
+    while (1){
+        if (GetKeyState('0') < 0 && !zeroKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+            zeroKeyPressedLastLoop = true;
+        } else if (GetKeyState('0') >= 0 && zeroKeyPressedLastLoop){ // else 1 not pressed
+            zeroKeyPressedLastLoop = false;
+            value = 0;
+            break;
+        }
+        if (GetKeyState('1') < 0 && !oneKeyPressedLastLoop) { //checks to make sure that the 1 key is pressed and makes sure it was not pressed last check
+            oneKeyPressedLastLoop = true;
+        } else if (GetKeyState('1') >= 0 && oneKeyPressedLastLoop){ // else 1 not pressed
+            oneKeyPressedLastLoop = false;
+            value = 1;
+            break;
+        }
+        if (GetKeyState('2') < 0 && !twoKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+            twoKeyPressedLastLoop = true;
+        } else if (GetKeyState('2') >= 0 && twoKeyPressedLastLoop){ // else 1 not pressed
+            twoKeyPressedLastLoop = false;
+            value = 2;
+            break;
+        }
+        if (GetKeyState('3') < 0 && !threeKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+            threeKeyPressedLastLoop = true;
+        } else if (GetKeyState('3') >= 0 && threeKeyPressedLastLoop){ // else 1 not pressed
+            threeKeyPressedLastLoop = false;
+            value = 3;
+            break;
+        }
+        if (GetKeyState('4') < 0 && !fourKeyPressedLastLoop) { //checks to make sure that the 4 key is pressed and makes sure it was not pressed last check
+            fourKeyPressedLastLoop = true;
+        } else if (GetKeyState('4') >= 0 && fourKeyPressedLastLoop){ // else 4 not pressed
+            fourKeyPressedLastLoop = false;
+            value = 4;
+            break;
+        }
+
+        //hidden features:
+        if (GetKeyState('N') < 0 && GetKeyState('I') < 0 && GetKeyState('A') < 0) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+            nKeyPressedLastLoop = true;
+            iKeyPressedLastLoop = true;
+            aKeyPressedLastLoop = true;
+            value = 14;
+            break;
+        } else if (GetKeyState('N') >= 0 || GetKeyState('I') >= 0 || GetKeyState('A') >= 0){ // else 1 not pressed
+            nKeyPressedLastLoop = false;
+            iKeyPressedLastLoop = false;
+            aKeyPressedLastLoop = false;
+        }
+        //admin menu:
+        if (GetKeyState(VK_CONTROL) < 0 && GetKeyState(VK_MENU) < 0 && GetKeyState('K') < 0) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+            controlKeyPressedLastLoop = true;
+            altKeyPressedLastLoop = true;
+            kKeyPressedLastLoop = true;
+            value = 15;
+            break;
+        } else if (GetKeyState(VK_CONTROL) >= 0 || GetKeyState(VK_MENU) >= 0 || GetKeyState('K') >= 0){ // else 1 not pressed
+            controlKeyPressedLastLoop = false;
+            altKeyPressedLastLoop = false;
+            kKeyPressedLastLoop = false;
+        }
+    }
+    switch (value){
+    case 0://Return to menu
+        menu(username);
+        break;
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+        system("cls");
+        ClearConsoleInputBuffer();
+        display(32, 1, worldMap.getTravelMessage(1, value));//Dakota please help me add user location data
+        //setPlayerLocation(username, worldMap.travel(1, value));//Dakota please help me add a set location function
         system("pause");
         menu(username);
         break;

@@ -1,12 +1,12 @@
 #include <iostream>
 #include <string>
 
-#include "Map.h"
+#include "WorldMap.h"
 using namespace std;
 //The map and movement are laid out thus:
 // 1 - 2 -_3_
 // 4 | 5 - 6
-string getMapDescription(int location){
+string WorldMap::getMapDescription(int location){
     switch(location){
         case 1:
             return "You are in the Glacius Desert. Frozen cacti are scattered everywhere.";
@@ -36,7 +36,7 @@ string getMapDescription(int location){
 //     1        N
 //   4   2    W   E
 //     3        S
-bool canTravel(int location, int direction){
+bool WorldMap::canTravel(int location, int direction){
     switch(location){
         case 1:
             if(direction == 2 || direction == 3)
@@ -81,7 +81,7 @@ bool canTravel(int location, int direction){
 
 }
 
-string getTravelMessage(int location, int direction){
+string WorldMap::getTravelMessage(int location, int direction){
     switch(location){
         case 1:
             if(direction == 1)
@@ -146,5 +146,19 @@ string getTravelMessage(int location, int direction){
         default:
             return "You were nowhere, did you find your way out?";
             break;
+    }
+}
+
+int WorldMap::travel(int location, int direction){
+    if(canTravel(location, direction)){
+        if(direction == 1){
+            return (location - 3);
+        }else if(direction == 2){
+            return (location + 1);
+        }else if(direction == 3){
+            return (location + 3);
+        }else if(direction == 4){
+            return (location - 1);
+        }
     }
 }
