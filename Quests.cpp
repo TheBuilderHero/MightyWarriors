@@ -180,42 +180,44 @@ void Quests::doQuest(string username, int location, int quest){
     int quest1Step = account.getQuest1Progress(username);
     bool noQuests = true;
 
-    switch(location){
-        case 1:
-            if(quest == 1 && (quest1Step == 0 || quest1Step == 1 || quest1Step == 6)){
-                quest1(username, quest1Step);
-                noQuests = false;
-            }
-            break;
-        case 2:
-            if(quest == 1 && (quest1Step == 2 || quest1Step == 7)){
-                quest1(username, quest1Step);
-                noQuests = false;
-            }
-            break;
-        case 3:
-            break;
-        case 4:
-            if(quest == 1 && quest1Step == 5){
-                quest1(username, quest1Step);
-                noQuests = false;
-            }
-            break;
-        case 5:
-            if(quest == 1 && quest1Step == 3){
-                quest1(username, quest1Step);
-                noQuests = false;
-            }
-            break;
-        case 6:
-            if(quest == 1 && quest1Step == 4){
-                quest1(username, quest1Step);
-                noQuests = false;
-            }
-            break;
-        default:
-            cout << "It looks like you are nowhere...";
-            break;
+    if(quest == 1){
+        switch(location){
+            case 1:
+                if(quest1Step == 0 || quest1Step == 1 || quest1Step == 6){
+                    quest1(username, quest1Step);
+                    noQuests = false;
+                }
+                break;
+            case 2:
+                if(quest1Step == 2 || quest1Step == 7){
+                    quest1(username, quest1Step);
+                    noQuests = false;
+                }
+                break;
+            case 3:
+                break;
+            case 4:
+                if(quest1Step == 5){
+                    quest1(username, quest1Step);
+                    noQuests = false;
+                }
+                break;
+            case 5:
+                if(quest1Step == 3){
+                    quest1(username, quest1Step);
+                    noQuests = false;
+                }
+                break;
+            case 6:
+                if(quest1Step == 4){
+                    quest1(username, quest1Step);
+                    noQuests = false;
+                }
+                break;
+            default:
+                cout << "It looks like you are nowhere...";
+                break;
+        }
     }
 
     if(noQuests){
@@ -227,6 +229,7 @@ void Quests::doQuest(string username, int location, int quest){
 
 void Quests::quest1(string username, int step){
     Battle battle;
+    TempEntity player;
     switch(step){
         case 0:
             cout << "You lumber across the frozen sands, not knowing which way to turn.";
@@ -247,10 +250,10 @@ void Quests::quest1(string username, int step){
 
             //I think this should be changed to a special battle function made for Quests
             //in which we can specify monsters to be fought and return the result of the battle
-            battle.startBattle(username);
+            battle.questBattle(username, 1, step, player);
 
             //If the battle was won, we should run this code:
-            if(true){
+            if(player.getHealth() > 0){
                 cout << "You are astonished at how incredibly weak the Void Cat turned out to be!";
                 cout << "\nMight as well have been fighting a sand castle!";
                 system("pause");
@@ -271,9 +274,9 @@ void Quests::quest1(string username, int step){
             system("pause");
             cout << "\nYou pause. '...No way! You gotta die, son!'";
             system("pause");
-            battle.startBattle(username);
+            battle.questBattle(username, 1, step, player);
 
-            if(true){
+            if(player.getHealth() > 0){
                 cout << "As the goblin falls lifeless to the ground, you check your parchment again.";
                 system("pause");
                 cout << "\nA new name writes itself: Klade the Orc. Somehow you know he is near Lake Argentus.";
@@ -291,9 +294,9 @@ void Quests::quest1(string username, int step){
             system("pause");
             cout << "\n'I know you hunt me. Ready yourself.'";
             system("pause");
-            battle.startBattle(username);
+            battle.questBattle(username, 1, step, player);
 
-            if(true){
+            if(player.getHealth() > 0){
                 cout << "The Orc collapses to the ground, eyes closed. He fought with honor.";
                 system("pause");
                 cout << "\nA new name writes itself: The Black Night. Somehow you know he is in Arva Umbra.";
@@ -327,9 +330,9 @@ void Quests::quest1(string username, int step){
             system("pause");
             cout << "\nSomeone kicks you in the head! It's the Black Night! You scramble for your weapon!";
             system("pause");
-            battle.startBattle(username);
+            battle.questBattle(username, 1, step, player);
 
-            if(true){
+            if(player.getHealth() > 0){
                 cout << "The Black Night shall ride no more. You read the enchanted parchment once again.";
                 system("pause");
                 cout << "\nA new name writes itself: The Blue Wizard. Somehow you know he is in Silva Ignis.";
@@ -345,9 +348,9 @@ void Quests::quest1(string username, int step){
             system("pause");
             cout << "\nA blast of fire just barely misses your shoulder. You wheel around, drawing your weapon!";
             system("pause");
-            battle.startBattle(username);
+            battle.questBattle(username, 1, step, player);
 
-            if(true){
+            if(player.getHealth() > 0){
                 cout << "The wizard collapses, but no body hits the ground. His robes simply crumple in the grass, with his pointy hat perched neatly on top.";
                 system("pause");
                 cout << "\nA new name writes itself: The Monstrous Behemoth. Somehow you know he is in the Ventosus Mountains.";
@@ -370,9 +373,9 @@ void Quests::quest1(string username, int step){
             cout << "\nThis time, he lands in front of you. The menacing figure makes you feel very small.";
             cout << "\nIn your mind, you are about to be fighting the mountain itself...";
             system("pause");
-            battle.startBattle(username);
+            battle.questBattle(username, 1, step, player);
 
-            if(true){
+            if(player.getHealth() > 0){
                 cout << "Incredibly, the titanic being crashes into the snow. Hands shaking, you check the parchment.";
                 system("pause");
                 cout << "\nA new name has been written: The Awful Necromancer. You know he is in the Glacius Desert, and you are terrified.";
@@ -398,9 +401,9 @@ void Quests::quest1(string username, int step){
             system("pause");
             cout << "You can feel it is the very embodiment of death itself.";
             system("pause");
-            battle.startBattle(username);
+            battle.questBattle(username, 1, step, player);
 
-            if(true){
+            if(player.getHealth() > 0){
                 cout << "The Necromancer screams, beams of light splitting his body apart, and he explodes into dust.";
                 system("pause");
                 cout << "The clouds clear, the sun begins warming everything, but even so you collapse to your knees and put your head in your hands.";
@@ -425,9 +428,9 @@ void Quests::quest1(string username, int step){
         case 7:
             cout << "Meh, guess like a dragon showed up or some junk";
             system("pause");
-            battle.startBattle(username);
+            battle.questBattle(username, 1, step, player);
 
-            if(true){
+            if(player.getHealth() > 0){
                 cout << "Huzzah, the dragon is like dead or whatever";
                 system("pause");
                 cout << "\nWith the last enemy defeated, the enchanted parchment crumbles into dust.";

@@ -8,6 +8,7 @@
 #include "Cipher.h"
 #include "Menu.h"
 #include "Battle.h"
+#include "TempEntity.h"
 
 Menu classMenu;
 
@@ -139,6 +140,107 @@ void Battle::startBattle(string username){
         system("pause");
         playerHealth -= enemyAttack;
         enemyAttack = 0;
+
+        if (playerHealth <= 0) {
+            fightLost = true;
+            break;
+        }
+    }
+    //print out the result of the fight
+    if (fightWon) { //the player has won the fight
+        system("cls");
+        //increase user xp, since fight was won.
+        string playerLevel = server.sendToServer(code.cipher("14", username, enemyName, "WillNeedToFeedBackEnemyLevel")); //this will need to send the enemy level later on.
+        cout <<  setfill(' ') << setw(57) << "You won the Battle!" << endl;
+        cout <<  setfill(' ') << setw((77 - 16) - playerLevel.length()) << "Your level is: " << playerLevel << endl;
+        system("pause");
+        system("cls"); 
+        int currentPlayerLevel = account.getLevel(username);
+        if(playerLevelAtStartOfFight < currentPlayerLevel){ //runs the level update for stats
+            account.levelUp(username, currentPlayerLevel);
+        }
+        system("cls");
+    } else if (fightLost){ //the enemy has won the fight
+        system("cls");
+        cout <<  setfill(' ') << setw(58) << "You Lost the Battle!" << endl;
+        system("pause");
+        system("cls");
+    }
+
+
+    
+    cout << "Would you like to Battle again? (Y/N)\n>";
+    answer = classMenu.yesOrNo();
+    while (!(answer == "n" || answer == "N" || answer == "y" || answer == "Y")) { //ask player if they want to battle more or go back to main menu.
+        cout << endl << answer << endl;
+        //answer = 'A';// set the answer variable to some other value on the start of each loop.
+        cout << "Your input was not recognized." << endl << "Would you like to Battle again? (Y/N)";
+        answer = classMenu.yesOrNo();
+    }
+    if (answer == "y" || answer == "Y"){
+        startBattle(username);//run battle again
+    } else {
+        classMenu.menu(username);//go to main menu
+    }
+}
+
+void Battle::questBattle(string username, int quest, int step, TempEntity player){
+    bool qKeyPressedLastLoop = false, wKeyPressedLastLoop = false, eKeyPressedLastLoop = false, rKeyPressedLastLoop = false;
+    bool playerBlocking = false;
+    int playerHealth, enemyHealth;
+    int ultimateUses = 1;
+    string answer;
+    bool fightWon, fightLost;
+    ReachOutToServer server;
+    Cipher code;
+    Account account;
+    //**************************
+    //Initalize all variables
+    int playerLevelAtStartOfFight = account.getLevel(username);
+    code.decipherS(server.sendToServer(code.cipher("6", username))); //request the current stats of this user from the server //pull info from the server to get the Player's Character info
+    player.setHealth(stoi(code.getItemS(1))); //set player health
+    playerHealth = player.getHealth();
+    fightWon = fightLost = false; //set both lost and won to false
+    code.decipherS(server.sendToServer(code.cipher("7", username, to_string(quest), to_string(step)))); //request the current stats of a enemy from the server //pull data from the server regarding the enemy to fight
+    enemyHealth = stoi(code.getItemS(2)); //set enemy health
+    if(quest == 1 && step == 0){
+        if(enemyHealth > 10)
+            enemyHealth = 10;
+    }
+    string enemyName = code.getItemS(1);
+    //**************************
+    //Start Battle clearing the screen
+    while (!fightWon && !fightLost){//loop through displaying the stats and having the player pick options until the fight is won or lost
+        int combatVal = 0;
+        int playerAttack = 0;
+        int enemyBlocking = 0;
+        optionsOutput(username, enemyName, playerHealth, enemyHealth); //outputs the options for battle
+        
+        //loops till the player presses one of Q W E R
+        waitForButtonPress(username,enemyName,qKeyPressedLastLoop,wKeyPressedLastLoop,eKeyPressedLastLoop,rKeyPressedLastLoop,playerBlocking,playerHealth,enemyHealth,ultimateUses,combatVal,playerAttack,enemyBlocking);
+        
+        cout << "Your attack hits the enemy for " << playerAttack << " damage" << endl;
+        system("pause");
+
+        //check if enemy is dead:
+        if (enemyHealth <= 0){
+            fightWon = true;
+            break;
+        }
+
+        //reprint the stats and info:
+        system("cls");
+        optionsOutput(username, enemyName, playerHealth, enemyHealth);
+
+        //Enemy's turn to attack:
+        int enemyAttack = stoi(server.sendToServer(code.cipher("10", username, enemyName, to_string(playerBlocking))));
+        enemyAttack = (enemyBlocking) ? 0 : enemyAttack; //set attack to 0 damage if enemy is blocking
+        cout << "The enemies attack hits you for " << enemyAttack << " damage" << endl;
+        system("pause");
+        playerHealth -= enemyAttack;
+        enemyAttack = 0;
+
+        player.setHealth(playerHealth);
 
         if (playerHealth <= 0) {
             fightLost = true;
