@@ -8,7 +8,6 @@
 #include "Cipher.h"
 #include "Menu.h"
 #include "Battle.h"
-#include "TempEntity.h"
 
 Menu classMenu;
 

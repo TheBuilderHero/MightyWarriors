@@ -159,6 +159,8 @@ int WorldMap::travel(int location, int direction){
             return (location + 3);
         }else if(direction == 4){
             return (location - 1);
-        }
-    }
+        }else
+            return location;
+    }else
+        return location;
 }
