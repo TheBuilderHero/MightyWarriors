@@ -15,6 +15,8 @@
                 "Battle.cpp",
                 "Map.cpp",
                 "Quests.cpp",
+                "TempEntity.cpp",
+                "WorldMap.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 " -lws2_32",
