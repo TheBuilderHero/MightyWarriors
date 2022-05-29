@@ -183,7 +183,7 @@ void Battle::startBattle(string username){
     }
 }
 
-void Battle::questBattle(string username, int quest, int step, TempEntity player){
+void Battle::questBattle(string username, int quest, int step/*, TempEntity player*/){
     bool qKeyPressedLastLoop = false, wKeyPressedLastLoop = false, eKeyPressedLastLoop = false, rKeyPressedLastLoop = false;
     bool playerBlocking = false;
     int playerHealth, enemyHealth;
@@ -197,8 +197,8 @@ void Battle::questBattle(string username, int quest, int step, TempEntity player
     //Initalize all variables
     int playerLevelAtStartOfFight = account.getLevel(username);
     code.decipherS(server.sendToServer(code.cipher("6", username))); //request the current stats of this user from the server //pull info from the server to get the Player's Character info
-    player.setHealth(stoi(code.getItemS(1))); //set player health
-    playerHealth = player.getHealth();
+    //player.setHealth(stoi(code.getItemS(1))); //set player health
+    //playerHealth = player.getHealth();
     fightWon = fightLost = false; //set both lost and won to false
     code.decipherS(server.sendToServer(code.cipher("7", username, to_string(quest), to_string(step)))); //request the current stats of a enemy from the server //pull data from the server regarding the enemy to fight
     enemyHealth = stoi(code.getItemS(2)); //set enemy health
@@ -239,7 +239,7 @@ void Battle::questBattle(string username, int quest, int step, TempEntity player
         playerHealth -= enemyAttack;
         enemyAttack = 0;
 
-        player.setHealth(playerHealth);
+        //player.setHealth(playerHealth);
 
         if (playerHealth <= 0) {
             fightLost = true;

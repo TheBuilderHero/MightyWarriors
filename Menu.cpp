@@ -11,7 +11,7 @@
 #include "Menu.h"
 #include "Battle.h"
 #include "Map.h"
-#include "WorldMap.h"
+//#include "WorldMap.h"
 #include "Quests.h"
 
 #undef min // these are needed for the cin.ignore statments to clear out the buffer for new data.
@@ -160,13 +160,13 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
 
 void Menu::travelMenu(string username){ //bring up the menu for travel
     system("cls");
-    WorldMap worldMap;
+    //WorldMap worldMap;
     bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false,
     nKeyPressedLastLoop = false, iKeyPressedLastLoop = false, aKeyPressedLastLoop = false, 
     controlKeyPressedLastLoop = false, altKeyPressedLastLoop = false ,kKeyPressedLastLoop = false;
     int value;
     display(50, 1, "Travel");
-    display(32, 2, worldMap.getMapDescription(1));//Dakota please help me load the user's current location
+    display(32, 2/*, worldMap.getMapDescription(1)*/,"change later");//Dakota please help me load the user's current location
     display(32, 3, "Go North");             display(53, 3, "(Press \"1\")");
     display(32, 4, "Go East");              display(53, 4, "(Press \"2\")");
     display(32, 5, "Go South");             display(53, 5, "(Press \"3\")");
@@ -244,7 +244,7 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
     case 4:
         system("cls");
         ClearConsoleInputBuffer();
-        display(32, 1, worldMap.getTravelMessage(1, value));//Dakota please help me add user location data
+        display(32, 1, "change later"/*worldMap.getTravelMessage(1, value)*/);//Dakota please help me add user location data
         //setPlayerLocation(username, worldMap.travel(1, value));//Dakota please help me add a set location function
         system("pause");
         menu(username);
