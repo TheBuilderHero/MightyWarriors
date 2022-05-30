@@ -187,26 +187,34 @@ void Battle::questBattle(string username, int quest, int step, TempEntity player
     bool qKeyPressedLastLoop = false, wKeyPressedLastLoop = false, eKeyPressedLastLoop = false, rKeyPressedLastLoop = false;
     bool playerBlocking = false;
     int playerHealth, enemyHealth;
+    int playerLevelAtStartOfFight = 0;
     int ultimateUses = 1;
+    string enemyName = "";
     string answer;
-    bool fightWon, fightLost;
+    bool fightWon = false, fightLost = false;
     ReachOutToServer server;
     Cipher code;
     Account account;
     //**************************
     //Initalize all variables
-    int playerLevelAtStartOfFight = account.getLevel(username);
-    code.decipherS(server.sendToServer(code.cipher("6", username))); //request the current stats of this user from the server //pull info from the server to get the Player's Character info
-    player.setHealth(stoi(code.getItemS(1))); //set player health
-    playerHealth = player.getHealth();
-    fightWon = fightLost = false; //set both lost and won to false
-    code.decipherS(server.sendToServer(code.cipher("7", username, to_string(quest), to_string(step)))); //request the current stats of a enemy from the server //pull data from the server regarding the enemy to fight
-    enemyHealth = stoi(code.getItemS(2)); //set enemy health
-    if(quest == 1 && step == 0){
-        if(enemyHealth > 10)
-            enemyHealth = 10;
+    try {
+        playerLevelAtStartOfFight = account.getLevel(username);
+        code.decipherS(server.sendToServer(code.cipher("6", username))); //request the current stats of this user from the server //pull info from the server to get the Player's Character info
+        player.setHealth(stoi(code.getItemS(1))); //set player health
+        playerHealth = player.getHealth();
+        fightWon = fightLost = false; //set both lost and won to false
+        code.decipherS(server.sendToServer(code.cipher("7", username, to_string(quest), to_string(step)))); //request the current stats of a enemy from the server //pull data from the server regarding the enemy to fight
+        enemyHealth = stoi(code.getItemS(2)); //set enemy health
+        if(quest == 1 && step == 0){
+            if(enemyHealth > 10)
+                enemyHealth = 10;
+        }
+        enemyName = code.getItemS(1);
+    } catch(std::invalid_argument) {
+        cout << "Battle initialization failed";
+        system("pause");
+        return;
     }
-    string enemyName = code.getItemS(1);
     //**************************
     //Start Battle clearing the screen
     while (!fightWon && !fightLost){//loop through displaying the stats and having the player pick options until the fight is won or lost

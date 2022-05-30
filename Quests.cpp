@@ -251,6 +251,7 @@ void Quests::quest1(string username, int step){
             //I think this should be changed to a special battle function made for Quests
             //in which we can specify monsters to be fought and return the result of the battle
             battle.questBattle(username, 1, step, player);
+            //battle.startBattle(username);
 
             //If the battle was won, we should run this code:
             if(player.getHealth() > 0){
