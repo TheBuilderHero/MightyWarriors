@@ -60,10 +60,11 @@ void Map::listAvalibleLocations(string username){
         switch(answer){ //need battle groups for this to work:
             case 1:
                 quests.getAvailableQuests(username, 1);
+                quests.doQuest(username, answer, 1);
                 /*system("cls");
                 menu.ClearConsoleInputBuffer();
-                battle.startBattle(username);
-                break;*/
+                battle.startBattle(username);*/
+                break;
             case 2:
                 quests.getAvailableQuests(username, 2);
                 break;

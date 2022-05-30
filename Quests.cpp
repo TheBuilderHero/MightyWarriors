@@ -232,20 +232,20 @@ void Quests::quest1(string username, int step){
     TempEntity player;
     switch(step){
         case 0:
-            cout << "You lumber across the frozen sands, not knowing which way to turn.";
+            cout << "You lumber across the frozen sands, not knowing which way to turn.\n";
             system("pause");
-            cout << "\nThe air somehow gets colder, and a shadow darkens the ground. You feel its presence engulf you.";
+            cout << "\nThe air somehow gets colder, and a shadow darkens the ground. You feel its presence engulf you.\n";
             system("pause");
             cout << "\nThe shade concentrates into a single form. It seems to stand in front of you.";
-            cout << "\nFloating in the air--No, in its outstretched hand, is some old parchment.";
+            cout << "\nFloating in the air--No, in its outstretched hand, is some old parchment.\n";
             system("pause");
-            cout << "\nThe shade's voice is a windy howl. 'A page ... of death. All those listed here ... must be slain.'";
+            cout << "\nThe shade's voice is a windy howl. 'A page ... of death. All those listed here ... must be slain.'\n";
             system("pause");
-            cout << "\nYou take the parchment, and a name etches itself into existence. 'The Void Cat'...";
+            cout << "\nYou take the parchment, and a name etches itself into existence. 'The Void Cat'...\n";
             system("pause");
-            cout << "\nAs you look up, dread fills every corner of your being. The Void Cat is stepping towards you!";
+            cout << "\nAs you look up, dread fills every corner of your being. The Void Cat is stepping towards you!\n";
             system("pause");
-            cout << "\nThe shadow cackles horribly, and slowly fades from your senses. But The Void Cat approaches...";
+            cout << "\nThe shadow cackles horribly, and slowly fades from your senses. But The Void Cat approaches...\n";
             system("pause");
 
             //I think this should be changed to a special battle function made for Quests
@@ -255,13 +255,13 @@ void Quests::quest1(string username, int step){
             //If the battle was won, we should run this code:
             if(player.getHealth() > 0){
                 cout << "You are astonished at how incredibly weak the Void Cat turned out to be!";
-                cout << "\nMight as well have been fighting a sand castle!";
+                cout << "\nMight as well have been fighting a sand castle!\n";
                 system("pause");
-                cout << "You got 10000000 experience!";
+                cout << "You got 10000000 experience!\n";
                 //Code to add experience
                 system("pause");
                 cout << "\nYou check the parchment again. The Void Cat's name is already fading.";
-                cout << "\nA new name writes itself: Morg the Goblin. Somehow you know he is in the Glacius Desert.";
+                cout << "\nA new name writes itself: Morg the Goblin. Somehow you know he is in the Glacius Desert.\n";
                 account.setQuest1Progress(username, 1);
             }
             break;
