@@ -253,6 +253,8 @@ void Quests::quest1(string username, int step){
             battle.questBattle(username, 1, step, player);
             //battle.startBattle(username);
 
+            cout << "Player ended Battle with " << player.getHealth() << " health!\n";
+            system("pause");
             //If the battle was won, we should run this code:
             if(player.getHealth() > 0){
                 cout << "You are astonished at how incredibly weak the Void Cat turned out to be!";

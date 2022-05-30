@@ -274,5 +274,4 @@ void Battle::questBattle(string username, int quest, int step, TempEntity player
         system("pause");
         system("cls");
     }
-    cout << "Player ended Battle with " << player.getHealth() << " health!\n";
 }
