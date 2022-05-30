@@ -183,7 +183,7 @@ void Battle::startBattle(string username){
     }
 }
 
-void Battle::questBattle(string username, int quest, int step, TempEntity player){
+void Battle::questBattle(string username, int quest, int step){
     bool qKeyPressedLastLoop = false, wKeyPressedLastLoop = false, eKeyPressedLastLoop = false, rKeyPressedLastLoop = false;
     bool playerBlocking = false;
     int playerHealth, enemyHealth;
@@ -200,8 +200,8 @@ void Battle::questBattle(string username, int quest, int step, TempEntity player
     try {
         playerLevelAtStartOfFight = account.getLevel(username);
         code.decipherS(server.sendToServer(code.cipher("6", username))); //request the current stats of this user from the server //pull info from the server to get the Player's Character info
-        player.setHealth(stoi(code.getItemS(1))); //set player health
-        playerHealth = player.getHealth();
+        playerHealth = stoi(code.getItemS(1)); //set player health
+        player.setHealth(playerHealth);
         fightWon = fightLost = false; //set both lost and won to false
         code.decipherS(server.sendToServer(code.cipher("7", username, to_string(quest), to_string(step)))); //request the current stats of a enemy from the server //pull data from the server regarding the enemy to fight
         enemyHealth = stoi(code.getItemS(2)); //set enemy health
@@ -245,9 +245,8 @@ void Battle::questBattle(string username, int quest, int step, TempEntity player
         cout << "The enemies attack hits you for " << enemyAttack << " damage" << endl;
         system("pause");
         playerHealth -= enemyAttack;
-        enemyAttack = 0;
-
         player.setHealth(playerHealth);
+        enemyAttack = 0;
 
         if (playerHealth <= 0) {
             fightLost = true;
@@ -274,4 +273,10 @@ void Battle::questBattle(string username, int quest, int step, TempEntity player
         system("pause");
         system("cls");
     }
+    //cout << "Player ended Battle with " << player.getHealth() << " health!\n";
+    //system("pause");
+}
+
+int Battle::getPlayerHealth(){
+    return player.getHealth();
 }

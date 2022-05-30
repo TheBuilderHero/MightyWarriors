@@ -250,8 +250,10 @@ void Quests::quest1(string username, int step){
 
             //I think this should be changed to a special battle function made for Quests
             //in which we can specify monsters to be fought and return the result of the battle
-            battle.questBattle(username, 1, step, player);
+            battle.questBattle(username, 1, step);
             //battle.startBattle(username);
+
+            player.setHealth(battle.getPlayerHealth());
 
             cout << "Player ended Battle with " << player.getHealth() << " health!\n";
             system("pause");
@@ -278,7 +280,7 @@ void Quests::quest1(string username, int step){
             system("pause");
             cout << "\nYou pause. '...No way! You gotta die, son!'";
             system("pause");
-            battle.questBattle(username, 1, step, player);
+            battle.questBattle(username, 1, step);
 
             if(player.getHealth() > 0){
                 cout << "As the goblin falls lifeless to the ground, you check your parchment again.";
@@ -298,7 +300,7 @@ void Quests::quest1(string username, int step){
             system("pause");
             cout << "\n'I know you hunt me. Ready yourself.'";
             system("pause");
-            battle.questBattle(username, 1, step, player);
+            battle.questBattle(username, 1, step);
 
             if(player.getHealth() > 0){
                 cout << "The Orc collapses to the ground, eyes closed. He fought with honor.";
@@ -334,7 +336,7 @@ void Quests::quest1(string username, int step){
             system("pause");
             cout << "\nSomeone kicks you in the head! It's the Black Night! You scramble for your weapon!";
             system("pause");
-            battle.questBattle(username, 1, step, player);
+            battle.questBattle(username, 1, step);
 
             if(player.getHealth() > 0){
                 cout << "The Black Night shall ride no more. You read the enchanted parchment once again.";
@@ -352,7 +354,7 @@ void Quests::quest1(string username, int step){
             system("pause");
             cout << "\nA blast of fire just barely misses your shoulder. You wheel around, drawing your weapon!";
             system("pause");
-            battle.questBattle(username, 1, step, player);
+            battle.questBattle(username, 1, step);
 
             if(player.getHealth() > 0){
                 cout << "The wizard collapses, but no body hits the ground. His robes simply crumple in the grass, with his pointy hat perched neatly on top.";
@@ -377,7 +379,7 @@ void Quests::quest1(string username, int step){
             cout << "\nThis time, he lands in front of you. The menacing figure makes you feel very small.";
             cout << "\nIn your mind, you are about to be fighting the mountain itself...";
             system("pause");
-            battle.questBattle(username, 1, step, player);
+            battle.questBattle(username, 1, step);
 
             if(player.getHealth() > 0){
                 cout << "Incredibly, the titanic being crashes into the snow. Hands shaking, you check the parchment.";
@@ -405,7 +407,7 @@ void Quests::quest1(string username, int step){
             system("pause");
             cout << "You can feel it is the very embodiment of death itself.";
             system("pause");
-            battle.questBattle(username, 1, step, player);
+            battle.questBattle(username, 1, step);
 
             if(player.getHealth() > 0){
                 cout << "The Necromancer screams, beams of light splitting his body apart, and he explodes into dust.";
@@ -432,7 +434,7 @@ void Quests::quest1(string username, int step){
         case 7:
             cout << "Meh, guess like a dragon showed up or some junk";
             system("pause");
-            battle.questBattle(username, 1, step, player);
+            battle.questBattle(username, 1, step);
 
             if(player.getHealth() > 0){
                 cout << "Huzzah, the dragon is like dead or whatever";
