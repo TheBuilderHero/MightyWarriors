@@ -118,6 +118,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
             //We probably need a separate questing menu
         Map map;
         map.listAvalibleLocations(username);
+        menu(username);
         break;
     }
     case 2://travel option

@@ -263,6 +263,7 @@ void Quests::quest1(string username, int step){
                 system("pause");
                 cout << "\nYou check the parchment again. The Void Cat's name is already fading.";
                 cout << "\nA new name writes itself: Morg the Goblin. Somehow you know he is in the Glacius Desert.\n";
+                system("pause");
                 account.setQuest1Progress(username, 1);
             }
             break;

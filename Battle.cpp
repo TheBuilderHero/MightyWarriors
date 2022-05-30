@@ -274,20 +274,5 @@ void Battle::questBattle(string username, int quest, int step, TempEntity player
         system("pause");
         system("cls");
     }
-
-
-    
-    cout << "Would you like to Battle again? (Y/N)\n>";
-    answer = classMenu.yesOrNo();
-    while (!(answer == "n" || answer == "N" || answer == "y" || answer == "Y")) { //ask player if they want to battle more or go back to main menu.
-        cout << endl << answer << endl;
-        //answer = 'A';// set the answer variable to some other value on the start of each loop.
-        cout << "Your input was not recognized." << endl << "Would you like to Battle again? (Y/N)";
-        answer = classMenu.yesOrNo();
-    }
-    if (answer == "y" || answer == "Y"){
-        startBattle(username);//run battle again
-    } else {
-        classMenu.menu(username);//go to main menu
-    }
+    cout << "Player ended Battle with " << player.getHealth() << " health!\n";
 }
