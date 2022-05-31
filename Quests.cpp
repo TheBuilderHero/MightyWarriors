@@ -119,6 +119,8 @@ void Quests::getAvailableQuests(string username, int location){
     int quest1Step = account.getQuest1Progress(username);
     bool noQuests = true;
 
+    cout << endl;
+
     switch(location){
         case 1:
             if(quest1Step == 0){
@@ -172,6 +174,7 @@ void Quests::getAvailableQuests(string username, int location){
         cout << "There are no Quests to do here.";
     }
 
+    cout << endl;
     system("pause");
     system("cls");
 }
