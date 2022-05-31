@@ -184,6 +184,7 @@ void Battle::startBattle(string username){
 }
 
 void Battle::questBattle(string username, int quest, int step){
+    system("cls");
     bool qKeyPressedLastLoop = false, wKeyPressedLastLoop = false, eKeyPressedLastLoop = false, rKeyPressedLastLoop = false;
     bool playerBlocking = false;
     int playerHealth, enemyHealth;
