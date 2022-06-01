@@ -5,7 +5,7 @@
 
 class Battle{//This class will have all the functions needed for the algorythms needed to complete a battle from start to finish.
     private:
-        TempEntity player;
+        TempEntity player{"kota"};
     
     public:
     void optionsOutput(std::string username, std::string enemyName, int playerHealth, int enemyHealth); //outputs the players battle options
