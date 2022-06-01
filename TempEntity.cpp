@@ -35,6 +35,9 @@ TempEntity::TempEntity(string currentUsername){
     setStamina(stoi(code.getItemS(8)));
     setMana(stoi(code.getItemS(9)));
 }
+TempEntity::~TempEntity(){
+
+}
 
 //setter functions:
 void TempEntity::setUsername(string newUsername){

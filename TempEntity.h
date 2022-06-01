@@ -2,19 +2,17 @@
 #include <string>
 
 #pragma once
-
-using namespace std;
 class TempEntity{
     private:
         std::string username;
         int health, armor, magicResistance, physicalDamageMin, physicalDamageMax, magicDamageMin, magicDamageMax, agility, stealth, stamina, mana;
         std::string name;
     public:
-        TempEntity(string currentUsername);
+        TempEntity(std::string currentUsername);
         ~TempEntity();
 
         //getter functions:
-        string getUsername() { return username; }
+        std::string getUsername() { return username; }
         //stats:
         int getHealth(){ return health; }
         int getArmor(){ return armor; }
@@ -29,7 +27,7 @@ class TempEntity{
         int getMana(){ return mana; }
 
         //setter functions:
-        void setUsername(string newUsername);
+        void setUsername(std::string newUsername);
         //stats:
         void setHealth(int newHealth);
         void setArmor(int newArmor);
