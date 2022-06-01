@@ -16,6 +16,8 @@ class Menu {
         void changePass(std::string username);
         char yesOrNo();
         int numberPressWait(int maxRange, bool hasZeroOption = false);
+        void waitForEnter(int enterCurrentlyPressed);
+        int getEnterKeyState();
         void ClearConsoleInputBuffer();
         void display(int column, int row, std::string outputString, bool resetCursorPosition = true, bool addExtraRow = true);
         std::string numberFormatting(double decimalNumber, int numberOfDecimals);

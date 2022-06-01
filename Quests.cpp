@@ -4,9 +4,11 @@
 #include "Quests.h"
 #include "Battle.h"
 #include "Account.h"
+#include "Menu.h"
 using namespace std;
 
 void Quests::getQuestDescription(string username, int quest){
+    Menu menu;
     int quest1Step = account.getQuest1Progress(username);
     switch(quest){
         case 1:
@@ -14,69 +16,70 @@ void Quests::getQuestDescription(string username, int quest){
                 case 1:
                     cout << "The name of your first target is scrawled on the parchemnt... Morg the Goblin.";
                     cout << "\nHe resides in the Glacius Desert.";
-                    system("pause");
+                    menu.waitForEnter(menu.getEnterKeyState());
                     system("cls");
                     break;
                 case 2:
                     cout << "The name of your second target is scrawled on the parchemnt... Klade the Orc.";
                     cout << "\nHe resides near Lake Argentus.";
-                    system("pause");
+                    menu.waitForEnter(menu.getEnterKeyState());
                     system("cls");
                     break;
                 case 3:
                     cout << "The name of your third target is scrawled on the parchemnt... The Black Night.";
                     cout << "\nHe resides in Arva Umbra.";
-                    system("pause");
+                    menu.waitForEnter(menu.getEnterKeyState());
                     system("cls");
                     break;
                 case 4:
                     cout << "The name of your fourth target is scrawled on the parchemnt... The Blue Wizard.";
                     cout << "\nHe resides in Silva Ignis.";
-                    system("pause");
+                    menu.waitForEnter(menu.getEnterKeyState());
                     system("cls");
                     break;
                 case 5:
                     cout << "The name of your fifth target is scrawled on the parchemnt... The Monstrous Behemoth.";
                     cout << "\nHe resides in the Ventosus Mountains.";
-                    system("pause");
+                    menu.waitForEnter(menu.getEnterKeyState());
                     system("cls");
                     break;
                 case 6:
                     cout << "The name of your sixth target is scrawled on the parchemnt... The Awful Necromancer.";
                     cout << "\nHe resides in the Glacius Desert.";
-                    system("pause");
+                    menu.waitForEnter(menu.getEnterKeyState());
                     system("cls");
                     break;
                 case 7:
                     cout << "The name of your final target is scrawled on the parchemnt...";
-                    system("pause");
+                    menu.waitForEnter(menu.getEnterKeyState());
                     cout << "The Dragon!!!";
-                    system("pause");
+                    menu.waitForEnter(menu.getEnterKeyState());
                     cout << "\nHe resides at Lake Argentus.";
-                    system("pause");
+                    menu.waitForEnter(menu.getEnterKeyState());
                     system("cls");
                     break;
                 case 8:
                     cout << "All the monsters have been slain! Huzzah!\nThis Quest is complete.";
-                    system("pause");
+                    menu.waitForEnter(menu.getEnterKeyState());
                     system("cls");
                     break;
                 default:
                     cout << "There is a problem with your Quest 1 data...";
-                    system("pause");
+                    menu.waitForEnter(menu.getEnterKeyState());
                     system("cls");
                     break;
             }
             break;
         default:
             cout << "There was a problem loading any quest data...";
-            system("pause");
+            menu.waitForEnter(menu.getEnterKeyState());
             system("cls");
             break;
     }
 }
 
 void Quests::getQuestLog(string username, int quest){
+    Menu menu;
     int quest1Step = account.getQuest1Progress(username);
     string output = "";
     switch(quest){
@@ -110,12 +113,13 @@ void Quests::getQuestLog(string username, int quest){
     }
 
     cout << output;
-    system("pause");
+    menu.waitForEnter(menu.getEnterKeyState());
     system("cls");
 }
 
 void Quests::getAvailableQuests(string username, int location){
     //Account account; //multiple definitions causing issues
+    Menu menu;
     int quest1Step = account.getQuest1Progress(username);
     bool noQuests = true;
 
@@ -140,7 +144,7 @@ void Quests::getAvailableQuests(string username, int location){
                 noQuests = false;
             }else if(quest1Step == 7){
                 cout << "Here you can continue Quest 1 and fight...";
-                system("pause");
+                menu.waitForEnter(menu.getEnterKeyState());
                 cout << "The Dragon!!!";
                 noQuests = false;
             }
@@ -167,6 +171,7 @@ void Quests::getAvailableQuests(string username, int location){
             break;  
         default:
             cout << "It looks like you are nowhere...";
+            
             break;
     }
 
@@ -175,11 +180,12 @@ void Quests::getAvailableQuests(string username, int location){
     }
 
     cout << endl;
-    system("pause");
+    menu.waitForEnter(menu.getEnterKeyState());
     system("cls");
 }
 
 void Quests::doQuest(string username, int location, int quest){
+    Menu menu;
     int quest1Step = account.getQuest1Progress(username);
     bool noQuests = true;
 
@@ -225,240 +231,253 @@ void Quests::doQuest(string username, int location, int quest){
 
     if(noQuests){
         cout << "There are no Quests to do here.";
-        system("pause");
+        menu.waitForEnter(menu.getEnterKeyState());
         system("cls");
     }
 }
 
 void Quests::quest1(string username, int step){
+    Menu menu;
     Battle battle;
     TempEntity player;
     switch(step){
         case 0:
-            cout << "You lumber across the frozen sands, not knowing which way to turn.\n";
-            system("pause");
+            cout << "You lumber across the frozen sands, not knowing which way to turn.\n (press Enter)";
+            menu.waitForEnter(menu.getEnterKeyState());
             cout << "\nThe air somehow gets colder, and a shadow darkens the ground. You feel its presence engulf you.\n";
-            system("pause");
+            menu.waitForEnter(menu.getEnterKeyState());
             cout << "\nThe shade concentrates into a single form. It seems to stand in front of you.";
             cout << "\nFloating in the air--No, in its outstretched hand, is some old parchment.\n";
-            system("pause");
+            menu.waitForEnter(menu.getEnterKeyState());
             cout << "\nThe shade's voice is a windy howl. 'A page ... of death. All those listed here ... must be slain.'\n";
-            system("pause");
+            menu.waitForEnter(menu.getEnterKeyState());
             cout << "\nYou take the parchment, and a name etches itself into existence. 'The Void Cat'...\n";
-            system("pause");
+            menu.waitForEnter(menu.getEnterKeyState());
             cout << "\nAs you look up, dread fills every corner of your being. The Void Cat is stepping towards you!\n";
-            system("pause");
+            menu.waitForEnter(menu.getEnterKeyState());
             cout << "\nThe shadow cackles horribly, and slowly fades from your senses. But The Void Cat approaches...\n";
-            system("pause");
-
-            //I think this should be changed to a special battle function made for Quests
-            //in which we can specify monsters to be fought and return the result of the battle
+            menu.waitForEnter(menu.getEnterKeyState());
+            
             battle.questBattle(username, 1, step);
-            //battle.startBattle(username);
 
             player.setHealth(battle.getPlayerHealth());
 
             cout << "Player ended Battle with " << player.getHealth() << " health!\n";
-            system("pause");
+            menu.waitForEnter(menu.getEnterKeyState());
             //If the battle was won, we should run this code:
             if(player.getHealth() > 0){
                 cout << "You are astonished at how incredibly weak the Void Cat turned out to be!";
                 cout << "\nMight as well have been fighting a sand castle!\n";
-                system("pause");
-                cout << "You got 10000000 experience!\n";
+                menu.waitForEnter(menu.getEnterKeyState());
+                cout << "\nYou got 10000000 experience!\n";
                 //Code to add experience
-                system("pause");
+                menu.waitForEnter(menu.getEnterKeyState());
                 cout << "\nYou check the parchment again. The Void Cat's name is already fading.";
                 cout << "\nA new name writes itself: Morg the Goblin. Somehow you know he is in the Glacius Desert.\n";
-                system("pause");
+                menu.waitForEnter(menu.getEnterKeyState());
                 system("cls");
                 account.setQuest1Progress(username, 1);
             }
             break;
         case 1:
-            cout << "You eventually come upon a hut made of sticks and mud. You bang on the door.";
-            system("pause");
-            cout << "\nA small green creature pokes his nose out. You cry out, 'I have come to slay you!'";
-            system("pause");
-            cout << "\nThe goblin blinks at you. 'Morg no want fighting. Stranger want tea?'";
-            system("pause");
-            cout << "\nYou pause. '...No way! You gotta die, son!'";
-            system("pause");
+            cout << "You eventually come upon a hut made of sticks and mud. You bang on the door.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nA small green creature pokes his nose out. You cry out, \"I have come to slay you!\"\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nThe goblin blinks at you. \"Morg no want fighting. Stranger want tea?\"\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nYou pause. \"...No way! You gotta die, son!\"\n";
+            menu.waitForEnter(menu.getEnterKeyState());
             battle.questBattle(username, 1, step);
 
+            player.setHealth(battle.getPlayerHealth());
+
             if(player.getHealth() > 0){
-                cout << "As the goblin falls lifeless to the ground, you check your parchment again.";
-                system("pause");
-                cout << "\nA new name writes itself: Klade the Orc. Somehow you know he is near Lake Argentus.";
-                system("pause");
-                cout << "You got 10000000 experience!";
+                cout << "As the goblin falls lifeless to the ground, you check your parchment again.\n";
+                menu.waitForEnter(menu.getEnterKeyState());
+                cout << "\nA new name writes itself: Klade the Orc. Somehow you know he is near Lake Argentus.\n";
+                menu.waitForEnter(menu.getEnterKeyState());
+                cout << "\nYou got 10000000 experience!\n";
                 //Code to add experience
-                system("pause");
+                menu.waitForEnter(menu.getEnterKeyState());
                 account.setQuest1Progress(username, 2);
             }
             break;
         case 2:
-            cout << "You circle the lake for hours, with no sign of the Orc. Finally, you sit beneath a tree to rest.";
-            system("pause");
-            cout << "\nBefore too long, a tall green man walks up to you. His footsteps make no sound.";
-            system("pause");
-            cout << "\n'I know you hunt me. Ready yourself.'";
-            system("pause");
+            cout << "You circle the lake for hours, with no sign of the Orc. Finally, you sit beneath a tree to rest.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nBefore too long, a tall green man walks up to you. His footsteps make no sound.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\n\"I know you hunt me. Ready yourself.\"\n";
+            menu.waitForEnter(menu.getEnterKeyState());
             battle.questBattle(username, 1, step);
 
+            player.setHealth(battle.getPlayerHealth());
+
             if(player.getHealth() > 0){
-                cout << "The Orc collapses to the ground, eyes closed. He fought with honor.";
-                system("pause");
-                cout << "\nA new name writes itself: The Black Night. Somehow you know he is in Arva Umbra.";
-                system("pause");
-                cout << "You got 10000000 experience!";
+                cout << "The Orc collapses to the ground, eyes closed. He fought with honor.\n";
+                menu.waitForEnter(menu.getEnterKeyState());
+                cout << "\nA new name writes itself: The Black Night. Somehow you know he is in Arva Umbra.\n";
+                menu.waitForEnter(menu.getEnterKeyState());
+                cout << "\nYou got 10000000 experience!\n";
                 //Code to add experience
-                system("pause");
+                menu.waitForEnter(menu.getEnterKeyState());
                 account.setQuest1Progress(username, 3);
             }
             break;
         case 3:
-            cout << "You gaze around the fields. The only signs of life are a few livestock.";
-            system("pause");
-            cout << "\nAfter a while, you spot a black figure on the horizon. It approaches even from some distance.";
-            system("pause");
-            cout << "\nSeveral minutes later, the figure hardly seems any closer.";
-            system("pause");
-            cout << "\nYou eventually sit down after realizing how long you'll be waiting.";
-            system("pause");
-            cout << "\nYou yawn. You can just make out the horse and the rider.";
-            system("pause");
-            cout << "\nThis is taking forever...";
-            system("pause");
-            cout << "\nYou can barely keep your eyes open at this point.";
-            system("pause");
-            cout << "\nYou can't stand it any longer. You fall asleep.";
-            system("pause");
-            cout << "\nzzzzzzzzzzzzzzzzzzzzzzzzzzz";
-            system("pause");
-            cout << "\nzzzzzzzzzzzzzzzzzzzzzzzzzzz";
-            system("pause");
-            cout << "\nSomeone kicks you in the head! It's the Black Night! You scramble for your weapon!";
-            system("pause");
+            cout << "You gaze around the fields. The only signs of life are a few livestock.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nAfter a while, you spot a black figure on the horizon. It approaches even from some distance.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nSeveral minutes later, the figure hardly seems any closer.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nYou eventually sit down after realizing how long you'll be waiting.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nYou yawn. You can just make out the horse and the rider.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nThis is taking forever...\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nYou can barely keep your eyes open at this point.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nYou can't stand it any longer. You fall asleep.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nzzzzzzzzzzzzzzzzzzzzzzzzzzz\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nzzzzzzzzzzzzzzzzzzzzzzzzzzz\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nSomeone kicks you in the head! It's the Black Night! You scramble for your weapon!\n";
+            menu.waitForEnter(menu.getEnterKeyState());
             battle.questBattle(username, 1, step);
 
+            player.setHealth(battle.getPlayerHealth());
+
             if(player.getHealth() > 0){
-                cout << "The Black Night shall ride no more. You read the enchanted parchment once again.";
-                system("pause");
-                cout << "\nA new name writes itself: The Blue Wizard. Somehow you know he is in Silva Ignis.";
-                system("pause");
-                cout << "You got 10000000 experience!";
+                cout << "The Black Night shall ride no more. You read the enchanted parchment once again.\n";
+                menu.waitForEnter(menu.getEnterKeyState());
+                cout << "\nA new name writes itself: The Blue Wizard. Somehow you know he is in Silva Ignis.\n";
+                menu.waitForEnter(menu.getEnterKeyState());
+                cout << "\nYou got 10000000 experience!\n";
                 //Code to add experience
-                system("pause");
+                menu.waitForEnter(menu.getEnterKeyState());
                 account.setQuest1Progress(username, 4);
             }
             break;
         case 4:
-            cout << "You wander through the trees, marvelling at their strange color.";
-            system("pause");
-            cout << "\nA blast of fire just barely misses your shoulder. You wheel around, drawing your weapon!";
-            system("pause");
+            cout << "You wander through the trees, marvelling at their strange color.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nA blast of fire just barely misses your shoulder. You wheel around, drawing your weapon!\n";
+            menu.waitForEnter(menu.getEnterKeyState());
             battle.questBattle(username, 1, step);
 
+            player.setHealth(battle.getPlayerHealth());
+
             if(player.getHealth() > 0){
-                cout << "The wizard collapses, but no body hits the ground. His robes simply crumple in the grass, with his pointy hat perched neatly on top.";
-                system("pause");
-                cout << "\nA new name writes itself: The Monstrous Behemoth. Somehow you know he is in the Ventosus Mountains.";
-                system("pause");
-                cout << "You got 10000000 experience!";
+                cout << "The wizard collapses, but no body hits the ground. His robes simply crumple in the grass, \nwith his pointy hat perched neatly on top.\n";
+                menu.waitForEnter(menu.getEnterKeyState());
+                cout << "\nA new name writes itself: The Monstrous Behemoth. Somehow you know he is in the Ventosus Mountains.\n";
+                menu.waitForEnter(menu.getEnterKeyState());
+                cout << "\nYou got 10000000 experience!";
                 //Code to add experience
-                system("pause");
+                menu.waitForEnter(menu.getEnterKeyState());
                 account.setQuest1Progress(username, 5);
             }
             break;
         case 5:
-            cout << "The mountains loom ominously over everything. You dread the moment when the Monstrous Behemoth will finally appear.";
-            system("pause");
-            cout << "\nRight on time, a huge, hulking shape lumbers over the mountainside.";
-            system("pause");
-            cout << "\nSpotting you, it roars furiously, then leaps with incredible might!";
-            system("pause");
-            cout << "\nIt clears an entire mountain in one great bound, then leaps again!";
-            system("pause");
-            cout << "\nThis time, he lands in front of you. The menacing figure makes you feel very small.";
+            cout << "The mountains loom ominously over everything. \nYou dread the moment when the Monstrous Behemoth will finally appear.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nRight on time, a huge, hulking shape lumbers over the mountainside.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nSpotting you, it roars furiously, then leaps with incredible might!\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nIt clears an entire mountain in one great bound, then leaps again!\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nThis time, he lands in front of you. The menacing figure makes you feel very small.\n";
             cout << "\nIn your mind, you are about to be fighting the mountain itself...";
-            system("pause");
+            menu.waitForEnter(menu.getEnterKeyState());
             battle.questBattle(username, 1, step);
 
+            player.setHealth(battle.getPlayerHealth());
+
             if(player.getHealth() > 0){
-                cout << "Incredibly, the titanic being crashes into the snow. Hands shaking, you check the parchment.";
-                system("pause");
-                cout << "\nA new name has been written: The Awful Necromancer. You know he is in the Glacius Desert, and you are terrified.";
-                system("pause");
-                cout << "You got 20000000 experience!";
+                cout << "Incredibly, the titanic being crashes into the snow. Hands shaking, you check the parchment.\n";
+                menu.waitForEnter(menu.getEnterKeyState());
+                cout << "\nA new name has been written: The Awful Necromancer. You know he is in the Glacius Desert, and you are terrified.\n";
+                menu.waitForEnter(menu.getEnterKeyState());
+                cout << "\nYou got 20000000 experience!\n";
                 //Code to add experience
-                system("pause");
+                menu.waitForEnter(menu.getEnterKeyState());
                 account.setQuest1Progress(username, 6);
             }
             break;
         case 6:
-            cout << "It is cold. Bitterly cold. Your toes feel as though they are frozen together.";
-            system("pause");
-            cout << "\nIt is almost noon, but it is getting colder.";
-            system("pause");
-            cout << "\nIt is getting darker.";
-            system("pause");
-            cout << "\nThe cold is so intense, and the clouds are like charcoal.";
-            system("pause");
-            cout << "\nDead silence falls over the whole landscape. It is now pitch black, and the cold is more than anything you have ever imagined.";
-            system("pause");
-            cout << "\nA blue light begins glowing, and a figure appears in its midst.";
-            system("pause");
-            cout << "You can feel it is the very embodiment of death itself.";
-            system("pause");
+            cout << "It is cold. Bitterly cold. Your toes feel as though they are frozen together.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nIt is almost noon, but it is getting colder.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nIt is getting darker.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nThe cold is so intense, and the clouds are like charcoal.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nDead silence falls over the whole landscape. \nIt is now pitch black, and the cold is more than anything you have ever imagined.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nA blue light begins glowing, and a figure appears in its midst.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nYou can feel it is the very embodiment of death itself.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
             battle.questBattle(username, 1, step);
 
+            player.setHealth(battle.getPlayerHealth());
+
             if(player.getHealth() > 0){
-                cout << "The Necromancer screams, beams of light splitting his body apart, and he explodes into dust.";
-                system("pause");
-                cout << "The clouds clear, the sun begins warming everything, but even so you collapse to your knees and put your head in your hands.";
-                system("pause");
-                cout << "Tears stream down your face. Your mind feels like wet dough,";
-                cout << "\noozing out of your head as thoughts and memories all melt into a sick mess.";
-                system("pause");
-                cout << "Your hands shake and you look at the parchment once more.";
-                system("pause");
-                cout << "\nA name is written. You know it is the last.";
-                system("pause");
-                cout << "\nThe Dragon.";
-                system("pause");
-                cout << "\nYou know he is at Lake Argentus.";
-                system("pause");
-                cout << "You got 30000000 experience!";
+                cout << "The Necromancer screams, beams of light splitting his body apart, and he explodes into dust.\n";
+                menu.waitForEnter(menu.getEnterKeyState());
+                cout << "\nThe clouds clear, the sun begins warming everything, \nbut even so you collapse to your knees and put your head in your hands.\n";
+                menu.waitForEnter(menu.getEnterKeyState());
+                cout << "\nTears stream down your face. Your mind feels like wet dough,";
+                cout << "\noozing out of your head as thoughts and memories all melt into a sick mess.\n";
+                menu.waitForEnter(menu.getEnterKeyState());
+                cout << "\nYour hands shake and you look at the parchment once more.\n";
+                menu.waitForEnter(menu.getEnterKeyState());
+                cout << "\nA name is written. You know it is the last.\n";
+                menu.waitForEnter(menu.getEnterKeyState());
+                cout << "\nThe Dragon.\n";
+                menu.waitForEnter(menu.getEnterKeyState());
+                cout << "\nYou know he is at Lake Argentus.\n";
+                menu.waitForEnter(menu.getEnterKeyState());
+                cout << "\nYou got 30000000 experience!\n";
                 //Code to add experience
-                system("pause");
+                menu.waitForEnter(menu.getEnterKeyState());
                 account.setQuest1Progress(username, 7);
             }
             break;
         case 7:
-            cout << "Meh, guess like a dragon showed up or some junk";
-            system("pause");
+            cout << "Meh, guess like a dragon showed up or some junk\n";
+            menu.waitForEnter(menu.getEnterKeyState());
             battle.questBattle(username, 1, step);
 
+            player.setHealth(battle.getPlayerHealth());
+
             if(player.getHealth() > 0){
-                cout << "Huzzah, the dragon is like dead or whatever";
-                system("pause");
-                cout << "\nWith the last enemy defeated, the enchanted parchment crumbles into dust.";
-                system("pause");
-                cout << "You finished the Quest! You got 50000000 experience!";
+                cout << "Huzzah, the dragon is like dead or whatever\n";
+                menu.waitForEnter(menu.getEnterKeyState());
+                cout << "\nWith the last enemy defeated, the enchanted parchment crumbles into dust.\n";
+                menu.waitForEnter(menu.getEnterKeyState());
+                cout << "You finished the Quest! You got 50000000 experience!\n";
                 //Code to add experience
-                system("pause");
-                cout << "Huzzah!";
-                system("pause");
-                cout << "Huzzah!";
-                system("pause");
-                cout << "Huzzah!";
-                system("pause");
+                menu.waitForEnter(menu.getEnterKeyState());
+                cout << "Huzzah!\n";
+                menu.waitForEnter(menu.getEnterKeyState());
+                cout << "Huzzah!\n";
+                menu.waitForEnter(menu.getEnterKeyState());
+                cout << "Huzzah!\n";
+                menu.waitForEnter(menu.getEnterKeyState());
                 account.setQuest1Progress(username, 8);
             }
             break;
         default:
             cout << "Error loading Quest...";
+            menu.waitForEnter(menu.getEnterKeyState());
             break;
     }
 }

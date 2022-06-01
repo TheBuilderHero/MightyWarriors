@@ -260,7 +260,7 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
     display(32, 3, "Logout");               display(53, 3, "(type number \"2\")");
     display(32, 4, "Stats");                display(53, 4, "(type number \"3\")");
     display(32, 5, "Info");                 display(53, 5, "(type number \"4\")");
-    display(32, 6, "Go Questing");          display(53, 6, "(type number \"5\")");
+    display(32, 6, "Test Questing");        display(53, 6, "(type number \"5\")");
     display(32, 7, "Exit");                 display(53, 7, "(type number \"0\")", false);
     
     while (1){
@@ -355,10 +355,13 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         getGameVersion();
         adminMenu(username);
         break;
-    case 5: //start battle
+    case 5:{ //test Quests
         system("cls");
-        battle.startBattle(username);//start battle code will go here.
-        break;
+        Quests tempQuest;
+        int tempStep  = numberPressWait(8, true);//enter step number
+        tempQuest.quest1(username, tempStep);
+        adminMenu(username);
+        break;}
     case 14:
         system("cls");
         display(3,3,"October is a Beautiful month to get Married!");
@@ -537,6 +540,24 @@ int Menu::numberPressWait(int maxRange, bool hasZeroOption){ //returns a value b
             }
         }
     }
+}
+void Menu::waitForEnter(int enterCurrentlyPressed){ //waits for a user to click the enter key
+    bool enterKeyPressedLastLoop = false;
+    while (1){
+        if (GetKeyState(VK_RETURN) < 0 && !enterKeyPressedLastLoop && enterCurrentlyPressed >= 0) { //checks to make sure that the enter key is pressed and makes sure it was not pressed last check
+            enterKeyPressedLastLoop = true;
+            ClearConsoleInputBuffer();
+            return;
+        } else if (GetKeyState(VK_RETURN) >= 0){ // else enter not pressed
+            enterKeyPressedLastLoop = false;
+            enterCurrentlyPressed = 0;
+        }
+    }
+    ClearConsoleInputBuffer();
+}
+//I am shaking my head at my own function
+int Menu::getEnterKeyState(){
+    return GetKeyState(VK_RETURN);
 }
 
 void Menu::display(int column, int row, string outputString, bool resetCursorPosition, bool addExtraRow) { //sets the display position of the text on the consol (allowing to display anywhere on the consol)
