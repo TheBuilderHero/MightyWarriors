@@ -28,6 +28,7 @@ void Account::setHealth(std::string username, int &remainingStatPoints, int numO
     int healthS = 0;
     cout << "Enter the number of points you would like to add to your Health stat: ";
     cin >> healthS;
+    if(healthS < 0) healthS = 0; //cancel negative inputs
     if (healthS <= remainingStatPoints) {
         initHealth = healthS;
         remainingStatPoints -= healthS;
@@ -36,13 +37,15 @@ void Account::setHealth(std::string username, int &remainingStatPoints, int numO
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
         initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initMana = 0;
         system("pause");
-        levelUp(username, numOfStatPoints);
+        //levelUp(username, numOfStatPoints); //causing addition of multiple states
+        restartLevelUp = true;
     }
 }
 void Account::setArmor(std::string username, int &remainingStatPoints, int numOfStatPoints){ //initial choice of Armor stats
     int armorS = 0;
     cout << "Enter the number of points you would like to add to your Armor stat: ";
     cin >> armorS;
+    if(armorS < 0) armorS = 0; //cancel negative inputs
     if (armorS <= remainingStatPoints) {
         initArmor = armorS;
         remainingStatPoints -= armorS;
@@ -51,13 +54,14 @@ void Account::setArmor(std::string username, int &remainingStatPoints, int numOf
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
         initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initMana = 0;
         system("pause");
-        levelUp(username, numOfStatPoints);
+        restartLevelUp = true;
     }
 }
 void Account::setMagicResistance(std::string username, int &remainingStatPoints, int numOfStatPoints){ //initial choice of Magic Resistance stats
     int magicResistanceS = 0;
     cout << "Enter the number of points you would like to add to your Magic Resistance stat: ";
     cin >> magicResistanceS;
+    if(magicResistanceS < 0) magicResistanceS = 0; //cancel negative inputs
     if (magicResistanceS <= remainingStatPoints) {
         initMagicResistance = magicResistanceS;
         remainingStatPoints -= magicResistanceS;
@@ -66,13 +70,14 @@ void Account::setMagicResistance(std::string username, int &remainingStatPoints,
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
         initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initMana = 0;
         system("pause");
-        levelUp(username, numOfStatPoints);
+        restartLevelUp = true;
     }
 }
 void Account::setPhysicalDamage(std::string username, int &remainingStatPoints, int numOfStatPoints){ //initial choice of PhysicalDamage stats
     int attackS = 0;
     cout << "Enter the number of points you would like to add to your PhysicalDamage stat: ";
     cin >> attackS;
+    if(attackS < 0) attackS = 0; //cancel negative inputs
     if (attackS <= remainingStatPoints) {
         initPhysicalDamage = attackS;
         remainingStatPoints -= attackS;
@@ -81,13 +86,14 @@ void Account::setPhysicalDamage(std::string username, int &remainingStatPoints, 
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
         initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initMana = 0;
         system("pause");
-        levelUp(username, numOfStatPoints);
+        restartLevelUp = true;
     }
 }
 void Account::setMagicDamage(std::string username, int &remainingStatPoints, int numOfStatPoints){ //initial choice of MagicDamage stats
     int magicDamageS = 0;
     cout << "Enter the number of points you would like to add to your MagicDamage stat: ";
     cin >> magicDamageS;
+    if(magicDamageS < 0) magicDamageS = 0; //cancel negative inputs
     if (magicDamageS <= remainingStatPoints) {
         initMagicDamage = magicDamageS;
         remainingStatPoints -= magicDamageS;
@@ -96,13 +102,14 @@ void Account::setMagicDamage(std::string username, int &remainingStatPoints, int
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
         initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initMana = 0;
         system("pause");
-        levelUp(username, numOfStatPoints);
+        restartLevelUp = true;
     }
 }
 void Account::setAgility(std::string username, int &remainingStatPoints, int numOfStatPoints){ //initial choice of Agility stats
     int agilityS = 0;
     cout << "Enter the number of points you would like to add to your Agility stat: ";
     cin >> agilityS;
+    if(agilityS < 0) agilityS = 0; //cancel negative inputs
     if (agilityS <= remainingStatPoints) {
         initAgility = agilityS;
         remainingStatPoints -= agilityS;
@@ -111,13 +118,14 @@ void Account::setAgility(std::string username, int &remainingStatPoints, int num
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
         initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initMana = 0;
         system("pause");
-        levelUp(username, numOfStatPoints);
+        restartLevelUp = true;
     }
 }
 void Account::setStealth(std::string username, int &remainingStatPoints, int numOfStatPoints){ //initial choice of Stealth stats
     int stealthS = 0;
     cout << "Enter the number of points you would like to add to your Stealth stat: ";
     cin >> stealthS;
+    if(stealthS < 0) stealthS = 0; //cancel negative inputs
     if (stealthS <= remainingStatPoints) {
         initStealth = stealthS;
         remainingStatPoints -= stealthS;
@@ -126,13 +134,14 @@ void Account::setStealth(std::string username, int &remainingStatPoints, int num
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
         initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initMana = 0;
         system("pause");
-        levelUp(username, numOfStatPoints);
+        restartLevelUp = true;
     }
 }
 void Account::setStamina(std::string username, int &remainingStatPoints, int numOfStatPoints){ //initial choice of Stamina stats
     int staminaS = 0;
     cout << "Enter the number of points you would like to add to your Stamina stat: ";
     cin >> staminaS;
+    if(staminaS < 0) staminaS = 0; //cancel negative inputs
     if (staminaS <= remainingStatPoints) {
         initStamina = staminaS;
         remainingStatPoints -= staminaS;
@@ -141,13 +150,14 @@ void Account::setStamina(std::string username, int &remainingStatPoints, int num
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
         initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initMana = 0;
         system("pause");
-        levelUp(username, numOfStatPoints);
+        restartLevelUp = true;
     }
 }
 void Account::setMana(std::string username, int &remainingStatPoints, int numOfStatPoints){ //initial choice of Mana stats
     int manaS = 0;
     cout << "Enter the number of points you would like to add to your Mana stat: ";
     cin >> manaS;
+    if(manaS < 0) manaS = 0; //cancel negative inputs
     if (manaS <= remainingStatPoints) {
         initMana = manaS;
         remainingStatPoints -= manaS;
@@ -156,7 +166,7 @@ void Account::setMana(std::string username, int &remainingStatPoints, int numOfS
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
         initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initMana = 0;
         system("pause");
-        levelUp(username, numOfStatPoints);
+        restartLevelUp = true;
     }
 }
 
@@ -402,6 +412,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
 void Account::levelUp(std::string username, int numOfStatPoints){
     Cipher code;
     ReachOutToServer server;
+    restartLevelUp = false;
     int remainingStatPoints = numOfStatPoints;
     system("cls");
     cout << "(Health, Armor, Magic Resistance, Physical Damage, Magic Damage, Agility, Stealth, Stamina, Mana)" << endl << "You have " + to_string(remainingStatPoints) + " points that can be distributed among the above stats" << endl;
@@ -409,23 +420,25 @@ void Account::levelUp(std::string username, int numOfStatPoints){
     system("cls");
     cout << "You have " + to_string(remainingStatPoints) + " points that can be distributed among the above stats" << endl << endl << "Please enter the number of points to add to each stat." << endl << endl;
     setHealth(username, remainingStatPoints, numOfStatPoints);
-    if (remainingStatPoints > 0) setArmor(username, remainingStatPoints, numOfStatPoints);
-    if (remainingStatPoints > 0) setMagicResistance(username, remainingStatPoints, numOfStatPoints);
-    if (remainingStatPoints > 0) setPhysicalDamage(username, remainingStatPoints, numOfStatPoints);
-    if (remainingStatPoints > 0) setMagicDamage(username, remainingStatPoints, numOfStatPoints);
-    if (remainingStatPoints > 0) setAgility(username, remainingStatPoints, numOfStatPoints);
-    if (remainingStatPoints > 0) setStealth(username, remainingStatPoints, numOfStatPoints);
-    if (remainingStatPoints > 0) setStamina(username, remainingStatPoints, numOfStatPoints);
-    if (remainingStatPoints > 0) setMana(username, remainingStatPoints, numOfStatPoints);
-    if (remainingStatPoints > 0) { //if the user did not use all their stat points we will restart the proccess
+    if (remainingStatPoints > 0 && !restartLevelUp) setArmor(username, remainingStatPoints, numOfStatPoints);
+    if (remainingStatPoints > 0 && !restartLevelUp) setMagicResistance(username, remainingStatPoints, numOfStatPoints);
+    if (remainingStatPoints > 0 && !restartLevelUp) setPhysicalDamage(username, remainingStatPoints, numOfStatPoints);
+    if (remainingStatPoints > 0 && !restartLevelUp) setMagicDamage(username, remainingStatPoints, numOfStatPoints);
+    if (remainingStatPoints > 0 && !restartLevelUp) setAgility(username, remainingStatPoints, numOfStatPoints);
+    if (remainingStatPoints > 0 && !restartLevelUp) setStealth(username, remainingStatPoints, numOfStatPoints);
+    if (remainingStatPoints > 0 && !restartLevelUp) setStamina(username, remainingStatPoints, numOfStatPoints);
+    if (remainingStatPoints > 0 && !restartLevelUp) setMana(username, remainingStatPoints, numOfStatPoints);
+    if (remainingStatPoints > 0 && !restartLevelUp) { //if the user did not use all their stat points we will restart the proccess
         cout << remainingStatPoints << endl;
         system("cls");
         cout << "You did not use all your Stat Points..." << endl << "Restarting this proccess so you can complete this task.";
         system("pause");
         initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initMana = 0; //reset all to 0
         levelUp(username, numOfStatPoints);
-    }
-    
+    } else if (restartLevelUp) {
+        initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initMana = 0; //reset all to 0
+        levelUp(username, numOfStatPoints);
+    } else {
     cout << "Your stat points have been to set to the following: " << endl << "Health: " << initHealth << endl << "Armor: " << initArmor << endl << "Magic Resistance: " 
     << initMagicResistance << endl << "initPhysicalDamage: " << initPhysicalDamage << endl << "initMagicDamage: " << initMagicDamage << endl << "initAgility: " << initAgility << endl
     << "initStealth: " << initStealth << endl << "initStamina: " << initStamina << endl << "initMana: " << initMana << endl;
@@ -435,6 +448,7 @@ void Account::levelUp(std::string username, int numOfStatPoints){
     //These send the data to the server to be saved properly in the [username].stat file
 
     system("pause");
+    }
 }
 
 int Account::getHealth(std::string username){ //reuturns the users current Health stat
