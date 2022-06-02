@@ -682,7 +682,9 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
             if (validLogon == 1){//logon is valid
                 menuClass.menu(usernameE);
             } else {
-                menu.display(12, 0, "Invalid Username or Password...");
+                string invalidMessage = "Invalid Username or Password...";
+                menu.display(12, 0, invalidMessage, false, false);
+                menu.display(12+invalidMessage.length(), 0, "", false, false);
                 system("pause");
                 //logon is invalid
                 logonScreen();
