@@ -178,6 +178,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
     system("pause");
     system("cls");
     int raceChoice = 0;
+    string input;
     char answer;
     bool exitNow = false;
     while(!exitNow){ //while the user has not selected one of the five options it will continue to ask them for an aswer.
@@ -185,19 +186,24 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
         raceChoice = 0;
         cout << endl << "Select your Character's race:" << endl;
         cout << "Please type the number corresponding to one of the races listed below (Note, this cannot be changed later!): "<< endl << endl;
-        cout << "1 - Human" << endl;
-        cout << " - - Humans get a random bonus stat for each battle" << endl;
-        cout << "2 - Ghost" << endl;
-        cout << " - - Ghosts have a chance to etherealize, ignoring attacks" << endl;
-        cout << "3 - Dino" << endl;
-        cout << " - - You can play as a Dinosaur!!!" << endl;
-        cout << "4 - Elf" << endl;
-        cout << " - - Elves have a chance for an extra attack" << endl;
-        cout << "5 - Dryad" << endl;
-        cout << " - - Dryads can reflect abilities back on an attacker" << endl;
+        cout << "1  Human" << endl;
+        cout << " -> Humans get a random bonus stat for each battle" << endl << endl;
+        cout << "2  Ghost" << endl;
+        cout << " ->  Ghosts have a chance to etherealize, ignoring attacks" << endl << endl;
+        cout << "3  Dino" << endl;
+        cout << " ->  You can play as a Dinosaur!!!" << endl << endl;
+        cout << "4  Elf" << endl;
+        cout << " -> Elves have a chance for an extra attack" << endl << endl;
+        cout << "5  Dryad" << endl;
+        cout << " -> Dryads can reflect abilities back on an attacker" << endl << endl;
         cout << ">";
-        cin >> raceChoice;
-        if (raceChoice <= 0 || raceChoice > 5) {
+        cin >> input;
+        try{
+            raceChoice = stoi(input);
+        } catch(...) {
+            raceChoice = 0;
+        }
+        if ((raceChoice <= 0 || raceChoice > 5) && (input.length() == 1 && raceChoice != 0)) {
             cin.clear(); //this and the next resolve issues with infinitely looping invalid
             cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
             cout << "You have entered an invalid input, Please try again." << endl;
@@ -206,7 +212,11 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
             system("cls");
         } else {
             string raceName;
-            switch(raceChoice){
+            if(input == "april"){
+                raceName = "Mop";
+                raceChoice = 100;
+            } else {
+                switch(raceChoice){
                 case 1:
                     raceName = "Human";
                     break;
@@ -225,7 +235,9 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
                 default:
                     raceName = "not chosen";
                     break;
+                }
             }
+            
             bool answered = false;
             while(!answered) { //validate the chosen race
                 Menu menu;
@@ -250,21 +262,21 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
     //Now that the race has been chosen and validated move on to kit selection
     int kitChoice = 0;
     exitNow = false;
-    while(!exitNow){ //while the user has not selected one of the four kit options it will continue to ask them for an aswer to kitChoice.
+    while(!exitNow){ //while the user has not selected one of the four kit options it will continue to ask them for an aswer to kitChoice. << endl
         system("cls");
         kitChoice = 0;
         cout << endl << "Select your Character's kit:" << endl;
         cout << "Please type the number corresponding to one of the kits from the list below (Note, this cannot be changed later!): "<< endl << endl;
-        cout << "1 - Tank" << endl;
-        cout << " - - Tanks gain +3 to Armor, Magic Resistance, and Health" << endl;
-        cout << "2 - Assassin" << endl;
-        cout << " - - Assassins gain +5 on Attack" << endl;
-        cout << "3 - Archer" << endl;
-        cout << " - - Archers gain +2 on Attack and +1 on Armor and Magic Resistance" << endl;
-        cout << "4 - Mage" << endl;
-        cout << " - - Mages gain +2 on Ability and +3 on Magic Resistance" << endl;
-        cout << "5 - Ninja" << endl;
-        cout << " - - Ninjas gain +2 on Attack and +3 on Agility and Stealth" << endl;
+        cout << "1  Tank" << endl;
+        cout << " -> Tanks gain +3 to Armor, Magic Resistance, and Health" << endl << endl;
+        cout << "2  Assassin" << endl;
+        cout << " -> Assassins gain +5 on Attack" << endl << endl;
+        cout << "3  Archer" << endl;
+        cout << " -> Archers gain +2 on Attack and +1 on Armor and Magic Resistance" << endl << endl;
+        cout << "4  Mage" << endl;
+        cout << " -> Mages gain +2 on Ability and +3 on Magic Resistance" << endl << endl;
+        cout << "5  Ninja" << endl;
+        cout << " -> Ninjas gain +2 on Attack and +3 on Agility and Stealth" << endl << endl;
         cout << ">";
         cin >> kitChoice;
         if (kitChoice <= 0 || kitChoice > 5) {
@@ -327,20 +339,20 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
         weaponChoice = 0;
         cout << endl << "Select your Character's weapon:" << endl;
         cout << "Please type the number corresponding to one of the kits from the list below (Note, this cannot be changed later!): "<< endl << endl;
-        cout << "1 - Sword" << endl;
-        cout << " - - +20 Physical Damage" << endl;
-        cout << "2 - Bow" << endl;
-        cout << " - - +12 Physical Damage" << endl;
-        cout << "3 - Dagger" << endl;
-        cout << " - - +12 Physical Damage" << endl;
-        cout << "4 - Fire Rune" << endl;
-        cout << " - - +18 Magic Damage and +3 Physical Damage" << endl;
-        cout << "5 - Wind Rune" << endl;
-        cout << " - - +14 Magic Damage and +6 Physical Damage" << endl;
-        cout << "6 - Ice Spike" << endl;
-        cout << " - - +36 Magic Damage and +16 Physical Damage" << endl;
-        cout << "7 - Black Book" << endl;
-        cout << " - - +8 Magic Damage and +8 Physical Damage and +5 PsychicDamage" << endl;
+        cout << "1  Sword" << endl;
+        cout << " ->  +20 Physical Damage" << endl << endl;
+        cout << "2  Bow" << endl;
+        cout << " ->  +12 Physical Damage" << endl << endl;
+        cout << "3  Dagger" << endl;
+        cout << " ->  +12 Physical Damage" << endl << endl;
+        cout << "4  Fire Rune" << endl;
+        cout << " -> +18 Magic Damage and +3 Physical Damage" << endl << endl;
+        cout << "5  Wind Rune" << endl;
+        cout << " ->  +14 Magic Damage and +6 Physical Damage" << endl << endl;
+        cout << "6  Ice Spike" << endl;
+        cout << " -> +36 Magic Damage and +16 Physical Damage" << endl << endl;
+        cout << "7  Black Book" << endl;
+        cout << " -> +8 Magic Damage and +8 Physical Damage and +5 PsychicDamage" << endl << endl;
         cout << ">";
         cin >> weaponChoice;
         if (weaponChoice <= 0 || weaponChoice > 7) {
