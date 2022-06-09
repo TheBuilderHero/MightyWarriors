@@ -8,6 +8,9 @@
 using namespace std;
 
 TempEntity::TempEntity(string currentUsername){
+    //causing issues with starting the program without the server running.
+    //It gives a stoi error:
+    
     string minMaxDelimiter = " - ";
     setUsername(currentUsername);
     ReachOutToServer server;
@@ -34,6 +37,10 @@ TempEntity::TempEntity(string currentUsername){
     setStealth(stoi(code.getItemS(7)));
     setStamina(stoi(code.getItemS(8)));
     setMana(stoi(code.getItemS(9)));
+    //set location:
+    code.decipherS(server.sendToServer(code.cipher("18", username)));
+    setLocation(stoi(code.getItemS(1)));
+    
 }
 TempEntity::~TempEntity(){
 
@@ -43,6 +50,10 @@ TempEntity::~TempEntity(){
 void TempEntity::setUsername(string newUsername){
     username = newUsername;
 }
+void TempEntity::setLocation(int currentLocationValue){
+    location = currentLocationValue;
+}
+//stats:
 void TempEntity::setHealth(int newHealth){
     health = newHealth;
 }
@@ -78,6 +89,7 @@ void TempEntity::setMana(int newMana){
 }
 
 //updater functions:
+//stats:
 void TempEntity::updateHealth(int addHealth){
     health += addHealth;
 }

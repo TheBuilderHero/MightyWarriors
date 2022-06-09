@@ -6,6 +6,7 @@ class TempEntity{
     private:
         std::string username;
         int health, armor, magicResistance, physicalDamageMin, physicalDamageMax, magicDamageMin, magicDamageMax, agility, stealth, stamina, mana;
+        int location;
         std::string name;
     public:
         TempEntity(std::string currentUsername);
@@ -13,6 +14,7 @@ class TempEntity{
 
         //getter functions:
         std::string getUsername() { return username; }
+        int getLocation() { return location; }
         //stats:
         int getHealth(){ return health; }
         int getArmor(){ return armor; }
@@ -28,6 +30,7 @@ class TempEntity{
 
         //setter functions:
         void setUsername(std::string newUsername);
+        void setLocation(int currentLocationValue);
         //stats:
         void setHealth(int newHealth);
         void setArmor(int newArmor);
