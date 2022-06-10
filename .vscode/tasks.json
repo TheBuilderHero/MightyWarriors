@@ -17,6 +17,7 @@
                 "Quests.cpp",
                 "TempEntity.cpp",
                 "WorldMap.cpp",
+                "Passives.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 " -lws2_32",

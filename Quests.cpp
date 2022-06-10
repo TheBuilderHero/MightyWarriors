@@ -239,7 +239,7 @@ void Quests::doQuest(string username, int location, int quest){
 void Quests::quest1(string username, int step){
     Menu menu;
     Battle battle;
-    TempEntity player{"kota"};
+    TempEntity player{username};
     switch(step){
         case 0:
             cout << "You lumber across the frozen sands, not knowing which way to turn.\n (press Enter)";
