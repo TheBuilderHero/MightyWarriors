@@ -40,7 +40,28 @@ TempEntity::TempEntity(string currentUsername){
     //set location:
     code.decipherS(server.sendToServer(code.cipher("18", username)));
     setLocation(stoi(code.getItemS(1)));
+    //set race, kit, level, experience:
+    code.decipherS(server.sendToServer(code.cipher("21", username)));
+    setRace(code.getItemS(1));
+    setKit(code.getItemS(2));
+    setWeapon(code.getItemS(3));
+    setLevel(stoi(code.getItemS(4)));
+    setCurrentXP(stoi(code.getItemS(5)));
+    setXPForNextLevel(stoi(code.getItemS(6)));
+    setQDamageType(code.getItemS(7));
+    setWDamageType(code.getItemS(8));
+    setEDamageType(code.getItemS(9));
+    setRDamageType(code.getItemS(10));
     
+}
+TempEntity::TempEntity(){//blank constructor if no username has been provided so far
+    health = armor = magicResistance = physicalDamageMin = physicalDamageMax = magicDamageMin = magicDamageMax = agility = stealth = stamina = mana = 0;
+    location = 1;
+    quest1Progress = 0;
+    level = 1;
+    currentXP = 0;
+    XPForNextLevel = 500;
+    name = username = race = kit = weapon = "Undefined";
 }
 TempEntity::~TempEntity(){
 
@@ -52,6 +73,9 @@ void TempEntity::setUsername(string newUsername){
 }
 void TempEntity::setLocation(int currentLocationValue){
     location = currentLocationValue;
+}
+void TempEntity::setQuest1Progress(int newProgress){
+    quest1Progress = newProgress;
 }
 //stats:
 void TempEntity::setHealth(int newHealth){
@@ -86,6 +110,37 @@ void TempEntity::setStamina(int newStamina){
 }
 void TempEntity::setMana(int newMana){
     mana = newMana;
+}
+
+void TempEntity::setRace(string newRace){
+    race = newRace;
+}
+void TempEntity::setKit(string newKit){
+    kit = newKit;
+}
+void TempEntity::setWeapon(string newWeapon){
+    weapon = newWeapon;
+}
+void TempEntity::setQDamageType(string newDamageType){
+    qDamageType = newDamageType;
+}
+void TempEntity::setWDamageType(string newDamageType){
+    wDamageType = newDamageType;
+}
+void TempEntity::setEDamageType(string newDamageType){
+    eDamageType = newDamageType;
+}
+void TempEntity::setRDamageType(string newDamageType){
+    rDamageType = newDamageType;
+}
+void TempEntity::setLevel(int newLevel){
+    level = newLevel;
+}
+void TempEntity::setCurrentXP(int newXP){
+    currentXP = newXP;
+}
+void TempEntity::setXPForNextLevel(int newXPForNextLevel){
+    XPForNextLevel = newXPForNextLevel;
 }
 
 //updater functions:
@@ -124,6 +179,13 @@ void TempEntity::updateMana(int addMana){
     mana += addMana;
 }
 
+void TempEntity::updateCurrentXP(int addXP){
+    currentXP += addXP;
+}
+void TempEntity::updateLevel(int addLevel){
+    level += addLevel;
+}
+
 
 //Richard functions:
 string TempEntity::getName(){
@@ -132,12 +194,6 @@ string TempEntity::getName(){
 void TempEntity::setName(string newName){
     name = newName;
 }
-/*int TempEntity::getHealth(){
-    return health;
-}
-void TempEntity::setHealth(int newHealth){
-    health = newHealth;
-}*/
 void TempEntity::damage(int damage){
     health -= damage;
 }

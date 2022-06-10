@@ -11,6 +11,7 @@
 #include "ReachOutToServer.h"
 #include "Cipher.h"
 #include "Menu.h"
+#include "TempEntity.h"
 
 using namespace std;
 Menu menuClass;
@@ -692,6 +693,8 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
             cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
             validLogon = stoi(server.sendToServer(code.cipher("3", usernameE, passwordE)));
             if (validLogon == 1){//logon is valid
+                TempEntity player{usernameE};
+                menuClass.setPlayer(player);
                 menuClass.menu(usernameE);
             } else {
                 string invalidMessage = "Invalid Username or Password...";

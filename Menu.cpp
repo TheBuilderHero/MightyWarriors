@@ -131,7 +131,8 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         case 3://display stats
             system("cls");
             ClearConsoleInputBuffer();
-            account.displayStats(username);
+            displayStats();
+            //account.displayStats(username);
             //menu(username);
             break;
         case 4:{
@@ -204,6 +205,69 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
         //menu(username);
         break;
     }
+}
+
+void Menu::displayStats(){
+    string physicalDamageAbilities = "Physical Damage Abilities: ";
+    string magicDamageAbilities = "Magic Damage Abilities: ";
+    if (player.getQDamageType() == "Physical") physicalDamageAbilities += " Q";
+    else magicDamageAbilities += " Q";
+    if (player.getWDamageType() == "Physical") physicalDamageAbilities += " W";
+    else magicDamageAbilities += " W";
+    if (player.getEDamageType() == "Physical") physicalDamageAbilities += " E";
+    else magicDamageAbilities += " E";
+    if (player.getRDamageType() == "Physical") physicalDamageAbilities += " R";
+    else magicDamageAbilities += " R";
+
+    stringstream currentXP, totalXP;
+    currentXP << fixed << setprecision(0) << player.getCurrentXP(); //format the XP
+    totalXP << fixed << setprecision(0) << player.getXPForNextLevel(); //format the XP
+    string currentXPFormatted = currentXP.str();
+    string totalXPFormatted = totalXP.str();
+    string playerLevelInfo = "Player Level: " + to_string(player.getLevel()) +  " With " + currentXPFormatted + "XP of " + totalXPFormatted + "XP";
+    string physicalDamageString = to_string(player.getPhysicalDamageMin()) + " - " + to_string(player.getPhysicalDamageMax());
+    string magicDamageString = to_string(player.getMagicDamageMin()) + " - " + to_string(player.getMagicDamageMax());
+
+    display(0, 0, "Your stats are as follows:\n");
+    cout << "\n" << setfill('=') << setw(92) << "=";
+    display(0, 2, "Health:");               display(42 - to_string(player.getHealth()).size(), 2, to_string(player.getHealth()));
+    display(48, 2, playerLevelInfo);        display(48, 3, "Player Race: " + player.getRace());
+    cout << "\n\n\n" << setfill('-') << setw(42) << "-";
+    display(0, 4, "Armor:");                display(42 - to_string(player.getArmor()).size(), 4, to_string(player.getArmor()));
+    display(48, 4, "Player Kit: " + player.getKit()); display(48, 5, "Player Weapon: " + player.getWeapon());
+    cout << "\n\n\n\n\n" << setfill('-') << setw(42) << "-";
+    display(0, 6, "Magic Resistance:");     display(42 - to_string(player.getMagicResistance()).size(), 6, to_string(player.getMagicResistance()));
+    cout << "\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-";
+    display(0, 8, "Physical Damage:");      display(42 - physicalDamageString.size(), 8, physicalDamageString);
+    display(48, 8, physicalDamageAbilities);
+    cout << "\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-";
+    display(0, 10, "Magic Damage:");        display(42 - magicDamageString.size(), 10, magicDamageString);
+    display(48, 10, magicDamageAbilities);
+    cout << "\n\n\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-";
+    display(0, 12, "Agility:");             display(42 - to_string(player.getAgility()).size(), 12, to_string(player.getAgility()));
+    cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-";
+    display(0, 14, "Stealth:");             display(42 - to_string(player.getStealth()).size(), 14, to_string(player.getStealth()));
+    cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-";
+    display(0, 16, "Stamina:");             display(42 - to_string(player.getStamina()).size(), 16, to_string(player.getStamina()));
+    cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-";
+    display(0, 18, "Mana:");                display(42 - to_string(player.getMana()).size(), 18, to_string(player.getMana()));
+    cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-" << endl << player.getRDamageType() << endl;
+
+
+   /* 
+    cout << "Your stats are as follows: " << endl << setfill('=') << setw(92) << "=" << endl 
+        << "Health: " << setfill(' ') << setw(34) << player.getHealth() << endl << setfill('-') << setw(42) << "-" << endl 
+        << "Armor: " << setfill(' ') << setw(35) << player.getArmor() << endl << setfill('-') << setw(42) << "-" << endl 
+        << "Magic Resistance: " << setfill(' ') << setw(24) << player.getMagicResistance() << endl << setfill('-') << setw(42) << "-" << endl 
+        << "Physical Damage: " << setfill(' ') << setw(20) << player.getPhysicalDamageMin() << " - " << player.getPhysicalDamageMax() << setfill(' ') <<  endl << setfill('-') << setw(42) << "-" << endl 
+        << "Magic Damage: " << setfill(' ') << setw(23) << player.getMagicDamageMin() << " - " << player.getMagicDamageMax() << setfill(' ') << endl << setfill('-') << setw(42) << "-" << endl 
+        << "Agility: " << setfill(' ') << setw(33) << player.getAgility() << endl << setfill('-') << setw(42) << "-" << endl 
+        << "Stealth: " << setfill(' ') << setw(33) << player.getStealth() << endl << setfill('-') << setw(42) << "-" << endl 
+        << "Stamina: " << setfill(' ') << setw(33) << player.getStamina() << endl << setfill('-') << setw(42) << "-" << endl 
+        << "Mana: " << setfill(' ') << setw(36) << player.getMana() << endl << setfill('-') << setw(42) << "-" << endl; //This cout statement prints out all the stats for the user to see.
+    */
+
+    system("pause");    
 }
 
 void Menu::accountInfo(string username){
@@ -593,4 +657,11 @@ string Menu::numberFormatting(double decimalNumber, int numberOfDecimals) { //fo
 	formattedNumber << setprecision(numberOfDecimals) << fixed << showpoint << decimalNumber;
 	formattedNumber >> formatNumberOutput;
 	return formatNumberOutput;
+}
+
+void Menu::setPlayer(TempEntity playerE){
+    player = playerE;
+}
+TempEntity Menu::getPlayer(){
+    return player;
 }

@@ -6,15 +6,19 @@ class TempEntity{
     private:
         std::string username;
         int health, armor, magicResistance, physicalDamageMin, physicalDamageMax, magicDamageMin, magicDamageMax, agility, stealth, stamina, mana;
-        int location;
+        int level, currentXP, XPForNextLevel;
+        std::string race, kit, weapon, qDamageType, wDamageType, eDamageType, rDamageType;
+        int location, quest1Progress;
         std::string name;
     public:
         TempEntity(std::string currentUsername);
+        TempEntity();
         ~TempEntity();
 
         //getter functions:
         std::string getUsername() { return username; }
         int getLocation() { return location; }
+        int getQuest1Progress(){ return quest1Progress; }
         //stats:
         int getHealth(){ return health; }
         int getArmor(){ return armor; }
@@ -28,9 +32,22 @@ class TempEntity{
         int getStamina(){ return stamina; }
         int getMana(){ return mana; }
 
+        std::string getRace(){ return race; }
+        std::string getKit(){ return kit; }
+        std::string getWeapon(){ return weapon; }
+        std::string getQDamageType(){ return qDamageType; }
+        std::string getWDamageType(){ return wDamageType; }
+        std::string getEDamageType(){ return eDamageType; }
+        std::string getRDamageType(){ return rDamageType; }
+        int getLevel(){ return level; }
+        int getCurrentXP(){ return currentXP; }
+        int getXPForNextLevel(){ return XPForNextLevel; }
+        
+
         //setter functions:
         void setUsername(std::string newUsername);
         void setLocation(int currentLocationValue);
+        void setQuest1Progress(int newProgress);
         //stats:
         void setHealth(int newHealth);
         void setArmor(int newArmor);
@@ -43,6 +60,17 @@ class TempEntity{
         void setStealth(int newStealth);
         void setStamina(int newStamina);
         void setMana(int newMana);
+
+        void setRace(std::string newRace);
+        void setKit(std::string newKit);
+        void setWeapon(std::string newWeapon);
+        void setQDamageType(std::string newDamageType);
+        void setWDamageType(std::string newDamageType);
+        void setEDamageType(std::string newDamageType);
+        void setRDamageType(std::string newDamageType);
+        void setLevel(int newLevel);
+        void setCurrentXP(int newXP);
+        void setXPForNextLevel(int newXPForNextLevel);
 
         //updater functions:
         //Stats:
@@ -58,12 +86,13 @@ class TempEntity{
         void updateStamina(int addStamina);
         void updateMana(int addMana);
 
+        void updateCurrentXP(int addXP);
+        void updateLevel(int addLevel);
+
 
         //Richards functions:
         std::string getName();
         void setName(std::string newName);
-        //int getHealth();
-        //void setHealth(int newHealth);
         void damage(int damage);
         void heal(int healing);
 };
