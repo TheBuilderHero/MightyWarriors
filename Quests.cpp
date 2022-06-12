@@ -183,6 +183,90 @@ void Quests::getAvailableQuests(string username, int location){
     menu.waitForEnter(menu.getEnterKeyState());
     system("cls");
 }
+void Quests::getAvailableQuests(){//TempEntity based quest call
+    //Account account; //multiple definitions causing issues
+    Menu menu;
+    int quest1Step = player.getQuest1Progress();
+    bool noQuests = true;
+
+    cout << endl;
+
+    switch(player.getLocation()){
+        case 1:
+            if(quest1Step == 0){
+                cout << "You can start Quest 1 here.";
+                noQuests = false;
+            }else if(quest1Step == 1){
+                cout << "Here you can continue Quest 1 and fight Morg the Goblin.";
+                noQuests = false;
+            }else if(quest1Step == 6){
+                cout << "Here you can continue Quest 1 and fight the Awful Necromancer.";
+                noQuests = false;
+            }
+            break;                
+        case 2:
+            if(quest1Step == 2){
+                cout << "Here you can continue Quest 1 and fight Klade the Orc.";
+                noQuests = false;
+            }else if(quest1Step == 7){
+                cout << "Here you can continue Quest 1 and fight...";
+                menu.waitForEnter(menu.getEnterKeyState());
+                cout << "The Dragon!!!";
+                noQuests = false;
+            }
+            break; 
+        case 3:
+            break;   
+        case 4:
+            if(quest1Step == 5){
+                cout << "Here you can continue Quest 1 and fight the Monstrous Behemoth.";
+                noQuests = false;
+            }
+            break;   
+        case 5:
+            if(quest1Step == 3){
+                cout << "Here you can continue Quest 1 and fight the Black Night.";
+                noQuests = false;
+            }
+            break;  
+        case 6:
+            if(quest1Step == 4){
+                cout << "Here you can continue Quest 1 and fight the Blue Wizard.";
+                noQuests = false;
+            }
+            break;  
+        default:
+            cout << "It looks like you are nowhere...";
+            
+            break;
+    }
+
+    if(noQuests){
+        cout << "There are no Quests to do here.";
+        menu.waitForEnter(menu.getEnterKeyState());
+    }else{
+        makeChoice();
+    }
+
+    cout << endl;
+    //menu.waitForEnter(menu.getEnterKeyState());
+    system("cls");
+}
+void Quests::makeChoice(){//I am thinking we should handle quests as an array
+    Menu menu;
+    int questOption;
+    for(int i = 1; i < 2/*player.getQuest1Progress().size() + 1*/; i++){
+        cout << "Do Quest 1:        Press \"" << i << "\"\n";
+        questOption = i;
+    }
+        cout << "Exit:              Press \"0\"\n";
+    int choice = menu.numberPressWait(1, true);
+    if(choice = 0){
+        return;
+    }else{
+        doQuest(player.getUsername(), player.getLocation(), choice);
+    }
+}
 
 void Quests::doQuest(string username, int location, int quest){
     Menu menu;

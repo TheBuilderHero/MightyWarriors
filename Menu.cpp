@@ -119,8 +119,12 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         case 1:{ //"Go Questing"//map for traveling and questing 
                  //We probably need a separate questing menu
             Map map;
-            map.listAvalibleLocations(username);
-            //menu(username);
+            Quests quest;
+            system("cls");
+            //map.listAvalibleLocations(username);
+            quest.setPlayer(player);
+            quest.getAvailableQuests();
+            setPlayer(quest.getPlayer());
             break;
         }
         case 2://travel option
@@ -170,7 +174,7 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
     nKeyPressedLastLoop = false, iKeyPressedLastLoop = false, aKeyPressedLastLoop = false, 
     controlKeyPressedLastLoop = false, altKeyPressedLastLoop = false ,kKeyPressedLastLoop = false;
     display(50, 1, "Travel");
-    display(16, 2, worldMap.getMapDescription(1));//Dakota please help me load the user's current location
+    display(16, 2, worldMap.getMapDescription(player.getLocation()));//Dakota please help me load the user's current location
     display(32, 3, "Go North");             display(53, 3, "(Press \"1\")");
     display(32, 4, "Go East");              display(53, 4, "(Press \"2\")");
     display(32, 5, "Go South");             display(53, 5, "(Press \"3\")");
