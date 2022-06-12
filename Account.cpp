@@ -694,7 +694,7 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
             validLogon = stoi(server.sendToServer(code.cipher("3", usernameE, passwordE)));
             if (validLogon == 1){//logon is valid
                 TempEntity player{usernameE};
-                menuClass.setPlayer(player);
+                menuClass.setPlayer(player); //setup temp entity to be used in the whole program
                 menuClass.menu(usernameE);
             } else {
                 string invalidMessage = "Invalid Username or Password...";
