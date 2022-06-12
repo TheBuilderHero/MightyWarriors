@@ -8,6 +8,8 @@
 #include "Cipher.h"
 #include "Menu.h"
 #include "Battle.h"
+#include "Passives.h"
+#include "TempEntity.h"
 
 Menu classMenu;
 
@@ -25,7 +27,7 @@ void Battle::optionsOutput(string username, string enemyName, int playerHealth, 
 }
 
 //loops till the player presses one of Q W E R
-void Battle::waitForButtonPress(string &username, string &enemyName, bool &qKeyPressedLastLoop, bool &wKeyPressedLastLoop, bool &eKeyPressedLastLoop, bool &rKeyPressedLastLoop, bool &playerBlocking, int &playerHealth, int &enemyHealth, int &ultimateUses, int &combatVal, int &playerAttack, int &enemyBlocking){
+void Battle::waitForButtonPress(string username, string &enemyName, bool &qKeyPressedLastLoop, bool &wKeyPressedLastLoop, bool &eKeyPressedLastLoop, bool &rKeyPressedLastLoop, bool &playerBlocking, int playerHealth, int &enemyHealth, int &ultimateUses, int &combatVal, int &playerAttack, int &enemyBlocking){
     ReachOutToServer server;
     Cipher code;
     string qOption = "1", wOption = "2", eOption = "3", rOption = "4";
@@ -243,6 +245,11 @@ void Battle::questBattle(string username, int quest, int step){
         //Enemy's turn to attack:
         int enemyAttack = stoi(server.sendToServer(code.cipher("10", username, enemyName, to_string(playerBlocking))));
         enemyAttack = (enemyBlocking) ? 0 : enemyAttack; //set attack to 0 damage if enemy is blocking
+
+        //check during battle passives:
+        Passives passive;
+        passive.duringBattleEnemyAttackPassives();
+
         cout << "The enemies attack hits you for " << enemyAttack << " damage" << endl;
         system("pause");
         playerHealth -= enemyAttack;
@@ -277,6 +284,106 @@ void Battle::questBattle(string username, int quest, int step){
     //cout << "Player ended Battle with " << player.getHealth() << " health!\n";
     //system("pause");
 }
+
+
+void Battle::tempEntBattle(TempEntity player){
+    setPlayer(player); //load in the players stats from tempentity data
+    standardBattle(player);
+}
+
+void Battle::standardBattle(TempEntity player){
+    system("cls");
+    TempEntity battlingStatsOfPlayer;
+    battlingStatsOfPlayer = player; //setup a duplicate account we can use for changing player stats in battle
+
+    //setup other variables:
+    bool qKeyPressedLastLoop = false, wKeyPressedLastLoop = false, eKeyPressedLastLoop = false, rKeyPressedLastLoop = false;
+    bool playerBlocking = false;
+    int enemyHealth;
+    int playerLevelAtStartOfFight = 0;
+    int ultimateUses = 1;
+    string enemyName = "";
+    string answer;
+    bool fightWon = false, fightLost = false;
+    ReachOutToServer server;
+    Cipher code;
+    Account account;
+
+    //before battle Passives:
+    Passives passive;
+    passive.preBattlePassives(); //checking if there is any pre battle passives which need to be run
+
+    //**************************
+    //Start Battle clearing the screen
+    while (!fightWon && !fightLost){//loop through displaying the stats and having the player pick options until the fight is won or lost
+        int combatVal = 0;
+        int playerAttack = 0;
+        int enemyBlocking = 0;
+        optionsOutput(player.getUsername(), enemyName, battlingStatsOfPlayer.getHealth(), enemyHealth); //outputs the options for battle
+        
+        //loops till the player presses one of Q W E R
+        waitForButtonPress(player.getUsername(),enemyName,qKeyPressedLastLoop,wKeyPressedLastLoop,eKeyPressedLastLoop,rKeyPressedLastLoop,playerBlocking, battlingStatsOfPlayer.getHealth(),enemyHealth,ultimateUses,combatVal,playerAttack,enemyBlocking);
+
+        //check during battle passives of player's attack:
+        passive.duringBattlePlayerAttackPassives();
+        
+        cout << "Your attack hits the enemy for " << playerAttack << " damage" << endl;
+        system("pause");
+
+        //check if enemy is dead:
+        if (enemyHealth <= 0){
+            fightWon = true;
+            break;
+        }
+
+        //reprint the stats and info:
+        system("cls");
+        optionsOutput(player.getUsername(), enemyName, battlingStatsOfPlayer.getHealth(), enemyHealth);
+
+        //Enemy's turn to attack:
+        int enemyAttack = stoi(server.sendToServer(code.cipher("10", player.getUsername(), enemyName, to_string(playerBlocking))));
+        enemyAttack = (enemyBlocking) ? 0 : enemyAttack; //set attack to 0 damage if enemy is blocking
+
+        //check during battle passives of enemies attack:
+        passive.duringBattleEnemyAttackPassives();
+
+        cout << "The enemies attack hits you for " << enemyAttack << " damage" << endl;
+        system("pause");
+        battlingStatsOfPlayer.setHealth(battlingStatsOfPlayer.getHealth() - enemyAttack);
+        //player.setHealth(playerHealth);
+        enemyAttack = 0;
+
+        if (battlingStatsOfPlayer.getHealth() <= 0) {
+            fightLost = true;
+            break;
+        }
+        //post battle passives:
+        passive.postBattlePassives();
+    }
+    //print out the result of the fight
+    if (fightWon) { //the player has won the fight
+        system("cls");
+        //increase user xp, since fight was won.
+        string playerLevel = server.sendToServer(code.cipher("14", player.getUsername(), enemyName, "WillNeedToFeedBackEnemyLevel")); //this will need to send the enemy level later on.
+        cout <<  setfill(' ') << setw(57) << "You won the Battle!" << endl;
+        cout <<  setfill(' ') << setw((77 - 16) - playerLevel.length()) << "Your level is: " << playerLevel << endl;
+        system("pause");
+        system("cls"); 
+        int currentPlayerLevel = account.getLevel(player.getUsername());
+        if(playerLevelAtStartOfFight < currentPlayerLevel){ //runs the level update for stats
+            account.levelUp(player.getUsername(), currentPlayerLevel);
+        }
+        system("cls");
+    } else if (fightLost){ //the enemy has won the fight
+        system("cls");
+        cout <<  setfill(' ') << setw(58) << "You Lost the Battle!" << endl;
+        system("pause");
+        system("cls");
+    }
+    //cout << "Player ended Battle with " << player.getHealth() << " health!\n";
+    //system("pause");
+}
+
 
 int Battle::getPlayerHealth(){
     //return player.getHealth();

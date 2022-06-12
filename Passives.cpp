@@ -2,12 +2,35 @@
 
 using namespace std;
 
-void Passives::preBattlePassive(){
+void Passives::preBattlePassives(){
     
 }
-void Passives::duringBattlePassive(){
+void Passives::duringBattlePlayerAttackPassives(){
 
 }
-void Passives::postBattlePassive(){
+void Passives::duringBattleEnemyAttackPassives(){
+
+}
+void Passives::postBattlePassives(){
+
+}
+
+//Passive list:
+void Passives::redirectAttack(){
+
+}
+void Passives::ignoreAttack(){
+
+}
+void Passives::bonusStats(){
+
+}
+void Passives::stun(){
+
+}
+void Passives::poison(){
+
+}
+void Passives::stealStats(){
 
 }
