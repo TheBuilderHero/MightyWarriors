@@ -194,24 +194,24 @@ void Quests::getAvailableQuests(){//TempEntity based quest call
     switch(player.getLocation()){
         case 1:
             if(quest1Step == 0){
-                cout << "You can start Quest 1 here.";
+                cout << "You can start Quest 1 here.\n";
                 noQuests = false;
             }else if(quest1Step == 1){
-                cout << "Here you can continue Quest 1 and fight Morg the Goblin.";
+                cout << "Here you can continue Quest 1 and fight Morg the Goblin.\n";
                 noQuests = false;
             }else if(quest1Step == 6){
-                cout << "Here you can continue Quest 1 and fight the Awful Necromancer.";
+                cout << "Here you can continue Quest 1 and fight the Awful Necromancer.\n";
                 noQuests = false;
             }
             break;                
         case 2:
             if(quest1Step == 2){
-                cout << "Here you can continue Quest 1 and fight Klade the Orc.";
+                cout << "Here you can continue Quest 1 and fight Klade the Orc.\n";
                 noQuests = false;
             }else if(quest1Step == 7){
-                cout << "Here you can continue Quest 1 and fight...";
+                cout << "Here you can continue Quest 1 and fight...\n\n";
                 menu.waitForEnter(menu.getEnterKeyState());
-                cout << "The Dragon!!!";
+                cout << "The Dragon!!!\n";
                 noQuests = false;
             }
             break; 
@@ -219,24 +219,24 @@ void Quests::getAvailableQuests(){//TempEntity based quest call
             break;   
         case 4:
             if(quest1Step == 5){
-                cout << "Here you can continue Quest 1 and fight the Monstrous Behemoth.";
+                cout << "Here you can continue Quest 1 and fight the Monstrous Behemoth.\n";
                 noQuests = false;
             }
             break;   
         case 5:
             if(quest1Step == 3){
-                cout << "Here you can continue Quest 1 and fight the Black Night.";
+                cout << "Here you can continue Quest 1 and fight the Black Night.\n";
                 noQuests = false;
             }
             break;  
         case 6:
             if(quest1Step == 4){
-                cout << "Here you can continue Quest 1 and fight the Blue Wizard.";
+                cout << "Here you can continue Quest 1 and fight the Blue Wizard.\n";
                 noQuests = false;
             }
             break;  
         default:
-            cout << "It looks like you are nowhere...";
+            cout << "It looks like you are nowhere...\n";
             
             break;
     }
@@ -245,6 +245,7 @@ void Quests::getAvailableQuests(){//TempEntity based quest call
         cout << "There are no Quests to do here.";
         menu.waitForEnter(menu.getEnterKeyState());
     }else{
+        cout << "\n\n";
         makeChoice();
     }
 
@@ -261,16 +262,18 @@ void Quests::makeChoice(){//I am thinking we should handle quests as an array
     }
         cout << "Exit:              Press \"0\"\n";
     int choice = menu.numberPressWait(1, true);
-    if(choice = 0){
+
+    if(choice == 0){
         return;
     }else{
+        system("cls");
         doQuest(player.getUsername(), player.getLocation(), choice);
     }
 }
 
 void Quests::doQuest(string username, int location, int quest){
     Menu menu;
-    int quest1Step = account.getQuest1Progress(username);
+    int quest1Step = player.getQuest1Progress();
     bool noQuests = true;
 
     if(quest == 1){
@@ -323,7 +326,7 @@ void Quests::doQuest(string username, int location, int quest){
 void Quests::quest1(string username, int step){
     Menu menu;
     Battle battle;
-    TempEntity player{username};
+    //TempEntity player{username};
     switch(step){
         case 0:
             cout << "You lumber across the frozen sands, not knowing which way to turn.\n (press Enter)";
@@ -342,9 +345,9 @@ void Quests::quest1(string username, int step){
             cout << "\nThe shadow cackles horribly, and slowly fades from your senses. But The Void Cat approaches...\n";
             menu.waitForEnter(menu.getEnterKeyState());
             
+            battle.setPlayer(player);
             battle.questBattle(username, 1, step);
-
-            player.setHealth(battle.getPlayerHealth());
+            setPlayer(battle.getPlayer());
 
             cout << "Player ended Battle with " << player.getHealth() << " health!\n";
             menu.waitForEnter(menu.getEnterKeyState());
@@ -360,7 +363,7 @@ void Quests::quest1(string username, int step){
                 cout << "\nA new name writes itself: Morg the Goblin. Somehow you know he is in the Glacius Desert.\n";
                 menu.waitForEnter(menu.getEnterKeyState());
                 system("cls");
-                account.setQuest1Progress(username, 1);
+                player.setQuest1Progress(1);
             }
             break;
         case 1:
@@ -372,9 +375,10 @@ void Quests::quest1(string username, int step){
             menu.waitForEnter(menu.getEnterKeyState());
             cout << "\nYou pause. \"...No way! You gotta die, son!\"\n";
             menu.waitForEnter(menu.getEnterKeyState());
+            
+            battle.setPlayer(player);
             battle.questBattle(username, 1, step);
-
-            player.setHealth(battle.getPlayerHealth());
+            setPlayer(battle.getPlayer());
 
             if(player.getHealth() > 0){
                 cout << "As the goblin falls lifeless to the ground, you check your parchment again.\n";
@@ -384,7 +388,7 @@ void Quests::quest1(string username, int step){
                 cout << "\nYou got 10000000 experience!\n";
                 //Code to add experience
                 menu.waitForEnter(menu.getEnterKeyState());
-                account.setQuest1Progress(username, 2);
+                player.setQuest1Progress(2);
             }
             break;
         case 2:
@@ -394,9 +398,10 @@ void Quests::quest1(string username, int step){
             menu.waitForEnter(menu.getEnterKeyState());
             cout << "\n\"I know you hunt me. Ready yourself.\"\n";
             menu.waitForEnter(menu.getEnterKeyState());
+            
+            battle.setPlayer(player);
             battle.questBattle(username, 1, step);
-
-            player.setHealth(battle.getPlayerHealth());
+            setPlayer(battle.getPlayer());
 
             if(player.getHealth() > 0){
                 cout << "The Orc collapses to the ground, eyes closed. He fought with honor.\n";
@@ -406,7 +411,7 @@ void Quests::quest1(string username, int step){
                 cout << "\nYou got 10000000 experience!\n";
                 //Code to add experience
                 menu.waitForEnter(menu.getEnterKeyState());
-                account.setQuest1Progress(username, 3);
+                player.setQuest1Progress(3);
             }
             break;
         case 3:
@@ -432,9 +437,10 @@ void Quests::quest1(string username, int step){
             menu.waitForEnter(menu.getEnterKeyState());
             cout << "\nSomeone kicks you in the head! It's the Black Night! You scramble for your weapon!\n";
             menu.waitForEnter(menu.getEnterKeyState());
+            
+            battle.setPlayer(player);
             battle.questBattle(username, 1, step);
-
-            player.setHealth(battle.getPlayerHealth());
+            setPlayer(battle.getPlayer());
 
             if(player.getHealth() > 0){
                 cout << "The Black Night shall ride no more. You read the enchanted parchment once again.\n";
@@ -444,7 +450,7 @@ void Quests::quest1(string username, int step){
                 cout << "\nYou got 10000000 experience!\n";
                 //Code to add experience
                 menu.waitForEnter(menu.getEnterKeyState());
-                account.setQuest1Progress(username, 4);
+                player.setQuest1Progress(4);
             }
             break;
         case 4:
@@ -452,9 +458,10 @@ void Quests::quest1(string username, int step){
             menu.waitForEnter(menu.getEnterKeyState());
             cout << "\nA blast of fire just barely misses your shoulder. You wheel around, drawing your weapon!\n";
             menu.waitForEnter(menu.getEnterKeyState());
+            
+            battle.setPlayer(player);
             battle.questBattle(username, 1, step);
-
-            player.setHealth(battle.getPlayerHealth());
+            setPlayer(battle.getPlayer());
 
             if(player.getHealth() > 0){
                 cout << "The wizard collapses, but no body hits the ground. His robes simply crumple in the grass, \nwith his pointy hat perched neatly on top.\n";
@@ -464,7 +471,7 @@ void Quests::quest1(string username, int step){
                 cout << "\nYou got 10000000 experience!";
                 //Code to add experience
                 menu.waitForEnter(menu.getEnterKeyState());
-                account.setQuest1Progress(username, 5);
+                player.setQuest1Progress(5);
             }
             break;
         case 5:
@@ -479,9 +486,10 @@ void Quests::quest1(string username, int step){
             cout << "\nThis time, he lands in front of you. The menacing figure makes you feel very small.\n";
             cout << "\nIn your mind, you are about to be fighting the mountain itself...";
             menu.waitForEnter(menu.getEnterKeyState());
+            
+            battle.setPlayer(player);
             battle.questBattle(username, 1, step);
-
-            player.setHealth(battle.getPlayerHealth());
+            setPlayer(battle.getPlayer());
 
             if(player.getHealth() > 0){
                 cout << "Incredibly, the titanic being crashes into the snow. Hands shaking, you check the parchment.\n";
@@ -491,7 +499,7 @@ void Quests::quest1(string username, int step){
                 cout << "\nYou got 20000000 experience!\n";
                 //Code to add experience
                 menu.waitForEnter(menu.getEnterKeyState());
-                account.setQuest1Progress(username, 6);
+                player.setQuest1Progress(6);
             }
             break;
         case 6:
@@ -509,9 +517,10 @@ void Quests::quest1(string username, int step){
             menu.waitForEnter(menu.getEnterKeyState());
             cout << "\nYou can feel it is the very embodiment of death itself.\n";
             menu.waitForEnter(menu.getEnterKeyState());
+            
+            battle.setPlayer(player);
             battle.questBattle(username, 1, step);
-
-            player.setHealth(battle.getPlayerHealth());
+            setPlayer(battle.getPlayer());
 
             if(player.getHealth() > 0){
                 cout << "The Necromancer screams, beams of light splitting his body apart, and he explodes into dust.\n";
@@ -532,15 +541,16 @@ void Quests::quest1(string username, int step){
                 cout << "\nYou got 30000000 experience!\n";
                 //Code to add experience
                 menu.waitForEnter(menu.getEnterKeyState());
-                account.setQuest1Progress(username, 7);
+                player.setQuest1Progress(7);
             }
             break;
         case 7:
             cout << "Meh, guess like a dragon showed up or some junk\n";
             menu.waitForEnter(menu.getEnterKeyState());
+            
+            battle.setPlayer(player);
             battle.questBattle(username, 1, step);
-
-            player.setHealth(battle.getPlayerHealth());
+            setPlayer(battle.getPlayer());
 
             if(player.getHealth() > 0){
                 cout << "Huzzah, the dragon is like dead or whatever\n";
@@ -556,7 +566,7 @@ void Quests::quest1(string username, int step){
                 menu.waitForEnter(menu.getEnterKeyState());
                 cout << "Huzzah!\n";
                 menu.waitForEnter(menu.getEnterKeyState());
-                account.setQuest1Progress(username, 8);
+                player.setQuest1Progress(8);
             }
             break;
         default:

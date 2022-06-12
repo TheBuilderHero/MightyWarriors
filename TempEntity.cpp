@@ -40,7 +40,7 @@ TempEntity::TempEntity(string currentUsername){
     //set location:
     code.decipherS(server.sendToServer(code.cipher("18", username)));
     setLocation(stoi(code.getItemS(1)));
-    if(getLocation() == 0){
+    if(getLocation() < 1 || getLocation() > 6){
         setLocation(1);
     }
     //set race, kit, level, experience:
