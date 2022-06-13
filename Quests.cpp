@@ -245,7 +245,7 @@ void Quests::getAvailableQuests(){//TempEntity based quest call
         cout << "There are no Quests to do here.";
         menu.waitForEnter(menu.getEnterKeyState());
     }else{
-        cout << "\n\n";
+        cout << "\n";
         makeChoice();
     }
 
@@ -327,6 +327,7 @@ void Quests::quest1(string username, int step){
     Menu menu;
     Battle battle;
     //TempEntity player{username};
+    cout << "\n";
     switch(step){
         case 0:
             cout << "You lumber across the frozen sands, not knowing which way to turn.\n (press Enter)";

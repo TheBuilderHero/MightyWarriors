@@ -273,6 +273,10 @@ void Battle::questBattle(string username, int quest, int step){
         int currentPlayerLevel = account.getLevel(username);
         if(playerLevelAtStartOfFight < currentPlayerLevel){ //runs the level update for stats
             account.levelUp(username, currentPlayerLevel);
+            TempEntity playerE{username};
+            setPlayer(playerE);
+        }else{
+            player.setCurrentXP(account.getCurrentXPForNextLevel(username));
         }
         system("cls");
     } else if (fightLost){ //the enemy has won the fight
