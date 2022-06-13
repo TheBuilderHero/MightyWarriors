@@ -59,6 +59,36 @@ string Cipher::decipher(char messageFromClient[]){
             case 12://the twelth item enclosed in delimiters
             if (output.length() > 0) item12 = output; 
             break;
+            case 13:
+            if (output.length() > 0) item13 = output; 
+            break;
+            case 14:
+            if (output.length() > 0) item14 = output; 
+            break;
+            case 15:
+            if (output.length() > 0) item15 = output; 
+            break;
+            case 16:
+            if (output.length() > 0) item16 = output; 
+            break;
+            case 17:
+            if (output.length() > 0) item17 = output; 
+            break;
+            case 18:
+            if (output.length() > 0) item18 = output; 
+            break;
+            case 19:
+            if (output.length() > 0) item19 = output; 
+            break;
+            case 20:
+            if (output.length() > 0) item20 = output; 
+            break;
+            case 21:
+            if (output.length() > 0) item21 = output; 
+            break;
+            case 22:
+            if (output.length() > 0) item22 = output; 
+            break;
         }
         loopPass++;
     }
@@ -112,6 +142,39 @@ string Cipher::decipherS(string messageFromClient){
             break;
             case 10://the tenth item enclosed in delimiters
             if (output.length() > 0) itemS10 = output; 
+            break;
+            case 11:
+            if (output.length() > 0) itemS11 = output; 
+            break;
+            case 12:
+            if (output.length() > 0) itemS12 = output; 
+            break;
+            case 13:
+            if (output.length() > 0) itemS13 = output; 
+            break;
+            case 14:
+            if (output.length() > 0) itemS14 = output; 
+            break;
+            case 15:
+            if (output.length() > 0) itemS15 = output; 
+            break;
+            case 16:
+            if (output.length() > 0) itemS16 = output; 
+            break;
+            case 17:
+            if (output.length() > 0) itemS17 = output; 
+            break;
+            case 18:
+            if (output.length() > 0) itemS18 = output; 
+            break;
+            case 19:
+            if (output.length() > 0) itemS19 = output; 
+            break;
+            case 20:
+            if (output.length() > 0) itemS20 = output; 
+            break;
+            case 21:
+            if (output.length() > 0) itemS21 = output; 
             break;
         }
         loopPass++;
@@ -208,6 +271,36 @@ string Cipher::getItem(int itemNumberToReturn){
     case 12:
         return item12;
         break;
+    case 13:
+        return item13;
+        break;
+    case 14:
+        return item14;
+        break;
+    case 15:
+        return item15;
+        break;
+    case 16:
+        return item16;
+        break;
+    case 17:
+        return item17;
+        break;
+    case 18:
+        return item18;
+        break;
+    case 19:
+        return item19;
+        break;
+    case 20:
+        return item20;
+        break;
+    case 21:
+        return item21;
+        break;
+    case 22:
+        return item22;
+        break;
     
     default:
     return "Default Output Given";
@@ -247,6 +340,39 @@ string Cipher::getItemS(int itemNumberToReturn){
         break;
     case 10:
         return itemS10;
+        break;
+    case 11:
+        return itemS11;
+        break;
+    case 12:
+        return itemS12;
+        break;
+    case 13:
+        return itemS13;
+        break;
+    case 14:
+        return itemS14;
+        break;
+    case 15:
+        return itemS15;
+        break;
+    case 16:
+        return itemS16;
+        break;
+    case 17:
+        return itemS17;
+        break;
+    case 18:
+        return itemS18;
+        break;
+    case 19:
+        return itemS19;
+        break;
+    case 20:
+        return itemS20;
+        break;
+    case 21:
+        return itemS21;
         break;
     
     default:

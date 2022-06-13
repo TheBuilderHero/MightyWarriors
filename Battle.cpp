@@ -253,7 +253,7 @@ void Battle::questBattle(string username, int quest, int step){
         cout << "The enemies attack hits you for " << enemyAttack << " damage" << endl;
         system("pause");
         playerHealth -= enemyAttack;
-        //player.setHealth(playerHealth);
+        player.setHealth(playerHealth);
         enemyAttack = 0;
 
         if (playerHealth <= 0) {
