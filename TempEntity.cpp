@@ -43,6 +43,7 @@ TempEntity::TempEntity(string currentUsername){
     if(getLocation() < 1 || getLocation() > 6){
         setLocation(1);
     }
+    setQuest1Progress(0);//temporary until we add quest data to server
     //set race, kit, level, experience:
     code.decipherS(server.sendToServer(code.cipher("21", username)));
     setRace(code.getItemS(1));
