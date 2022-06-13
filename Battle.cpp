@@ -193,6 +193,7 @@ void Battle::questBattle(string username, int quest, int step){
     int playerLevelAtStartOfFight = 0;
     int ultimateUses = 1;
     string enemyName = "";
+    int enemyNum = 0;
     string answer;
     bool fightWon = false, fightLost = false;
     ReachOutToServer server;
@@ -213,6 +214,7 @@ void Battle::questBattle(string username, int quest, int step){
                 enemyHealth = 10;
         }
         enemyName = code.getItemS(1);
+        enemyNum = stoi(code.getItemS(7));
     } catch(std::invalid_argument) {
         cout << "Battle initialization failed";
         system("pause");
@@ -265,7 +267,7 @@ void Battle::questBattle(string username, int quest, int step){
     if (fightWon) { //the player has won the fight
         system("cls");
         //increase user xp, since fight was won.
-        string playerLevel = server.sendToServer(code.cipher("14", username, enemyName, "WillNeedToFeedBackEnemyLevel")); //this will need to send the enemy level later on.
+        string playerLevel = server.sendToServer(code.cipher("14", username, to_string(enemyNum), "WillNeedToFeedBackEnemyLevel")); //this will need to send the enemy level later on.
         cout <<  setfill(' ') << setw(57) << "You won the Battle!" << endl;
         cout <<  setfill(' ') << setw((77 - 16) - playerLevel.length()) << "Your level is: " << playerLevel << endl;
         system("pause");

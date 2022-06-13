@@ -255,7 +255,7 @@ void Menu::displayStats(){
     display(0, 16, "Stamina:");             display(42 - to_string(player.getStamina()).size(), 16, to_string(player.getStamina()));
     cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-";
     display(0, 18, "Mana:");                display(42 - to_string(player.getMana()).size(), 18, to_string(player.getMana()));
-    cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-" << endl << player.getRDamageType() << endl;
+    cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-" << "\n\n";
 
 
    /* 
