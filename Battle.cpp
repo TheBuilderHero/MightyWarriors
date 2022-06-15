@@ -43,7 +43,7 @@ void Battle::waitForButtonPress(string username, string &enemyName, bool &qKeyPr
                 rKeyPressedLastLoop = true;
                 break;
             } else if (GetKeyState('R') < 0 && !rKeyPressedLastLoop && ultimateUses <= 0) {
-                cout << "You do nothave anymore ultimate uses..." << endl;
+                cout << "You do not have any more ultimate uses..." << endl;
                 system("pause");
                 system("cls");
                 optionsOutput(username, enemyName, playerHealth, enemyHealth); //re output the options for battle after clearing the terminal

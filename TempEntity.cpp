@@ -37,6 +37,13 @@ TempEntity::TempEntity(string currentUsername){
     setStealth(stoi(code.getItemS(7)));
     setStamina(stoi(code.getItemS(8)));
     setMana(stoi(code.getItemS(9)));
+    setMind(stoi(code.getItemS(10)));
+    //find the seperator and pull the values out of it for the min and max:
+    string tempPsychicDamageString = code.getItemS(11);
+    size_t pos3 = tempPsychicDamageString.find(minMaxDelimiter);
+    setPsychicDamageMin(stoi(tempPsychicDamageString.substr(0, pos3)));
+    tempPsychicDamageString.erase(0, pos3 + minMaxDelimiter.length());
+    setPsychicDamageMax(stoi(tempPsychicDamageString)); 
     //set location:
     code.decipherS(server.sendToServer(code.cipher("18", username)));
     setLocation(stoi(code.getItemS(1)));
@@ -115,6 +122,15 @@ void TempEntity::setStamina(int newStamina){
 void TempEntity::setMana(int newMana){
     mana = newMana;
 }
+void TempEntity::setMind(int newMind){
+    mind = newMind;
+}
+void TempEntity::setPsychicDamageMin(int newPsychicDamageMin){
+    psychicDamageMin = newPsychicDamageMin;
+}
+void TempEntity::setPsychicDamageMax(int newPsychicDamageMax){
+    psychicDamageMax = newPsychicDamageMax;
+}
 
 void TempEntity::setRace(string newRace){
     race = newRace;
@@ -181,6 +197,15 @@ void TempEntity::updateStamina(int addStamina){
 }
 void TempEntity::updateMana(int addMana){
     mana += addMana;
+}
+void TempEntity::updateMind(int addMind){
+    mind += addMind;
+}
+void TempEntity::updatePsychicDamageMin(int addPsychicDamageMin){
+    psychicDamageMin += addPsychicDamageMin;
+}
+void TempEntity::updatePsychicDamageMax(int addPsychicDamageMax){
+    psychicDamageMax += addPsychicDamageMax;
 }
 
 void TempEntity::updateCurrentXP(int addXP){
