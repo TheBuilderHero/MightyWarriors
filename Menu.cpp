@@ -329,72 +329,10 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
     display(32, 4, "Stats");                display(53, 4, "(type number \"3\")");
     display(32, 5, "Info");                 display(53, 5, "(type number \"4\")");
     display(32, 6, "Test Questing");        display(53, 6, "(type number \"5\")");
-    display(32, 7, "Exit");                 display(53, 7, "(type number \"0\")", false);
+    display(32, 7, "Map Test");             display(53, 7, "(type number \"6\")");
+    display(32, 8, "Exit");                 display(53, 8, "(type number \"0\")", false);
     
-    while (1){
-        //change password
-        if (GetKeyState('1') < 0 && !oneKeyPressedLastLoop) { //checks to make sure that the 1 key is pressed and makes sure it was not pressed last check
-            oneKeyPressedLastLoop = true;
-        } else if (GetKeyState('1') >= 0 && oneKeyPressedLastLoop){ // else 1 not pressed
-            oneKeyPressedLastLoop = false;
-            value = 1;
-            break;
-        }
-        //Logout
-        if (GetKeyState('2') < 0 && !twoKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
-            twoKeyPressedLastLoop = true;
-        } else if (GetKeyState('2') >= 0 && twoKeyPressedLastLoop){ // else 2 not pressed
-            twoKeyPressedLastLoop = false;
-            value = 2;
-            break;
-        }
-        //Stats of any user
-        if (GetKeyState('3') < 0 && !threeKeyPressedLastLoop) { //checks to make sure that the 3 key is pressed and makes sure it was not pressed last check
-            threeKeyPressedLastLoop = true;
-        } else if (GetKeyState('3') >= 0 && threeKeyPressedLastLoop){ // else 3 not pressed
-            threeKeyPressedLastLoop = false;
-            value = 3;
-            break;
-        }
-        //Info - game version
-        if (GetKeyState('4') < 0 && !fourKeyPressedLastLoop) { //checks to make sure that the 4 key is pressed and makes sure it was not pressed last check
-            fourKeyPressedLastLoop = true;
-        } else if (GetKeyState('4') >= 0 && fourKeyPressedLastLoop){ // else 4 not pressed
-            fourKeyPressedLastLoop = false;
-            value = 4;
-            break;
-        }
-        //Battle start
-        if (GetKeyState('5') < 0 && !fiveKeyPressedLastLoop) { //checks to make sure that the 5 key is pressed and makes sure it was not pressed last check
-            fiveKeyPressedLastLoop = true;
-        } else if (GetKeyState('5') >= 0 && fiveKeyPressedLastLoop){ // else 5 not pressed
-            fiveKeyPressedLastLoop = false;
-            value = 5;
-            break;
-        }
-        //Exit program
-        if (GetKeyState('0') < 0 && !zeroKeyPressedLastLoop) { //checks to make sure that the 0 key is pressed and makes sure it was not pressed last check
-            zeroKeyPressedLastLoop = true;
-        } else if (GetKeyState('0') >= 0 && zeroKeyPressedLastLoop){ // else 0 not pressed
-            zeroKeyPressedLastLoop = false;
-            value = 0;
-            break;
-        }
-
-        //hidden feature: 
-        //Nina's surprise
-        if (GetKeyState('N') < 0 && GetKeyState('I') < 0 && GetKeyState('A') < 0) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
-            nKeyPressedLastLoop = true;
-            iKeyPressedLastLoop = true;
-            aKeyPressedLastLoop = true;
-            value = 14;
-            break;
-        } else if (GetKeyState('N') >= 0 || GetKeyState('I') >= 0 || GetKeyState('A') >= 0){ // else 1 not pressed
-            nKeyPressedLastLoop = false;
-            iKeyPressedLastLoop = false;
-            aKeyPressedLastLoop = false;
-        }
-    }
+    value = numberPressWait(6, true);
     switch (value)
     {
     case 0: //exit program
@@ -430,13 +368,13 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         tempQuest.quest1(username, tempStep);
         adminMenu(username);
         break;}
-    case 14:
+    case 6:{
         system("cls");
-        display(3,3,"October is a Beautiful month to get Married!");
-        display(3,4,"Dakota loves Beautiful!", false);
-        system("pause");
-        adminMenu(username);
+        Map map;
+        map.displayMap();
+        waitForEnter(getEnterKeyState());
         break;
+    }
     default:
         system("cls");
         display(3,3,"Invalid input, Please try again...", false);
@@ -623,7 +561,7 @@ void Menu::waitForEnter(int enterCurrentlyPressed){ //waits for a user to click 
     }
     ClearConsoleInputBuffer();
 }
-//I am shaking my head at my own function
+//I am shaking my head at my own function //Lol... You did good...
 int Menu::getEnterKeyState(){
     return GetKeyState(VK_RETURN);
 }
