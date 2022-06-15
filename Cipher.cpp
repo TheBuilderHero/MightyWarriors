@@ -338,7 +338,7 @@ string Cipher::decipherS(string messageFromClient){
 
 //this functions purpose it to add the delimiters to given items 
 string Cipher::cipher(string typeOfRequest, string username, string item3, string item4, string item5, string item6, string item7, string item8, string item9, string item10, string item11, string item12, string item13, string item14, string item15, string item16, string item17, string item18, string item19, string item20, string item21, string item22){ // the default values have been set to "" in case no input is given
-    int numberOfItems = 12; //max number of items that we can cipher
+    int numberOfItems = 22; //max number of items that we can cipher
     //"~" //a character that marks the beginning or end of a unit of data
 
     string str_file_content;
