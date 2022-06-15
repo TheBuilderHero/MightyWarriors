@@ -259,7 +259,7 @@ void Menu::displayStats(){
     cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-";
     display(0, 20, "Mind:");                display(42 - to_string(player.getMind()).size(), 20, to_string(player.getMind()));
     cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-";
-    display(0, 20, "Psychic Damage:");      display(42 - psychicDamageString.size(), 20, psychicDamageString);
+    display(0, 22, "Psychic Damage:");      display(42 - psychicDamageString.size(), 22, psychicDamageString);
     cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-" << "\n\n";
 
    /* 
