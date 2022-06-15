@@ -94,73 +94,26 @@ void Map::listAvalibleLocations(string username){
     }
 }
 
-void Map::displayMap(){
+void Map::displayMapOutline(){
     Menu menu;
-    int diplayPos1 = 1;
-    menu.display(diplayPos1,2,"+");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"|");
-    menu.display(++diplayPos1,2,"+");
+    int maxColumn = 210;
+    int maxRow = 62;
+    int initalPosRow = 1;
+    int initalPosColumn = 2;
+    menu.display(initalPosColumn,initalPosRow,"+");
+    for (int posRow = initalPosRow+1; posRow < maxRow; posRow++){
+        menu.display(initalPosColumn,posRow,"|");
+    }
+    menu.display(initalPosColumn,maxRow,"+");
+    for (int posColumn = initalPosColumn+1; posColumn < maxColumn; posColumn++){
+        menu.display(posColumn,maxRow,"-");
+    }
+    menu.display(maxColumn, maxRow,"+");
+    for (int posRow = maxRow-1; initalPosRow < posRow; posRow--){
+        menu.display(maxColumn,posRow,"|");
+    }
+    menu.display(maxColumn, initalPosRow,"+");
+    for (int posColumn = maxColumn-1; initalPosColumn < posColumn; posColumn--){
+        menu.display(posColumn,initalPosRow,"-");
+    }
 }

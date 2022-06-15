@@ -8,7 +8,7 @@ class Map{
         TempEntity player;
     public:
         void listAvalibleLocations(std::string username);
-        void displayMap();
+        void displayMapOutline();
         TempEntity getPlayer(){ return player ;}
         void setPlayer(TempEntity playerE){ player = playerE; }
 };

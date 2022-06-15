@@ -371,7 +371,7 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
     case 6:{
         system("cls");
         Map map;
-        map.displayMap();
+        map.displayMapOutline();
         waitForEnter(getEnterKeyState());
         break;
     }
