@@ -231,6 +231,7 @@ void Menu::displayStats(){
     string playerLevelInfo = "Player Level: " + to_string(player.getLevel()) +  " With " + currentXPFormatted + "XP of " + totalXPFormatted + "XP";
     string physicalDamageString = to_string(player.getPhysicalDamageMin()) + " - " + to_string(player.getPhysicalDamageMax());
     string magicDamageString = to_string(player.getMagicDamageMin()) + " - " + to_string(player.getMagicDamageMax());
+    string psychicDamageString = to_string(player.getPsychicDamageMin()) + " - " + to_string(player.getPsychicDamageMax());
 
     display(0, 0, "Your stats are as follows:\n");
     cout << "\n" << setfill('=') << setw(92) << "=";
@@ -255,8 +256,11 @@ void Menu::displayStats(){
     display(0, 16, "Stamina:");             display(42 - to_string(player.getStamina()).size(), 16, to_string(player.getStamina()));
     cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-";
     display(0, 18, "Mana:");                display(42 - to_string(player.getMana()).size(), 18, to_string(player.getMana()));
-    cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-" << "\n\n";
-
+    cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-";
+    display(0, 20, "Mind:");                display(42 - to_string(player.getMind()).size(), 20, to_string(player.getMind()));
+    cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-";
+    display(0, 22, "Psychic Damage:");      display(42 - psychicDamageString.size(), 22, psychicDamageString);
+    cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-" << "\n\n";
 
    /* 
     cout << "Your stats are as follows: " << endl << setfill('=') << setw(92) << "=" << endl 
