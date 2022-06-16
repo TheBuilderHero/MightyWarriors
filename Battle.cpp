@@ -196,6 +196,7 @@ void Battle::questBattle(string username, int quest, int step){
     int enemyNum = 0;
     string answer;
     bool fightWon = false, fightLost = false;
+    int location = player.getLocation();
     ReachOutToServer server;
     Cipher code;
     Account account;
@@ -278,8 +279,10 @@ void Battle::questBattle(string username, int quest, int step){
             TempEntity playerE{username};
             setPlayer(playerE);
         }else{
-            player.setCurrentXP(account.getCurrentXPForNextLevel(username));
+            player.setCurrentXP(account.getCurrentXPForNextLevel(username));//This was added because XP was not updating in player stats after battles
         }
+        player.setBattleResult(true);
+        player.setLocation(location);
         system("cls");
     } else if (fightLost){ //the enemy has won the fight
         system("cls");

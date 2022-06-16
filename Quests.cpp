@@ -350,11 +350,9 @@ void Quests::quest1(string username, int step){
             battle.questBattle(username, 1, step);
             setPlayer(battle.getPlayer());
 
-            cout << "Player ended Battle with " << player.getHealth() << " health!\n";
-            menu.waitForEnter(menu.getEnterKeyState());
             //If the battle was won, we should run this code:
-            if(player.getHealth() > 0){
-                cout << "You are astonished at how incredibly weak the Void Cat turned out to be!";
+            if(player.getBattleResult()){
+                cout << "\nYou are astonished at how incredibly weak the Void Cat turned out to be!";
                 cout << "\nMight as well have been fighting a sand castle!\n";
                 menu.waitForEnter(menu.getEnterKeyState());
                 cout << "\nYou got 10000000 experience!\n";
@@ -365,6 +363,7 @@ void Quests::quest1(string username, int step){
                 menu.waitForEnter(menu.getEnterKeyState());
                 system("cls");
                 player.setQuest1Progress(1);
+                player.setBattleResult(false);
             }
             break;
         case 1:
@@ -381,8 +380,10 @@ void Quests::quest1(string username, int step){
             battle.questBattle(username, 1, step);
             setPlayer(battle.getPlayer());
 
-            if(player.getHealth() > 0){
-                cout << "As the goblin falls lifeless to the ground, you check your parchment again.\n";
+            //A problem occurs if there's any server connection issues in the middle of a battle
+            //Player health will trigger the quest completion, so I added a battle result boolean
+            if(player.getBattleResult()){
+                cout << "\nAs the goblin falls lifeless to the ground, you check your parchment again.\n";
                 menu.waitForEnter(menu.getEnterKeyState());
                 cout << "\nA new name writes itself: Klade the Orc. Somehow you know he is near Lake Argentus.\n";
                 menu.waitForEnter(menu.getEnterKeyState());
@@ -390,6 +391,7 @@ void Quests::quest1(string username, int step){
                 //Code to add experience
                 menu.waitForEnter(menu.getEnterKeyState());
                 player.setQuest1Progress(2);
+                player.setBattleResult(false);
             }
             break;
         case 2:
@@ -404,8 +406,8 @@ void Quests::quest1(string username, int step){
             battle.questBattle(username, 1, step);
             setPlayer(battle.getPlayer());
 
-            if(player.getHealth() > 0){
-                cout << "The Orc collapses to the ground, eyes closed. He fought with honor.\n";
+            if(player.getBattleResult()){
+                cout << "\nThe Orc collapses to the ground, eyes closed. He fought with honor.\n";
                 menu.waitForEnter(menu.getEnterKeyState());
                 cout << "\nA new name writes itself: The Black Night. Somehow you know he is in Arva Umbra.\n";
                 menu.waitForEnter(menu.getEnterKeyState());
@@ -413,6 +415,7 @@ void Quests::quest1(string username, int step){
                 //Code to add experience
                 menu.waitForEnter(menu.getEnterKeyState());
                 player.setQuest1Progress(3);
+                player.setBattleResult(false);
             }
             break;
         case 3:
@@ -443,8 +446,8 @@ void Quests::quest1(string username, int step){
             battle.questBattle(username, 1, step);
             setPlayer(battle.getPlayer());
 
-            if(player.getHealth() > 0){
-                cout << "The Black Night shall ride no more. You read the enchanted parchment once again.\n";
+            if(player.getBattleResult()){
+                cout << "\nThe Black Night shall ride no more. You read the enchanted parchment once again.\n";
                 menu.waitForEnter(menu.getEnterKeyState());
                 cout << "\nA new name writes itself: The Blue Wizard. Somehow you know he is in Silva Ignis.\n";
                 menu.waitForEnter(menu.getEnterKeyState());
@@ -452,6 +455,7 @@ void Quests::quest1(string username, int step){
                 //Code to add experience
                 menu.waitForEnter(menu.getEnterKeyState());
                 player.setQuest1Progress(4);
+                player.setBattleResult(false);
             }
             break;
         case 4:
@@ -464,8 +468,8 @@ void Quests::quest1(string username, int step){
             battle.questBattle(username, 1, step);
             setPlayer(battle.getPlayer());
 
-            if(player.getHealth() > 0){
-                cout << "The wizard collapses, but no body hits the ground. His robes simply crumple in the grass, \nwith his pointy hat perched neatly on top.\n";
+            if(player.getBattleResult()){
+                cout << "\nThe wizard collapses, but no body hits the ground. His robes simply crumple in the grass, \nwith his pointy hat perched neatly on top.\n";
                 menu.waitForEnter(menu.getEnterKeyState());
                 cout << "\nA new name writes itself: The Monstrous Behemoth. Somehow you know he is in the Ventosus Mountains.\n";
                 menu.waitForEnter(menu.getEnterKeyState());
@@ -473,10 +477,11 @@ void Quests::quest1(string username, int step){
                 //Code to add experience
                 menu.waitForEnter(menu.getEnterKeyState());
                 player.setQuest1Progress(5);
+                player.setBattleResult(false);
             }
             break;
         case 5:
-            cout << "The mountains loom ominously over everything. \nYou dread the moment when the Monstrous Behemoth will finally appear.\n";
+            cout << "The mountains loom ominously over everything. You dread the moment when the Monstrous Behemoth will finally appear.\n";
             menu.waitForEnter(menu.getEnterKeyState());
             cout << "\nRight on time, a huge, hulking shape lumbers over the mountainside.\n";
             menu.waitForEnter(menu.getEnterKeyState());
@@ -485,6 +490,7 @@ void Quests::quest1(string username, int step){
             cout << "\nIt clears an entire mountain in one great bound, then leaps again!\n";
             menu.waitForEnter(menu.getEnterKeyState());
             cout << "\nThis time, he lands in front of you. The menacing figure makes you feel very small.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
             cout << "\nIn your mind, you are about to be fighting the mountain itself...";
             menu.waitForEnter(menu.getEnterKeyState());
             
@@ -492,8 +498,8 @@ void Quests::quest1(string username, int step){
             battle.questBattle(username, 1, step);
             setPlayer(battle.getPlayer());
 
-            if(player.getHealth() > 0){
-                cout << "Incredibly, the titanic being crashes into the snow. Hands shaking, you check the parchment.\n";
+            if(player.getBattleResult()){
+                cout << "\nIncredibly, the titanic being crashes into the snow. Hands shaking, you check the parchment.\n";
                 menu.waitForEnter(menu.getEnterKeyState());
                 cout << "\nA new name has been written: The Awful Necromancer. You know he is in the Glacius Desert, and you are terrified.\n";
                 menu.waitForEnter(menu.getEnterKeyState());
@@ -501,6 +507,7 @@ void Quests::quest1(string username, int step){
                 //Code to add experience
                 menu.waitForEnter(menu.getEnterKeyState());
                 player.setQuest1Progress(6);
+                player.setBattleResult(false);
             }
             break;
         case 6:
@@ -523,8 +530,8 @@ void Quests::quest1(string username, int step){
             battle.questBattle(username, 1, step);
             setPlayer(battle.getPlayer());
 
-            if(player.getHealth() > 0){
-                cout << "The Necromancer screams, beams of light splitting his body apart, and he explodes into dust.\n";
+            if(player.getBattleResult()){
+                cout << "\nThe Necromancer screams, beams of light splitting his body apart, and he explodes into dust.\n";
                 menu.waitForEnter(menu.getEnterKeyState());
                 cout << "\nThe clouds clear, the sun begins warming everything, \nbut even so you collapse to your knees and put your head in your hands.\n";
                 menu.waitForEnter(menu.getEnterKeyState());
@@ -543,6 +550,7 @@ void Quests::quest1(string username, int step){
                 //Code to add experience
                 menu.waitForEnter(menu.getEnterKeyState());
                 player.setQuest1Progress(7);
+                player.setBattleResult(false);
             }
             break;
         case 7:
@@ -553,8 +561,8 @@ void Quests::quest1(string username, int step){
             battle.questBattle(username, 1, step);
             setPlayer(battle.getPlayer());
 
-            if(player.getHealth() > 0){
-                cout << "Huzzah, the dragon is like dead or whatever\n";
+            if(player.getBattleResult()){
+                cout << "\nHuzzah, the dragon is like dead or whatever\n";
                 menu.waitForEnter(menu.getEnterKeyState());
                 cout << "\nWith the last enemy defeated, the enchanted parchment crumbles into dust.\n";
                 menu.waitForEnter(menu.getEnterKeyState());
@@ -568,6 +576,7 @@ void Quests::quest1(string username, int step){
                 cout << "Huzzah!\n";
                 menu.waitForEnter(menu.getEnterKeyState());
                 player.setQuest1Progress(8);
+                player.setBattleResult(false);
             }
             break;
         default:

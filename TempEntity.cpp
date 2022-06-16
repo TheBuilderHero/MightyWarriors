@@ -17,6 +17,7 @@ TempEntity::TempEntity(string currentUsername){
     Cipher code;
     //set all the stats:
     code.decipherS(server.sendToServer(code.cipher("6", username)));
+    setMaxHealth(stoi(code.getItemS(1)));
     setHealth(stoi(code.getItemS(1)));
     setArmor(stoi(code.getItemS(2)));
     setMagicResistance(stoi(code.getItemS(3)));
@@ -89,6 +90,9 @@ void TempEntity::setQuest1Progress(int newProgress){
     quest1Progress = newProgress;
 }
 //stats:
+void TempEntity::setMaxHealth(int newHealth){
+    maxHealth = newHealth;
+}
 void TempEntity::setHealth(int newHealth){
     health = newHealth;
 }
@@ -165,6 +169,9 @@ void TempEntity::setXPForNextLevel(int newXPForNextLevel){
 
 //updater functions:
 //stats:
+void TempEntity::updateMaxHealth(int addHealth){
+    maxHealth += addHealth;
+}
 void TempEntity::updateHealth(int addHealth){
     health += addHealth;
 }

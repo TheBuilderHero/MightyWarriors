@@ -229,13 +229,14 @@ void Menu::displayStats(){
     string currentXPFormatted = currentXP.str();
     string totalXPFormatted = totalXP.str();
     string playerLevelInfo = "Player Level: " + to_string(player.getLevel()) +  " With " + currentXPFormatted + "XP of " + totalXPFormatted + "XP";
+    string healthString = to_string(player.getHealth()) + " / " + to_string(player.getMaxHealth());
     string physicalDamageString = to_string(player.getPhysicalDamageMin()) + " - " + to_string(player.getPhysicalDamageMax());
     string magicDamageString = to_string(player.getMagicDamageMin()) + " - " + to_string(player.getMagicDamageMax());
     string psychicDamageString = to_string(player.getPsychicDamageMin()) + " - " + to_string(player.getPsychicDamageMax());
 
     display(0, 0, "Your stats are as follows:\n");
     cout << "\n" << setfill('=') << setw(92) << "=";
-    display(0, 2, "Health:");               display(42 - to_string(player.getHealth()).size(), 2, to_string(player.getHealth()));
+    display(0, 2, "Health:");               display(42 - healthString.size(), 2, healthString);
     display(48, 2, playerLevelInfo);        display(48, 3, "Player Race: " + player.getRace());
     cout << "\n\n\n" << setfill('-') << setw(42) << "-";
     display(0, 4, "Armor:");                display(42 - to_string(player.getArmor()).size(), 4, to_string(player.getArmor()));

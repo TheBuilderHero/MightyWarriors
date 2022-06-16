@@ -5,7 +5,7 @@
 class TempEntity{
     private:
         std::string username;
-        int health, armor, magicResistance, physicalDamageMin, physicalDamageMax, magicDamageMin, magicDamageMax, agility, stealth, stamina, mana, mind, psychicDamageMin, psychicDamageMax;
+        int maxHealth, health, armor, magicResistance, physicalDamageMin, physicalDamageMax, magicDamageMin, magicDamageMax, agility, stealth, stamina, mana, mind, psychicDamageMin, psychicDamageMax;
         int level, currentXP, XPForNextLevel;
         std::string race, kit, weapon, qDamageType, wDamageType, eDamageType, rDamageType;
         int location, quest1Progress;
@@ -21,6 +21,7 @@ class TempEntity{
         int getLocation() { return location; }
         int getQuest1Progress(){ return quest1Progress; }
         //stats:
+        int getMaxHealth(){ return maxHealth; }
         int getHealth(){ return health; }
         int getArmor(){ return armor; }
         int getMagicResistance(){ return magicResistance; }
@@ -53,6 +54,7 @@ class TempEntity{
         void setLocation(int currentLocationValue);
         void setQuest1Progress(int newProgress);
         //stats:
+        void setMaxHealth(int newHealth);
         void setHealth(int newHealth);
         void setArmor(int newArmor);
         void setMagicResistance(int newMagicResistance);
@@ -81,6 +83,7 @@ class TempEntity{
 
         //updater functions:
         //Stats:
+        void updateMaxHealth(int addHealth);
         void updateHealth(int addHealth);
         void updateArmor(int addArmor);
         void updateMagicResistance(int addMagicResistance);
