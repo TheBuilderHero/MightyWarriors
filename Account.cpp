@@ -449,7 +449,9 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
 
     //add it an inital stat personalization
     string wasAbleToSave = server.sendToServer(code.cipher("5", username, to_string(initHealth), to_string(initArmor), to_string(initMagicResistance), to_string(initPhysicalDamage), to_string(initMagicDamage), to_string(initAgility),
-    to_string(initStealth), to_string(initStamina), to_string(initMana))); //These send the data to the server to be saved properly in the [username].stat file
+    to_string(initStealth), to_string(initStamina), to_string(initMana), to_string(initMind), to_string(initPsychicDamage))); //These send the data to the server to be saved properly in the [username].stat file
+    TempEntity player{username};
+    menuClass.setPlayer(player);
     system("cls");
     introStory(raceChoice, username); //send the user to the intro story
     menuClass.changePass(username); //before sending them to the logon screen they need to set their new account's password.

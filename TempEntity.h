@@ -10,6 +10,7 @@ class TempEntity{
         std::string race, kit, weapon, qDamageType, wDamageType, eDamageType, rDamageType;
         int location, quest1Progress;
         std::string name;
+        bool battleWon = false;
     public:
         TempEntity(std::string currentUsername);
         TempEntity();
@@ -104,4 +105,6 @@ class TempEntity{
         void setName(std::string newName);
         void damage(int damage);
         void heal(int healing);
+        void setBattleResult(bool result){ battleWon = result; }
+        bool getBattleResult(){ return battleWon; }
 };
