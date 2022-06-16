@@ -38,6 +38,7 @@ TempEntity::TempEntity(string currentUsername){
     setStealth(stoi(code.getItemS(7)));
     setStamina(stoi(code.getItemS(8)));
     setMana(stoi(code.getItemS(9)));
+    setMaxMind(stoi(code.getItemS(10)));
     setMind(stoi(code.getItemS(10)));
     //find the seperator and pull the values out of it for the min and max:
     string tempPsychicDamageString = code.getItemS(11);
@@ -126,6 +127,9 @@ void TempEntity::setStamina(int newStamina){
 void TempEntity::setMana(int newMana){
     mana = newMana;
 }
+void TempEntity::setMaxMind(int newMind){
+    maxMind = newMind;
+}
 void TempEntity::setMind(int newMind){
     mind = newMind;
 }
@@ -204,6 +208,9 @@ void TempEntity::updateStamina(int addStamina){
 }
 void TempEntity::updateMana(int addMana){
     mana += addMana;
+}
+void TempEntity::updateMaxMind(int addMind){
+    maxMind += addMind;
 }
 void TempEntity::updateMind(int addMind){
     mind += addMind;

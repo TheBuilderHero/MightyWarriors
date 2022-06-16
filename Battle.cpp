@@ -39,7 +39,7 @@ void Battle::optionsOutput(string username, string enemyName, int playerHealth, 
 }
 
 //loops till the player presses one of Q W E R
-void Battle::waitForButtonPress(string username, string &enemyName, bool &qKeyPressedLastLoop, bool &wKeyPressedLastLoop, bool &eKeyPressedLastLoop, bool &rKeyPressedLastLoop, bool &playerBlocking, int playerHealth, int &enemyHealth, int &ultimateUses, int &combatVal, int &playerAttack, int &enemyBlocking, string playerAttackType){
+void Battle::waitForButtonPress(string username, string &enemyName, bool &qKeyPressedLastLoop, bool &wKeyPressedLastLoop, bool &eKeyPressedLastLoop, bool &rKeyPressedLastLoop, bool &playerBlocking, int playerHealth, int &enemyHealth, int &ultimateUses, int &combatVal, int &playerAttack, int &enemyBlocking, string &playerAttackType){
     ReachOutToServer server;
     Cipher code;
     string qOption = "1", wOption = "2", eOption = "3", rOption = "4";
@@ -137,11 +137,12 @@ void Battle::startBattle(string username){
     while (!fightWon && !fightLost){//loop through displaying the stats and having the player pick options until the fight is won or lost
         int combatVal = 0;
         int playerAttack = 0;
+        string playerAttackType = " ";
         int enemyBlocking = 0;
         optionsOutput(username, enemyName, playerHealth, enemyHealth); //outputs the options for battle
         
         //loops till the player presses one of Q W E R
-        waitForButtonPress(username,enemyName,qKeyPressedLastLoop,wKeyPressedLastLoop,eKeyPressedLastLoop,rKeyPressedLastLoop,playerBlocking,playerHealth,enemyHealth,ultimateUses,combatVal,playerAttack,enemyBlocking);
+        waitForButtonPress(username,enemyName,qKeyPressedLastLoop,wKeyPressedLastLoop,eKeyPressedLastLoop,rKeyPressedLastLoop,playerBlocking,playerHealth,enemyHealth,ultimateUses,combatVal,playerAttack,enemyBlocking, playerAttackType);
         
         cout << "Your attack hits the enemy for " << playerAttack << " damage" << endl;
         system("pause");
@@ -377,11 +378,12 @@ void Battle::standardBattle(TempEntity player){
     while (!fightWon && !fightLost){//loop through displaying the stats and having the player pick options until the fight is won or lost
         int combatVal = 0;
         int playerAttack = 0;
+        string playerAttackType = " ";
         int enemyBlocking = 0;
         optionsOutput(player.getUsername(), enemyName, battlingStatsOfPlayer.getHealth(), enemyHealth); //outputs the options for battle
         
         //loops till the player presses one of Q W E R
-        waitForButtonPress(player.getUsername(),enemyName,qKeyPressedLastLoop,wKeyPressedLastLoop,eKeyPressedLastLoop,rKeyPressedLastLoop,playerBlocking, battlingStatsOfPlayer.getHealth(),enemyHealth,ultimateUses,combatVal,playerAttack,enemyBlocking);
+        waitForButtonPress(player.getUsername(),enemyName,qKeyPressedLastLoop,wKeyPressedLastLoop,eKeyPressedLastLoop,rKeyPressedLastLoop,playerBlocking, battlingStatsOfPlayer.getHealth(),enemyHealth,ultimateUses,combatVal,playerAttack,enemyBlocking, playerAttackType);
 
         //check during battle passives of player's attack:
         passive.duringBattlePlayerAttackPassives();

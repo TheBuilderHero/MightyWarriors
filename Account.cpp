@@ -301,7 +301,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
         cout << endl << "Select your Character's kit:" << endl;
         cout << "Please type the number corresponding to one of the kits from the list below (Note, this cannot be changed later!): "<< endl << endl;
         cout << "1  Tank" << endl;
-        cout << " -> Tanks gain +3 to Armor, Magic Resistance, and Health" << endl << endl;
+        cout << " -> Tanks gain +3 on Armor, Magic Resistance, and Health" << endl << endl;
         cout << "2  Assassin" << endl;
         cout << " -> Assassins gain +5 on Attack" << endl << endl;
         cout << "3  Archer" << endl;
@@ -310,9 +310,11 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
         cout << " -> Mages gain +2 on Ability and +3 on Magic Resistance" << endl << endl;
         cout << "5  Ninja" << endl;
         cout << " -> Ninjas gain +2 on Attack and +3 on Agility and Stealth" << endl << endl;
+        cout << "6  Mentalist" << endl;
+        cout << " -> Mentalists gain +2 on Mind and +2 onPsychic Attack" << endl << endl;
         cout << ">";
         cin >> kitChoice;
-        if (kitChoice <= 0 || kitChoice > 5) {
+        if (kitChoice <= 0 || kitChoice > 6) {
             cin.clear(); //this and the next resolve issues with infinitely looping invalid
             cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
             cout << "You have entered an invalid input, Please try again." << endl;
@@ -336,6 +338,9 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
                     break;
                 case 5:
                     kitName = "Ninja";
+                    break;
+                case 6:
+                    kitName = "Mentalist";
                     break;
                 default:
                     kitName = "not chosen";

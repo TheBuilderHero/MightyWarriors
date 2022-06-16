@@ -5,7 +5,7 @@
 class TempEntity{
     private:
         std::string username;
-        int maxHealth, health, armor, magicResistance, physicalDamageMin, physicalDamageMax, magicDamageMin, magicDamageMax, agility, stealth, stamina, mana, mind, psychicDamageMin, psychicDamageMax;
+        int maxHealth, health, armor, magicResistance, physicalDamageMin, physicalDamageMax, magicDamageMin, magicDamageMax, agility, stealth, stamina, mana, maxMind, mind, psychicDamageMin, psychicDamageMax;
         int level, currentXP, XPForNextLevel;
         std::string race, kit, weapon, qDamageType, wDamageType, eDamageType, rDamageType;
         int location, quest1Progress;
@@ -33,6 +33,7 @@ class TempEntity{
         int getStealth(){ return stealth; }
         int getStamina(){ return stamina; }
         int getMana(){ return mana; }
+        int getMaxMind(){ return maxMind; }
         int getMind(){ return mind; }
         int getPsychicDamageMin(){ return psychicDamageMin; }
         int getPsychicDamageMax(){ return psychicDamageMax; }
@@ -66,6 +67,7 @@ class TempEntity{
         void setStealth(int newStealth);
         void setStamina(int newStamina);
         void setMana(int newMana);
+        void setMaxMind(int newMaxMind);
         void setMind(int newMind);
         void setPsychicDamageMin(int newPsychicDamageMin);
         void setPsychicDamageMax(int newPsychicDamageMax);
@@ -95,6 +97,7 @@ class TempEntity{
         void updateStealth(int addStealth);
         void updateStamina(int addStamina);
         void updateMana(int addMana);
+        void updateMaxMind(int addMana);
         void updateMind(int addMana);
         void updatePsychicDamageMin(int addPsychicDamageMin);
         void updatePsychicDamageMax(int addPsychicDamageMax);

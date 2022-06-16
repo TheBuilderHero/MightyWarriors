@@ -214,13 +214,18 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
 void Menu::displayStats(){
     string physicalDamageAbilities = "Physical Damage Abilities: ";
     string magicDamageAbilities = "Magic Damage Abilities: ";
+    string psychicDamageAbilities = "Psychic Damage Abilities: ";
     if (player.getQDamageType() == "Physical") physicalDamageAbilities += " Q";
+    else if (player.getQDamageType() == "Psychic") psychicDamageAbilities += " Q";
     else magicDamageAbilities += " Q";
     if (player.getWDamageType() == "Physical") physicalDamageAbilities += " W";
+    else if (player.getWDamageType() == "Psychic") psychicDamageAbilities += " W";
     else magicDamageAbilities += " W";
     if (player.getEDamageType() == "Physical") physicalDamageAbilities += " E";
+    else if (player.getEDamageType() == "Psychic") psychicDamageAbilities += " E";
     else magicDamageAbilities += " E";
     if (player.getRDamageType() == "Physical") physicalDamageAbilities += " R";
+    else if (player.getRDamageType() == "Psychic") psychicDamageAbilities += " R";
     else magicDamageAbilities += " R";
 
     stringstream currentXP, totalXP;
@@ -230,6 +235,7 @@ void Menu::displayStats(){
     string totalXPFormatted = totalXP.str();
     string playerLevelInfo = "Player Level: " + to_string(player.getLevel()) +  " With " + currentXPFormatted + "XP of " + totalXPFormatted + "XP";
     string healthString = to_string(player.getHealth()) + " / " + to_string(player.getMaxHealth());
+    string mindString = to_string(player.getMind()) + " / " + to_string(player.getMaxMind());
     string physicalDamageString = to_string(player.getPhysicalDamageMin()) + " - " + to_string(player.getPhysicalDamageMax());
     string magicDamageString = to_string(player.getMagicDamageMin()) + " - " + to_string(player.getMagicDamageMax());
     string psychicDamageString = to_string(player.getPsychicDamageMin()) + " - " + to_string(player.getPsychicDamageMax());
@@ -258,9 +264,10 @@ void Menu::displayStats(){
     cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-";
     display(0, 18, "Mana:");                display(42 - to_string(player.getMana()).size(), 18, to_string(player.getMana()));
     cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-";
-    display(0, 20, "Mind:");                display(42 - to_string(player.getMind()).size(), 20, to_string(player.getMind()));
+    display(0, 20, "Mind:");                display(42 - mindString.size(), 20, mindString);
     cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-";
     display(0, 22, "Psychic Damage:");      display(42 - psychicDamageString.size(), 22, psychicDamageString);
+    display(48, 22, psychicDamageAbilities);
     cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-" << "\n\n";
 
    /* 
