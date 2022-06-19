@@ -14,6 +14,7 @@ class Cipher {
     public:
     
     std::string decipher(char messageFromClient[], bool hasSubItems = false);//this function is intended to pull out the delimiters from a message and the data associated with each request
+    std::string decipher(std::string messageFromClient, bool hasSubItems = false);//this function is intended to pull out the delimiters from a message and the data associated with each request - string version.
     std::string subDecipher(std::string subMessageFromClient, int rootItem);//this function is intended to pull out the subDelimiters from a message and the data
     std::string decipherS(std::string messageFromClient);//this function is intended to pull out the delimiters from a message and the data associated with each request - string version
 

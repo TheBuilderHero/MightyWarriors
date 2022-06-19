@@ -6,7 +6,7 @@
 class ReachOutToServer{
 private:
     std::string message;
-    char buf[4096];
+    char buf[8192]; //doubled to 8192 from 4096
     SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
 
 public:

@@ -335,16 +335,17 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
     bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, fiveKeyPressedLastLoop = false, 
     zeroKeyPressedLastLoop = false, nKeyPressedLastLoop = false, iKeyPressedLastLoop = false, aKeyPressedLastLoop = false, controlKeyPressedLastLoop = false, 
     altKeyPressedLastLoop = false ,kKeyPressedLastLoop = false;
-    display(44, 1, "Admin Menu of options:");
-    display(32, 2, "Change Password");      display(53, 2, "(type number \"1\")");
-    display(32, 3, "Logout");               display(53, 3, "(type number \"2\")");
-    display(32, 4, "Stats");                display(53, 4, "(type number \"3\")");
-    display(32, 5, "Info");                 display(53, 5, "(type number \"4\")");
-    display(32, 6, "Test Questing");        display(53, 6, "(type number \"5\")");
-    display(32, 7, "Map Test");             display(53, 7, "(type number \"6\")");
-    display(32, 8, "Exit");                 display(53, 8, "(type number \"0\")", false);
+    display(50, 1, "Admin Menu of options:");
+    display(32, 2, "Change Password");          display(63, 2, "(type number \"1\")");
+    display(32, 3, "Logout");                   display(63, 3, "(type number \"2\")");
+    display(32, 4, "Stats");                    display(63, 4, "(type number \"3\")");
+    display(32, 5, "Info");                     display(63, 5, "(type number \"4\")");
+    display(32, 6, "Test Questing");            display(63, 6, "(type number \"5\")");
+    display(32, 7, "Map Test");                 display(63, 7, "(type number \"6\")");
+    display(32, 8, "Message Test SubCipher");   display(63, 8, "(type number \"7\")");
+    display(32, 9, "Exit");                     display(63, 9, "(type number \"0\")", false);
     
-    value = numberPressWait(6, true);
+    value = numberPressWait(7, true);
     switch (value)
     {
     case 0: //exit program
@@ -385,6 +386,15 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         Map map;
         map.displayMapOutline();
         waitForEnter(getEnterKeyState());
+        break;
+    }
+    case 7:{
+        system("cls");
+        ReachOutToServer serverMessage;
+        string output;
+        cout << serverMessage.sendToServer(code.cipher("22"));
+        //display(2,2, output, false, true);
+        system("pause");
         break;
     }
     default:

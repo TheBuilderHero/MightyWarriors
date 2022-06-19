@@ -22,7 +22,7 @@ string ReachOutToServer::sendToServer(string aMessage) {
     int wsResult = WSAStartup(ver, &data);
     if (wsResult != WSAStartup(ver, &data)) {
         cerr << "Can't start Winsock, Err #" << wsResult << endl;
-        return "failed";
+        return "failedwinsock";
     }
 
     //create socket
@@ -30,7 +30,7 @@ string ReachOutToServer::sendToServer(string aMessage) {
     sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock == INVALID_SOCKET) {
         cerr << "Can't create socket, Err #" << WSAGetLastError() << endl;
-        return "failed";
+        return "failedsock";
     }
 
     //fill in kint structure
@@ -60,8 +60,8 @@ string ReachOutToServer::sendToServer(string aMessage) {
         int sendResult = send(sock, message.c_str(), message.size() + 1, 0);
         if (sendResult != SOCKET_ERROR) {
             //wait for response
-            ZeroMemory(buf, 4096);
-            int bytesRecived = recv(sock, buf, 4096, 0);
+            ZeroMemory(buf, 8192); //doubled from 4096
+            int bytesRecived = recv(sock, buf, 8192, 0);
             if (bytesRecived > 0) {
                 
                 //decipher the message from the server
@@ -107,7 +107,7 @@ string ReachOutToServer::sendToServer(string aMessage) {
         case 4: //more than one purpose - added the purpose of returning battle attack values and level of player
             return code.getItem(2);
             break;
-        case 5: //this is going to be used to get the stats of the user stored on the server
+        case 5: //this is going to be used to get all the items sent from the server
             statInfo = code.getDelimiter();
             statInfo += code.getItem(2);
             statInfo += code.getDelimiter();
@@ -152,6 +152,16 @@ string ReachOutToServer::sendToServer(string aMessage) {
             return statInfo; //returns the deliminated version of the data from server.  This info can then be proccessed by the function decipherS function making us able to call on itemS1 - 6
             //That is is just trying to say call the function decipherS() on sendToServer() so that you can use the output.
             break;
+        case 6:{ //whole message return since option 6 selected. - Able to use subDelimination.
+            stringstream fullMessage;
+            fullMessage << buf;
+            cout << buf << endl << endl;
+            cout << fullMessage.str() << endl;
+            cout << "that was the server." << endl;
+            system("pause");
+            return fullMessage.str(); //return the whole message from the server without editting it.
+            break;
+        }
         case 0: //Client version validity check
             return code.getItem(2);
             break;

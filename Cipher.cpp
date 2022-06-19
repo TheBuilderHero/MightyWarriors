@@ -157,6 +157,157 @@ string Cipher::decipher(char messageFromClient[], bool hasSubItems){
     }
     return str_file_content;
 }
+string Cipher::decipher(string messageFromClient, bool hasSubItems){
+    
+    //string message = messageFromClient; // change the message into a string
+
+    
+    // the above variables may later be replaced with a more wide veriety of variables however, for testing we are using all strings
+    string s = messageFromClient;
+    string str_file_content;
+    string token, output;
+    int loopPass = 0;
+    size_t pos = 0; // position variable for removing the delimiters to view the message
+    while ((pos = s.find(delimiter)) != std::string::npos) {
+        token = s.substr(0, pos);
+        output = token;
+        str_file_content += std::string(token); // we do not need to add spaces between the information for now so I removed: + std::string(" ")
+        s.erase(0, pos + delimiter.length());
+        switch (loopPass){
+            case 1://the first item enclosed in delimiters
+            if (output.length() > 0) responseType = stoi(output); // we many need to change the variable to an int with stoi(output) later but right now we just want a string version
+            break;
+            case 2://the second item enclosed in delimiters
+            if (output.length() > 0) {
+                item[2] = output;
+                if (hasSubItems) subDecipher(item[2], 2);
+                } 
+            break;
+            case 3://third item after delimiter
+            if (output.length() > 0) {
+                item[3] = output;
+                if (hasSubItems) subDecipher(item[3], 3);
+                }
+            break;
+            case 4://forth item after delimiter
+            if (output.length() > 0) {
+                item[4] = output;
+                if (hasSubItems) subDecipher(item[4], 4);
+                }
+            break;
+            case 5://fith item after delimiter
+            if (output.length() > 0) {
+                item[5] = output;
+                if (hasSubItems) subDecipher(item[5], 5);
+                }
+            break;
+            case 6://sixth item after delimiter
+            if (output.length() > 0) {
+                item[6] = output;
+                if (hasSubItems) subDecipher(item[6], 6);
+                }
+            break;
+            case 7://seventh item after delimiter
+            if (output.length() > 0) {
+                item[7] = output;
+                if (hasSubItems) subDecipher(item[7], 7);
+                }
+            break; 
+            case 8://the eighth item enclosed in delimiters
+            if (output.length() > 0) {
+                item[8] = output;
+                if (hasSubItems) subDecipher(item[8], 8);
+                } 
+            break;
+            case 9://the ninth item enclosed in delimiters
+            if (output.length() > 0) {
+                item[9] = output;
+                if (hasSubItems) subDecipher(item[9], 9);
+                } 
+            break;
+            case 10://the tenth item enclosed in delimiters
+            if (output.length() > 0) {
+                item[10] = output;
+                if (hasSubItems) subDecipher(item[10], 10);
+                } 
+            break;
+            case 11://the tenth item enclosed in delimiters
+            if (output.length() > 0) {
+                item[11] = output;
+                if (hasSubItems) subDecipher(item[11], 11);
+                } 
+            break;
+            case 12://the tenth item enclosed in delimiters
+            if (output.length() > 0) {
+                item[12] = output;
+                if (hasSubItems) subDecipher(item[12], 12);
+                } 
+            break;
+            case 13:
+            if (output.length() > 0) {
+                item[13] = output;
+                if (hasSubItems) subDecipher(item[13], 13);
+                } 
+            break;
+            case 14:
+            if (output.length() > 0) {
+                item[14] = output;
+                if (hasSubItems) subDecipher(item[14], 14);
+                } 
+            break;
+            case 15:
+            if (output.length() > 0) {
+                item[15] = output;
+                if (hasSubItems) subDecipher(item[15], 15);
+                } 
+            break;
+            case 16:
+            if (output.length() > 0) {
+                item[16] = output;
+                if (hasSubItems) subDecipher(item[16], 16);
+                } 
+            break;
+            case 17:
+            if (output.length() > 0) {
+                item[17] = output;
+                if (hasSubItems) subDecipher(item[17], 17);
+                } 
+            break;
+            case 18:
+            if (output.length() > 0) {
+                item[18] = output;
+                if (hasSubItems) subDecipher(item[18], 18);
+                } 
+            break;
+            case 19:
+            if (output.length() > 0) {
+                item[19] = output;
+                if (hasSubItems) subDecipher(item[19], 19);
+                } 
+            break;
+            case 20:
+            if (output.length() > 0) {
+                item[20] = output;
+                if (hasSubItems) subDecipher(item[20], 20);
+                } 
+            break;
+            case 21:
+            if (output.length() > 0) {
+                item[21] = output;
+                if (hasSubItems) subDecipher(item[21], 21);
+                } 
+            break;
+            case 22:
+            if (output.length() > 0) {
+                item[22] = output;
+                if (hasSubItems) subDecipher(item[22], 22);
+                } 
+            break;
+        }
+        loopPass++;
+    }
+    return str_file_content;
+}
 string Cipher::subDecipher(string subMessageFromClient, int rootItem){
     
     //string message = messageFromClient; // change the message into a string
