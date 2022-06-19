@@ -74,6 +74,10 @@ string ReachOutToServer::sendToServer(string aMessage) {
 
                 ss << buf;
                 s = ss.str();
+            } else {
+                perror("recv");
+                cout << "bytesRecived < 0" << endl;
+                //return "failedBytesRecv";
             }
         }
         if (secondtimethrough != true) {
@@ -86,11 +90,15 @@ string ReachOutToServer::sendToServer(string aMessage) {
 
     } while (timesthrough == 0);
 
+    //these two are to test the long message sending:
+    stringstream fullMessage;
+    fullMessage << buf;
+    string test = fullMessage.str();
 
     //Gracefully close down everything
     closesocket(sock);
     WSACleanup();
-    code.decipher(buf);
+    code.decipher(test);
     string statInfo;
     switch (code.getResponseType()){
         case 1:
@@ -153,8 +161,8 @@ string ReachOutToServer::sendToServer(string aMessage) {
             //That is is just trying to say call the function decipherS() on sendToServer() so that you can use the output.
             break;
         case 6:{ //whole message return since option 6 selected. - Able to use subDelimination.
-            stringstream fullMessage;
-            fullMessage << buf;
+            // stringstream fullMessage;
+            // fullMessage << buf;
             cout << buf << endl << endl;
             cout << fullMessage.str() << endl;
             cout << "that was the server." << endl;
