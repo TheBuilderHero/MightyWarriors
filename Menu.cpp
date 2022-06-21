@@ -22,6 +22,24 @@ Cipher code; //declare the new instance of Cipher class
 Account account;
 Battle battle;
 
+//Exit functions: (since once the user logs on they have something to loose when the programs closes)
+void fnExit(void){
+    cout << "You are closing the application..." << endl;
+    cout << "1" << endl;
+    cout << "2" << endl;
+    cout << "3" << endl;
+    cout << "4" << endl;
+    cout << "5" << endl;
+    cout << "6" << endl;
+    cout << "7" << endl;
+    cout << "8" << endl;
+    cout << "9" << endl;
+    cout << "10" << endl;
+    cout << "end" << endl;
+    cout << "this funtion is incomplete but will be used to save all userdata before closing the aplication." << endl;
+    system("pause");
+}
+
 void Menu::ClearConsoleInputBuffer()
 {
     PINPUT_RECORD ClearingVar1 = new INPUT_RECORD[256];
@@ -36,6 +54,9 @@ void Menu::getGameVersion(){
 }
 
 void Menu::menu(string username){ //bring up the menu for the passing in the username
+    //Now that the user is logged into their account and loaded their data we will save their data if they close the aplication:
+    atexit(fnExit);
+
     bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false,
     nKeyPressedLastLoop = false, iKeyPressedLastLoop = false, aKeyPressedLastLoop = false, 
     controlKeyPressedLastLoop = false, altKeyPressedLastLoop = false ,kKeyPressedLastLoop = false;
