@@ -13,7 +13,7 @@ string ReachOutToServer::sendToServer(string aMessage) {
     Cipher code; // declare a new Decipher class
     string ipAddress = "174.86.47.26";  //IP of server192.168.1.13  // ip of home 174.86.47.26  // change this back
     int port = 7000;                    //Listening Port # of Server
-    std::string s;
+    std::string s[2];
     std::stringstream ss;
 
     //init winsock
@@ -55,13 +55,55 @@ string ReachOutToServer::sendToServer(string aMessage) {
 
     bool secondtimethrough = false;
     int timesthrough = 0;
+    int messageFromSeverLength;
     //message = "3.5";
     do {
-        int sendResult = send(sock, message.c_str(), message.size() + 1, 0);
+        int sendResult = send(sock, (to_string(message.size() + 1)  + "~").c_str(), (to_string(message.size() + 1)  + "~").size() + 1, 0); //first is used to get length info of data to server prior to sending it.
         if (sendResult != SOCKET_ERROR) {
             //wait for response
             ZeroMemory(buf, 8192); //doubled from 4096
             int bytesRecived = recv(sock, buf, 8192, 0);
+            //cout << buf << endl; //this was four trouble shooting
+            //system("pause");
+            if (bytesRecived > 0) {
+                stringstream ssConvert;
+                string responseVerified;
+                ssConvert << buf;
+                responseVerified = ssConvert.str();
+                //These were for testing:
+                //cout << "Recv: " << responseVerified << " Sent Item: " << message << endl;
+                //system("pause");
+            }
+        }
+        int sendResult2 = send(sock, message.c_str(), message.size() + 1, 0); //sends the data to the server. (server then responds with length of data it will send back)
+        if (sendResult2 != SOCKET_ERROR) {
+            //wait for response
+            ZeroMemory(buf, 8192); //doubled from 4096
+            int bytesRecived = recv(sock, buf, 8192, 0);
+            //cout << buf << endl; //this was four trouble shooting
+            //system("pause");
+            if (bytesRecived > 0) {
+                stringstream ssConvert;
+                string responseLengthVerified;
+                ssConvert << buf;
+                responseLengthVerified = ssConvert.str();
+                //This was for testing:
+                //cout << responseLengthVerified << endl;
+                try{
+                    messageFromSeverLength = stoi(responseLengthVerified);
+                } catch(invalid_argument){
+                    cout << "int sendResult2 = send(sock, message.c_str(), message.size() + 1, 0); //sends the data to the server. (server then responds with length of data it will send back)" << endl;
+                    system("pause");
+                }
+            }
+        }
+        int sendResult3 = send(sock, to_string(messageFromSeverLength).c_str(), to_string(messageFromSeverLength).size() + 1, 0); //Tell the server we know the length of the data that is going to be sent. It can send it now.
+        if (sendResult3 != SOCKET_ERROR) {
+            //wait for response
+            ZeroMemory(buf, 8192); //doubled from 4096
+            int bytesRecived = recv(sock, buf, messageFromSeverLength, MSG_WAITALL);
+            //cout << buf << endl; //this was four trouble shooting
+            //system("pause");
             if (bytesRecived > 0) {
                 
                 //decipher the message from the server
@@ -73,32 +115,22 @@ string ReachOutToServer::sendToServer(string aMessage) {
                 //before we were using cipher we used string(buf, 0, bytesRecived) as the output
 
                 ss << buf;
-                s = ss.str();
-            } else {
-                perror("recv");
-                cout << "bytesRecived < 0" << endl;
-                //return "failedBytesRecv";
+                s[timesthrough] = ss.str(); //using for long messages
             }
         }
         if (secondtimethrough != true) {
             secondtimethrough = true;
-            //system("pause"); //removed because it seems to be working fine sending and recieving data without it in place
         }
         else {
             timesthrough++;
         }
 
-    } while (timesthrough == 0);
-
-    //these two are to test the long message sending:
-    stringstream fullMessage;
-    fullMessage << buf;
-    string test = fullMessage.str();
+    } while (timesthrough == 0); //run through until it has all data
 
     //Gracefully close down everything
     closesocket(sock);
     WSACleanup();
-    code.decipher(test);
+    code.decipher(buf);
     string statInfo;
     switch (code.getResponseType()){
         case 1:
@@ -107,7 +139,7 @@ string ReachOutToServer::sendToServer(string aMessage) {
             break;
             //others will be added to setup the usage of other features like pulling data and cteating accounts
         case 2: //user creation
-            return s;
+            return s[0];
             break;
         case 3: //logon reutrn from the server
             return code.getItem(2);
@@ -161,13 +193,16 @@ string ReachOutToServer::sendToServer(string aMessage) {
             //That is is just trying to say call the function decipherS() on sendToServer() so that you can use the output.
             break;
         case 6:{ //whole message return since option 6 selected. - Able to use subDelimination.
-            // stringstream fullMessage;
-            // fullMessage << buf;
-            cout << buf << endl << endl;
-            cout << fullMessage.str() << endl;
-            cout << "that was the server." << endl;
-            system("pause");
-            return fullMessage.str(); //return the whole message from the server without editting it.
+            int workingInt = 0;
+            if (s[0].length() > 0) {
+                //cout << s[0] << endl << endl; //used for testing the large cipher messages
+                workingInt = 0;
+            } else {
+                //cout << s[1] << endl << endl; //used for testing the large cipher messages
+                workingInt = 1;
+            }
+            //system("pause"); //used for testing the large cipher messages
+            return s[workingInt]; //return the whole message from the server without editting it.
             break;
         }
         case 0: //Client version validity check
@@ -175,6 +210,6 @@ string ReachOutToServer::sendToServer(string aMessage) {
             break;
 
         default:
-            return s;
+            return s[0];
     }
 }

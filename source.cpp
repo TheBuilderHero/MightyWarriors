@@ -27,7 +27,7 @@ int main(){ //Starts the program if the clients version is compatable with the s
     while (!(answer == "n" || answer == "N")) { //This do while loop is intended to get them connected to the server.  If it fails it will prompt the user Y/N to retry connecting.
         system("cls");
         //answer = ""; // set the answer variable to some other value on the start of each loop.
-        string runningCurrentVersion = server.sendToServer(code.cipher("0", "", to_string(gameVersion), to_string(gameMajorBuild), to_string(gameMinorBuild), to_string(gamePatch)));//check to see if the version the client is running is allowed to continue - the reponse is stored in "runningCurrentVersion"
+        string runningCurrentVersion = server.sendToServer(/*"31" + */code.cipher("0", "", to_string(gameVersion), to_string(gameMajorBuild), to_string(gameMinorBuild), to_string(gamePatch)));//check to see if the version the client is running is allowed to continue - the reponse is stored in "runningCurrentVersion"
         //Before doing anything else... request required client version from server.
         if (runningCurrentVersion == "true"){ //if we are running the current version then the program will start
             menu.ClearConsoleInputBuffer();//clear keyboard input from the yesNo prompt - this seems to remove the keyboard input
@@ -37,7 +37,7 @@ int main(){ //Starts the program if the clients version is compatable with the s
             cout << "The Server is currently Offline for either maintanance or other reasons..." << endl << "Would you like to try connecting again? (Y/N) [Attempt: " << attempts << "]\n>";
             answer = menu.yesOrNo();
             while (!(answer == "n" || answer == "N" || answer == "y" || answer == "Y")) { 
-                cout << endl << answer << endl;
+                //cout << endl << answer << endl;
                 //answer = 'A';// set the answer variable to some other value on the start of each loop.
                 cout << "Your input was not recognized." << endl << "Would you like to try connecting again? (Y/N) [Attempt: " << attempts << "]";
                 answer = menu.yesOrNo();

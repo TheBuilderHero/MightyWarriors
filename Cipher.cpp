@@ -1,12 +1,14 @@
 #include <string>
 
 #include "Cipher.h"
+#include "Menu.h" //including for the display funciton
 
 using namespace std;
 
 
 //this function is intended to pull out the delimiters from a message and the data associated with each request
 string Cipher::decipher(char messageFromClient[], bool hasSubItems){
+    Menu menu;
     
     //string message = messageFromClient; // change the message into a string
 
@@ -24,7 +26,7 @@ string Cipher::decipher(char messageFromClient[], bool hasSubItems){
         s.erase(0, pos + delimiter.length());
         switch (loopPass){
             case 1://the first item enclosed in delimiters
-            if (output.length() > 0) responseType = stoi(output); // we many need to change the variable to an int with stoi(output) later but right now we just want a string version
+            if (output.length() > 0) try{ responseType = stoi(output);}catch(invalid_argument){ menu.display(1,1,"string Cipher::decipher(char messageFromClient[], bool hasSubItems){ Failed STOI", false); } // we many need to change the variable to an int with stoi(output) later but right now we just want a string version
             break;
             case 2://the second item enclosed in delimiters
             if (output.length() > 0) {
@@ -158,6 +160,7 @@ string Cipher::decipher(char messageFromClient[], bool hasSubItems){
     return str_file_content;
 }
 string Cipher::decipher(string messageFromClient, bool hasSubItems){
+    Menu menu;
     
     //string message = messageFromClient; // change the message into a string
 
@@ -175,7 +178,7 @@ string Cipher::decipher(string messageFromClient, bool hasSubItems){
         s.erase(0, pos + delimiter.length());
         switch (loopPass){
             case 1://the first item enclosed in delimiters
-            if (output.length() > 0) responseType = stoi(output); // we many need to change the variable to an int with stoi(output) later but right now we just want a string version
+            if (output.length() > 0) try{ responseType = stoi(output);}catch(invalid_argument){ menu.display(1,1,"string Cipher::decipher(char messageFromClient[], bool hasSubItems){ Failed STOI", false); } // we many need to change the variable to an int with stoi(output) later but right now we just want a string version
             break;
             case 2://the second item enclosed in delimiters
             if (output.length() > 0) {
@@ -571,7 +574,7 @@ string Cipher::cipher(string typeOfRequest, string username, string item3, strin
 }
 
 string Cipher::subCipher(string item1, string item2, string item3, string item4, string item5, string item6, string item7, string item8, string item9, string item10, string item11, string item12, string item13, string item14, string item15, string item16, string item17, string item18, string item19, string item20, string item21, string item22){ // the default values have been set to "" in case no input is given
-    int numberOfItems = 12; //max number of items that we can cipher
+    int numberOfItems = 22; //max number of items that we can cipher
     //"=" //a character that marks the beginning or end of a unit of data
 
     string str_file_content;
