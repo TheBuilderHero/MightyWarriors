@@ -184,10 +184,6 @@ string Cipher::decipher(string messageFromClient, bool hasSubItems){
         s.erase(0, pos + delimiter.length());
         switch (loopPass){
             case 1://the first item enclosed in delimiters
-            cout << ">>>" << output << "<<<" << endl;
-            cout << s << endl;
-            system("pause");
-
             if (output.length() > 0) {
                 try{ 
                     responseType = stoi(output);
