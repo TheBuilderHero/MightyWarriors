@@ -13,6 +13,7 @@ class TempEntity{
         bool battleWon = false;
     public:
         TempEntity(std::string currentUsername);
+        TempEntity(std::string currentUsername, bool NewTempEntityProccess);
         TempEntity();
         ~TempEntity();
 

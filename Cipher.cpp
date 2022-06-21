@@ -26,7 +26,13 @@ string Cipher::decipher(char messageFromClient[], bool hasSubItems){
         s.erase(0, pos + delimiter.length());
         switch (loopPass){
             case 1://the first item enclosed in delimiters
-            if (output.length() > 0) try{ responseType = stoi(output);}catch(invalid_argument){ menu.display(1,1,"string Cipher::decipher(char messageFromClient[], bool hasSubItems){ Failed STOI", false); } // we many need to change the variable to an int with stoi(output) later but right now we just want a string version
+            if (output.length() > 0) {
+                try{ 
+                    responseType = stoi(output);
+                }catch(invalid_argument){ 
+                    menu.display(1,1,"string Cipher::decipher(char messageFromClient[], bool hasSubItems){ Failed STOI", false);
+                }
+            } // we many need to change the variable to an int with stoi(output) later but right now we just want a string version
             break;
             case 2://the second item enclosed in delimiters
             if (output.length() > 0) {
@@ -178,7 +184,17 @@ string Cipher::decipher(string messageFromClient, bool hasSubItems){
         s.erase(0, pos + delimiter.length());
         switch (loopPass){
             case 1://the first item enclosed in delimiters
-            if (output.length() > 0) try{ responseType = stoi(output);}catch(invalid_argument){ menu.display(1,1,"string Cipher::decipher(char messageFromClient[], bool hasSubItems){ Failed STOI", false); } // we many need to change the variable to an int with stoi(output) later but right now we just want a string version
+            cout << ">>>" << output << "<<<" << endl;
+            cout << s << endl;
+            system("pause");
+
+            if (output.length() > 0) {
+                try{ 
+                    responseType = stoi(output);
+                }catch(invalid_argument){ 
+                    menu.display(1,1,"string Cipher::decipher(char messageFromClient[], bool hasSubItems){ Failed STOI", false);
+                }
+            } // we many need to change the variable to an int with stoi(output) later but right now we just want a string version
             break;
             case 2://the second item enclosed in delimiters
             if (output.length() > 0) {

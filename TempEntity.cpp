@@ -67,6 +67,64 @@ TempEntity::TempEntity(string currentUsername){
     setRDamageType(code.getItemS(10));
     
 }
+TempEntity::TempEntity(string currentUsername, bool NewTempEntityProccess){ //initallizes all player info by pulling it from the server in one request
+
+    string minMaxDelimiter = " - ";
+    setUsername(currentUsername);
+    ReachOutToServer server;
+    Cipher code;
+    //set all the stats:
+    code.decipher(server.sendToServer(code.cipher("23", username)), true);
+    setMaxHealth(stoi(code.getItem(2,1)));
+    setHealth(stoi(code.getItem(2,1)));
+    setArmor(stoi(code.getItem(2,2)));
+    setMagicResistance(stoi(code.getItem(2,3)));
+    //find the seperator and pull the values out of it for the min and max:
+    string tempPhysicalDamageString = code.getItem(2,4);
+    size_t pos1 = tempPhysicalDamageString.find(minMaxDelimiter);
+    setPhysicalDamageMin(stoi(tempPhysicalDamageString.substr(0, pos1)));
+    tempPhysicalDamageString.erase(0, pos1 + minMaxDelimiter.length());
+    setPhysicalDamageMax(stoi(tempPhysicalDamageString));
+    //find the seperator and pull the values out of it for the min and max:
+    string tempMagicDamageString = code.getItem(2,5);
+    size_t pos2 = tempMagicDamageString.find(minMaxDelimiter);
+    setMagicDamageMin(stoi(tempMagicDamageString.substr(0, pos2)));
+    tempMagicDamageString.erase(0, pos2 + minMaxDelimiter.length());
+    setMagicDamageMax(stoi(tempMagicDamageString)); 
+    //set the rest of the stats:
+    setAgility(stoi(code.getItem(2,6)));
+    setStealth(stoi(code.getItem(2,7)));
+    setStamina(stoi(code.getItem(2,8)));
+    setMana(stoi(code.getItem(2,9)));
+    setMaxMind(stoi(code.getItem(2,10)));
+    setMind(stoi(code.getItem(2,10)));
+    //find the seperator and pull the values out of it for the min and max:
+    string tempPsychicDamageString = code.getItem(2,11);
+    size_t pos3 = tempPsychicDamageString.find(minMaxDelimiter);
+    setPsychicDamageMin(stoi(tempPsychicDamageString.substr(0, pos3)));
+    tempPsychicDamageString.erase(0, pos3 + minMaxDelimiter.length());
+    setPsychicDamageMax(stoi(tempPsychicDamageString)); 
+    //set location:
+    setLocation(stoi(code.getItem(2,12)));
+    if(getLocation() < 1 || getLocation() > 6){
+        setLocation(1);
+    }
+    setRace(code.getItem(2,13));
+    setKit(code.getItem(2,14));
+    setWeapon(code.getItem(2,15));
+    setLevel(stoi(code.getItem(2,16)));
+    setCurrentXP(stoi(code.getItem(2,17)));
+    setXPForNextLevel(stoi(code.getItem(2,18)));
+    setQDamageType(code.getItem(2,19));
+    setWDamageType(code.getItem(2,20));
+    setEDamageType(code.getItem(2,21));
+    setRDamageType(code.getItem(2,22));
+    
+    //code.getItem(3,1) is the quest number (we will need a function to check what quest they are currently working to complete based on the server's response)
+    setQuest1Progress(stoi(code.getItem(3,2)));//temporary until we add quest data to server
+    //set race, kit, level, experience:
+    
+}
 TempEntity::TempEntity(){//blank constructor if no username has been provided so far
     health = armor = magicResistance = physicalDamageMin = physicalDamageMax = magicDamageMin = magicDamageMax = agility = stealth = stamina = mana = 0;
     location = 1;
