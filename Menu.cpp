@@ -22,8 +22,10 @@ Cipher code; //declare the new instance of Cipher class
 Account account;
 Battle battle;
 
+typedef  int (Menu::*fnExitMenu)(TempEntity player);
+
 //Exit functions: (since once the user logs on they have something to loose when the programs closes)
-void fnExit(void){
+void fnExit(){
     cout << "You are closing the application..." << endl;
     cout << "1" << endl;
     cout << "2" << endl;
@@ -55,7 +57,7 @@ void Menu::getGameVersion(){
 
 void Menu::menu(string username){ //bring up the menu for the passing in the username
     //Now that the user is logged into their account and loaded their data we will save their data if they close the aplication:
-    atexit(fnExit);
+    //atexit(fnExit); // We are going to need to "What you should do instead, as mentioned in the comments, is to use a destructor to do cleanup work. This pattern is known as RAII, and is by far one of the best." - https://stackoverflow.com/questions/43690677/trying-to-pass-a-struct-member-function-to-atexit
 
     bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false,
     nKeyPressedLastLoop = false, iKeyPressedLastLoop = false, aKeyPressedLastLoop = false, 
