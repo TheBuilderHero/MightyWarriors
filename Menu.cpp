@@ -13,6 +13,7 @@
 #include "Map.h"
 #include "WorldMap.h"
 #include "Quests.h"
+#include "DataGuard.h"
 
 #undef min // these are needed for the cin.ignore statments to clear out the buffer for new data.
 #undef max 
@@ -38,9 +39,11 @@ void Menu::getGameVersion(){
 }
 
 void Menu::menu(string username){ //bring up the menu for the passing in the username
-    //Now that the user is logged into their account and loaded their data we will save their data if they close the aplication:
-    atexit(fnExit); // We are going to need to "What you should do instead, as mentioned in the comments, is to use a destructor to do cleanup work. This pattern is known as RAII, and is by far one of the best." - https://stackoverflow.com/questions/43690677/trying-to-pass-a-struct-member-function-to-atexit
-
+    //the following is program close code:
+    atexit(fnExit);
+    guard.on();
+    //guard.updateGuardData(getPlayer());
+    //end of program close code.
 
     bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false,
     nKeyPressedLastLoop = false, iKeyPressedLastLoop = false, aKeyPressedLastLoop = false, 

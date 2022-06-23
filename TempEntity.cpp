@@ -135,10 +135,6 @@ TempEntity::TempEntity(){//blank constructor if no username has been provided so
     name = username = race = kit = weapon = "Undefined";
 }
 TempEntity::~TempEntity(){
-    if(getUsername().length() > 0){
-        cout << "destroyed TempEntity" << endl; 
-        //system("pause"); //doing some testing for saving data to server when the console is closed.
-    }
 }
 
 //setter functions:

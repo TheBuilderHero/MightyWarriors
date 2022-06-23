@@ -6,6 +6,7 @@
 #include "Account.h"
 #include "Menu.h"
 #include "Battle.h"
+#include "DataGuard.h"
 
 Menu menu;
 //Change the version number in the menu.h header file.
@@ -17,23 +18,6 @@ const int gamePatch       = menu.gamePatch;
 //********************************************
 
 using namespace std; //so I dont have to type "std::"
-
-void fnExit(){
-    std::cout << "You are closing the application..." << std::endl;
-    std::cout << "1" << std::endl;
-    std::cout << "2" << std::endl;
-    std::cout << "3" << std::endl;
-    std::cout << "4" << std::endl;
-    std::cout << "5" << std::endl;
-    std::cout << "6" << std::endl;
-    std::cout << "7" << std::endl;
-    std::cout << "8" << std::endl;
-    std::cout << "9" << std::endl;
-    std::cout << "10" << std::endl;
-    std::cout << "end" << std::endl;
-    std::cout << "this funtion is incomplete but will be used to save all userdata before closing the aplication." << std::endl;
-    system("pause");
-}
 
 int main(){ //Starts the program if the clients version is compatable with the server's versions
     string answer;
