@@ -5,7 +5,15 @@
 class TempEntity{
     private:
         std::string username;
+        //Stats***********************************************************************************
         int maxHealth, health, armor, magicResistance, physicalDamageMin, physicalDamageMax, magicDamageMin, magicDamageMax, agility, stealth, stamina, mana, maxMind, mind, psychicDamageMin, psychicDamageMax;
+        //the following data is used to update the user's saved data on the server (need to create getters and setters)
+        //Stats added*********************************************************************************************************************
+        int addedHealth, addedarmor, addedMagicResistance, addedPhysicalDamageMin, addedPhysicalDamageMax, addedMagicDamageMin, addedMagicDamageMax, addedAgility, addedStealth, addedStamina, addedMana, addedMaxMind, addedMind, addedPsychicDamageMin, addedPsychicDamageMax;
+        //weapon Additions****************************************************************************************************************
+        int addedWeaponIron, addedWeaponWood, addedWeaponGems, addedWeaponFeet, addedWeaponFruit, addedWeaponBrains;
+        
+        //Other player info************************************************************************************************************
         int level, currentXP, XPForNextLevel;
         std::string race, kit, weapon, qDamageType, wDamageType, eDamageType, rDamageType;
         int location, quest1Progress;
