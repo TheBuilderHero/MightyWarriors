@@ -146,7 +146,6 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
             ClearConsoleInputBuffer();
             displayStats();
             //account.displayStats(username);
-            //menu(username);
             break;
         case 4:{
             accountInfo(username);
@@ -158,7 +157,6 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
             display(3,3,"October is a Beautiful month to get Married!");
             display(3,4,"Dakota loves Beautiful!", false);
             system("pause");
-            //menu(username);
             break;
         case 15:
             system("cls");
@@ -170,7 +168,6 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
             ClearConsoleInputBuffer();
             display(3, 3, "Invalid input, Please try again...", false);
             system("pause");
-            //menu(username);
             break;
         }
     }
@@ -192,7 +189,7 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
     int value = numberPressWait(4, true);
     switch (value){
     case 0://Return to menu
-        menu(username);
+        //menu(username); //causing duplicate menus
         break;
     case 1:
     case 2:
@@ -307,7 +304,7 @@ void Menu::accountInfo(string username){
     switch (answer)
     {
     case 0: //back to main menu
-        menu(username);
+        //menu(username); //causing duplicate menus
         break;
     case 1: //change password
         //change password
@@ -324,7 +321,7 @@ void Menu::accountInfo(string username){
         system("cls");
         ClearConsoleInputBuffer();
         getGameVersion();
-        menu(username);
+        //menu(username);
         break;
     default:
         system("cls");
