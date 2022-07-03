@@ -95,7 +95,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
                 break;
             }
 
-        //hidden features:
+            //hidden features:
             if (GetKeyState('N') < 0 && GetKeyState('I') < 0 && GetKeyState('A') < 0) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
                 nKeyPressedLastLoop = true;
                 iKeyPressedLastLoop = true;
@@ -161,7 +161,8 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         case 15:
             system("cls");
             ClearConsoleInputBuffer();
-            adminMenu(username);
+            exitAdminMenu = false; //logon menu loop variable
+            while (!exitAdminMenu) adminMenu(username);
             break;
         default:
             system("cls");
@@ -205,7 +206,7 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
     case 15:
         system("cls");
         ClearConsoleInputBuffer();
-        adminMenu(username);
+        //adminMenu(username);
         break;
     default:
         system("cls");
@@ -307,7 +308,6 @@ void Menu::accountInfo(string username){
         //menu(username); //causing duplicate menus
         break;
     case 1: //change password
-        //change password
         system("cls");
         ClearConsoleInputBuffer();
         account.logonScreen(2);
@@ -349,16 +349,16 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
     display(32, 6, "Test Questing");            display(63, 6, "(type number \"5\")");
     display(32, 7, "Map Test");                 display(63, 7, "(type number \"6\")");
     display(32, 8, "Message Test SubCipher");   display(63, 8, "(type number \"7\")");
-    display(32, 9, "Exit");                     display(63, 9, "(type number \"0\")", false);
+    display(32, 9, "Exit Admin Menu");          display(63, 9, "(type number \"0\")", false);
     
     value = numberPressWait(7, true);
     switch (value)
     {
-    case 0: //exit program
-        exit(0);
+    case 0: //exit admin menu program
+        //exit(0); //no longer end program
+        exitAdminMenu = true; //exit the admin menu
         break;
     case 1: //change password
-        //change password
         system("cls");
         account.logonScreen(2);
         break;
@@ -373,19 +373,19 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         cin >> usernameE;
         account.displayStats(usernameE, 1, username);
         usernameE = "";
-        adminMenu(username);
+        //adminMenu(username);
         break;
     case 4://display version and info
         system("cls");
         getGameVersion();
-        adminMenu(username);
+        //adminMenu(username);
         break;
     case 5:{ //test Quests
         system("cls");
         Quests tempQuest;
         int tempStep  = numberPressWait(8, true);//enter step number
         tempQuest.quest1(username, tempStep);
-        adminMenu(username);
+        //adminMenu(username);
         break;}
     case 6:{
         system("cls");
@@ -407,7 +407,7 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         system("cls");
         display(3,3,"Invalid input, Please try again...", false);
         system("pause");
-        adminMenu(username);
+        //adminMenu(username);
         break;
     }
 }
@@ -450,7 +450,7 @@ void Menu::changePass(string username){ //changes the users password
         
     if (passwordNew == passwordConf){
         server.sendToServer(code.cipher("4", username, passwordNew));
-        menu(username);
+        //menu(username);
     } else {
         display(3,3,"Your passwords did not match, please try again...", false);
         system("pause");

@@ -16,6 +16,7 @@ public:
     void updateGuardData(TempEntity player) { playerData = player; }; //updates the data to be guarded
     void on() { dataSaveingOn = true; }; //turn data auto saving to server on (meaning that at this time there is data to loose)
     void off() { dataSaveingOn = false; }; //turn data auto saving to server off (meaing that there is NOT data to loose at this time)
+    bool getDataSave() { return dataSaveingOn; };
     ~DataGuard();
 };
 
