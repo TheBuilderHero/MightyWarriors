@@ -497,8 +497,8 @@ void Account::levelUp(std::string username, int numOfStatPoints){
     << initMagicResistance << endl << "Physical Damage: " << initPhysicalDamage << endl << "Magic Damage: " << initMagicDamage << endl << "Agility: " << initAgility << endl
     << "Stealth: " << initStealth << endl << "Stamina: " << initStamina << endl << "Mana: " << initMana << endl << "Mind: " << initMind << endl << "Psychic Damage: " << initPsychicDamage << endl;
     //write the stats to file so that they are stored to be opened again later.
-    string wasAbleToSave = server.sendToServer(code.cipher("16", username, to_string(initHealth), to_string(initArmor), to_string(initMagicResistance), to_string(initPhysicalDamage), 
-    to_string(initMagicDamage), to_string(initAgility), to_string(initStealth), to_string(initStamina), to_string(initMana), to_string(initMind), to_string(initPsychicDamage))); 
+    //Will need to modify with new data guard
+    string wasAbleToSave = server.sendToServer(code.cipher("16", username, to_string(initHealth), to_string(initArmor), to_string(initMagicResistance), to_string(initPhysicalDamage), to_string(initMagicDamage), to_string(initAgility), to_string(initStealth), to_string(initStamina), to_string(initMana), to_string(initMind), to_string(initPsychicDamage))); 
     //These send the data to the server to be saved properly in the [username].stat file
 
     system("pause");

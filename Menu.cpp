@@ -41,7 +41,7 @@ void Menu::getGameVersion(){
 void Menu::menu(string username){ //bring up the menu for the passing in the username
     //the following is program close code:
     atexit(fnExit);
-    guard.on();
+    guard.on(username);
     //guard.updateGuardData(getPlayer());
     //end of program close code.
 
