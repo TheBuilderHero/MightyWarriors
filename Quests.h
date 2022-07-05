@@ -10,6 +10,8 @@ class Quests{
     private:
         Account account;
         TempEntity player;
+        int NUMBER_OF_QUESTS = 2;
+        bool availableQuests[2] = {false, false};
     public:
         void getQuestDescription(string username, int quest);
         void getQuestLog(string username, int quest);
@@ -18,6 +20,7 @@ class Quests{
         void makeChoice();
         void doQuest(string username, int location, int quest);
         void quest1(string username, int step);
+        void quest2(string username, int step);
 
         TempEntity getPlayer(){ return player ;}
         void setPlayer(TempEntity playerE){ player = playerE; }

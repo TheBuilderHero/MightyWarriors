@@ -195,43 +195,57 @@ void Quests::getAvailableQuests(){//TempEntity based quest call
         case 1:
             if(quest1Step == 0){
                 cout << "You can start Quest 1 here.\n";
+                availableQuests[0] = true;
                 noQuests = false;
             }else if(quest1Step == 1){
                 cout << "Here you can continue Quest 1 and fight Morg the Goblin.\n";
+                availableQuests[0] = true;
                 noQuests = false;
             }else if(quest1Step == 6){
                 cout << "Here you can continue Quest 1 and fight the Awful Necromancer.\n";
+                availableQuests[0] = true;
                 noQuests = false;
             }
             break;                
         case 2:
             if(quest1Step == 2){
                 cout << "Here you can continue Quest 1 and fight Klade the Orc.\n";
+                availableQuests[0] = true;
                 noQuests = false;
             }else if(quest1Step == 7){
                 cout << "Here you can continue Quest 1 and fight...\n\n";
                 menu.waitForEnter(menu.getEnterKeyState());
                 cout << "The Dragon!!!\n";
+                availableQuests[0] = true;
+                noQuests = false;
+            }
+            if(player.getQuest1Progress(1) == 0){
+                cout << "You can start Quest 2 here.\n";
+                availableQuests[1] = true;
                 noQuests = false;
             }
             break; 
         case 3:
+            
             break;   
         case 4:
             if(quest1Step == 5){
                 cout << "Here you can continue Quest 1 and fight the Monstrous Behemoth.\n";
+                availableQuests[0] = true;
                 noQuests = false;
             }
             break;   
         case 5:
             if(quest1Step == 3){
                 cout << "Here you can continue Quest 1 and fight the Black Night.\n";
+                availableQuests[0] = true;
                 noQuests = false;
             }
             break;  
         case 6:
             if(quest1Step == 4){
                 cout << "Here you can continue Quest 1 and fight the Blue Wizard.\n";
+                availableQuests[0] = true;
                 noQuests = false;
             }
             break;  
@@ -255,13 +269,23 @@ void Quests::getAvailableQuests(){//TempEntity based quest call
 }
 void Quests::makeChoice(){//I am thinking we should handle quests as an array
     Menu menu;
-    int questOption;
-    for(int i = 1; i < 2/*player.getQuest1Progress().size() + 1*/; i++){
-        cout << "Do Quest 1:        Press \"" << i << "\"\n";
-        questOption = i;
+    int questOption[2], skips = 0, options = 0;
+    for(int i = 1; i < NUMBER_OF_QUESTS + 1; i++){
+        int option = i - skips;
+        if(availableQuests[i - 1]){
+            cout << "Do Quest " << i << ":        Press \"" << option << "\"\n";
+            questOption[option - 1] = i;
+            options++;
+        }else{
+            skips++;
+        }
     }
         cout << "Exit:              Press \"0\"\n";
-    int choice = menu.numberPressWait(1, true);
+    int choice = questOption[menu.numberPressWait(options, true) - 1];
+
+    for(int i = 0; i < NUMBER_OF_QUESTS; i++){
+        availableQuests[i] = false;
+    }
 
     if(choice == 0){
         return;
@@ -313,6 +337,13 @@ void Quests::doQuest(string username, int location, int quest){
             default:
                 cout << "It looks like you are nowhere...";
                 break;
+        }
+    }else if(quest == 2){
+        if(location == 2){
+            if(player.getQuest1Progress(1) == 0){
+                quest2(username, 0);
+                noQuests = false;
+            }
         }
     }
 
@@ -566,7 +597,7 @@ void Quests::quest1(string username, int step){
                 menu.waitForEnter(menu.getEnterKeyState());
                 cout << "\nWith the last enemy defeated, the enchanted parchment crumbles into dust.\n";
                 menu.waitForEnter(menu.getEnterKeyState());
-                cout << "You finished the Quest! You got 50000000 experience!\n";
+                cout << "\nYou finished the Quest! You got 50000000 experience!\n";
                 //Code to add experience
                 menu.waitForEnter(menu.getEnterKeyState());
                 cout << "Huzzah!\n";
@@ -583,5 +614,29 @@ void Quests::quest1(string username, int step){
             cout << "Error loading Quest...";
             menu.waitForEnter(menu.getEnterKeyState());
             break;
+    }
+}
+
+void Quests::quest2(string username, int step){
+    Menu menu;
+    Battle battle;
+    if(step == 0){
+        cout << "\nAs you are being a normal person doing normal things, a normal potato appears out of nowhere.\n";
+        menu.waitForEnter(menu.getEnterKeyState());
+
+        battle.setPlayer(player);
+        battle.questBattle(username, 2, 0);
+        setPlayer(battle.getPlayer());
+
+        if(player.getBattleResult()){
+            cout << "\nUNBELIEVABLE! You defeated a Normal Potato!\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            cout << "\nWhy would you do that? What have potatoes ever done to you?\n";
+            player.setQuest1Progress(1, 1);
+            player.setBattleResult(false);
+        }else{
+            cout << "\nUnbelievable! How could you lose a fight to a normal potato? Hang your head in shame!\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+        }
     }
 }
