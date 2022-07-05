@@ -186,7 +186,7 @@ void Quests::getAvailableQuests(string username, int location){
 void Quests::getAvailableQuests(){//TempEntity based quest call
     //Account account; //multiple definitions causing issues
     Menu menu;
-    int quest1Step = player.getQuest1Progress();
+    int quest1Step = player.getQuest1Progress(0);
     bool noQuests = true;
 
     cout << endl;
@@ -273,7 +273,7 @@ void Quests::makeChoice(){//I am thinking we should handle quests as an array
 
 void Quests::doQuest(string username, int location, int quest){
     Menu menu;
-    int quest1Step = player.getQuest1Progress();
+    int quest1Step = player.getQuest1Progress(0);
     bool noQuests = true;
 
     if(quest == 1){
@@ -362,7 +362,7 @@ void Quests::quest1(string username, int step){
                 cout << "\nA new name writes itself: Morg the Goblin. Somehow you know he is in the Glacius Desert.\n";
                 menu.waitForEnter(menu.getEnterKeyState());
                 system("cls");
-                player.setQuest1Progress(1);
+                player.setQuest1Progress(0, 1);
                 player.setBattleResult(false);
             }
             break;
@@ -390,7 +390,7 @@ void Quests::quest1(string username, int step){
                 cout << "\nYou got 10000000 experience!\n";
                 //Code to add experience
                 menu.waitForEnter(menu.getEnterKeyState());
-                player.setQuest1Progress(2);
+                player.setQuest1Progress(0, 2);
                 player.setBattleResult(false);
             }
             break;
@@ -414,7 +414,7 @@ void Quests::quest1(string username, int step){
                 cout << "\nYou got 10000000 experience!\n";
                 //Code to add experience
                 menu.waitForEnter(menu.getEnterKeyState());
-                player.setQuest1Progress(3);
+                player.setQuest1Progress(0, 3);
                 player.setBattleResult(false);
             }
             break;
@@ -454,7 +454,7 @@ void Quests::quest1(string username, int step){
                 cout << "\nYou got 10000000 experience!\n";
                 //Code to add experience
                 menu.waitForEnter(menu.getEnterKeyState());
-                player.setQuest1Progress(4);
+                player.setQuest1Progress(0, 4);
                 player.setBattleResult(false);
             }
             break;
@@ -476,7 +476,7 @@ void Quests::quest1(string username, int step){
                 cout << "\nYou got 10000000 experience!";
                 //Code to add experience
                 menu.waitForEnter(menu.getEnterKeyState());
-                player.setQuest1Progress(5);
+                player.setQuest1Progress(0, 5);
                 player.setBattleResult(false);
             }
             break;
@@ -506,7 +506,7 @@ void Quests::quest1(string username, int step){
                 cout << "\nYou got 20000000 experience!\n";
                 //Code to add experience
                 menu.waitForEnter(menu.getEnterKeyState());
-                player.setQuest1Progress(6);
+                player.setQuest1Progress(0, 6);
                 player.setBattleResult(false);
             }
             break;
@@ -549,7 +549,7 @@ void Quests::quest1(string username, int step){
                 cout << "\nYou got 30000000 experience!\n";
                 //Code to add experience
                 menu.waitForEnter(menu.getEnterKeyState());
-                player.setQuest1Progress(7);
+                player.setQuest1Progress(0, 7);
                 player.setBattleResult(false);
             }
             break;
@@ -575,7 +575,7 @@ void Quests::quest1(string username, int step){
                 menu.waitForEnter(menu.getEnterKeyState());
                 cout << "Huzzah!\n";
                 menu.waitForEnter(menu.getEnterKeyState());
-                player.setQuest1Progress(8);
+                player.setQuest1Progress(0, 8);
                 player.setBattleResult(false);
             }
             break;

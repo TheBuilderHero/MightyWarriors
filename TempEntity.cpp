@@ -52,7 +52,7 @@ TempEntity::TempEntity(string currentUsername){
     if(getLocation() < 1 || getLocation() > 6){
         setLocation(1);
     }
-    setQuest1Progress(0);//temporary until we add quest data to server
+    setQuest1Progress(0, 0);//temporary until we add quest data to server
     //set race, kit, level, experience:
     code.decipherS(server.sendToServer(code.cipher("21", username)));
     setRace(code.getItemS(1));
@@ -121,14 +121,16 @@ TempEntity::TempEntity(string currentUsername, bool NewTempEntityProccess){ //in
     setRDamageType(code.getItem(2,22));
     
     //code.getItem(3,1) is the quest number (we will need a function to check what quest they are currently working to complete based on the server's response)
-    setQuest1Progress(stoi(code.getItem(3,2)));//temporary until we add quest data to server
+    setQuest1Progress(0, stoi(code.getItem(3,2)));//temporary until we add quest data to server
     //set race, kit, level, experience:
     
 }
 TempEntity::TempEntity(){//blank constructor if no username has been provided so far
     health = armor = magicResistance = physicalDamageMin = physicalDamageMax = magicDamageMin = magicDamageMax = agility = stealth = stamina = mana = 0;
     location = 1;
-    quest1Progress = 0;
+    for(int i = 0; i < NUMBER_OF_QUESTS; i++){
+        quest1Progress[i] = 0;
+    }
     level = 1;
     currentXP = 0;
     XPForNextLevel = 500;
@@ -144,8 +146,8 @@ void TempEntity::setUsername(string newUsername){
 void TempEntity::setLocation(int currentLocationValue){
     location = currentLocationValue;
 }
-void TempEntity::setQuest1Progress(int newProgress){
-    quest1Progress = newProgress;
+void TempEntity::setQuest1Progress(int questNumber, int newProgress){
+    quest1Progress[questNumber] = newProgress;
 }
 //stats:
 void TempEntity::setMaxHealth(int newHealth){

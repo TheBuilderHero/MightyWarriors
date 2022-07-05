@@ -14,9 +14,11 @@ class TempEntity{
         int addedWeaponIron, addedWeaponWood, addedWeaponGems, addedWeaponFeet, addedWeaponFruit, addedWeaponBrains;
         
         //Other player info************************************************************************************************************
+        int NUMBER_OF_QUESTS = 2;
         int level, currentXP, XPForNextLevel;
         std::string race, kit, weapon, qDamageType, wDamageType, eDamageType, rDamageType;
-        int location, quest1Progress;
+        int location, quest1Progress[2];
+        //int quest1Progress[2];
         std::string name;
         bool battleWon = false;
     public:
@@ -28,7 +30,7 @@ class TempEntity{
         //getter functions:
         std::string getUsername() { return username; }
         int getLocation() { return location; }
-        int getQuest1Progress(){ return quest1Progress; }
+        int getQuest1Progress(int questNumber){ return quest1Progress[questNumber]; }
         //stats:
         int getMaxHealth(){ return maxHealth; }
         int getHealth(){ return health; }
@@ -62,7 +64,7 @@ class TempEntity{
         //setter functions:
         void setUsername(std::string newUsername);
         void setLocation(int currentLocationValue);
-        void setQuest1Progress(int newProgress);
+        void setQuest1Progress(int questNumber, int newProgress);
         //stats:
         void setMaxHealth(int newHealth);
         void setHealth(int newHealth);
