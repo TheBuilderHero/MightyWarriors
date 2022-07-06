@@ -8,11 +8,13 @@ using namespace std;
 class WorldMap{
     private:
         TempEntity player;
+        bool encounter;
+        string travelMessage1, travelMessage2;
     public:
         string getMapDescription(int location);
         bool canTravel(int location, int direction);
         string getTravelMessage(int location, int direction);
-        int travel(int location, int direction);
-        TempEntity getPlayer(){ return player ;}
+        void travel(int direction);
+        TempEntity getPlayer(){ return player; }
         void setPlayer(TempEntity playerE){ player = playerE; }
 };

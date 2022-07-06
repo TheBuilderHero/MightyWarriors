@@ -198,9 +198,9 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
     case 4:
         system("cls");
         ClearConsoleInputBuffer();
-        display(16, 1, worldMap.getTravelMessage(player.getLocation(), value));//Still need to save this data to files on server side
-        player.setLocation(worldMap.travel(player.getLocation(), value));
-        waitForEnter(getEnterKeyState());
+        worldMap.setPlayer(player);
+        worldMap.travel(value);
+        setPlayer(worldMap.getPlayer());
         //menu(username);
         break;
     case 15:
