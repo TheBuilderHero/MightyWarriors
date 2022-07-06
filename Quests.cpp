@@ -9,7 +9,7 @@ using namespace std;
 
 void Quests::getQuestDescription(string username, int quest){
     Menu menu;
-    int quest1Step = account.getQuest1Progress(username);
+    int quest1Step = player.getQuest1Progress(1);
     switch(quest){
         case 1:
             switch(quest1Step){
@@ -80,7 +80,7 @@ void Quests::getQuestDescription(string username, int quest){
 
 void Quests::getQuestLog(string username, int quest){
     Menu menu;
-    int quest1Step = account.getQuest1Progress(username);
+    int quest1Step = player.getQuest1Progress(1);
     string output = "";
     switch(quest){
         case 1:
@@ -186,8 +186,12 @@ void Quests::getAvailableQuests(string username, int location){
 void Quests::getAvailableQuests(){//TempEntity based quest call
     //Account account; //multiple definitions causing issues
     Menu menu;
-    int quest1Step = player.getQuest1Progress(0);
+    int quest1Step = player.getQuest1Progress(1);
     bool noQuests = true;
+    
+    for(int i = 0; i < NUMBER_OF_QUESTS; i++){
+        availableQuests[i] = false;
+    }
 
     cout << endl;
 
@@ -219,14 +223,38 @@ void Quests::getAvailableQuests(){//TempEntity based quest call
                 availableQuests[0] = true;
                 noQuests = false;
             }
-            if(player.getQuest1Progress(1) == 0){
-                cout << "You can start Quest 2 here.\n";
+            if(player.getQuest1Progress(2) == 0){
+                cout << "You can attempt Quest 2 here.\n";
                 availableQuests[1] = true;
+                noQuests = false;
+            }
+            if(player.getQuest1Progress(3) == 0){
+                cout << "You can do Quest 3 here.\n";
+                availableQuests[2] = true;
+                noQuests = false;
+            }
+            if(player.getQuest1Progress(5) == 0){
+                cout << "You can do Quest 5 here.\n";
+                availableQuests[4] = true;
+                noQuests = false;
+            }
+            if(player.getQuest1Progress(6) == 0){
+                cout << "You can do Quest 6 here.\n";
+                availableQuests[5] = true;
                 noQuests = false;
             }
             break; 
         case 3:
-            
+            if(player.getQuest1Progress(4) == 0){
+                cout << "You can do Quest 4 here.\n";
+                availableQuests[3] = true;
+                noQuests = false;
+            }
+            if(player.getQuest1Progress(7) == 0){
+                cout << "You can do Quest 7 here.\n";
+                availableQuests[6] = true;
+                noQuests = false;
+            }
             break;   
         case 4:
             if(quest1Step == 5){
@@ -269,7 +297,7 @@ void Quests::getAvailableQuests(){//TempEntity based quest call
 }
 void Quests::makeChoice(){//I am thinking we should handle quests as an array
     Menu menu;
-    int questOption[2], skips = 0, options = 0;
+    int questOption[NUMBER_OF_QUESTS], skips = 0, options = 0;
     for(int i = 1; i < NUMBER_OF_QUESTS + 1; i++){
         int option = i - skips;
         if(availableQuests[i - 1]){
@@ -297,7 +325,7 @@ void Quests::makeChoice(){//I am thinking we should handle quests as an array
 
 void Quests::doQuest(string username, int location, int quest){
     Menu menu;
-    int quest1Step = player.getQuest1Progress(0);
+    int quest1Step = player.getQuest1Progress(1);
     bool noQuests = true;
 
     if(quest == 1){
@@ -340,8 +368,44 @@ void Quests::doQuest(string username, int location, int quest){
         }
     }else if(quest == 2){
         if(location == 2){
-            if(player.getQuest1Progress(1) == 0){
+            if(player.getQuest1Progress(2) == 0){
                 quest2(username, 0);
+                noQuests = false;
+            }
+        }
+    }else if(quest == 3){
+        if(location == 2){
+            if(player.getQuest1Progress(3) == 0){
+                quest3(username, 0);
+                noQuests = false;
+            }
+        }
+    }else if(quest == 4){
+        if(location == 3){
+            if(player.getQuest1Progress(4) == 0){
+                quest4(username, 0);
+                noQuests = false;
+            }
+        }
+    }
+    else if(quest == 5){
+        if(location == 2){
+            if(player.getQuest1Progress(5) == 0){
+                quest5(username, 0);
+                noQuests = false;
+            }
+        }
+    }else if(quest == 6){
+        if(location == 2){
+            if(player.getQuest1Progress(6) == 0){
+                quest6(username, 0);
+                noQuests = false;
+            }
+        }
+    }else if(quest == 7){
+        if(location == 3){
+            if(player.getQuest1Progress(7) == 0){
+                quest7(username, 0);
                 noQuests = false;
             }
         }
@@ -637,6 +701,101 @@ void Quests::quest2(string username, int step){
         }else{
             cout << "\nUnbelievable! How could you lose a fight to a normal potato? Hang your head in shame!\n";
             menu.waitForEnter(menu.getEnterKeyState());
+        }
+    }
+}
+
+void Quests::quest3(string username, int step){
+    Menu menu;
+    Battle battle;
+    if(step == 0){
+        cout << "\nQuest 3 is a garbage quest for testing.\n";
+        menu.waitForEnter(menu.getEnterKeyState());
+
+        battle.setPlayer(player);
+        battle.questBattle(username, 3, 0);
+        setPlayer(battle.getPlayer());
+
+        if(player.getBattleResult()){
+            cout << "\nQuest 3 is repeatable.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            player.setBattleResult(false);
+        }
+    }
+}
+
+void Quests::quest4(string username, int step){
+    Menu menu;
+    Battle battle;
+    if(step == 0){
+        cout << "\nQuest 4 is a garbage quest for testing.\n";
+        menu.waitForEnter(menu.getEnterKeyState());
+
+        battle.setPlayer(player);
+        battle.questBattle(username, 4, 0);
+        setPlayer(battle.getPlayer());
+
+        if(player.getBattleResult()){
+            cout << "\nQuest 4 is repeatable.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            player.setBattleResult(false);
+        }
+    }
+}
+
+void Quests::quest5(string username, int step){
+    Menu menu;
+    Battle battle;
+    if(step == 0){
+        cout << "\nQuest 5 is a garbage quest for testing.\n";
+        menu.waitForEnter(menu.getEnterKeyState());
+
+        battle.setPlayer(player);
+        battle.questBattle(username, 5, 0);
+        setPlayer(battle.getPlayer());
+
+        if(player.getBattleResult()){
+            cout << "\nQuest 5 is repeatable.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            player.setBattleResult(false);
+        }
+    }
+}
+
+void Quests::quest6(string username, int step){
+    Menu menu;
+    Battle battle;
+    if(step == 0){
+        cout << "\nQuest 6 is a garbage quest for testing.\n";
+        menu.waitForEnter(menu.getEnterKeyState());
+
+        battle.setPlayer(player);
+        battle.questBattle(username, 6, 0);
+        setPlayer(battle.getPlayer());
+
+        if(player.getBattleResult()){
+            cout << "\nQuest 6 is repeatable.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            player.setBattleResult(false);
+        }
+    }
+}
+
+void Quests::quest7(string username, int step){
+    Menu menu;
+    Battle battle;
+    if(step == 0){
+        cout << "\nQuest 7 is a garbage quest for testing.\n";
+        menu.waitForEnter(menu.getEnterKeyState());
+
+        battle.setPlayer(player);
+        battle.questBattle(username, 7, 0);
+        setPlayer(battle.getPlayer());
+
+        if(player.getBattleResult()){
+            cout << "\nQuest 7 is repeatable.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            player.setBattleResult(false);
         }
     }
 }

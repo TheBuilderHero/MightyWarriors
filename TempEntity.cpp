@@ -121,6 +121,9 @@ TempEntity::TempEntity(string currentUsername, bool NewTempEntityProccess){ //in
     setRDamageType(code.getItem(2,22));
     
     //code.getItem(3,1) is the quest number (we will need a function to check what quest they are currently working to complete based on the server's response)
+    for(int i = 0; i < NUMBER_OF_QUESTS; i++){//initializing quest progress to 0 for now
+        quest1Progress[i] = 0;
+    }
     setQuest1Progress(0, stoi(code.getItem(3,2)));//temporary until we add quest data to server
     //set race, kit, level, experience:
     
