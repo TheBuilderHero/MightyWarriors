@@ -12,6 +12,7 @@
 #include "Cipher.h"
 #include "Menu.h"
 #include "TempEntity.h"
+#include "DataGuard.h"
 
 using namespace std;
 Menu menuClass;
@@ -496,9 +497,23 @@ void Account::levelUp(std::string username, int numOfStatPoints){
     cout << "Your stat points have been to set to the following: " << endl << "Health: " << initHealth << endl << "Armor: " << initArmor << endl << "Magic Resistance: " 
     << initMagicResistance << endl << "Physical Damage: " << initPhysicalDamage << endl << "Magic Damage: " << initMagicDamage << endl << "Agility: " << initAgility << endl
     << "Stealth: " << initStealth << endl << "Stamina: " << initStamina << endl << "Mana: " << initMana << endl << "Mind: " << initMind << endl << "Psychic Damage: " << initPsychicDamage << endl;
-    //write the stats to file so that they are stored to be opened again later.
+    //place all stats in dataguard to be saved to server if the program is closed.
+    guard.updateSaveValueMaxHealth(initHealth);
+    guard.updateSaveValueArmor(initArmor);
+    guard.updateSaveValueMagicResistance(initMagicResistance);
+    guard.updateSaveValuePhysicalDamageMax(initPhysicalDamage);
+    guard.updateSaveValueMagicDamageMax(initMagicDamage);
+    guard.updateSaveValueAgility(initAgility);
+    guard.updateSaveValueStealth(initStealth);
+    guard.updateSaveValueStamina(initStamina);
+    guard.updateSaveValueMana(initMana);
+    guard.updateSaveValueMaxMind(initMind);
+    guard.updateSaveValuePsychicDamageMax(initPsychicDamage);
+    //also update the current stats:
+    //player.
+
     //Will need to modify with new data guard
-    string wasAbleToSave = server.sendToServer(code.cipher("16", username, to_string(initHealth), to_string(initArmor), to_string(initMagicResistance), to_string(initPhysicalDamage), to_string(initMagicDamage), to_string(initAgility), to_string(initStealth), to_string(initStamina), to_string(initMana), to_string(initMind), to_string(initPsychicDamage))); 
+    //Replacing this with temp entity //string wasAbleToSave = server.sendToServer(code.cipher("16", username, to_string(initHealth), to_string(initArmor), to_string(initMagicResistance), to_string(initPhysicalDamage), to_string(initMagicDamage), to_string(initAgility), to_string(initStealth), to_string(initStamina), to_string(initMana), to_string(initMind), to_string(initPsychicDamage))); 
     //These send the data to the server to be saved properly in the [username].stat file
 
     system("pause");
