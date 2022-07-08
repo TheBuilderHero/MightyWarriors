@@ -351,6 +351,7 @@ void Battle::tempEntBattle(TempEntity player){
     standardBattle(player);
 }
 
+//probably not needed since the quest battle function does everything we need. I would like to use this and make one for travel combat.
 void Battle::standardBattle(TempEntity player){
     system("cls");
     TempEntity battlingStatsOfPlayer;

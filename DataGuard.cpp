@@ -39,8 +39,8 @@ DataGuard::DataGuard(){ //not sure why but this runs twice when I call the destr
 }
 
 DataGuard::~DataGuard(){
-    cout << "DataDeleted..." << endl;
-    system("pause");
+    //cout << "DataDeleted..." << endl;
+    //system("pause");
 }
 
 //Data saving for program close:
