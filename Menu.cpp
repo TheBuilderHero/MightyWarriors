@@ -177,16 +177,18 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
 void Menu::travelMenu(string username){ //bring up the menu for travel
     system("cls");
     WorldMap worldMap;
+    Map map;
     bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false,
     nKeyPressedLastLoop = false, iKeyPressedLastLoop = false, aKeyPressedLastLoop = false, 
     controlKeyPressedLastLoop = false, altKeyPressedLastLoop = false ,kKeyPressedLastLoop = false;
-    display(50, 1, "Travel");
-    display(16, 2, worldMap.getMapDescription(player.getLocation()));//Dakota please help me load the user's current location
-    display(32, 3, "Go North");             display(53, 3, "(Press \"1\")");
-    display(32, 4, "Go East");              display(53, 4, "(Press \"2\")");
-    display(32, 5, "Go South");             display(53, 5, "(Press \"3\")");
-    display(32, 6, "Go West");              display(53, 6, "(Press \"4\")");
-    display(32, 7, "Return to Menu");       display(53, 7, "(Press \"0\")");
+    map.displayMapOutline();
+    display(50, 1+42, "Travel");
+    display(16, 2+42, worldMap.getMapDescription(player.getLocation()));//Dakota please help me load the user's current location
+    display(32, 3+42, "Go North");             display(53, 3+42, "(Press \"1\")");
+    display(32, 4+42, "Go East");              display(53, 4+42, "(Press \"2\")");
+    display(32, 5+42, "Go South");             display(53, 5+42, "(Press \"3\")");
+    display(32, 6+42, "Go West");              display(53, 6+42, "(Press \"4\")");
+    display(32, 7+42, "Return to Menu");       display(53, 7+42, "(Press \"0\")");
     int value = numberPressWait(4, true);
     switch (value){
     case 0://Return to menu

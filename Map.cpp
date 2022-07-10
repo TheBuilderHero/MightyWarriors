@@ -96,8 +96,8 @@ void Map::listAvalibleLocations(string username){
 
 void Map::displayMapOutline(){
     Menu menu;
-    int maxColumn = 210;
-    int maxRow = 62;
+    int maxColumn = 170; //was 210
+    int maxRow = 42; //was 62
     int initalPosRow = 1;
     int initalPosColumn = 2;
     menu.display(initalPosColumn,initalPosRow,"+");
