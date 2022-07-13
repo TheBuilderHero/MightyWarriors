@@ -181,7 +181,8 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
     bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false,
     nKeyPressedLastLoop = false, iKeyPressedLastLoop = false, aKeyPressedLastLoop = false, 
     controlKeyPressedLastLoop = false, altKeyPressedLastLoop = false ,kKeyPressedLastLoop = false;
-    map.displayMapOutline();
+    map.displayMapOutline(); //draw the map outline to the screen
+    map.displayLocations();
     display(50, 1+42, "Travel");
     display(16, 2+42, worldMap.getMapDescription(player.getLocation()));//Dakota please help me load the user's current location
     display(32, 3+42, "Go North");             display(53, 3+42, "(Press \"1\")");

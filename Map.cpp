@@ -96,10 +96,10 @@ void Map::listAvalibleLocations(string username){
 
 void Map::displayMapOutline(){
     Menu menu;
-    int maxColumn = 170; //was 210
-    int maxRow = 42; //was 62
-    int initalPosRow = 1;
-    int initalPosColumn = 2;
+    maxColumn = 170; //was 210
+    maxRow = 42; //was 62
+    int initalPosRow = minRow = 1;
+    int initalPosColumn = minColumn = 2;
     menu.display(initalPosColumn,initalPosRow,"+");
     for (int posRow = initalPosRow+1; posRow < maxRow; posRow++){
         menu.display(initalPosColumn,posRow,"|");
@@ -116,4 +116,155 @@ void Map::displayMapOutline(){
     for (int posColumn = maxColumn-1; initalPosColumn < posColumn; posColumn--){
         menu.display(posColumn,initalPosRow,"-");
     }
+}
+
+void Map::displayLocations(){
+    int const tempmaxRow = maxRow;
+    int pos[tempmaxRow][2];
+    int value = 1;
+    //main island asci data:
+    pos[value][1] = 80;
+    pos[value++][0] = 70;
+    pos[value][1] = 90;
+    pos[value++][0] = 60;
+    pos[value][1] = 100;
+    pos[value++][0] = 50;
+    pos[value][1] = 105;
+    pos[value++][0] = 47;
+    pos[value][1] = 105;
+    pos[value++][0] = 45;
+    pos[value][1] = 105;
+    pos[value++][0] = 45;
+    pos[value][1] = 105;
+    pos[value++][0] = 45;
+    pos[value][1] = 105;
+    pos[value++][0] = 45;
+    pos[value][1] = 105;
+    pos[value++][0] = 45;
+    pos[value][1] = 105;
+    pos[value++][0] = 45;
+    pos[value][1] = 105;
+    pos[value++][0] = 45;
+    pos[value][1] = 105;
+    pos[value++][0] = 45;
+    pos[value][1] = 105;
+    pos[value++][0] = 45;
+    pos[value][1] = 105;
+    pos[value++][0] = 45;
+    pos[value][1] = 105;
+    pos[value++][0] = 45;
+    pos[value][1] = 105;
+    pos[value++][0] = 45;
+    pos[value][1] = 105;
+    pos[value++][0] = 45;
+    pos[value][1] = 105;
+    pos[value++][0] = 45;
+    pos[value][1] = 105;
+    pos[value++][0] = 45;
+    pos[value][1] = 105;
+    pos[value++][0] = 45;
+    pos[value][1] = 105;
+    pos[value++][0] = 45;
+    pos[value][1] = 105;
+    pos[value++][0] = 50;
+    pos[value][1] = 103;
+    pos[value++][0] = 55;
+    pos[value][1] = 102;
+    pos[value++][0] = 58;
+    pos[value][1] = 100;
+    pos[value++][0] = 66;
+    pos[value][1] = 100;
+    pos[value++][0] = 70;
+    pos[value][1] = 100;
+    pos[value++][0] = 70;
+    pos[value][1] = 100;
+    pos[value++][0] = 75;
+    pos[value][1] = 100;
+    pos[value++][0] = 76;
+    pos[value][1] = 100;
+    pos[value++][0] = 77;
+    pos[value][1] = 100;
+    pos[value++][0] = 78;
+    pos[value][1] = 100;
+    pos[value++][0] = 79;
+    pos[value][1] = 100;
+    pos[value++][0] = 80;
+    pos[value][1] = 100;
+    pos[value++][0] = 24;
+    pos[value][1] = 100;
+    pos[value++][0] = 23;
+    pos[value][1] = 100;
+    pos[value++][0] = 22;
+    pos[value][1] = 100;
+    pos[value++][0] = 21;
+    pos[value][1] = 100;
+    pos[value++][0] = 20;
+    pos[value][1] = 100;
+    pos[value++][0] = 19;
+    pos[value][1] = 100;
+    pos[value++][0] = 18;
+    pos[value][1] = 100;
+    pos[value++][0] = 17;
+    pos[value][1] = 100;
+    pos[value++][0] = 16;
+    pos[value][1] = 100;
+    pos[value++][0] = 15;
+    pos[value][1] = 100;
+    pos[value++][0] = 14;
+    pos[value][1] = 100;
+    pos[value++][0] = 13;
+    pos[value][1] = 100;
+    pos[value++][0] = 13;
+    pos[value][1] = 100;
+    pos[value++][0] = 13;
+    pos[value][1] = 100;
+    pos[value++][0] = 13;
+    pos[value][1] = 100;
+    pos[value++][0] = 13;
+    pos[value][1] = 100;
+    pos[value++][0] = 13;
+    pos[value][1] = 100;
+    pos[value++][0] = 13;
+    pos[value][1] = 100;
+    pos[value++][0] = 13;
+    pos[value][1] = 100;
+    pos[value++][0] = 13;
+    pos[value][1] = 100;
+    pos[value++][0] = 13;
+    pos[value][1] = 100;
+    pos[value++][0] = 13;
+    pos[value][1] = 100;
+    pos[value++][0] = 13;
+    while (value < maxRow) {
+        pos[value][1] = maxColumn - 1;//-1 for the inside of the outline
+        pos[value++][0] = minColumn + 1;//+1 for the inside of the outline
+    }
+
+    Menu menu;
+    //starting from top to bottom for the first number and left to right for the second number in pos1_1 - pos#_# 
+    int posRow = minRow; //+1 for the inside of the outline
+    for (int rowCount = minRow+1; rowCount < maxRow; rowCount++){ //added 1 to the minRow since this will then keep the output inside the outline
+        int currentPos = pos[rowCount][0];
+        //int currentPos = 5;
+        while (currentPos <= pos[rowCount][1]){
+            menu.display(currentPos, rowCount, "O");
+            currentPos++;
+        }
+    }
+}
+
+void Map::displayLocations(int city){
+    switch(city){
+        case 1:
+            break;
+        case 2:
+            break;
+        default:
+            break;
+
+    }
+}
+
+void Map::displayLocations(int city, int town){
+    
 }
