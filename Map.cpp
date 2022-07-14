@@ -120,94 +120,118 @@ void Map::displayMapOutline(){
 
 void Map::displayLocations(){
     int const tempmaxRow = maxRow;
-    int pos[tempmaxRow][2];
-    int value = 1;
+    int pos[tempmaxRow][6];
+    int value = 2;
+    for (int i = 0; i <= tempmaxRow; i++){ //set all values to null before setting
+        pos[i][5] = 0;
+        pos[i][4] = 0;
+        pos[i][3] = 0;
+        pos[i][2] = 0;
+        pos[i][1] = 0;
+        pos[i][0] = 0;
+    }
     //main island asci data:
-    pos[value][1] = 80;
-    pos[value++][0] = 70;
-    pos[value][1] = 90;
-    pos[value++][0] = 60;
-    pos[value][1] = 100;
-    pos[value++][0] = 50;
-    pos[value][1] = 105;
-    pos[value++][0] = 47;
-    pos[value][1] = 105;
-    pos[value++][0] = 45;
-    pos[value][1] = 105;
-    pos[value++][0] = 45;
-    pos[value][1] = 105;
-    pos[value++][0] = 45;
-    pos[value][1] = 105;
-    pos[value++][0] = 45;
-    pos[value][1] = 105;
-    pos[value++][0] = 45;
-    pos[value][1] = 105;
-    pos[value++][0] = 45;
-    pos[value][1] = 105;
-    pos[value++][0] = 45;
-    pos[value][1] = 105;
-    pos[value++][0] = 45;
-    pos[value][1] = 105;
-    pos[value++][0] = 45;
-    pos[value][1] = 105;
-    pos[value++][0] = 45;
-    pos[value][1] = 105;
-    pos[value++][0] = 45;
-    pos[value][1] = 105;
-    pos[value++][0] = 45;
-    pos[value][1] = 105;
-    pos[value++][0] = 45;
-    pos[value][1] = 105;
-    pos[value++][0] = 45;
-    pos[value][1] = 105;
-    pos[value++][0] = 45;
-    pos[value][1] = 105;
-    pos[value++][0] = 45;
-    pos[value][1] = 105;
-    pos[value++][0] = 45;
-    pos[value][1] = 105;
-    pos[value++][0] = 50;
-    pos[value][1] = 103;
-    pos[value++][0] = 55;
-    pos[value][1] = 102;
-    pos[value++][0] = 58;
-    pos[value][1] = 100;
-    pos[value++][0] = 66;
-    pos[value][1] = 100;
-    pos[value++][0] = 70;
-    pos[value][1] = 100;
-    pos[value++][0] = 70;
-    pos[value][1] = 100;
-    pos[value++][0] = 60;
-    pos[value][1] = 100;
-    pos[value++][0] = 60;
-    pos[value][1] = 100;
-    pos[value++][0] = 60;
-    pos[value][1] = 94;
-    pos[value++][0] = 71;
-    pos[value][1] = 96;
-    pos[value++][0] = 70;
-    pos[value][1] = 100;
-    pos[value++][0] = 67;
-    pos[value][1] = 95;
-    pos[value++][0] = 69;
-    pos[value][1] = 94;
-    pos[value++][0] = 68;
-    pos[value][1] = 89;
-    pos[value++][0] = 70;
-    pos[value][1] = 90;
-    pos[value++][0] = 69;
-    pos[value][1] = 87;
-    pos[value++][0] = 70;
-    pos[value][1] = 80;
-    pos[value++][0] = 73;
-    pos[value][1] = 80;
-    pos[value++][0] = 74;
-    pos[value][1] = 80;
-    pos[value++][0] = 75;
+    pos[value][1] = 34+50;
+    pos[value++][0] = 34+50;
+    pos[value][1] = 35+50;
+    pos[value++][0] = 28+50;
+    pos[value][1] = 36+50;
+    pos[value++][0] = 26+50;
+    pos[value][1] = 42+50;
+    pos[value++][0] = 26+50;
+    pos[value][1] = 43+50;
+    pos[value++][0] = 24+50;
+    pos[value][1] = 44+50;
+    pos[value++][0] = 23+50;
+    pos[value][1] = 45+50;
+    pos[value++][0] = 21+50;
+    pos[value][1] = 47+50;
+    pos[value++][0] = 19+50;
+    pos[value][1] = 48+50;
+    pos[value++][0] = 18+50;
+    pos[value][1] = 50+50;
+    pos[value++][0] = 17+50;
+    pos[value][1] = 51+50;
+    pos[value++][0] = 18+50;
+    pos[value][1] = 52+50;
+    pos[value++][0] = 19+50;
+    pos[value][1] = 53+50;
+    pos[value++][0] = 19+50;
+    pos[value][1] = 54+50;
+    pos[value++][0] = 18+50;
+    pos[value][1] = 55+50;
+    pos[value++][0] = 18+50;
+    pos[value][1] = 57+50;
+    pos[value++][0] = 17+50;
+    pos[value][1] = 58+50;
+    pos[value++][0] = 17+50;
+    pos[value][3] = 58+50;
+    pos[value][2] = 37+50;
+    pos[value][1] = 34+50;
+    pos[value++][0] = 17+50;
+    pos[value][5] = 60+50;
+    pos[value][4] = 42+50;
+    pos[value][3] = 40+50;
+    pos[value][2] = 39+50;
+    pos[value][1] = 34+50;
+    pos[value++][0] = 17+50;
+    pos[value][5] = 60+50;
+    pos[value][4] = 56+50;
+    pos[value][3] = 54+50;
+    pos[value][2] = 42+50;
+    pos[value][1] = 34+50;
+    pos[value++][0] = 17+50;
+    pos[value][5] = 61+50;
+    pos[value][4] = 57+50;
+    pos[value][3] = 54+50;
+    pos[value][2] = 44+50;
+    pos[value][1] = 34+50;
+    pos[value++][0] = 18+50;
+    pos[value][5] = 61+50;
+    pos[value][4] = 59+50;
+    pos[value][3] = 54+50;
+    pos[value][2] = 46+50;
+    pos[value][1] = 34+50;
+    pos[value++][0] = 20+50;
+    pos[value][3] = 51+50;
+    pos[value][2] = 47+50;
+    pos[value][1] = 33+50;
+    pos[value++][0] = 20+50;
+    pos[value][1] = 34+50;
+    pos[value++][0] = 20+50;
+    pos[value][1] = 35+50;
+    pos[value++][0] = 20+50;
+    pos[value][1] = 35+50;
+    pos[value++][0] = 22+50;
+    pos[value][1] = 36+50;
+    pos[value++][0] = 22+50;
+    pos[value][1] = 37+50;
+    pos[value++][0] = 23+50;
+    pos[value][1] = 38+50;
+    pos[value++][0] = 23+50;
+    pos[value][1] = 39+50;
+    pos[value++][0] = 24+50;
+    pos[value][1] = 39+50;
+    pos[value++][0] = 24+50;
+    pos[value][1] = 40+50;
+    pos[value++][0] = 24+50;
+    pos[value][1] = 40+50;
+    pos[value++][0] = 25+50;
+    pos[value][1] = 37+50;
+    pos[value++][0] = 25+50;
+    pos[value][1] = 33+50;
+    pos[value++][0] = 26+50;
+    pos[value][1] = 31+50;
+    pos[value++][0] = 28+50;
+    pos[value][1] = 31+50;
+    pos[value++][0] = 29+50;
+    pos[value][1] = 31+50;
+    pos[value++][0] = 30+50;
+    pos[value][1] = 32+50;
+    pos[value++][0] = 30+50;
     while (value < maxRow) {
         pos[value][1] = maxColumn - 1;//-1 for the inside of the outline
-        pos[value++][0] = minColumn + 1;//+1 for the inside of the outline
+        pos[value++][0] = maxColumn;//+1 for the inside of the outline //was minColumn + 1 to fill the entire row
     }
 
     Menu menu;
@@ -219,6 +243,22 @@ void Map::displayLocations(){
         while (currentPos <= pos[rowCount][1]){
             menu.display(currentPos, rowCount, "O");
             currentPos++;
+        }
+        //menu.display(15, 0, "Part 1"); //writes the 2nd portion of the map
+        if(pos[rowCount][2] != 0){
+            int currentPos2 = pos[rowCount][2];
+            while (currentPos2 <= pos[rowCount][3]){
+            menu.display(currentPos2, rowCount, "O");
+            currentPos2++;
+            }
+        }
+        //menu.display(30, 0, "Part 2"); //writes the 3rd portion of the map
+        if(pos[rowCount][4] != 0){
+            int currentPos3 = pos[rowCount][4];
+            while (currentPos3 <= pos[rowCount][5]){
+            menu.display(currentPos3, rowCount, "O");
+            currentPos3++;
+            }
         }
     }
 }
