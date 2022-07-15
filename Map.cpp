@@ -239,25 +239,46 @@ void Map::displayLocations(){
     int posRow = minRow; //+1 for the inside of the outline
     for (int rowCount = minRow+1; rowCount < maxRow; rowCount++){ //added 1 to the minRow since this will then keep the output inside the outline
         int currentPos = pos[rowCount][0];
+        int lastInput1_0 = 2;
         //int currentPos = 5;
         while (currentPos <= pos[rowCount][1]){
-            menu.display(currentPos, rowCount, "O");
+
+            if (lastInput1_0 == 2){ //used to put spaces between the 0's to spread out the look of the map
+                menu.display(currentPos, rowCount, "0");
+                lastInput1_0 = 0;
+            } else {
+                menu.display(currentPos, rowCount, " ");
+                lastInput1_0++;
+            }
             currentPos++;
         }
         //menu.display(15, 0, "Part 1"); //writes the 2nd portion of the map
         if(pos[rowCount][2] != 0){
             int currentPos2 = pos[rowCount][2];
             while (currentPos2 <= pos[rowCount][3]){
-            menu.display(currentPos2, rowCount, "O");
-            currentPos2++;
+                if (lastInput1_0 == 2){ //used to put spaces between the 0's to spread out the look of the map
+                    menu.display(currentPos2, rowCount, "0");
+                    lastInput1_0 = 0;
+                } else {
+                    menu.display(currentPos2, rowCount, " ");
+                    lastInput1_0++;
+                }
+                currentPos2++;
             }
         }
         //menu.display(30, 0, "Part 2"); //writes the 3rd portion of the map
         if(pos[rowCount][4] != 0){
             int currentPos3 = pos[rowCount][4];
             while (currentPos3 <= pos[rowCount][5]){
-            menu.display(currentPos3, rowCount, "O");
-            currentPos3++;
+
+                if (lastInput1_0 == 2){ //used to put spaces between the 0's to spread out the look of the map
+                    menu.display(currentPos3, rowCount, "0");
+                    lastInput1_0 = 0;
+                } else {
+                    menu.display(currentPos3, rowCount, " ");
+                    lastInput1_0++;
+                }
+                currentPos3++;
             }
         }
     }
