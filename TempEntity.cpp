@@ -124,7 +124,8 @@ TempEntity::TempEntity(string currentUsername, bool NewTempEntityProccess){ //in
     for(int i = 0; i < NUMBER_OF_QUESTS; i++){//initializing quest progress to 0 for now
         quest1Progress[i] = 0;
     }
-    setQuest1Progress(0, stoi(code.getItem(3,2)));//temporary until we add quest data to server
+    if(stoi(code.getItem(3,2)) > 0 && stoi(code.getItem(3,2)) <= 8)
+        setQuest1Progress(0, stoi(code.getItem(3,2)));//temporary until we add quest data to server
     //set race, kit, level, experience:
     
 }

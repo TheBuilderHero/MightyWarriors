@@ -13,7 +13,7 @@ class Quests{
         int NUMBER_OF_QUESTS = 7;
         bool availableQuests[7];
     public:
-        void getQuestDescription(string username, int quest);
+        string getQuestDescription(string username, int quest);
         void getQuestLog(string username, int quest);
         void getAvailableQuests(string username, int location);
         void getAvailableQuests();

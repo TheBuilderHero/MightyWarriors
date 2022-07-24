@@ -7,73 +7,96 @@
 #include "Menu.h"
 using namespace std;
 
-void Quests::getQuestDescription(string username, int quest){
+string Quests::getQuestDescription(string username, int quest){
     Menu menu;
-    int quest1Step = player.getQuest1Progress(1);
     switch(quest){
         case 1:
-            switch(quest1Step){
+            switch(player.getQuest1Progress(1)){
                 case 1:
-                    cout << "The name of your first target is scrawled on the parchemnt... Morg the Goblin.";
-                    cout << "\nHe resides in the Glacius Desert.";
-                    menu.waitForEnter(menu.getEnterKeyState());
-                    system("cls");
+                    return "The name of your first target is scrawled on the parchemnt... Morg the Goblin.\nHe resides in the Glacius Desert.\n";
                     break;
                 case 2:
-                    cout << "The name of your second target is scrawled on the parchemnt... Klade the Orc.";
-                    cout << "\nHe resides near Lake Argentus.";
-                    menu.waitForEnter(menu.getEnterKeyState());
-                    system("cls");
+                    return "The name of your second target is scrawled on the parchemnt... Klade the Orc.\nHe resides near Lake Argentus.\n";
                     break;
                 case 3:
-                    cout << "The name of your third target is scrawled on the parchemnt... The Black Night.";
-                    cout << "\nHe resides in Arva Umbra.";
-                    menu.waitForEnter(menu.getEnterKeyState());
-                    system("cls");
+                    return "The name of your third target is scrawled on the parchemnt... The Black Night.\nHe resides in Arva Umbra.\n";
                     break;
                 case 4:
-                    cout << "The name of your fourth target is scrawled on the parchemnt... The Blue Wizard.";
-                    cout << "\nHe resides in Silva Ignis.";
-                    menu.waitForEnter(menu.getEnterKeyState());
-                    system("cls");
+                    return "The name of your fourth target is scrawled on the parchemnt... The Blue Wizard.\nHe resides in Silva Ignis.\n";
                     break;
                 case 5:
-                    cout << "The name of your fifth target is scrawled on the parchemnt... The Monstrous Behemoth.";
-                    cout << "\nHe resides in the Ventosus Mountains.";
-                    menu.waitForEnter(menu.getEnterKeyState());
-                    system("cls");
+                    return "The name of your fifth target is scrawled on the parchemnt... The Monstrous Behemoth.\nHe resides in the Ventosus Mountains.\n";
                     break;
                 case 6:
-                    cout << "The name of your sixth target is scrawled on the parchemnt... The Awful Necromancer.";
-                    cout << "\nHe resides in the Glacius Desert.";
-                    menu.waitForEnter(menu.getEnterKeyState());
-                    system("cls");
+                    return "The name of your sixth target is scrawled on the parchemnt... The Awful Necromancer.\nHe resides in the Glacius Desert.\n";
                     break;
                 case 7:
-                    cout << "The name of your final target is scrawled on the parchemnt...";
-                    menu.waitForEnter(menu.getEnterKeyState());
-                    cout << "The Dragon!!!";
-                    menu.waitForEnter(menu.getEnterKeyState());
-                    cout << "\nHe resides at Lake Argentus.";
-                    menu.waitForEnter(menu.getEnterKeyState());
-                    system("cls");
+                    return "The name of your final target is scrawled on the parchemnt...\nThe Dragon!!!\nHe resides at Lake Argentus.\n";
                     break;
                 case 8:
-                    cout << "All the monsters have been slain! Huzzah!\nThis Quest is complete.";
-                    menu.waitForEnter(menu.getEnterKeyState());
-                    system("cls");
+                    return "All the monsters have been slain! Huzzah!\nThis Quest is complete.";
                     break;
                 default:
-                    cout << "There is a problem with your Quest 1 data...";
-                    menu.waitForEnter(menu.getEnterKeyState());
-                    system("cls");
+                    return ("There is a problem with your Quest 1 data...\nError value: " + to_string(player.getQuest1Progress(1)));
                     break;
             }
             break;
+        case 2:
+            switch(player.getQuest1Progress(2)){
+                case 1:
+                    return "The completely innocent Potato has been mashed, by YOU, scoundrel!";
+                    break;
+                default: 
+                    return "There is a problem with your Quest 2 data...";
+                    break;
+            }
+        case 3:
+            switch(player.getQuest1Progress(3)){
+                case 1:
+                    return "This will theoretically contain pertinent data in the future!";
+                    break;
+                default: 
+                    return "There is a problem with your Quest 3 data...";
+                    break;
+            }
+        case 4:
+            switch(player.getQuest1Progress(4)){
+                case 1:
+                    return "This will theoretically contain pertinent data in the future!";
+                    break;
+                default: 
+                    return "There is a problem with your Quest 4 data...";
+                    break;
+            }
+        case 5:
+            switch(player.getQuest1Progress(5)){
+                case 1:
+                    return "This will theoretically contain pertinent data in the future!";
+                    break;
+                default: 
+                    return "There is a problem with your Quest 5 data...";
+                    break;
+            }
+        case 6:
+            switch(player.getQuest1Progress(6)){
+                case 1:
+                    return "This will theoretically contain pertinent data in the future!";
+                    break;
+                default: 
+                    return "There is a problem with your Quest 6 data...";
+                    break;
+            }
+        case 7:
+            switch(player.getQuest1Progress(7)){
+                case 1:
+                    return "This will theoretically contain pertinent data in the future!";
+                    break;
+                default: 
+                    return "There is a problem with your Quest 7 data...";
+                    break;
+            }
         default:
-            cout << "There was a problem loading any quest data...";
-            menu.waitForEnter(menu.getEnterKeyState());
-            system("cls");
+            return "There was a problem loading any quest data...";
             break;
     }
 }
@@ -297,19 +320,25 @@ void Quests::getAvailableQuests(){//TempEntity based quest call
 }
 void Quests::makeChoice(){//I am thinking we should handle quests as an array
     Menu menu;
+    //I use an array of quest options to match an option number to a quest number. For example, option 0 --> quest 2, option 1 --> quest 5
+    //Every option will be assigned (0, 1, 2, 3, etc.) even though not every quest is always available
     int questOption[NUMBER_OF_QUESTS], skips = 0, options = 0;
     for(int i = 1; i < NUMBER_OF_QUESTS + 1; i++){
         int option = i - skips;
+        //The availableQuests array comes from the getAvailableQuests function. It checks if a quest number is available
         if(availableQuests[i - 1]){
-            cout << "Do Quest " << i << ":        Press \"" << option << "\"\n";
+            cout << "Do Quest " << i << ":                  Press \"" << option << "\"\n";
+            //Here we write the quest number (e.g. 2, 3, 5) to the option number (e.g. 1, 2, 3)
+            //So the quest number is 'i' and it gets written into the index [option - 1]
             questOption[option - 1] = i;
             options++;
         }else{
             skips++;
         }
     }
-        cout << "Exit:              Press \"0\"\n";
-    int choice = questOption[menu.numberPressWait(options, true) - 1];
+        cout << "Show Current Quests Info:    Press \"" << (options + 1) << "\"\n";
+        cout << "Exit:                        Press \"0\"\n";
+    int choice = menu.numberPressWait(options + 1, true);
 
     for(int i = 0; i < NUMBER_OF_QUESTS; i++){
         availableQuests[i] = false;
@@ -317,9 +346,15 @@ void Quests::makeChoice(){//I am thinking we should handle quests as an array
 
     if(choice == 0){
         return;
+    }else if(choice == (options + 1)){
+        system("cls");
+        for(int i = 0; i < options; i++){
+            cout << endl << getQuestDescription(player.getUsername(), questOption[i]);
+        }
+        menu.waitForEnter(menu.getEnterKeyState());
     }else{
         system("cls");
-        doQuest(player.getUsername(), player.getLocation(), choice);
+        doQuest(player.getUsername(), player.getLocation(), questOption[choice - 1]);
     }
 }
 
