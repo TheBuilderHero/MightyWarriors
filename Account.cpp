@@ -510,6 +510,7 @@ void Account::levelUp(std::string username, int numOfStatPoints){
     guard.updateSaveValueMaxMind(initMind);
     guard.updateSaveValuePsychicDamageMax(initPsychicDamage);
     //also update the current stats:
+    
     //player.
 
     //Will need to modify with new data guard
@@ -722,7 +723,36 @@ void Account::displayStats(std::string username, int bypass ,string usernameA){
         }
         menuClass.adminMenu(usernameA);
     }
-    
+}
+void Account::displayStats(std::string username, TempEntity player, int bypass){
+    if (bypass == 0) {//run the testing stat output (default)
+        string physicalAbilities = getPhysicalDamgeAbilities(username);
+        string magicalAbilites = getMagicDamgeAbilities(username);
+        string raceOutput = "Player Race: " + getRace(username);
+        string kitOutput = "Player Kit: " + getKit(username);
+        string weaponOutput = "Player Weapon: " + getWeapon(username);
+        stringstream currentXP, totalXP;
+        currentXP << fixed << setprecision(0) << getCurrentXPForNextLevel(username); //format the XP
+        totalXP << fixed << setprecision(0) << getTotalXPForNextLevel(username); //format the XP
+        string currentXPFormatted = currentXP.str();
+        string totalXPFormatted = totalXP.str();
+        string playerLevelInfo = "Player Level: " + to_string(getLevel(username)) +  " With " + currentXPFormatted + "XP of " + totalXPFormatted + "XP";
+        cout << "Your stats are as follows: " << endl << setfill('=') << setw(92) << "=" << endl 
+        << "Health: " << setfill(' ') << setw(34) << getHealth(username) 
+        << setw(5 + playerLevelInfo.length()) << playerLevelInfo << endl << setfill('-') << setw(42) << "-" << setfill(' ') 
+        << setw(5 + raceOutput.length()) << raceOutput << endl 
+        << "Armor: " << setfill(' ') << setw(35) << getArmor(username) 
+        << setw(5 + kitOutput.length()) << kitOutput << endl << setfill('-') << setw(42) << "-" << setfill(' ') 
+        << setw(5 + weaponOutput.length()) << weaponOutput << endl 
+        << "Magic Resistance: " << setfill(' ') << setw(24) << getMagicResistance(username) << endl << setfill('-') << setw(42) << "-" << endl 
+        << "Physical Damage: " << setfill(' ') << setw(25) << getPhysicalDamageString(username) << setfill(' ') << setw(5 + physicalAbilities.length()) << physicalAbilities << endl << setfill('-') << setw(42) << "-" << endl 
+        << "Magic Damage: " << setfill(' ') << setw(28) << getMagicDamageString(username) << setfill(' ') << setw(5 + magicalAbilites.length()) << magicalAbilites << endl << setfill('-') << setw(42) << "-" << endl 
+        << "Agility: " << setfill(' ') << setw(33) << getAgility(username) << endl << setfill('-') << setw(42) << "-" << endl 
+        << "Stealth: " << setfill(' ') << setw(33) << getStealth(username) << endl << setfill('-') << setw(42) << "-" << endl 
+        << "Stamina: " << setfill(' ') << setw(33) << getStamina(username) << endl << setfill('-') << setw(42) << "-" << endl 
+        << "Mana: " << setfill(' ') << setw(36) << getMana(username) << endl << setfill('-') << setw(42) << "-" << endl; //This cout statement prints out all the stats for the user to see.
+        system("pause");
+    }
 }
 
 void Account::logonScreen(int type){ //defualt is case 1 - that is a standard logon... Case 2 is change password logon

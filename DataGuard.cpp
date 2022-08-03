@@ -46,57 +46,57 @@ DataGuard::~DataGuard(){
 //Data saving for program close:
 //Stats:
 void DataGuard::updateSaveValueMaxHealth(int addHealth){
-
+    maxHealth += addHealth;
 }
 void DataGuard::updateSaveValueHealth(int addHealth){
-
+    health += addHealth;
 }
 void DataGuard::updateSaveValueArmor(int addArmor){
-
+    armor += addArmor;
 }
 void DataGuard::updateSaveValueMagicResistance(int addMagicResistance){
-
+    magicResistance += addMagicResistance;
 }
 void DataGuard::updateSaveValuePhysicalDamageMin(int addPhysicalDamageMin){
-
+    maxPhysicalDamage += addPhysicalDamageMin;
 }
 void DataGuard::updateSaveValuePhysicalDamageMax(int addPhysicalDamageMax){
-
+    minPhysicalDamage += addPhysicalDamageMax;
 }
 void DataGuard::updateSaveValueMagicDamageMin(int addMagicDamageMin){
-
+    minMagicDamage += addMagicDamageMin;
 }
 void DataGuard::updateSaveValueMagicDamageMax(int addMagicDamageMax){
-
+    maxMagicDamage += addMagicDamageMax;
 }
 void DataGuard::updateSaveValueAgility(int addAgility){
-
+    agility += addAgility;
 }
 void DataGuard::updateSaveValueStealth(int addStealth){
-
+    stealth += addStealth;
 }
 void DataGuard::updateSaveValueStamina(int addStamina){
-
+    stamina += addStamina;
 }
 void DataGuard::updateSaveValueMana(int addMana){
-
+    mana += addMana;
 }
-void DataGuard::updateSaveValueMaxMind(int addMana){
-
+void DataGuard::updateSaveValueMaxMind(int addMind){
+    maxMind += addMind
 }
-void DataGuard::updateSaveValueMind(int addMana){
-
+void DataGuard::updateSaveValueMind(int addMind){
+    mind += addMind;
 }
 void DataGuard::updateSaveValuePsychicDamageMin(int addPsychicDamageMin){
-
+    minPsychicDamage += addPsychicDamageMin;
 }
 void DataGuard::updateSaveValuePsychicDamageMax(int addPsychicDamageMax){
-
+    maxPsychicDamage += addPsychicDamageMax;
 }
 //Other:
-void updateSaveValueCurrentXP(int addXP){
-
+void DataGuard::updateSaveValueCurrentXP(int addXP){
+    xp += addXP;
 }
-void updateSaveValueLevel(int addLevel){
-
+void DataGuard::updateSaveValueLevel(int addLevel){
+    level += addLevel;
 }
