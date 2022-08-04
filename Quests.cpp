@@ -12,6 +12,9 @@ string Quests::getQuestDescription(string username, int quest){
     switch(quest){
         case 1:
             switch(player.getQuest1Progress(1)){
+                case 0:
+                    return "";
+                    break;
                 case 1:
                     return "The name of your first target is scrawled on the parchemnt... Morg the Goblin.\nHe resides in the Glacius Desert.\n";
                     break;
@@ -43,6 +46,9 @@ string Quests::getQuestDescription(string username, int quest){
             break;
         case 2:
             switch(player.getQuest1Progress(2)){
+                case 0:
+                    return "";
+                    break;
                 case 1:
                     return "The completely innocent Potato has been mashed, by YOU, scoundrel!";
                     break;
@@ -52,6 +58,9 @@ string Quests::getQuestDescription(string username, int quest){
             }
         case 3:
             switch(player.getQuest1Progress(3)){
+                case 0:
+                    return "";
+                    break;
                 case 1:
                     return "This will theoretically contain pertinent data in the future!";
                     break;
@@ -61,6 +70,9 @@ string Quests::getQuestDescription(string username, int quest){
             }
         case 4:
             switch(player.getQuest1Progress(4)){
+                case 0:
+                    return "";
+                    break;
                 case 1:
                     return "This will theoretically contain pertinent data in the future!";
                     break;
@@ -70,6 +82,9 @@ string Quests::getQuestDescription(string username, int quest){
             }
         case 5:
             switch(player.getQuest1Progress(5)){
+                case 0:
+                    return "";
+                    break;
                 case 1:
                     return "This will theoretically contain pertinent data in the future!";
                     break;
@@ -79,6 +94,9 @@ string Quests::getQuestDescription(string username, int quest){
             }
         case 6:
             switch(player.getQuest1Progress(6)){
+                case 0:
+                    return "";
+                    break;
                 case 1:
                     return "This will theoretically contain pertinent data in the future!";
                     break;
@@ -88,6 +106,9 @@ string Quests::getQuestDescription(string username, int quest){
             }
         case 7:
             switch(player.getQuest1Progress(7)){
+                case 0:
+                    return "";
+                    break;
                 case 1:
                     return "This will theoretically contain pertinent data in the future!";
                     break;
@@ -349,7 +370,9 @@ void Quests::makeChoice(){//I am thinking we should handle quests as an array
     }else if(choice == (options + 1)){
         system("cls");
         for(int i = 0; i < options; i++){
-            cout << endl << getQuestDescription(player.getUsername(), questOption[i]);
+            if(getQuestDescription(player.getUsername(), questOption[i]) != ""){
+                cout << endl << getQuestDescription(player.getUsername(), questOption[i]);
+            }
         }
         menu.waitForEnter(menu.getEnterKeyState());
     }else{

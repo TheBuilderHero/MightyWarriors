@@ -16,6 +16,7 @@ class Menu {
         void menu(std::string username);
         void travelMenu(std::string username);
         void displayStats();//This function uses a stored TempEntity to display player data
+        void displayInventory();
         void accountInfo(std::string username);
         void adminMenu (std::string username);
         void changePass(std::string username);

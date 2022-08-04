@@ -22,8 +22,9 @@ class TempEntity{
         std::string name;
         bool battleWon = false;
 
-        int INVENTORY_SPACES = 24;
+        int INVENTORY_SPACES = 24; //this should be the max inventory (I guess)
         int inventory[24]; //if inventory changes, this number should be updated
+        int inventorySize = 12; //Spaces in your starting pack; as you upgrade your pack you can carry more
         int primaryHand, offHand; //these values will be set to the weapon number
     public:
         TempEntity(std::string currentUsername);
@@ -67,6 +68,7 @@ class TempEntity{
         int getInventory(int number){ return inventory[number]; }
         int getPrimaryHand(){ return primaryHand; }
         int getOffHand(){ return offHand; }
+        int getInventorySize(){ return inventorySize; }
 
         //setter functions:
         void setUsername(std::string newUsername);
@@ -104,6 +106,7 @@ class TempEntity{
         void setInventory(int number, int itemNum);
         void setPrimaryHand(int itemNum);
         void setOffHand(int itemNum);
+        void setInventorySize(int newInventorySize);
 
         //updater functions:
         //Stats:
@@ -127,6 +130,7 @@ class TempEntity{
         void updateCurrentXP(int addXP);
         void updateLevel(int addLevel);
 
+        void updateInventorySize(int addInventory);
 
         //Richards old and outdated and completely unusued (totally lame) functions:
         std::string getName();

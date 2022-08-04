@@ -134,6 +134,9 @@ TempEntity::TempEntity(string currentUsername, bool NewTempEntityProccess){ //in
     for(int i = 0; i < INVENTORY_SPACES; i++){
         setInventory(i, 0); //setting all spaces to 0 for now.
     }
+    for(int i = 0; i < 5; i++){
+        setInventory(i, i + 1); //setting all spaces to 0 for now.
+    }
     setPrimaryHand(itemHandler.getWeaponNumber(getWeapon()));
     setOffHand(0);    
 }
@@ -254,6 +257,9 @@ void TempEntity::setPrimaryHand(int itemNum){
 void TempEntity::setOffHand(int itemNum){
     offHand = itemNum;
 }
+void TempEntity::setInventorySize(int newInventorySize){
+    inventorySize = newInventorySize;
+}
 
 //updater functions:
 //stats:
@@ -313,6 +319,9 @@ void TempEntity::updateLevel(int addLevel){
     level += addLevel;
 }
 
+void TempEntity::updateInventorySize(int addInventory){
+    inventorySize += addInventory;
+}
 
 //Richard functions:
 string TempEntity::getName(){

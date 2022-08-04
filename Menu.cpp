@@ -14,6 +14,7 @@
 #include "WorldMap.h"
 #include "Quests.h"
 #include "DataGuard.h"
+#include "Items.h"
 
 #undef min // these are needed for the cin.ignore statments to clear out the buffer for new data.
 #undef max 
@@ -45,7 +46,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
     //guard.updateGuardData(getPlayer());
     //end of program close code.
 
-    bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false,
+    bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, fiveKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false,
     nKeyPressedLastLoop = false, iKeyPressedLastLoop = false, aKeyPressedLastLoop = false, 
     controlKeyPressedLastLoop = false, altKeyPressedLastLoop = false ,kKeyPressedLastLoop = false;
     int value;
@@ -56,8 +57,9 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         display(32, 2, "Go Questing");          display(53, 2, "(Press \"1\")");
         display(32, 3, "Travel");               display(53, 3, "(Press \"2\")");
         display(32, 4, "Stats");                display(53, 4, "(Press \"3\")");
-        display(32, 5, "Account Info");         display(53, 5, "(Press \"4\")");
-        display(32, 6, "Exit");                 display(53, 6, "(Press \"0\")");
+        display(32, 5, "Inventory");            display(53, 5, "(Press \"4\")");
+        display(32, 6, "Account Info");         display(53, 6, "(Press \"5\")");
+        display(32, 7, "Exit");                 display(53, 7, "(Press \"0\")");
         while (1){
             if (GetKeyState('0') < 0 && !zeroKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
                 zeroKeyPressedLastLoop = true;
@@ -92,6 +94,13 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
             } else if (GetKeyState('4') >= 0 && fourKeyPressedLastLoop){ // else 4 not pressed
                 fourKeyPressedLastLoop = false;
                 value = 4;
+                break;
+            }
+            if (GetKeyState('5') < 0 && !fiveKeyPressedLastLoop) { //checks to make sure that the 4 key is pressed and makes sure it was not pressed last check
+                fiveKeyPressedLastLoop = true;
+            } else if (GetKeyState('5') >= 0 && fiveKeyPressedLastLoop){ // else 4 not pressed
+                fiveKeyPressedLastLoop = false;
+                value = 5;
                 break;
             }
 
@@ -148,6 +157,12 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
             //account.displayStats(username);
             break;
         case 4:{
+            system("cls");
+            ClearConsoleInputBuffer();
+            displayInventory();
+            break;
+        }
+        case 5:{
             accountInfo(username);
             break;
         }
@@ -222,6 +237,7 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
 }
 
 void Menu::displayStats(){
+    Items itemHandler;
     string physicalDamageAbilities = "Physical Damage Abilities: ";
     string magicDamageAbilities = "Magic Damage Abilities: ";
     string psychicDamageAbilities = "Psychic Damage Abilities: ";
@@ -256,7 +272,7 @@ void Menu::displayStats(){
     display(48, 2, playerLevelInfo);        display(48, 3, "Player Race: " + player.getRace());
     cout << "\n\n\n" << setfill('-') << setw(42) << "-";
     display(0, 4, "Armor:");                display(42 - to_string(player.getArmor()).size(), 4, to_string(player.getArmor()));
-    display(48, 4, "Player Kit: " + player.getKit()); display(48, 5, "Player Weapon: " + player.getWeapon());
+    display(48, 4, "Player Kit: " + player.getKit()); display(48, 5, "Primary Weapon: " + itemHandler.getWeaponName(player.getPrimaryHand()));
     cout << "\n\n\n\n\n" << setfill('-') << setw(42) << "-";
     display(0, 6, "Magic Resistance:");     display(42 - to_string(player.getMagicResistance()).size(), 6, to_string(player.getMagicResistance()));
     cout << "\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-";
@@ -294,6 +310,25 @@ void Menu::displayStats(){
     */
 
     system("pause");    
+}
+void Menu::displayInventory(){
+    Items itemHandler;
+    display(1, 2, "You are carrying the following:");
+    display(1, 3, "Main Hand: " + itemHandler.getWeaponName(player.getPrimaryHand()));
+    display(1, 4, "Off Hand: " + itemHandler.getWeaponName(player.getOffHand()));
+    display(1, 6, "Pack:");
+    for(int i = 0; i < player.getInventorySize(); i++){
+        if(itemHandler.getWeaponName(player.getInventory(i)) == "Empty"){
+            if(i == 0){
+                display(1, 7 + i, itemHandler.getWeaponName(player.getInventory(i)));
+            }
+            i = 24;
+        }else{
+            display(1, 7 + i, itemHandler.getWeaponName(player.getInventory(i)));
+        }
+        
+    }
+    system("pause");
 }
 
 void Menu::accountInfo(string username){
