@@ -724,7 +724,7 @@ void Account::displayStats(std::string username, int bypass ,string usernameA){
         menuClass.adminMenu(usernameA);
     }
 }
-void Account::displayStats(std::string username, TempEntity player, int bypass){
+/*void Account::displayStats(std::string username, TempEntity player, int bypass){
     if (bypass == 0) {//run the testing stat output (default)
         string physicalAbilities = getPhysicalDamgeAbilities(username);
         string magicalAbilites = getMagicDamgeAbilities(username);
@@ -753,7 +753,7 @@ void Account::displayStats(std::string username, TempEntity player, int bypass){
         << "Mana: " << setfill(' ') << setw(36) << getMana(username) << endl << setfill('-') << setw(42) << "-" << endl; //This cout statement prints out all the stats for the user to see.
         system("pause");
     }
-}
+}*/
 
 void Account::logonScreen(int type){ //defualt is case 1 - that is a standard logon... Case 2 is change password logon
     Cipher code;

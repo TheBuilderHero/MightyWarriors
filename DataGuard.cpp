@@ -82,7 +82,7 @@ void DataGuard::updateSaveValueMana(int addMana){
     mana += addMana;
 }
 void DataGuard::updateSaveValueMaxMind(int addMind){
-    maxMind += addMind
+    maxMind += addMind;
 }
 void DataGuard::updateSaveValueMind(int addMind){
     mind += addMind;
