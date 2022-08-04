@@ -19,6 +19,7 @@
                 "WorldMap.cpp",
                 "Passives.cpp",
                 "DataGuard.cpp",
+                "Items.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 " -lws2_32",

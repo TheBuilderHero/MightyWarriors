@@ -2,6 +2,7 @@
 #include <string>
 
 #include "TempEntity.h"
+#include "Items.h"
 #include "Cipher.h"
 #include "ReachOutToServer.h"
 
@@ -127,7 +128,14 @@ TempEntity::TempEntity(string currentUsername, bool NewTempEntityProccess){ //in
     if(stoi(code.getItem(3,2)) > 0 && stoi(code.getItem(3,2)) <= 8)
         setQuest1Progress(0, stoi(code.getItem(3,2)));//temporary until we add quest data to server
     //set race, kit, level, experience:
-    
+
+    //set inventory!!!:
+    Items itemHandler;
+    for(int i = 0; i < INVENTORY_SPACES; i++){
+        setInventory(i, 0); //setting all spaces to 0 for now.
+    }
+    setPrimaryHand(itemHandler.getWeaponNumber(getWeapon()));
+    setOffHand(0);    
 }
 TempEntity::TempEntity(){//blank constructor if no username has been provided so far
     health = armor = magicResistance = physicalDamageMin = physicalDamageMax = magicDamageMin = magicDamageMax = agility = stealth = stamina = mana = 0;
@@ -135,6 +143,10 @@ TempEntity::TempEntity(){//blank constructor if no username has been provided so
     for(int i = 0; i < NUMBER_OF_QUESTS; i++){
         quest1Progress[i] = 0;
     }
+    for(int i = 0; i < INVENTORY_SPACES; i++){
+        inventory[i] = 0;
+    }
+    primaryHand = offHand = 0;
     level = 1;
     currentXP = 0;
     XPForNextLevel = 500;
@@ -232,6 +244,15 @@ void TempEntity::setCurrentXP(int newXP){
 }
 void TempEntity::setXPForNextLevel(int newXPForNextLevel){
     XPForNextLevel = newXPForNextLevel;
+}
+void TempEntity::setInventory(int number, int itemNum){
+    inventory[number] = itemNum;
+}
+void TempEntity::setPrimaryHand(int itemNum){
+    primaryHand = itemNum;
+}
+void TempEntity::setOffHand(int itemNum){
+    offHand = itemNum;
 }
 
 //updater functions:

@@ -21,6 +21,10 @@ class TempEntity{
         //int quest1Progress[2];
         std::string name;
         bool battleWon = false;
+
+        int INVENTORY_SPACES = 24;
+        int inventory[24]; //if inventory changes, this number should be updated
+        int primaryHand, offHand; //these values will be set to the weapon number
     public:
         TempEntity(std::string currentUsername);
         TempEntity(std::string currentUsername, bool NewTempEntityProccess);
@@ -59,7 +63,10 @@ class TempEntity{
         int getLevel(){ return level; }
         int getCurrentXP(){ return currentXP; }
         int getXPForNextLevel(){ return XPForNextLevel; }
-        
+
+        int getInventory(int number){ return inventory[number]; }
+        int getPrimaryHand(){ return primaryHand; }
+        int getOffHand(){ return offHand; }
 
         //setter functions:
         void setUsername(std::string newUsername);
@@ -94,6 +101,10 @@ class TempEntity{
         void setCurrentXP(int newXP);
         void setXPForNextLevel(int newXPForNextLevel);
 
+        void setInventory(int number, int itemNum);
+        void setPrimaryHand(int itemNum);
+        void setOffHand(int itemNum);
+
         //updater functions:
         //Stats:
         void updateMaxHealth(int addHealth);
@@ -117,7 +128,7 @@ class TempEntity{
         void updateLevel(int addLevel);
 
 
-        //Richards functions:
+        //Richards old and outdated and completely unusued (totally lame) functions:
         std::string getName();
         void setName(std::string newName);
         void damage(int damage);
