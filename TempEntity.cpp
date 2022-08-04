@@ -134,10 +134,10 @@ TempEntity::TempEntity(string currentUsername, bool NewTempEntityProccess){ //in
     for(int i = 0; i < INVENTORY_SPACES; i++){
         setInventory(i, 0); //setting all spaces to 0 for now.
     }
-    for(int i = 0; i < 5; i++){
-        setInventory(i, i + 1); //setting all spaces to 0 for now.
-    }
-    setPrimaryHand(itemHandler.getWeaponNumber(getWeapon()));
+    /*for(int i = 0; i < 5; i++){
+        setInventory(i, i + 1);
+    }*/
+    setPrimaryHand(itemHandler.getNumber(getWeapon()));
     setOffHand(0);    
 }
 TempEntity::TempEntity(){//blank constructor if no username has been provided so far

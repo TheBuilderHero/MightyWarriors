@@ -5,22 +5,22 @@
 
 using namespace std;
 
-string Items::getWeaponName(int number){
-    return allWeaponNames[number];
+string Items::getName(int number){
+    return itemNames[number];
 }
 int Items::getPhysicalDamage(int number){
-    return allWeaponPhysicalDamage[number];
+    return physicalDamage[number];
 }
 int Items::getMagicDamage(int number){
-    return allWeaponMagicDamage[number];
+    return magicDamage[number];
 }
 int Items::getPsychicDamage(int number){
-    return allWeaponPsychicDamage[number];
+    return psychicDamage[number];
 }
 
-int Items::getWeaponNumber(string weaponName){
-    for(int i = 1; i < ALL_WEAPONS; i++){
-        if(allWeaponNames[i] == weaponName){
+int Items::getNumber(string itemName){
+    for(int i = 1; i < ALL_ITEMS; i++){
+        if(itemNames[i] == itemName){
             return i;
         }
     }

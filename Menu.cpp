@@ -196,15 +196,17 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
     bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false,
     nKeyPressedLastLoop = false, iKeyPressedLastLoop = false, aKeyPressedLastLoop = false, 
     controlKeyPressedLastLoop = false, altKeyPressedLastLoop = false ,kKeyPressedLastLoop = false;
+
+    display(50, 1, "Travel");
+    display(16, 2, worldMap.getMapDescription(player.getLocation()));//Dakota please help me load the user's current location
+    display(32, 3, "Go North");             display(53, 3, "(Press \"1\")");
+    display(32, 4, "Go East");              display(53, 4, "(Press \"2\")");
+    display(32, 5, "Go South");             display(53, 5, "(Press \"3\")");
+    display(32, 6, "Go West");              display(53, 6, "(Press \"4\")");
+    display(32, 7, "Return to Menu");       display(53, 7, "(Press \"0\")", false);
     map.displayMapOutline(); //draw the map outline to the screen
     map.displayLocations();
-    display(50, 1+42, "Travel");
-    display(16, 2+42, worldMap.getMapDescription(player.getLocation()));//Dakota please help me load the user's current location
-    display(32, 3+42, "Go North");             display(53, 3+42, "(Press \"1\")");
-    display(32, 4+42, "Go East");              display(53, 4+42, "(Press \"2\")");
-    display(32, 5+42, "Go South");             display(53, 5+42, "(Press \"3\")");
-    display(32, 6+42, "Go West");              display(53, 6+42, "(Press \"4\")");
-    display(32, 7+42, "Return to Menu");       display(53, 7+42, "(Press \"0\")");
+
     int value = numberPressWait(4, true);
     switch (value){
     case 0://Return to menu
@@ -272,7 +274,7 @@ void Menu::displayStats(){
     display(48, 2, playerLevelInfo);        display(48, 3, "Player Race: " + player.getRace());
     cout << "\n\n\n" << setfill('-') << setw(42) << "-";
     display(0, 4, "Armor:");                display(42 - to_string(player.getArmor()).size(), 4, to_string(player.getArmor()));
-    display(48, 4, "Player Kit: " + player.getKit()); display(48, 5, "Primary Weapon: " + itemHandler.getWeaponName(player.getPrimaryHand()));
+    display(48, 4, "Player Kit: " + player.getKit()); display(48, 5, "Primary Weapon: " + itemHandler.getName(player.getPrimaryHand()));
     cout << "\n\n\n\n\n" << setfill('-') << setw(42) << "-";
     display(0, 6, "Magic Resistance:");     display(42 - to_string(player.getMagicResistance()).size(), 6, to_string(player.getMagicResistance()));
     cout << "\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-";
@@ -313,22 +315,22 @@ void Menu::displayStats(){
 }
 void Menu::displayInventory(){
     Items itemHandler;
-    display(1, 2, "You are carrying the following:");
-    display(1, 3, "Main Hand: " + itemHandler.getWeaponName(player.getPrimaryHand()));
-    display(1, 4, "Off Hand: " + itemHandler.getWeaponName(player.getOffHand()));
-    display(1, 6, "Pack:");
+    display(1, 1, "You are carrying the following:");
+    display(1, 2, "Main Hand: " + itemHandler.getName(player.getPrimaryHand()));
+    display(1, 3, "Off Hand: " + itemHandler.getName(player.getOffHand()));
+    display(1, 5, "Pack:");
     for(int i = 0; i < player.getInventorySize(); i++){
-        if(itemHandler.getWeaponName(player.getInventory(i)) == "Empty"){
+        if(itemHandler.getName(player.getInventory(i)) == "Empty"){
             if(i == 0){
-                display(1, 7 + i, itemHandler.getWeaponName(player.getInventory(i)));
+                display(1, 6, "Empty", false);
             }
             i = 24;
         }else{
-            display(1, 7 + i, itemHandler.getWeaponName(player.getInventory(i)));
+            display(1, 6 + i, itemHandler.getName(player.getInventory(i)), false);
         }
         
     }
-    system("pause");
+    waitForEnter(getEnterKeyState());
 }
 
 void Menu::accountInfo(string username){

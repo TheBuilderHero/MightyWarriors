@@ -96,9 +96,10 @@ void Map::listAvalibleLocations(string username){
 
 void Map::displayMapOutline(){
     Menu menu;
+    int optionsHeight = 8;
     maxColumn = 170; //was 210
-    maxRow = 42; //was 62
-    int initalPosRow = minRow = 1;
+    maxRow = 42 + optionsHeight; //was 62
+    int initalPosRow = minRow = 1 + optionsHeight;
     int initalPosColumn = minColumn = 2;
     menu.display(initalPosColumn,initalPosRow,"+");
     for (int posRow = initalPosRow+1; posRow < maxRow; posRow++){
@@ -119,9 +120,10 @@ void Map::displayMapOutline(){
 }
 
 void Map::displayLocations(){
+    int optionsHeight = 8;
     int const tempmaxRow = maxRow;
     int pos[tempmaxRow][6];
-    int value = 2;
+    int value = 2 + optionsHeight;
     for (int i = 0; i <= tempmaxRow; i++){ //set all values to null before setting
         pos[i][5] = 0;
         pos[i][4] = 0;
