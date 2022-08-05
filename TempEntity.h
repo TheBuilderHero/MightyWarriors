@@ -131,6 +131,7 @@ class TempEntity{
         void updateLevel(int addLevel);
 
         void updateInventorySize(int addInventory);
+        void sortInventory();
 
         //Richards old and outdated and completely unusued (totally lame) functions:
         std::string getName();

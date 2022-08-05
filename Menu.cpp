@@ -96,9 +96,9 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
                 value = 4;
                 break;
             }
-            if (GetKeyState('5') < 0 && !fiveKeyPressedLastLoop) { //checks to make sure that the 4 key is pressed and makes sure it was not pressed last check
+            if (GetKeyState('5') < 0 && !fiveKeyPressedLastLoop) { //checks to make sure that the 5 key is pressed and makes sure it was not pressed last check
                 fiveKeyPressedLastLoop = true;
-            } else if (GetKeyState('5') >= 0 && fiveKeyPressedLastLoop){ // else 4 not pressed
+            } else if (GetKeyState('5') >= 0 && fiveKeyPressedLastLoop){ // else 5 not pressed
                 fiveKeyPressedLastLoop = false;
                 value = 5;
                 break;
@@ -157,8 +157,6 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
             //account.displayStats(username);
             break;
         case 4:{
-            system("cls");
-            ClearConsoleInputBuffer();
             displayInventory();
             break;
         }
@@ -317,10 +315,12 @@ void Menu::displayInventory(){
     Items itemHandler;
     bool keepLooping = false;
     do{
+        system("cls");
+        ClearConsoleInputBuffer();
         display(1, 1, "You are carrying the following:");                                   display(64, 1, "You can:");
-        display(1, 2, "Main Hand: " + itemHandler.getName(player.getPrimaryHand()));        display(64, 2, "Move Weapon to Primary Hand (Press \"1\"");
-        display(1, 3, "Off Hand: " + itemHandler.getName(player.getOffHand()));             display(64, 3, "Move Weapon to Off Hand     (Press \"2\"");
-        display(1, 5, "Pack:");                                                             display(64, 4, "Exit                        (Press \"0\"");
+        display(1, 2, "Main Hand: " + itemHandler.getName(player.getPrimaryHand()));        display(64, 2, "Move Weapon to Primary Hand (Press \"1\")");
+        display(1, 3, "Off Hand: " + itemHandler.getName(player.getOffHand()));             display(64, 3, "Move Weapon to Off Hand     (Press \"2\")");
+        display(1, 5, "Pack:");                                                             display(64, 4, "Exit                        (Press \"0\")");
         for(int i = 0; i < player.getInventorySize(); i++){
             if(player.getInventory(i) == 0){
                 if(i == 0){
@@ -337,9 +337,10 @@ void Menu::displayInventory(){
             int items = 0;
             keepLooping = true;
             system("cls");
+            ClearConsoleInputBuffer();
             display(1, 1, "Trade which item?");
             for(int i = 0; i < 8; i++){
-                display(1, 2 + i, itemHandler.getName(player.getInventory(i))); display(32, 2 + i, "Press \"" + (i + 1) + '\"');
+                display(1, 2 + i, itemHandler.getName(player.getInventory(i))); display(32, 2 + i, ("Press \"" + to_string(i + 1) + "\""));
                 items++;
                 if(player.getInventory(i) == 0){
                     i = 24;
@@ -354,6 +355,7 @@ void Menu::displayInventory(){
                 tempItem = (choice == 1) ? player.getPrimaryHand() : player.getOffHand();
                 (choice == 1) ? player.setPrimaryHand(player.getInventory(choice2 - 1)) : player.setOffHand(player.getInventory(choice2 - 1));
                 player.setInventory(choice2 - 1, tempItem);
+                player.sortInventory();
             }
         }else{
             keepLooping = false;
