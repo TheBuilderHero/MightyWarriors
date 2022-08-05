@@ -315,22 +315,50 @@ void Menu::displayStats(){
 }
 void Menu::displayInventory(){
     Items itemHandler;
-    display(1, 1, "You are carrying the following:");
-    display(1, 2, "Main Hand: " + itemHandler.getName(player.getPrimaryHand()));
-    display(1, 3, "Off Hand: " + itemHandler.getName(player.getOffHand()));
-    display(1, 5, "Pack:");
-    for(int i = 0; i < player.getInventorySize(); i++){
-        if(itemHandler.getName(player.getInventory(i)) == "Empty"){
-            if(i == 0){
-                display(1, 6, "Empty", false);
-            }
-            i = 24;
-        }else{
-            display(1, 6 + i, itemHandler.getName(player.getInventory(i)), false);
+    bool keepLooping = false;
+    do{
+        display(1, 1, "You are carrying the following:");                                   display(64, 1, "You can:");
+        display(1, 2, "Main Hand: " + itemHandler.getName(player.getPrimaryHand()));        display(64, 2, "Move Weapon to Primary Hand (Press \"1\"");
+        display(1, 3, "Off Hand: " + itemHandler.getName(player.getOffHand()));             display(64, 3, "Move Weapon to Off Hand     (Press \"2\"");
+        display(1, 5, "Pack:");                                                             display(64, 4, "Exit                        (Press \"0\"");
+        for(int i = 0; i < player.getInventorySize(); i++){
+            if(player.getInventory(i) == 0){
+                if(i == 0){
+                    display(1, 6, "Empty", false);
+                }
+                i = 24;
+            }else{
+                display(1, 6 + i, itemHandler.getName(player.getInventory(i)), false);
+            }        
         }
-        
-    }
-    waitForEnter(getEnterKeyState());
+
+        int choice = numberPressWait(2, true);
+        if(choice == 1 || choice == 2){
+            int items = 0;
+            keepLooping = true;
+            system("cls");
+            display(1, 1, "Trade which item?");
+            for(int i = 0; i < 8; i++){
+                display(1, 2 + i, itemHandler.getName(player.getInventory(i))); display(32, 2 + i, "Press \"" + (i + 1) + '\"');
+                items++;
+                if(player.getInventory(i) == 0){
+                    i = 24;
+                }
+            }
+            display(24, 2 + items, "Cancel: Press \"0\"");
+            int choice2 = numberPressWait(items, true);
+            if(choice2 == 0){
+
+            }else{
+                int tempItem;
+                tempItem = (choice == 1) ? player.getPrimaryHand() : player.getOffHand();
+                (choice == 1) ? player.setPrimaryHand(player.getInventory(choice2 - 1)) : player.setOffHand(player.getInventory(choice2 - 1));
+                player.setInventory(choice2 - 1, tempItem);
+            }
+        }else{
+            keepLooping = false;
+        }
+    }while(keepLooping);
 }
 
 void Menu::accountInfo(string username){
