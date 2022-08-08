@@ -11,7 +11,7 @@ using namespace std;
 
 string ReachOutToServer::sendToServer(string aMessage) {
     Cipher code; // declare a new Decipher class
-    string ipAddress = "174.86.47.26";  //IP of server192.168.1.13  // ip of home 174.86.47.26  // change this back
+    string ipAddress = "174.86.238.171"; //(as of 8/8/2022)
     int port = 7000;                    //Listening Port # of Server
     std::string s[2];
     std::stringstream ss;
