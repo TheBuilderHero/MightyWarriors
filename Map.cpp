@@ -135,108 +135,110 @@ void Map::displayLocations(){
     //main island asci data:
     pos[value][1] = 34+50;
     pos[value++][0] = 34+50;
-    pos[value][1] = 35+50;
+    pos[value][1] = 36+50;
     pos[value++][0] = 28+50;
     pos[value][1] = 36+50;
     pos[value++][0] = 26+50;
     pos[value][1] = 42+50;
     pos[value++][0] = 26+50;
-    pos[value][1] = 43+50;
+    pos[value][1] = 42+50;
     pos[value++][0] = 24+50;
     pos[value][1] = 44+50;
-    pos[value++][0] = 23+50;
-    pos[value][1] = 45+50;
-    pos[value++][0] = 21+50;
-    pos[value][1] = 47+50;
-    pos[value++][0] = 19+50;
+    pos[value++][0] = 22+50;
+    pos[value][1] = 44+50;
+    pos[value++][0] = 20+50;
+    pos[value][1] = 46+50;
+    pos[value++][0] = 20+50;
     pos[value][1] = 48+50;
     pos[value++][0] = 18+50;
     pos[value][1] = 50+50;
-    pos[value++][0] = 17+50;
-    pos[value][1] = 51+50;
     pos[value++][0] = 18+50;
     pos[value][1] = 52+50;
-    pos[value++][0] = 19+50;
-    pos[value][1] = 53+50;
-    pos[value++][0] = 19+50;
+    pos[value++][0] = 18+50;
+    pos[value][1] = 52+50;
+    pos[value++][0] = 20+50;
+    pos[value][1] = 52+50;
+    pos[value++][0] = 20+50;
     pos[value][1] = 54+50;
-    pos[value++][0] = 18+50;
-    pos[value][1] = 55+50;
-    pos[value++][0] = 18+50;
-    pos[value][1] = 57+50;
-    pos[value++][0] = 17+50;
+    pos[value++][0] = 19+50;
+    pos[value][1] = 56+50;
+    pos[value++][0] = 19+50;
     pos[value][1] = 58+50;
-    pos[value++][0] = 17+50;
+    pos[value++][0] = 19+50;
+    pos[value][1] = 58+50;
+    pos[value++][0] = 19+50;
     pos[value][3] = 58+50;
-    pos[value][2] = 37+50;
+    pos[value][2] = 38+50;
     pos[value][1] = 34+50;
-    pos[value++][0] = 17+50;
+    pos[value++][0] = 19+50;
     pos[value][5] = 60+50;
     pos[value][4] = 42+50;
     pos[value][3] = 40+50;
-    pos[value][2] = 39+50;
+    pos[value][2] = 40+50;
     pos[value][1] = 34+50;
-    pos[value++][0] = 17+50;
+    pos[value++][0] = 19+50;
     pos[value][5] = 60+50;
     pos[value][4] = 56+50;
     pos[value][3] = 54+50;
     pos[value][2] = 42+50;
     pos[value][1] = 34+50;
-    pos[value++][0] = 17+50;
-    pos[value][5] = 61+50;
-    pos[value][4] = 57+50;
+    pos[value++][0] = 19+50;
+    pos[value][5] = 62+50;
+    pos[value][4] = 58+50;
     pos[value][3] = 54+50;
     pos[value][2] = 44+50;
     pos[value][1] = 34+50;
-    pos[value++][0] = 18+50;
-    pos[value][5] = 61+50;
-    pos[value][4] = 59+50;
+    pos[value++][0] = 19+50;
+    pos[value][5] = 62+50;
+    pos[value][4] = 60+50;
     pos[value][3] = 54+50;
     pos[value][2] = 46+50;
     pos[value][1] = 34+50;
-    pos[value++][0] = 20+50;
-    pos[value][3] = 51+50;
-    pos[value][2] = 47+50;
-    pos[value][1] = 33+50;
-    pos[value++][0] = 20+50;
+    pos[value++][0] = 19+50;
+    pos[value][3] = 52+50;
+    pos[value][2] = 48+50;
     pos[value][1] = 34+50;
-    pos[value++][0] = 20+50;
-    pos[value][1] = 35+50;
-    pos[value++][0] = 20+50;
-    pos[value][1] = 35+50;
+    pos[value++][0] = 19+50;
+    pos[value][1] = 34+50;
+    pos[value++][0] = 19+50;
+    pos[value][1] = 36+50;
+    pos[value++][0] = 19+50;
+    pos[value][1] = 36+50;
     pos[value++][0] = 22+50;
     pos[value][1] = 36+50;
     pos[value++][0] = 22+50;
-    pos[value][1] = 37+50;
-    pos[value++][0] = 23+50;
     pos[value][1] = 38+50;
-    pos[value++][0] = 23+50;
-    pos[value][1] = 39+50;
-    pos[value++][0] = 24+50;
-    pos[value][1] = 39+50;
-    pos[value++][0] = 24+50;
-    pos[value][1] = 40+50;
-    pos[value++][0] = 24+50;
+    pos[value++][0] = 25+50;
+    pos[value][1] = 38+50;
+    pos[value++][0] = 25+50;
     pos[value][1] = 40+50;
     pos[value++][0] = 25+50;
-    pos[value][1] = 37+50;
+    pos[value][1] = 40+50;
     pos[value++][0] = 25+50;
-    pos[value][1] = 33+50;
-    pos[value++][0] = 26+50;
-    pos[value][1] = 31+50;
-    pos[value++][0] = 28+50;
-    pos[value][1] = 31+50;
-    pos[value++][0] = 29+50;
-    pos[value][1] = 31+50;
-    pos[value++][0] = 30+50;
+    pos[value][1] = 40+50;
+    pos[value++][0] = 25+50;
+    pos[value][1] = 40+50;
+    pos[value++][0] = 25+50;
+    pos[value][1] = 38+50;
+    pos[value++][0] = 25+50;
+    pos[value][1] = 34+50;
+    pos[value++][0] = 25+50;
     pos[value][1] = 32+50;
-    pos[value++][0] = 30+50;
+    pos[value++][0] = 28+50;
+    pos[value][1] = 32+50;
+    pos[value++][0] = 31+50;
+    pos[value][1] = 32+50;
+    pos[value++][0] = 31+50;
+    pos[value][1] = 32+50;
+    pos[value++][0] = 31+50;
     while (value < maxRow) {
         pos[value][1] = maxColumn - 1;//-1 for the inside of the outline
         pos[value++][0] = maxColumn;//+1 for the inside of the outline //was minColumn + 1 to fill the entire row
     }
 
     Menu menu;
+    string mapUnfilled = "\u231A";
+    string mapFilled = "\u231A";
     //starting from top to bottom for the first number and left to right for the second number in pos1_1 - pos#_# 
     int posRow = minRow; //+1 for the inside of the outline
     for (int rowCount = minRow+1; rowCount < maxRow; rowCount++){ //added 1 to the minRow since this will then keep the output inside the outline
@@ -246,7 +248,7 @@ void Map::displayLocations(){
         while (currentPos <= pos[rowCount][1]){
 
             if (lastInput1_0 == 2){ //used to put spaces between the 0's to spread out the look of the map
-                menu.display(currentPos, rowCount, "0");
+                menu.display(currentPos, rowCount, mapUnfilled);
                 lastInput1_0 = 0;
             } else {
                 menu.display(currentPos, rowCount, " ");
@@ -259,7 +261,7 @@ void Map::displayLocations(){
             int currentPos2 = pos[rowCount][2];
             while (currentPos2 <= pos[rowCount][3]){
                 if (lastInput1_0 == 2){ //used to put spaces between the 0's to spread out the look of the map
-                    menu.display(currentPos2, rowCount, "0");
+                    menu.display(currentPos2, rowCount, mapUnfilled);
                     lastInput1_0 = 0;
                 } else {
                     menu.display(currentPos2, rowCount, " ");
@@ -274,7 +276,7 @@ void Map::displayLocations(){
             while (currentPos3 <= pos[rowCount][5]){
 
                 if (lastInput1_0 == 2){ //used to put spaces between the 0's to spread out the look of the map
-                    menu.display(currentPos3, rowCount, "0");
+                    menu.display(currentPos3, rowCount, mapUnfilled);
                     lastInput1_0 = 0;
                 } else {
                     menu.display(currentPos3, rowCount, " ");
