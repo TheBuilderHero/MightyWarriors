@@ -237,21 +237,29 @@ void Map::displayLocations(){
     }
 
     Menu menu;
-    string mapUnfilled = "0";
+    int locationConfirmedCount = 0;
+    string mapBlank = " ";
     string mapFilled = "X";
+    string mapUnfilled = to_string(locationConfirmedCount);// "0";
     //starting from top to bottom for the first number and left to right for the second number in pos1_1 - pos#_# 
     int posRow = minRow; //+1 for the inside of the outline
     for (int rowCount = minRow+1; rowCount < maxRow; rowCount++){ //added 1 to the minRow since this will then keep the output inside the outline
+        mapUnfilled = to_string(locationConfirmedCount);
         int currentPos = pos[rowCount][0];
         int lastInput1_0 = 1;
         //int currentPos = 5;
         while (currentPos <= pos[rowCount][1]){
 
             if (lastInput1_0 == 1){ //used to put spaces between the 0's to spread out the look of the map
+                locationConfirmedCount++;
                 menu.display(currentPos, rowCount, mapUnfilled);
+                //these two lines record all of the locations on the map so people can travel to them.
+                //possibleTravelLocations[locationConfirmedCount].x = rowCount;
+                //possibleTravelLocations[locationConfirmedCount].y = currentPos;
+
                 lastInput1_0 = 0;
             } else {
-                menu.display(currentPos, rowCount, " ");
+                menu.display(currentPos, rowCount, mapBlank);
                 lastInput1_0++;
             }
             currentPos++;
@@ -265,10 +273,11 @@ void Map::displayLocations(){
             int currentPos2 = pos[rowCount][2];
             while (currentPos2 <= pos[rowCount][3]){
                 if (lastInput1_0 == 1){ //used to put spaces between the 0's to spread out the look of the map
+                    locationConfirmedCount++;
                     menu.display(currentPos2, rowCount, mapUnfilled);
                     lastInput1_0 = 0;
                 } else {
-                    menu.display(currentPos2, rowCount, " ");
+                    menu.display(currentPos2, rowCount, mapBlank);
                     lastInput1_0++;
                 }
                 currentPos2++;
@@ -284,10 +293,11 @@ void Map::displayLocations(){
             while (currentPos3 <= pos[rowCount][5]){
 
                 if (lastInput1_0 == 1){ //used to put spaces between the 0's to spread out the look of the map
+                    locationConfirmedCount++;
                     menu.display(currentPos3, rowCount, mapUnfilled);
                     lastInput1_0 = 0;
                 } else {
-                    menu.display(currentPos3, rowCount, " ");
+                    menu.display(currentPos3, rowCount, mapBlank);
                     lastInput1_0++;
                 }
                 currentPos3++;

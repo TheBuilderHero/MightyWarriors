@@ -8,6 +8,14 @@ class Map{
         TempEntity player;
         int maxColumn, minColumn;
         int maxRow, minRow;
+        struct coords
+        {
+            // data 
+            int x;
+            int y;
+        };
+        coords possibleTravelLocations[]; //these are all the places coordinates which a player can travel
+        
     public:
         void listAvalibleLocations(std::string username);
         void displayMapOutline();
