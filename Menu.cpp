@@ -20,9 +20,13 @@
 #undef max 
 
 using namespace std;
+
 Cipher code; //declare the new instance of Cipher class
 Account account;
 Battle battle;
+WorldMap worldMap;
+Map map;
+Quests quest;
 
 void fnExit(); //prototype from source.cpp
 
@@ -134,10 +138,9 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         case 0:
             exit(1);
             break;
-        case 1:{ //"Go Questing"//map for traveling and questing 
-                 //We probably need a separate questing menu
-            Map map;
-            Quests quest;
+        case 1:{//"Go Questing"//map for traveling and questing 
+                //We probably need a separate questing menu
+            //Map map;
             system("cls");
             //map.listAvalibleLocations(username);
             quest.setPlayer(player);
@@ -189,8 +192,6 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
 
 void Menu::travelMenu(string username){ //bring up the menu for travel
     system("cls");
-    WorldMap worldMap;
-    Map map;
     bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false,
     nKeyPressedLastLoop = false, iKeyPressedLastLoop = false, aKeyPressedLastLoop = false, 
     controlKeyPressedLastLoop = false, altKeyPressedLastLoop = false ,kKeyPressedLastLoop = false;
@@ -459,7 +460,7 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         break;}
     case 6:{
         system("cls");
-        Map map;
+        //Map map;
         map.displayMapOutline();
         waitForEnter(getEnterKeyState());
         break;

@@ -240,11 +240,11 @@ void Map::displayLocations(){
     int locationConfirmedCount = 0;
     string mapBlank = " ";
     string mapFilled = "X";
-    string mapUnfilled = to_string(locationConfirmedCount);// "0";
+    string mapUnfilled = "0";//to_string(locationConfirmedCount);
     //starting from top to bottom for the first number and left to right for the second number in pos1_1 - pos#_# 
     int posRow = minRow; //+1 for the inside of the outline
     for (int rowCount = minRow+1; rowCount < maxRow; rowCount++){ //added 1 to the minRow since this will then keep the output inside the outline
-        mapUnfilled = to_string(locationConfirmedCount);
+        //mapUnfilled = to_string(locationConfirmedCount); //tesing value
         int currentPos = pos[rowCount][0];
         int lastInput1_0 = 1;
         //int currentPos = 5;
@@ -254,8 +254,8 @@ void Map::displayLocations(){
                 locationConfirmedCount++;
                 menu.display(currentPos, rowCount, mapUnfilled);
                 //these two lines record all of the locations on the map so people can travel to them.
-                //possibleTravelLocations[locationConfirmedCount].x = rowCount;
-                //possibleTravelLocations[locationConfirmedCount].y = currentPos;
+                possibleTravelLocations[locationConfirmedCount].x = rowCount;
+                possibleTravelLocations[locationConfirmedCount].y = currentPos;
 
                 lastInput1_0 = 0;
             } else {
@@ -275,6 +275,9 @@ void Map::displayLocations(){
                 if (lastInput1_0 == 1){ //used to put spaces between the 0's to spread out the look of the map
                     locationConfirmedCount++;
                     menu.display(currentPos2, rowCount, mapUnfilled);
+                    possibleTravelLocations[locationConfirmedCount].x = rowCount;
+                    possibleTravelLocations[locationConfirmedCount].y = currentPos;
+
                     lastInput1_0 = 0;
                 } else {
                     menu.display(currentPos2, rowCount, mapBlank);
@@ -295,6 +298,9 @@ void Map::displayLocations(){
                 if (lastInput1_0 == 1){ //used to put spaces between the 0's to spread out the look of the map
                     locationConfirmedCount++;
                     menu.display(currentPos3, rowCount, mapUnfilled);
+                    possibleTravelLocations[locationConfirmedCount].x = rowCount;
+                    possibleTravelLocations[locationConfirmedCount].y = currentPos;
+
                     lastInput1_0 = 0;
                 } else {
                     menu.display(currentPos3, rowCount, mapBlank);
@@ -303,6 +309,7 @@ void Map::displayLocations(){
                 currentPos3++;
             }
         }
+    menu.display(0, 51, "Total number of locations: " + to_string(locationConfirmedCount)); //display the number of locations on the map
     }
 }
 
