@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include "Map.h"
+#include "WorldMap.h"
 #include "Menu.h"
 #include "Account.h"
 #include "Battle.h"
@@ -238,9 +239,6 @@ void Map::displayLocations(){
 
     Menu menu;
     int locationConfirmedCount = 0;
-    string mapBlank = " ";
-    string mapFilled = "X";
-    string mapUnfilled = "0";//to_string(locationConfirmedCount);
     //starting from top to bottom for the first number and left to right for the second number in pos1_1 - pos#_# 
     int posRow = minRow; //+1 for the inside of the outline
     for (int rowCount = minRow+1; rowCount < maxRow; rowCount++){ //added 1 to the minRow since this will then keep the output inside the outline
@@ -252,14 +250,16 @@ void Map::displayLocations(){
 
             if (lastInput1_0 == 1){ //used to put spaces between the 0's to spread out the look of the map
                 locationConfirmedCount++;
-                menu.display(currentPos, rowCount, mapUnfilled);
+                menu.display(currentPos, rowCount, getMapUnfilled() ,false,false);
+                possibleTravelLocations[locationConfirmedCount].x = currentPos;
+                possibleTravelLocations[locationConfirmedCount].y = rowCount;
                 //these two lines record all of the locations on the map so people can travel to them.
-                possibleTravelLocations[locationConfirmedCount].x = rowCount;
-                possibleTravelLocations[locationConfirmedCount].y = currentPos;
+                    //worldMap.locationsRecord(locationConfirmedCount, rowCount, currentPos); //map.setPossibleTravelLocations(locationConfirmedCount, rowCount, currentPos);
+                    // Testing output:  cout << "Y: " + to_string(rowCount) + "X: " + to_string(currentPos) << endl;
 
                 lastInput1_0 = 0;
             } else {
-                menu.display(currentPos, rowCount, mapBlank);
+                menu.display(currentPos, rowCount, getMapBlank());
                 lastInput1_0++;
             }
             currentPos++;
@@ -274,13 +274,15 @@ void Map::displayLocations(){
             while (currentPos2 <= pos[rowCount][3]){
                 if (lastInput1_0 == 1){ //used to put spaces between the 0's to spread out the look of the map
                     locationConfirmedCount++;
-                    menu.display(currentPos2, rowCount, mapUnfilled);
-                    possibleTravelLocations[locationConfirmedCount].x = rowCount;
-                    possibleTravelLocations[locationConfirmedCount].y = currentPos;
+                    menu.display(currentPos2, rowCount, getMapUnfilled(),false,false);
+                    possibleTravelLocations[locationConfirmedCount].x = currentPos;
+                    possibleTravelLocations[locationConfirmedCount].y = rowCount;
+                    //worldMap.locationsRecord(locationConfirmedCount, rowCount, currentPos); //map.setPossibleTravelLocations(locationConfirmedCount, rowCount, currentPos);
+                    // Testing output:  cout << "Y: " + to_string(rowCount) + "X: " + to_string(currentPos) << endl;
 
                     lastInput1_0 = 0;
                 } else {
-                    menu.display(currentPos2, rowCount, mapBlank);
+                    menu.display(currentPos2, rowCount, getMapBlank());
                     lastInput1_0++;
                 }
                 currentPos2++;
@@ -297,19 +299,36 @@ void Map::displayLocations(){
 
                 if (lastInput1_0 == 1){ //used to put spaces between the 0's to spread out the look of the map
                     locationConfirmedCount++;
-                    menu.display(currentPos3, rowCount, mapUnfilled);
-                    possibleTravelLocations[locationConfirmedCount].x = rowCount;
-                    possibleTravelLocations[locationConfirmedCount].y = currentPos;
+                    menu.display(currentPos3, rowCount, getMapUnfilled(),false,false);
+                    possibleTravelLocations[locationConfirmedCount].x = currentPos;
+                    possibleTravelLocations[locationConfirmedCount].y = rowCount;
+                    //worldMap.locationsRecord(locationConfirmedCount, rowCount, currentPos); //map.setPossibleTravelLocations(locationConfirmedCount, rowCount, currentPos);
+                    // Testing output:  cout << "Y: " + to_string(rowCount) + "X: " + to_string(currentPos) << endl;
 
                     lastInput1_0 = 0;
                 } else {
-                    menu.display(currentPos3, rowCount, mapBlank);
+                    menu.display(currentPos3, rowCount, getMapBlank());
                     lastInput1_0++;
                 }
                 currentPos3++;
             }
         }
-    menu.display(0, 51, "Total number of locations: " + to_string(locationConfirmedCount)); //display the number of locations on the map
+        /*
+        if (worldMap.getMapLocationValue() >= 0){
+            //value is set properly
+        } else {
+            //value was not set
+            worldMap.setMapLocationValue(433);
+        }
+        worldMap.setMapLocationValue(433);
+        */
+        /*
+        for (int i = 0; i <= 438; i++){
+            cout << " X: " + to_string(map.getPossibleTravelLocationsX(worldMap.getMapLocationValue())) + " Y: " + to_string(map.getPossibleTravelLocationsY(worldMap.getMapLocationValue())) << endl;
+        }*/
+        //menu.display(worldMap.getLocationX(worldMap.getMapLocationValue()), worldMap.getLocationY(worldMap.getMapLocationValue()), mapFilled);
+        menu.display(0, 51, "Total number of locations: " + to_string(locationConfirmedCount)); //display the number of locations on the map
+        //menu.display(0, 52, "map value: " + to_string(worldMap.getMapLocationValue()));
     }
 }
 

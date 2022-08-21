@@ -4,7 +4,12 @@
 #include "WorldMap.h"
 #include "Battle.h"
 #include "Menu.h"
+#include "Map.h"
+
 using namespace std;
+
+extern Map map;
+
 //The map and movement are laid out thus:
 // 1 - 2 -_3_
 // 4 | 5 - 6
@@ -284,6 +289,19 @@ void WorldMap::travel(int direction){
     }
 }
 
+/*
+void locationsRecord(int locationCount, int y, int x) {
+    map.setPossibleTravelLocations(locationCount, y, x);
+}
+
+int getLocationX(int num) {
+    return map.getPossibleTravelLocationsX(num);
+}
+
+int getLocationY(int num) {
+    return map.getPossibleTravelLocationsY(num);
+}
+*/
 /*void WorldMap::travelEncounter(string username){
     srand(time(NULL)); 
     if(rand() % 3 == 0){

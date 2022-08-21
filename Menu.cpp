@@ -205,6 +205,7 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
     display(32, 7, "Return to Menu");       display(53, 7, "(Press \"0\")", false);
     map.displayMapOutline(); //draw the map outline to the screen
     map.displayLocations();
+    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled());
 
     int value = numberPressWait(4, true);
     switch (value){
@@ -220,6 +221,7 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
         worldMap.setPlayer(player);
         worldMap.travel(value);
         setPlayer(worldMap.getPlayer());
+        map.setCurrentLocation(1);
         //menu(username);
         break;
     case 15:
