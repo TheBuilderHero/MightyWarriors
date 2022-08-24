@@ -151,7 +151,10 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         case 2://travel option
             system("cls");
             ClearConsoleInputBuffer();
+            stillTraveling = true;
+            do {
             travelMenu(username);
+            } while(stillTraveling);
             break;
         case 3://display stats
             system("cls");
@@ -211,6 +214,7 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
     switch (value){
     case 0://Return to menu
         //menu(username); //causing duplicate menus
+        stillTraveling = false;
         break;
     case 1:
     case 2:

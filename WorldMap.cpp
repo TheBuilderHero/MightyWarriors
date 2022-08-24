@@ -278,7 +278,7 @@ void WorldMap::travel(int direction){
         }        
     }
     */
-    /*
+    /* //Old movement code
     if(canTravel(location, direction)){
         if(direction == 1){
             player.setLocation(location - 3);

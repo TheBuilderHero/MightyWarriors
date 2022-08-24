@@ -7,6 +7,7 @@ class Menu {
     private: 
         TempEntity player;
         bool exitAdminMenu = false;
+        bool stillTraveling = false;
     public:
         const int gameVersion     = 1;
         const int gameMajorBuild  = 0;
