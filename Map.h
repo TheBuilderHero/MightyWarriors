@@ -30,7 +30,8 @@ class Map{
         void displayLocations(int city); //displays map of city
         void displayLocations(int city, int town); //displays map of town
 
-        void setCurrentLocation(int num) { currentLocation += num; }
+        void setCurrentLocation(int num) { currentLocation = num; }
+        bool canMoveFromCurrentLocation(int directionValue);
         int getCurrentLocation() {if (currentLocation > 0) { return currentLocation;} else { return currentLocation = 1; } }
 
         /*

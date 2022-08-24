@@ -251,6 +251,7 @@ string WorldMap::getTravelMessage(int location, int direction){
 }
 
 void WorldMap::travel(int direction){
+    /*
     Menu menu; 
     encounter = false;
     srand(time(NULL)); 
@@ -276,6 +277,8 @@ void WorldMap::travel(int direction){
             player.setBattleResult(false);
         }        
     }
+    */
+    /*
     if(canTravel(location, direction)){
         if(direction == 1){
             player.setLocation(location - 3);
@@ -286,6 +289,24 @@ void WorldMap::travel(int direction){
         }else if(direction == 4){
             player.setLocation(location - 1);
         }
+    }
+    */
+    bool ableToMove = true;
+    if(direction == 1){
+        ableToMove = map.canMoveFromCurrentLocation(direction);
+    }else if(direction == 2){
+        ableToMove = map.canMoveFromCurrentLocation(direction);
+    }else if(direction == 3){
+        ableToMove = map.canMoveFromCurrentLocation(direction);
+    }else if(direction == 4){
+        ableToMove = map.canMoveFromCurrentLocation(direction);
+    }
+    if (ableToMove){
+        cout << "move success!" << endl;
+        system("pause");
+    } else {
+        cout << "failed move" << endl;
+        system("pause");
     }
 }
 

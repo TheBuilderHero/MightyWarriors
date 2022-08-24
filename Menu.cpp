@@ -219,9 +219,9 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
         system("cls");
         ClearConsoleInputBuffer();
         worldMap.setPlayer(player);
-        worldMap.travel(value);
+        worldMap.travel(value); //value
         setPlayer(worldMap.getPlayer());
-        map.setCurrentLocation(1);
+        //map.setCurrentLocation(1);
         //menu(username);
         break;
     case 15:

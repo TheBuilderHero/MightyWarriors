@@ -332,6 +332,89 @@ void Map::displayLocations(){
     }
 }
 
+bool Map::canMoveFromCurrentLocation(int directionValue) { //1 for north, 2 for east, 3 for south, 4 for west
+    switch (directionValue)
+    {
+        case 1:{
+            int endVal = 0;
+            for (int i = 0; i <= 438; i++){
+                if (possibleTravelLocations[i].x == possibleTravelLocations[getCurrentLocation()].x){
+                    if (possibleTravelLocations[i].y == possibleTravelLocations[getCurrentLocation()].y - 1){
+                        setCurrentLocation(i);
+                        return true;
+                    }
+                }
+                endVal++;
+            }
+            if (endVal >= 438){
+                cout << "location travel failed" << endl;
+                system("pause");
+                return false;
+            }
+            break;
+        }
+        case 2:{
+            int endVal = 0;
+            for (int i = 0; i <= 438; i++){
+                if (possibleTravelLocations[i].x == possibleTravelLocations[getCurrentLocation()].x + 2){
+                    if (possibleTravelLocations[i].y == possibleTravelLocations[getCurrentLocation()].y){
+                        setCurrentLocation(i);
+                        return true;
+                    }
+                }
+                endVal++;
+            }
+            if (endVal >= 438){
+                cout << "location travel failed" << endl;
+                system("pause");
+                return false;
+            }
+            break;
+        }
+        case 3:{
+            int endVal = 0;
+            for (int i = 0; i <= 438; i++){
+                if (possibleTravelLocations[i].x == possibleTravelLocations[getCurrentLocation()].x){
+                    if (possibleTravelLocations[i].y == possibleTravelLocations[getCurrentLocation()].y + 1){
+                        setCurrentLocation(i);
+                        return true;
+                    }
+                }
+                endVal++;
+            }
+            if (endVal >= 438){
+                cout << "location travel failed" << endl;
+                system("pause");
+                return false;
+            }
+            break;
+        }
+        case 4:{
+            int endVal = 0;
+            for (int i = 0; i <= 438; i++){
+                if (possibleTravelLocations[i].x == possibleTravelLocations[getCurrentLocation()].x - 2){
+                    if (possibleTravelLocations[i].y == possibleTravelLocations[getCurrentLocation()].y){
+                        setCurrentLocation(i);
+                        return true;
+                    }
+                }
+                endVal++;
+            }
+            if (endVal >= 438){
+                cout << "location travel failed" << endl;
+                system("pause");
+                return false;
+            }
+            break;
+        }
+    
+        default:{
+            return false;
+        }
+    }
+    return false;
+}
+
 void Map::displayLocations(int city){
     switch(city){
         case 1:
