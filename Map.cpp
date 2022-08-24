@@ -275,7 +275,7 @@ void Map::displayLocations(){
                 if (lastInput1_0 == 1){ //used to put spaces between the 0's to spread out the look of the map
                     locationConfirmedCount++;
                     menu.display(currentPos2, rowCount, getMapUnfilled(),false,false);
-                    possibleTravelLocations[locationConfirmedCount].x = currentPos;
+                    possibleTravelLocations[locationConfirmedCount].x = currentPos2;
                     possibleTravelLocations[locationConfirmedCount].y = rowCount;
                     //worldMap.locationsRecord(locationConfirmedCount, rowCount, currentPos); //map.setPossibleTravelLocations(locationConfirmedCount, rowCount, currentPos);
                     // Testing output:  cout << "Y: " + to_string(rowCount) + "X: " + to_string(currentPos) << endl;
@@ -300,7 +300,7 @@ void Map::displayLocations(){
                 if (lastInput1_0 == 1){ //used to put spaces between the 0's to spread out the look of the map
                     locationConfirmedCount++;
                     menu.display(currentPos3, rowCount, getMapUnfilled(),false,false);
-                    possibleTravelLocations[locationConfirmedCount].x = currentPos;
+                    possibleTravelLocations[locationConfirmedCount].x = currentPos3;
                     possibleTravelLocations[locationConfirmedCount].y = rowCount;
                     //worldMap.locationsRecord(locationConfirmedCount, rowCount, currentPos); //map.setPossibleTravelLocations(locationConfirmedCount, rowCount, currentPos);
                     // Testing output:  cout << "Y: " + to_string(rowCount) + "X: " + to_string(currentPos) << endl;

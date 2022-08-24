@@ -303,7 +303,7 @@ void WorldMap::travel(int direction){
     }
     if (ableToMove){
         cout << "move success!" << endl;
-        system("pause");
+        //system("pause");
     } else {
         cout << "failed move" << endl;
         system("pause");
