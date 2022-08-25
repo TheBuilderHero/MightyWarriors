@@ -15,7 +15,7 @@ class Map{
             int x;
             int y;
         };
-        coords possibleTravelLocations[500]; //these are all the places coordinates which a player can travel
+        coords possibleTravelLocations[750]; //these are all the places coordinates which a player can travel
         int currentLocation;
         std::string mapBlank = " ";
         std::string mapFilled = "X";
