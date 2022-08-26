@@ -134,104 +134,102 @@ void Map::displayLocations(){
         pos[i][0] = 0;
     }
     //main island asci data:
-    pos[value][1] = 34+50;
-    pos[value++][0] = 34+50;
     pos[value][1] = 36+50;
-    pos[value++][0] = 28+50;
-    pos[value][1] = 36+50;
-    pos[value++][0] = 26+50;
+    pos[value++][0] = 34+50;//36
+    pos[value][1] = 38+50;
+    pos[value++][0] = 22+50;//35
     pos[value][1] = 42+50;
-    pos[value++][0] = 26+50;
-    pos[value][1] = 42+50;
-    pos[value++][0] = 24+50;
-    pos[value][1] = 44+50;
-    pos[value++][0] = 22+50;
-    pos[value][1] = 44+50;
-    pos[value++][0] = 20+50;
-    pos[value][1] = 46+50;
-    pos[value++][0] = 20+50;
-    pos[value][1] = 48+50;
-    pos[value++][0] = 18+50;
-    pos[value][1] = 50+50;
-    pos[value++][0] = 18+50;
+    pos[value++][0] = 18+50;//34
     pos[value][1] = 52+50;
-    pos[value++][0] = 18+50;
-    pos[value][1] = 52+50;
-    pos[value++][0] = 20+50;
-    pos[value][1] = 52+50;
-    pos[value++][0] = 20+50;
+    pos[value++][0] = 16+50;//33
     pos[value][1] = 54+50;
-    pos[value++][0] = 20+50;
+    pos[value++][0] = 14+50;//32
     pos[value][1] = 56+50;
-    pos[value++][0] = 20+50;
+    pos[value++][0] = 14+50;//31
     pos[value][1] = 58+50;
-    pos[value++][0] = 20+50;
-    pos[value][1] = 58+50;
-    pos[value++][0] = 20+50;
-    pos[value][3] = 58+50;
-    pos[value][2] = 38+50;
-    pos[value][1] = 34+50;
-    pos[value++][0] = 20+50;
-    pos[value][5] = 60+50;
-    pos[value][4] = 42+50;
-    pos[value][3] = 40+50;
-    pos[value][2] = 40+50;
-    pos[value][1] = 34+50;
-    pos[value++][0] = 20+50;
-    pos[value][5] = 60+50;
-    pos[value][4] = 56+50;
-    pos[value][3] = 54+50;
+    pos[value++][0] = 10+50;//30
+    pos[value][1] = 64+50;
+    pos[value++][0] = 6+50;//29
+    pos[value][1] = 66+50;
+    pos[value++][0] = 2+50;//28
+    pos[value][1] = 70+50;
+    pos[value++][0] = 4+50;//27
+    pos[value][1] = 74+50;
+    pos[value++][0] = 4+50;//26
+    pos[value][1] = 76+50;
+    pos[value++][0] = 4+50;//25
+    pos[value][1] = 78+50;
+    pos[value++][0] = 4+50;//24
+    pos[value][1] = 78+50;
+    pos[value++][0] = 4+50;//23
+    pos[value][1] = 80+50;
+    pos[value++][0] = 4+50;//22
+    pos[value][3] = 82+50;
     pos[value][2] = 42+50;
-    pos[value][1] = 34+50;
-    pos[value++][0] = 20+50;
-    pos[value][5] = 62+50;
-    pos[value][4] = 58+50;
-    pos[value][3] = 54+50;
-    pos[value][2] = 44+50;
-    pos[value][1] = 34+50;
-    pos[value++][0] = 20+50;
-    pos[value][5] = 62+50;
-    pos[value][4] = 60+50;
-    pos[value][3] = 54+50;
-    pos[value][2] = 46+50;
-    pos[value][1] = 34+50;
-    pos[value++][0] = 18+50;
-    pos[value][3] = 52+50;
+    pos[value][1] = 36+50;
+    pos[value++][0] = 2+50;//21
+    pos[value][3] = 84+50;
     pos[value][2] = 48+50;
-    pos[value][1] = 34+50;
-    pos[value++][0] = 18+50;
-    pos[value][1] = 34+50;
-    pos[value++][0] = 18+50;
     pos[value][1] = 36+50;
-    pos[value++][0] = 18+50;
+    pos[value++][0] = 2+50;//20
+    pos[value][5] = 86+50;
+    pos[value][4] = 78+50;
+    pos[value][3] = 74+50;
+    pos[value][2] = 50+50;
     pos[value][1] = 36+50;
-    pos[value++][0] = 22+50;
+    pos[value++][0] = 2+50;//19
+    pos[value][5] = 88+50;
+    pos[value][4] = 80+50;
+    pos[value][3] = 74+50;
+    pos[value][2] = 54+50;
     pos[value][1] = 36+50;
-    pos[value++][0] = 22+50;
-    pos[value][1] = 38+50;
-    pos[value++][0] = 24+50;
-    pos[value][1] = 38+50;
-    pos[value++][0] = 24+50;
-    pos[value][1] = 40+50;
-    pos[value++][0] = 24+50;
-    pos[value][1] = 40+50;
-    pos[value++][0] = 26+50;
-    pos[value][1] = 40+50;
-    pos[value++][0] = 26+50;
-    pos[value][1] = 40+50;
-    pos[value++][0] = 26+50;
-    pos[value][1] = 38+50;
-    pos[value++][0] = 26+50;
+    pos[value++][0] = 4+50;//18
+    pos[value][5] = 88+50;
+    pos[value][4] = 86+50;
+    pos[value][3] = 72+50;
+    pos[value][2] = 60+50;
     pos[value][1] = 34+50;
-    pos[value++][0] = 26+50;
+    pos[value++][0] = 4+50;//17
+    pos[value][1] = 34+50;
+    pos[value++][0] = 8+50;//16
+    pos[value][1] = 36+50;
+    pos[value++][0] = 8+50;//15
+    pos[value][1] = 38+50;
+    pos[value++][0] = 10+50;//14
+    pos[value][1] = 38+50;
+    pos[value++][0] = 12+50;//13
+    pos[value][1] = 40+50;
+    pos[value++][0] = 12+50;//12
+    pos[value][1] = 42+50;
+    pos[value++][0] = 14+50;//11
+    pos[value][1] = 42+50;
+    pos[value++][0] = 16+50;//10
+    pos[value][1] = 46+50;
+    pos[value++][0] = 16+50;//9
+    pos[value][1] = 50+50;
+    pos[value++][0] = 14+50;//8
+    pos[value][1] = 42+50;
+    pos[value++][0] = 16+50;//7
+    pos[value][3] = 98+50;
+    pos[value][2] = 86+50; 
+    pos[value][1] = 42+50;
+    pos[value++][0] = 18+50;//6
+    pos[value][3] = 104+50;
+    pos[value][2] = 80+50;
+    pos[value][1] = 34+50;
+    pos[value++][0] = 20+50;//5
+    pos[value][3] = 108+50;
+    pos[value][2] = 80+50;
     pos[value][1] = 32+50;
-    pos[value++][0] = 28+50;
+    pos[value++][0] = 24+50;//4
+    pos[value][3] = 110+50;
+    pos[value][2] = 84+50;
     pos[value][1] = 32+50;
-    pos[value++][0] = 30+50;
+    pos[value++][0] = 28+50;//3
     pos[value][1] = 32+50;
-    pos[value++][0] = 30+50;
+    pos[value++][0] = 30+50;//2
     pos[value][1] = 32+50;
-    pos[value++][0] = 30+50;
+    pos[value++][0] = 30+50;//1
     while (value < maxRow) {
         pos[value][1] = maxColumn - 1;//-1 for the inside of the outline
         pos[value++][0] = maxColumn;//+1 for the inside of the outline //was minColumn + 1 to fill the entire row
@@ -323,7 +321,7 @@ void Map::displayLocations(){
         worldMap.setMapLocationValue(433);
         */
         /*
-        for (int i = 0; i <= 438; i++){
+        for (int i = 0; i <= locationCount; i++){
             cout << " X: " + to_string(map.getPossibleTravelLocationsX(worldMap.getMapLocationValue())) + " Y: " + to_string(map.getPossibleTravelLocationsY(worldMap.getMapLocationValue())) << endl;
         }*/
         //menu.display(worldMap.getLocationX(worldMap.getMapLocationValue()), worldMap.getLocationY(worldMap.getMapLocationValue()), mapFilled);
@@ -337,7 +335,7 @@ bool Map::canMoveFromCurrentLocation(int directionValue) { //1 for north, 2 for 
     {
         case 1:{
             int endVal = 0;
-            for (int i = 0; i <= 438; i++){
+            for (int i = 0; i <= locationCount; i++){
                 if (possibleTravelLocations[i].x == possibleTravelLocations[getCurrentLocation()].x){
                     if (possibleTravelLocations[i].y == possibleTravelLocations[getCurrentLocation()].y - 1){
                         setCurrentLocation(i);
@@ -346,7 +344,7 @@ bool Map::canMoveFromCurrentLocation(int directionValue) { //1 for north, 2 for 
                 }
                 endVal++;
             }
-            if (endVal >= 438){
+            if (endVal >= locationCount){
                 cout << "location travel failed" << endl;
                 system("pause");
                 return false;
@@ -355,7 +353,7 @@ bool Map::canMoveFromCurrentLocation(int directionValue) { //1 for north, 2 for 
         }
         case 2:{
             int endVal = 0;
-            for (int i = 0; i <= 438; i++){
+            for (int i = 0; i <= locationCount; i++){
                 if (possibleTravelLocations[i].x == possibleTravelLocations[getCurrentLocation()].x + 2){
                     if (possibleTravelLocations[i].y == possibleTravelLocations[getCurrentLocation()].y){
                         setCurrentLocation(i);
@@ -364,7 +362,7 @@ bool Map::canMoveFromCurrentLocation(int directionValue) { //1 for north, 2 for 
                 }
                 endVal++;
             }
-            if (endVal >= 438){
+            if (endVal >= locationCount){
                 cout << "location travel failed" << endl;
                 system("pause");
                 return false;
@@ -373,7 +371,7 @@ bool Map::canMoveFromCurrentLocation(int directionValue) { //1 for north, 2 for 
         }
         case 3:{
             int endVal = 0;
-            for (int i = 0; i <= 438; i++){
+            for (int i = 0; i <= locationCount; i++){
                 if (possibleTravelLocations[i].x == possibleTravelLocations[getCurrentLocation()].x){
                     if (possibleTravelLocations[i].y == possibleTravelLocations[getCurrentLocation()].y + 1){
                         setCurrentLocation(i);
@@ -382,7 +380,7 @@ bool Map::canMoveFromCurrentLocation(int directionValue) { //1 for north, 2 for 
                 }
                 endVal++;
             }
-            if (endVal >= 438){
+            if (endVal >= locationCount){
                 cout << "location travel failed" << endl;
                 system("pause");
                 return false;
@@ -391,7 +389,7 @@ bool Map::canMoveFromCurrentLocation(int directionValue) { //1 for north, 2 for 
         }
         case 4:{
             int endVal = 0;
-            for (int i = 0; i <= 438; i++){
+            for (int i = 0; i <= locationCount; i++){
                 if (possibleTravelLocations[i].x == possibleTravelLocations[getCurrentLocation()].x - 2){
                     if (possibleTravelLocations[i].y == possibleTravelLocations[getCurrentLocation()].y){
                         setCurrentLocation(i);
@@ -400,7 +398,7 @@ bool Map::canMoveFromCurrentLocation(int directionValue) { //1 for north, 2 for 
                 }
                 endVal++;
             }
-            if (endVal >= 438){
+            if (endVal >= locationCount){
                 cout << "location travel failed" << endl;
                 system("pause");
                 return false;
