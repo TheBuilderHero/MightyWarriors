@@ -306,7 +306,7 @@ void WorldMap::travel(int direction){
         //cout << "move success!" << endl;
         //system("pause");
     } else {
-        menu.display(0, 0, "failed move   ");
+        menu.display(0, 0, "failed move   ", false, false);
         system("pause");
     }
 }
