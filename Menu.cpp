@@ -195,9 +195,6 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
 
 void Menu::travelMenu(string username){ //bring up the menu for travel
     system("cls");
-    bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false,
-    nKeyPressedLastLoop = false, iKeyPressedLastLoop = false, aKeyPressedLastLoop = false, 
-    controlKeyPressedLastLoop = false, altKeyPressedLastLoop = false ,kKeyPressedLastLoop = false;
 
     display(50, 1, "Travel");
     display(16, 2, worldMap.getMapDescription(player.getLocation()));//Dakota please help me load the user's current location
@@ -208,39 +205,46 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
     display(32, 7, "Return to Menu");       display(53, 7, "(Press \"0\")", false);
     map.displayMapOutline(); //draw the map outline to the screen
     map.displayLocations();
-    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled());
-
-    int value = numberPressWait(4, true);
-    switch (value){
-    case 0://Return to menu
-        //menu(username); //causing duplicate menus
-        stillTraveling = false;
-        break;
-    case 1:
-    case 2:
-    case 3:
-    case 4:
-        system("cls");
-        ClearConsoleInputBuffer();
-        worldMap.setPlayer(player);
-        worldMap.travel(value); //value
-        setPlayer(worldMap.getPlayer());
-        //map.setCurrentLocation(1);
-        //menu(username);
-        break;
-    case 15:
-        system("cls");
-        ClearConsoleInputBuffer();
-        //adminMenu(username);
-        break;
-    default:
-        system("cls");
-        ClearConsoleInputBuffer();
-        display(3, 3, "menu value somehow set impossibly!", false);
-        system("pause");
-        //menu(username);
-        break;
-    }
+    bool stillSimpleTraveling = true;// for the do while loop so we do not have to refresh the whole cmd
+    int tempCurrentLocation = -1; //no location
+    do{
+        if (tempCurrentLocation == -1){
+            tempCurrentLocation = map.getCurrentLocation();
+            display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled());
+        } else {
+            display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled());
+            display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled());
+            tempCurrentLocation = map.getCurrentLocation(); 
+        }
+        int value = numberPressWait(4, true);
+        switch (value){
+        case 0://Return to menu
+            //menu(username); //causing duplicate menus
+            stillTraveling = false;
+            stillSimpleTraveling = false;
+            break;
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+            //system("cls");
+            ClearConsoleInputBuffer();
+            worldMap.setPlayer(player);
+            worldMap.travel(value); //changes current location
+            setPlayer(worldMap.getPlayer());
+            //map.setCurrentLocation(1);
+            //menu(username);
+            break;
+        default:
+            system("cls");
+            ClearConsoleInputBuffer();
+            display(3, 3, "menu value somehow set impossibly!", false);
+            system("pause");
+            //menu(username);
+            break;
+        }
+    } while (stillSimpleTraveling);
+    
 }
 
 void Menu::displayStats(){
@@ -295,7 +299,7 @@ void Menu::displayStats(){
     cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-";
     display(0, 16, "Stamina:");             display(42 - to_string(player.getStamina()).size(), 16, to_string(player.getStamina()));
     cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-";
-    display(0, 18, "Mana:");                display(42 - to_string(player.getMana()).size(), 18, to_string(player.getMana()));
+    display(0, 18, "NaturalEnergy:");                display(42 - to_string(player.getNaturalEnergy()).size(), 18, to_string(player.getNaturalEnergy()));
     cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-";
     display(0, 20, "Mind:");                display(42 - mindString.size(), 20, mindString);
     cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << setfill('-') << setw(42) << "-";
@@ -313,7 +317,7 @@ void Menu::displayStats(){
         << "Agility: " << setfill(' ') << setw(33) << player.getAgility() << endl << setfill('-') << setw(42) << "-" << endl 
         << "Stealth: " << setfill(' ') << setw(33) << player.getStealth() << endl << setfill('-') << setw(42) << "-" << endl 
         << "Stamina: " << setfill(' ') << setw(33) << player.getStamina() << endl << setfill('-') << setw(42) << "-" << endl 
-        << "Mana: " << setfill(' ') << setw(36) << player.getMana() << endl << setfill('-') << setw(42) << "-" << endl; //This cout statement prints out all the stats for the user to see.
+        << "NaturalEnergy: " << setfill(' ') << setw(36) << player.getNaturalEnergy() << endl << setfill('-') << setw(42) << "-" << endl; //This cout statement prints out all the stats for the user to see.
     */
 
     system("pause");    

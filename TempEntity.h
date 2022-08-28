@@ -6,10 +6,10 @@ class TempEntity{
     private:
         std::string username;
         //Stats***********************************************************************************
-        int maxHealth, health, armor, magicResistance, physicalDamageMin, physicalDamageMax, magicDamageMin, magicDamageMax, agility, stealth, stamina, mana, maxMind, mind, psychicDamageMin, psychicDamageMax;
+        int maxHealth, health, armor, magicResistance, physicalDamageMin, physicalDamageMax, magicDamageMin, magicDamageMax, agility, stealth, stamina, naturalEnergy, maxMind, mind, psychicDamageMin, psychicDamageMax;
         //the following data is used to update the user's saved data on the server (need to create getters and setters)
         //Stats added*********************************************************************************************************************
-        int addedHealth, addedarmor, addedMagicResistance, addedPhysicalDamageMin, addedPhysicalDamageMax, addedMagicDamageMin, addedMagicDamageMax, addedAgility, addedStealth, addedStamina, addedMana, addedMaxMind, addedMind, addedPsychicDamageMin, addedPsychicDamageMax;
+        int addedHealth, addedarmor, addedMagicResistance, addedPhysicalDamageMin, addedPhysicalDamageMax, addedMagicDamageMin, addedMagicDamageMax, addedAgility, addedStealth, addedStamina, addedNaturalEnergy, addedMaxMind, addedMind, addedPsychicDamageMin, addedPsychicDamageMax;
         //weapon Additions****************************************************************************************************************
         int addedWeaponIron, addedWeaponWood, addedWeaponGems, addedWeaponFeet, addedWeaponFruit, addedWeaponBrains;
         
@@ -48,7 +48,7 @@ class TempEntity{
         int getAgility(){ return agility; }
         int getStealth(){ return stealth; }
         int getStamina(){ return stamina; }
-        int getMana(){ return mana; }
+        int getNaturalEnergy(){ return naturalEnergy; }
         int getMaxMind(){ return maxMind; }
         int getMind(){ return mind; }
         int getPsychicDamageMin(){ return psychicDamageMin; }
@@ -86,7 +86,7 @@ class TempEntity{
         void setAgility(int newAgility);
         void setStealth(int newStealth);
         void setStamina(int newStamina);
-        void setMana(int newMana);
+        void setNaturalEnergy(int newNaturalEnergy);
         void setMaxMind(int newMaxMind);
         void setMind(int newMind);
         void setPsychicDamageMin(int newPsychicDamageMin);
@@ -121,9 +121,9 @@ class TempEntity{
         void updateAgility(int addAgility);
         void updateStealth(int addStealth);
         void updateStamina(int addStamina);
-        void updateMana(int addMana);
-        void updateMaxMind(int addMana);
-        void updateMind(int addMana);
+        void updateNaturalEnergy(int addNaturalEnergy);
+        void updateMaxMind(int addNaturalEnergy);
+        void updateMind(int addNaturalEnergy);
         void updatePsychicDamageMin(int addPsychicDamageMin);
         void updatePsychicDamageMax(int addPsychicDamageMax);
 

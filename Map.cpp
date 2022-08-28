@@ -345,8 +345,8 @@ bool Map::canMoveFromCurrentLocation(int directionValue) { //1 for north, 2 for 
                 endVal++;
             }
             if (endVal >= locationCount){
-                cout << "location travel failed" << endl;
-                system("pause");
+                //cout << "location travel failed" << endl;
+                //system("pause");
                 return false;
             }
             break;
@@ -363,8 +363,8 @@ bool Map::canMoveFromCurrentLocation(int directionValue) { //1 for north, 2 for 
                 endVal++;
             }
             if (endVal >= locationCount){
-                cout << "location travel failed" << endl;
-                system("pause");
+                //cout << "location travel failed" << endl;
+                //system("pause");
                 return false;
             }
             break;
@@ -381,8 +381,8 @@ bool Map::canMoveFromCurrentLocation(int directionValue) { //1 for north, 2 for 
                 endVal++;
             }
             if (endVal >= locationCount){
-                cout << "location travel failed" << endl;
-                system("pause");
+                //cout << "location travel failed" << endl;
+                //system("pause");
                 return false;
             }
             break;
@@ -399,8 +399,8 @@ bool Map::canMoveFromCurrentLocation(int directionValue) { //1 for north, 2 for 
                 endVal++;
             }
             if (endVal >= locationCount){
-                cout << "location travel failed" << endl;
-                system("pause");
+                //cout << "location travel failed" << endl;
+                //system("pause");
                 return false;
             }
             break;

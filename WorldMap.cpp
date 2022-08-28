@@ -9,6 +9,7 @@
 using namespace std;
 
 extern Map map;
+extern Menu menu;
 
 //The map and movement are laid out thus:
 // 1 - 2 -_3_
@@ -302,10 +303,10 @@ void WorldMap::travel(int direction){
         ableToMove = map.canMoveFromCurrentLocation(direction);
     }
     if (ableToMove){
-        cout << "move success!" << endl;
+        //cout << "move success!" << endl;
         //system("pause");
     } else {
-        cout << "failed move" << endl;
+        menu.display(0, 0, "failed move   ");
         system("pause");
     }
 }

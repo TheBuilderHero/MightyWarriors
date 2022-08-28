@@ -11,7 +11,7 @@ private:
     TempEntity playerData;
     std::string playerUsername;
     bool dataSaveingOn = false;
-    int maxHealth, health, armor, magicResistance, maxPhysicalDamage, minPhysicalDamage, maxMagicDamage, minMagicDamage, agility, stealth, stamina, mana, maxMind, mind, maxPsychicDamage, minPsychicDamage;
+    int maxHealth, health, armor, magicResistance, maxPhysicalDamage, minPhysicalDamage, maxMagicDamage, minMagicDamage, agility, stealth, stamina, naturalEnergy, maxMind, mind, maxPsychicDamage, minPsychicDamage;
     int level, xp;
 
 public:
@@ -39,9 +39,9 @@ public:
     void updateSaveValueAgility(int addAgility);
     void updateSaveValueStealth(int addStealth);
     void updateSaveValueStamina(int addStamina);
-    void updateSaveValueMana(int addMana);
-    void updateSaveValueMaxMind(int addMana);
-    void updateSaveValueMind(int addMana);
+    void updateSaveValueNaturalEnergy(int addNaturalEnergy);
+    void updateSaveValueMaxMind(int addNaturalEnergy);
+    void updateSaveValueMind(int addNaturalEnergy);
     void updateSaveValuePsychicDamageMin(int addPsychicDamageMin);
     void updateSaveValuePsychicDamageMax(int addPsychicDamageMax);
     //Other:
@@ -61,7 +61,7 @@ public:
     int getSaveValueAgility(){ return agility; }
     int getSaveValueStealth(){ return stealth; }
     int getSaveValueStamina(){ return stamina; }
-    int getSaveValueMana(){ return mana; }
+    int getSaveValueNaturalEnergy(){ return naturalEnergy; }
     int getSaveValueMaxMind(){ return maxMind; }
     int getSaveValueMind(){ return mind; }
     int getSaveValuePsychicDamageMin(){ return minPsychicDamage; }

@@ -38,7 +38,7 @@ TempEntity::TempEntity(string currentUsername){
     setAgility(stoi(code.getItemS(6)));
     setStealth(stoi(code.getItemS(7)));
     setStamina(stoi(code.getItemS(8)));
-    setMana(stoi(code.getItemS(9)));
+    setNaturalEnergy(stoi(code.getItemS(9)));
     setMaxMind(stoi(code.getItemS(10)));
     setMind(stoi(code.getItemS(10)));
     //find the seperator and pull the values out of it for the min and max:
@@ -96,7 +96,7 @@ TempEntity::TempEntity(string currentUsername, bool NewTempEntityProccess){ //in
     setAgility(stoi(code.getItem(2,6)));
     setStealth(stoi(code.getItem(2,7)));
     setStamina(stoi(code.getItem(2,8)));
-    setMana(stoi(code.getItem(2,9)));
+    setNaturalEnergy(stoi(code.getItem(2,9)));
     setMaxMind(stoi(code.getItem(2,10)));
     setMind(stoi(code.getItem(2,10)));
     //find the seperator and pull the values out of it for the min and max:
@@ -142,7 +142,7 @@ TempEntity::TempEntity(string currentUsername, bool NewTempEntityProccess){ //in
     setOffHand(0);    
 }
 TempEntity::TempEntity(){//blank constructor if no username has been provided so far
-    health = armor = magicResistance = physicalDamageMin = physicalDamageMax = magicDamageMin = magicDamageMax = agility = stealth = stamina = mana = 0;
+    health = armor = magicResistance = physicalDamageMin = physicalDamageMax = magicDamageMin = magicDamageMax = agility = stealth = stamina = naturalEnergy = 0;
     location = 1;
     for(int i = 0; i < NUMBER_OF_QUESTS; i++){
         quest1Progress[i] = 0;
@@ -203,8 +203,8 @@ void TempEntity::setStealth(int newStealth){
 void TempEntity::setStamina(int newStamina){
     stamina = newStamina;
 }
-void TempEntity::setMana(int newMana){
-    mana = newMana;
+void TempEntity::setNaturalEnergy(int newNaturalEnergy){
+    naturalEnergy = newNaturalEnergy;
 }
 void TempEntity::setMaxMind(int newMind){
     maxMind = newMind;
@@ -297,8 +297,8 @@ void TempEntity::updateStealth(int addStealth){
 void TempEntity::updateStamina(int addStamina){
     stamina += addStamina;
 }
-void TempEntity::updateMana(int addMana){
-    mana += addMana;
+void TempEntity::updateNaturalEnergy(int addNaturalEnergy){
+    naturalEnergy += addNaturalEnergy;
 }
 void TempEntity::updateMaxMind(int addMind){
     maxMind += addMind;
