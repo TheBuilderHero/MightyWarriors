@@ -251,7 +251,7 @@ string WorldMap::getTravelMessage(int location, int direction){
     }
 }
 
-void WorldMap::travel(int direction){
+void WorldMap::travel(int direction, bool &failedTravel){
     /*
     Menu menu; 
     encounter = false;
@@ -303,10 +303,14 @@ void WorldMap::travel(int direction){
         ableToMove = map.canMoveFromCurrentLocation(direction);
     }
     if (ableToMove){
+        failedTravel = false;
         //cout << "move success!" << endl;
         //system("pause");
     } else {
-        menu.display(0, 0, "failed move   ", false, false);
+        failedTravel = true;
+        string messageFailure = "failed move   ";
+        int messageFailureLength = messageFailure.length();
+        menu.display(0, 0, messageFailure, messageFailureLength);
         system("pause");
     }
 }

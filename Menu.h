@@ -27,6 +27,7 @@ class Menu {
         int getEnterKeyState();
         void ClearConsoleInputBuffer();
         void display(int column, int row, std::string outputString, bool resetCursorPosition = true, bool addExtraRow = true);
+        void display(int column, int row, std::string outputString, int lengthOfString, bool resetCursorPosition = false, bool addExtraRow = false);
         std::string numberFormatting(double decimalNumber, int numberOfDecimals);
 
         void setPlayer(TempEntity playerE);

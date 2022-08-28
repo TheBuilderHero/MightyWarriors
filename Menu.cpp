@@ -207,14 +207,22 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
     map.displayLocations();
     bool stillSimpleTraveling = true;// for the do while loop so we do not have to refresh the whole cmd
     int tempCurrentLocation = -1; //no location
+    bool lastLoopFailedTravel = false;
     do{
         if (tempCurrentLocation == -1){
             tempCurrentLocation = map.getCurrentLocation();
             display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled());
         } else {
-            display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled());
-            display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled());
-            tempCurrentLocation = map.getCurrentLocation(); 
+            if (!lastLoopFailedTravel){
+                display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled());
+                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled());
+                tempCurrentLocation = map.getCurrentLocation(); 
+            } else {
+                for(int i = 0; i <= 50; i+=5){
+                    display(i,0, "     ");
+                }
+                lastLoopFailedTravel = false;
+            }
         }
         int value = numberPressWait(4, true);
         switch (value){
@@ -230,7 +238,7 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
             //system("cls");
             ClearConsoleInputBuffer();
             worldMap.setPlayer(player);
-            worldMap.travel(value); //changes current location
+            worldMap.travel(value, lastLoopFailedTravel); //changes current location
             setPlayer(worldMap.getPlayer());
             //map.setCurrentLocation(1);
             //menu(username);
@@ -700,6 +708,11 @@ void Menu::display(int column, int row, string outputString, bool resetCursorPos
             SetConsoleCursorPosition(screen, position);
         }
     }
+}
+
+void Menu::display(int column, int row, std::string outputString, int lengthOfString, bool resetCursorPosition, bool addExtraRow){
+    display(column, row, outputString, resetCursorPosition, addExtraRow);
+    display(column+lengthOfString, row, " ", resetCursorPosition, addExtraRow);
 }
 
 string Menu::numberFormatting(double decimalNumber, int numberOfDecimals) { //formats a decimal value to a given number of decimal places and returns it in string form
