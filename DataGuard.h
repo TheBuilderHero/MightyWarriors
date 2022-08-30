@@ -11,8 +11,8 @@ private:
     TempEntity playerData;
     std::string playerUsername;
     bool dataSaveingOn = false;
-    int maxHealth, health, armor, magicResistance, maxPhysicalDamage, minPhysicalDamage, maxMagicDamage, minMagicDamage, agility, stealth, stamina, naturalEnergy, maxMind, mind, maxPsychicDamage, minPsychicDamage;
-    int level, xp;
+    int maxHealth = 0, health = 0, armor = 0, magicResistance = 0, maxPhysicalDamage = 0, minPhysicalDamage = 0, maxMagicDamage = 0, minMagicDamage = 0, agility = 0, stealth = 0, stamina = 0, naturalEnergy = 0, maxMind = 0, mind = 0, maxPsychicDamage = 0, minPsychicDamage = 0;
+    int level, xp, locationNum;
 
 public:
     DataGuard();
@@ -47,6 +47,10 @@ public:
     //Other:
     void updateSaveValueCurrentXP(int addXP);
     void updateSaveValueLevel(int addLevel);
+
+    //Setters:
+    //Map Data:
+    void setPlayerMapLocation(int num);
     
     //Data saving getter functions:
     //Stats:
@@ -69,6 +73,8 @@ public:
     //Other:
     int getSaveValueCurrentXP(){ return xp; }
     int getSaveValueLevel(){ return level; }
+
+    void saveAllData();
 };
 
 //global data guard variable:

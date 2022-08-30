@@ -5,11 +5,13 @@
 #include "Battle.h"
 #include "Menu.h"
 #include "Map.h"
+#include "DataGuard.h"
 
 using namespace std;
 
 extern Map map;
 extern Menu menu;
+extern DataGuard guard;
 
 //The map and movement are laid out thus:
 // 1 - 2 -_3_
@@ -252,33 +254,7 @@ string WorldMap::getTravelMessage(int location, int direction){
 }
 
 void WorldMap::travel(int direction, bool &failedTravel){
-    /*
-    Menu menu; 
-    encounter = false;
-    srand(time(NULL)); 
-    if(rand() % 3 == 0){
-        encounter = true;
-    }
-    int location = player.getLocation();
-    getTravelMessage(player.getLocation(), direction);
-    menu.display(16, 1, travelMessage1);
-    menu.waitForEnter(menu.getEnterKeyState());
-    if(encounter){
-        Battle battle;
-        battle.setPlayer(player);
-        battle.questBattle(player.getUsername(), 100, 10);
-        setPlayer(battle.getPlayer());
-        if(!player.getBattleResult()){
-            menu.display(16, 1, "Having been defeated, you return to whence you came.");
-            menu.waitForEnter(menu.getEnterKeyState());
-            return;
-        }else{
-            menu.display(16, 1, travelMessage2);
-            menu.waitForEnter(menu.getEnterKeyState());
-            player.setBattleResult(false);
-        }        
-    }
-    */
+    
     /* //Old movement code
     if(canTravel(location, direction)){
         if(direction == 1){
@@ -306,6 +282,32 @@ void WorldMap::travel(int direction, bool &failedTravel){
         failedTravel = false;
         //cout << "move success!" << endl;
         //system("pause");
+        guard.setPlayerMapLocation(map.getCurrentLocation()); //this is for saving location to the server when then program is shut down.
+        //the following is code for the other travel system that probably needs some slight adjustments to the current system:
+        encounter = false;
+        srand(time(NULL)); 
+        if(rand() % 3 == 0){
+            encounter = true;
+        }
+        int location = player.getLocation();
+        getTravelMessage(player.getLocation(), direction);
+        menu.display(16, 1, travelMessage1);
+        menu.waitForEnter(menu.getEnterKeyState());
+        if(encounter){
+            Battle battle;
+            battle.setPlayer(player);
+            battle.questBattle(player.getUsername(), 100, 10);
+            setPlayer(battle.getPlayer());
+            if(!player.getBattleResult()){
+                menu.display(16, 1, "Having been defeated, you return to whence you came.");
+                menu.waitForEnter(menu.getEnterKeyState());
+                return;
+            }else{
+                menu.display(16, 1, travelMessage2);
+                menu.waitForEnter(menu.getEnterKeyState());
+                player.setBattleResult(false);
+            }        
+        }
     } else {
         failedTravel = true;
         string messageFailure = "failed move   ";
