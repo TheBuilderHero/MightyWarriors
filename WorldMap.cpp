@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 
+#include "Main.h"
 #include "WorldMap.h"
 #include "Battle.h"
 #include "Menu.h"
@@ -8,10 +9,6 @@
 #include "DataGuard.h"
 
 using namespace std;
-
-extern Map map;
-extern Menu menu;
-extern DataGuard guard;
 
 //The map and movement are laid out thus:
 // 1 - 2 -_3_
@@ -291,22 +288,31 @@ void WorldMap::travel(int direction, bool &failedTravel){
         }
         int location = player.getLocation();
         getTravelMessage(player.getLocation(), direction);
-        menu.display(16, 1, travelMessage1);
-        menu.waitForEnter(menu.getEnterKeyState());
         if(encounter){
+            menu.setStillSimpleTraveling(false);//no longer simple traveling (The cmd will have to re-output the travel menu.)
+            menu.clearDisplayRow(2);
+            menu.display(16, 2, travelMessage1);
+            menu.waitForEnter(menu.getEnterKeyState());
             Battle battle;
             battle.setPlayer(player);
             battle.questBattle(player.getUsername(), 100, 10);
             setPlayer(battle.getPlayer());
             if(!player.getBattleResult()){
-                menu.display(16, 1, "Having been defeated, you return to whence you came.");
+                menu.display(16, 2, "Having been defeated, you return to whence you came.");
                 menu.waitForEnter(menu.getEnterKeyState());
+                //cout << "still Traveling? " << menu.getStillSimpleTraveling();
+                //menu.waitForEnter(menu.getEnterKeyState());
                 return;
             }else{
-                menu.display(16, 1, travelMessage2);
+                //cout << "still Traveling? " << menu.getStillSimpleTraveling();
+                //menu.waitForEnter(menu.getEnterKeyState());
+                menu.display(16, 2, travelMessage2);
                 menu.waitForEnter(menu.getEnterKeyState());
                 player.setBattleResult(false);
             }        
+        } else {
+            menu.clearDisplayRow(2);
+            menu.display(16, 2, travelMessage1);
         }
     } else {
         failedTravel = true;

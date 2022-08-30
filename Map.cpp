@@ -1,5 +1,7 @@
 #include <string>
 #include <iostream>
+
+#include "Main.h"
 #include "Map.h"
 #include "WorldMap.h"
 #include "Menu.h"
@@ -9,8 +11,9 @@
 
 using namespace std;
 
+//extern Menu menu;
+
 void Map::listAvalibleLocations(string username){
-    Menu menu;
     Account account;
     Battle battle;
     int currentLevel = account.getLevel(username);
@@ -96,7 +99,7 @@ void Map::listAvalibleLocations(string username){
 }
 
 void Map::displayMapOutline(){
-    Menu menu;
+    //Menu menu;
     int optionsHeight = 8;
     maxColumn = 170; //was 210
     maxRow = 42 + optionsHeight; //was 62
@@ -235,7 +238,7 @@ void Map::displayLocations(){
         pos[value++][0] = maxColumn;//+1 for the inside of the outline //was minColumn + 1 to fill the entire row
     }
 
-    Menu menu;
+    //Menu menu;
     int locationConfirmedCount = 0;
     //starting from top to bottom for the first number and left to right for the second number in pos1_1 - pos#_# 
     int posRow = minRow; //+1 for the inside of the outline

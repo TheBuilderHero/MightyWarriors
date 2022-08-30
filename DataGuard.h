@@ -1,8 +1,13 @@
 #include <string>
 
 #include "TempEntity.h"
+#include "Menu.h"
 
 #pragma once
+
+
+//global menu:
+//extern Menu menu;
 
 //Reason for this is to setup
 

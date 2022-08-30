@@ -8,6 +8,7 @@ class Menu {
         TempEntity player;
         bool exitAdminMenu = false;
         bool stillTraveling = false;
+        bool stillSimpleTraveling = false;// for the do while loop so we do not have to refresh the whole cmd
     public:
         const int gameVersion     = 1;
         const int gameMajorBuild  = 0;
@@ -28,8 +29,12 @@ class Menu {
         void ClearConsoleInputBuffer();
         void display(int column, int row, std::string outputString, bool resetCursorPosition = true, bool addExtraRow = true);
         void display(int column, int row, std::string outputString, int lengthOfString, bool resetCursorPosition = false, bool addExtraRow = false);
+        void clearDisplayRow(int row);
         std::string numberFormatting(double decimalNumber, int numberOfDecimals);
 
         void setPlayer(TempEntity playerE);
         TempEntity getPlayer();
+
+        void setStillSimpleTraveling(bool trueFalse) { stillSimpleTraveling = trueFalse; }
+        bool getStillSimpleTraveling() { return stillSimpleTraveling; }
 };

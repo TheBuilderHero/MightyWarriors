@@ -205,7 +205,7 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
     display(32, 7, "Return to Menu");       display(53, 7, "(Press \"0\")", false);
     map.displayMapOutline(); //draw the map outline to the screen
     map.displayLocations();
-    bool stillSimpleTraveling = true;// for the do while loop so we do not have to refresh the whole cmd
+    setStillSimpleTraveling(true);// for the do while loop so we do not have to refresh the whole cmd
     int tempCurrentLocation = -1; //no location
     bool lastLoopFailedTravel = false;
     do{
@@ -229,7 +229,7 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
         case 0://Return to menu
             //menu(username); //causing duplicate menus
             stillTraveling = false;
-            stillSimpleTraveling = false;
+            setStillSimpleTraveling(false);
             break;
         case 1:
         case 2:
@@ -240,6 +240,8 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
             worldMap.setPlayer(player);
             worldMap.travel(value, lastLoopFailedTravel); //changes current location
             setPlayer(worldMap.getPlayer());
+            //cout << "still Traveling? " << getStillSimpleTraveling(); // for testing
+            //waitForEnter(getEnterKeyState());// for testing
             //map.setCurrentLocation(1);
             //menu(username);
             break;
@@ -251,7 +253,7 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
             //menu(username);
             break;
         }
-    } while (stillSimpleTraveling);
+    } while (getStillSimpleTraveling());
     
 }
 
@@ -713,6 +715,12 @@ void Menu::display(int column, int row, string outputString, bool resetCursorPos
 void Menu::display(int column, int row, std::string outputString, int lengthOfString, bool resetCursorPosition, bool addExtraRow){
     display(column, row, outputString, resetCursorPosition, addExtraRow);
     display(column+lengthOfString, row, " ", resetCursorPosition, addExtraRow);
+}
+
+void Menu::clearDisplayRow(int row){
+    for(int i = 0; i <= 200; i++){
+    display(i, row, " ", true, false);
+    }
 }
 
 string Menu::numberFormatting(double decimalNumber, int numberOfDecimals) { //formats a decimal value to a given number of decimal places and returns it in string form

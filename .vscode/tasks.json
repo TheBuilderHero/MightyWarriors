@@ -20,6 +20,7 @@
                 "Passives.cpp",
                 "DataGuard.cpp",
                 "Items.cpp",
+                "Main.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 " -lws2_32",

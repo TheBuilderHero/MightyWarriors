@@ -7,6 +7,7 @@
 #include <ctime> 
 #include <sstream> //for the use of the cout being better with double numbers
 
+#include "Main.h"
 #include "Account.h"
 #include "ReachOutToServer.h"
 #include "Cipher.h"
@@ -15,7 +16,7 @@
 #include "DataGuard.h"
 
 using namespace std;
-Menu menuClass;
+//extern Menu menu;
 
 #undef min // these are needed for the cin.ignore statments to clear out the buffer for new data.
 #undef max 
@@ -274,7 +275,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
             
             bool answered = false;
             while(!answered) { //validate the chosen race
-                Menu menu;
+                //Menu menu;
                 cout << "Your race has been set to " << raceName << ". Would you like to accept this and continue?(Y/N)" << endl << ">";
                 answer = menu.yesOrNo();
                 if (answer != 'n' && answer !='N' && answer !='y' && answer !='Y') { //if they did not enter y, Y, n, or, N then we will tell them what they input is invalid and retry.
@@ -349,7 +350,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
             }
             int answered = 0; // 0 for false :: 1 for true
             while(!answered) { //validate the chosen race
-                Menu menu;
+                //Menu menu;
                 cout << "Your kit has been set to " << kitName << ". Would you like to accept this and continue?(Y/N)" << endl << ">";
                 answer = menu.yesOrNo();
                 if (answer != 'n' && answer !='N' && answer !='y' && answer !='Y') { //if they did not enter y, Y, n, or, N then we will tell them what they input is invalid and retry.
@@ -431,7 +432,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
             }
             int answered = 0; // 0 for false :: 1 for true
             while(!answered) { //validate the chosen race
-                Menu menu;
+                //Menu menu;
                 cout << "Your Weapon has been set to " << weaponName << ". Would you like to accept this and continue?(Y/N)" << endl << "";
                 answer = menu.yesOrNo();
                 if (answer != 'n' && answer !='N' && answer !='y' && answer !='Y') { //if they did not enter y, Y, n, or, N then we will tell them what they input is invalid and retry.
@@ -457,10 +458,10 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
     string wasAbleToSave = server.sendToServer(code.cipher("5", username, to_string(initHealth), to_string(initArmor), to_string(initMagicResistance), to_string(initPhysicalDamage), to_string(initMagicDamage), to_string(initAgility),
     to_string(initStealth), to_string(initStamina), to_string(initNaturalEnergy), to_string(initMind), to_string(initPsychicDamage))); //These send the data to the server to be saved properly in the [username].stat file
     TempEntity player{username};
-    menuClass.setPlayer(player);
+    menu.setPlayer(player);
     system("cls");
     introStory(raceChoice, username); //send the user to the intro story
-    menuClass.changePass(username); //before sending them to the logon screen they need to set their new account's password.
+    menu.changePass(username); //before sending them to the logon screen they need to set their new account's password.
 }
 void Account::levelUp(std::string username, int numOfStatPoints){
     Cipher code;
@@ -721,7 +722,7 @@ void Account::displayStats(std::string username, int bypass ,string usernameA){
             cout << "You did not enter a valid user which has stats to view..." << endl;
             system("pause");
         }
-        menuClass.adminMenu(usernameA);
+        menu.adminMenu(usernameA);
     }
 }
 /*void Account::displayStats(std::string username, TempEntity player, int bypass){
@@ -757,7 +758,7 @@ void Account::displayStats(std::string username, int bypass ,string usernameA){
 
 void Account::logonScreen(int type){ //defualt is case 1 - that is a standard logon... Case 2 is change password logon
     Cipher code;
-    Menu menu;
+    //Menu menu;
     system("cls");
     ReachOutToServer server;
     string usernameE;
@@ -780,8 +781,8 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
             validLogon = stoi(server.sendToServer(code.cipher("3", usernameE, passwordE)));
             if (validLogon == 1){//logon is valid
                 TempEntity player{usernameE, true};
-                menuClass.setPlayer(player); //setup temp entity to be used in the whole program
-                menuClass.menu(usernameE);
+                menu.setPlayer(player); //setup temp entity to be used in the whole program
+                menu.menu(usernameE);
             } else {
                 string invalidMessage = "Invalid Username or Password...";
                 menu.display(12, 0, invalidMessage, false, false);
@@ -804,7 +805,7 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
             validLogon = stoi(server.sendToServer(code.cipher("3", usernameE, passwordE)));
             if (validLogon == 1){//logon is valid
                 system("cls");
-                menuClass.changePass(usernameE);
+                menu.changePass(usernameE);
             } else {
                 cout << "Invalid Username or Password..." << endl;
                 system("pause");
@@ -823,7 +824,7 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
             cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
             validLogon = stoi(server.sendToServer(code.cipher("3", usernameE, passwordE)));
             if (validLogon == 1){//logon is valid
-                menuClass.adminMenu(usernameE);
+                menu.adminMenu(usernameE);
             } else {
                 cout << "Invalid Username or Password..." << endl;
                 system("pause");
@@ -868,7 +869,7 @@ void Account::createNewAccount(){ //runs through the code to create a new user a
             break;
             case 1:{
             //username is valid
-            Menu menu;
+            //Menu menu;
             string createAccountCheck;
             cout << "The username " << username << " is valid and you can use it as your username." << endl << "Would you like to continue and create an account with this username? (Y/N)" << endl << "> ";
             createAccountCheck = menu.yesOrNo();

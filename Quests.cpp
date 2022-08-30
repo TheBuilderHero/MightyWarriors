@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 
+#include "Main.h"
 #include "Quests.h"
 #include "Battle.h"
 #include "Account.h"
@@ -8,7 +9,7 @@
 using namespace std;
 
 string Quests::getQuestDescription(string username, int quest){
-    Menu menu;
+    //Menu menu;
     switch(quest){
         case 1:
             switch(player.getQuest1Progress(1)){
@@ -123,7 +124,7 @@ string Quests::getQuestDescription(string username, int quest){
 }
 
 void Quests::getQuestLog(string username, int quest){
-    Menu menu;
+    //Menu menu;
     int quest1Step = player.getQuest1Progress(1);
     string output = "";
     switch(quest){
@@ -163,7 +164,7 @@ void Quests::getQuestLog(string username, int quest){
 
 void Quests::getAvailableQuests(string username, int location){
     //Account account; //multiple definitions causing issues
-    Menu menu;
+    //Menu menu;
     int quest1Step = account.getQuest1Progress(username);
     bool noQuests = true;
 
@@ -229,7 +230,7 @@ void Quests::getAvailableQuests(string username, int location){
 }
 void Quests::getAvailableQuests(){//TempEntity based quest call
     //Account account; //multiple definitions causing issues
-    Menu menu;
+    //Menu menu;
     int quest1Step = player.getQuest1Progress(1);
     bool noQuests = true;
     
@@ -340,7 +341,7 @@ void Quests::getAvailableQuests(){//TempEntity based quest call
     system("cls");
 }
 void Quests::makeChoice(){//I am thinking we should handle quests as an array
-    Menu menu;
+    //Menu menu;
     //I use an array of quest options to match an option number to a quest number. For example, option 0 --> quest 2, option 1 --> quest 5
     //Every option will be assigned (0, 1, 2, 3, etc.) even though not every quest is always available
     int questOption[NUMBER_OF_QUESTS], skips = 0, options = 0;
@@ -382,7 +383,7 @@ void Quests::makeChoice(){//I am thinking we should handle quests as an array
 }
 
 void Quests::doQuest(string username, int location, int quest){
-    Menu menu;
+    //Menu menu;
     int quest1Step = player.getQuest1Progress(1);
     bool noQuests = true;
 
@@ -477,7 +478,7 @@ void Quests::doQuest(string username, int location, int quest){
 }
 
 void Quests::quest1(string username, int step){
-    Menu menu;
+    //Menu menu;
     Battle battle;
     //TempEntity player{username};
     cout << "\n";
@@ -740,7 +741,7 @@ void Quests::quest1(string username, int step){
 }
 
 void Quests::quest2(string username, int step){
-    Menu menu;
+    //Menu menu;
     Battle battle;
     if(step == 0){
         cout << "\nAs you are being a normal person doing normal things, a normal potato appears out of nowhere.\n";
@@ -764,7 +765,7 @@ void Quests::quest2(string username, int step){
 }
 
 void Quests::quest3(string username, int step){
-    Menu menu;
+    //Menu menu;
     Battle battle;
     if(step == 0){
         cout << "\nQuest 3 is a garbage quest for testing.\n";
@@ -783,7 +784,7 @@ void Quests::quest3(string username, int step){
 }
 
 void Quests::quest4(string username, int step){
-    Menu menu;
+    //Menu menu;
     Battle battle;
     if(step == 0){
         cout << "\nQuest 4 is a garbage quest for testing.\n";
@@ -802,7 +803,7 @@ void Quests::quest4(string username, int step){
 }
 
 void Quests::quest5(string username, int step){
-    Menu menu;
+    //Menu menu;
     Battle battle;
     if(step == 0){
         cout << "\nQuest 5 is a garbage quest for testing.\n";
@@ -821,7 +822,7 @@ void Quests::quest5(string username, int step){
 }
 
 void Quests::quest6(string username, int step){
-    Menu menu;
+    //Menu menu;
     Battle battle;
     if(step == 0){
         cout << "\nQuest 6 is a garbage quest for testing.\n";
@@ -840,7 +841,7 @@ void Quests::quest6(string username, int step){
 }
 
 void Quests::quest7(string username, int step){
-    Menu menu;
+    //Menu menu;
     Battle battle;
     if(step == 0){
         cout << "\nQuest 7 is a garbage quest for testing.\n";

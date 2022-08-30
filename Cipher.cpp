@@ -1,5 +1,6 @@
 #include <string>
 
+#include "Main.h"
 #include "Cipher.h"
 #include "Menu.h" //including for the display funciton
 
@@ -8,7 +9,7 @@ using namespace std;
 
 //this function is intended to pull out the delimiters from a message and the data associated with each request
 string Cipher::decipher(char messageFromClient[], bool hasSubItems){
-    Menu menu;
+    //Menu menu;
     
     //string message = messageFromClient; // change the message into a string
 
@@ -166,7 +167,7 @@ string Cipher::decipher(char messageFromClient[], bool hasSubItems){
     return str_file_content;
 }
 string Cipher::decipher(string messageFromClient, bool hasSubItems){
-    Menu menu;
+    //Menu menu;
     
     //string message = messageFromClient; // change the message into a string
 
