@@ -78,6 +78,7 @@ public:
     //Other:
     int getSaveValueCurrentXP(){ return xp; }
     int getSaveValueLevel(){ return level; }
+    int getPlayerMapLocation() { return locationNum; };
 
     void saveAllData();
 };
