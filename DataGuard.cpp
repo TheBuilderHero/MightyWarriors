@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 
+#include "Main.h"
 #include "TempEntity.h"
 #include "DataGuard.h"
 #include "Cipher.h"
@@ -9,11 +10,9 @@
 
 using namespace std;
 
-//global data guard variable:
-DataGuard guard;
-
 void fnExit(){
     if(guard.getDataSave()){ //if data daving is on then we will save all data to the server.
+        guard.saveAllData();
         std::cout << "You are closing the application..." << std::endl;
         std::cout << "1" << std::endl;
         std::cout << "2" << std::endl;

@@ -10,7 +10,9 @@
 
 using namespace std;
 
+//global variable declarations:
 Menu menu;
+DataGuard guard;
  
 void Main::attemptStartGame(){
     string answer;

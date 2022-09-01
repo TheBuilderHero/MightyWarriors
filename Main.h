@@ -4,9 +4,12 @@
 
 #pragma once
 
+//This file holds the global variables for the program.
+/************Global Variables**************/
 extern Menu menu;
 extern Map map;
 extern DataGuard guard;
+/******************************************/
 
 class Main {
     private:

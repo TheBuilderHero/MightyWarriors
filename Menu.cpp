@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <sstream>
 
+#include "Main.h"
 #include "Account.h"
 #include "ReachOutToServer.h"
 #include "Cipher.h"

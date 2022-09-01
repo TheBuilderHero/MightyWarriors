@@ -5,10 +5,6 @@
 
 #pragma once
 
-
-//global menu:
-//extern Menu menu;
-
 //Reason for this is to setup
 
 class DataGuard {
@@ -82,6 +78,3 @@ public:
 
     void saveAllData();
 };
-
-//global data guard variable:
-extern DataGuard guard;

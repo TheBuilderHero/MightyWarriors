@@ -16,7 +16,6 @@
 #include "DataGuard.h"
 
 using namespace std;
-//extern Menu menu;
 
 #undef min // these are needed for the cin.ignore statments to clear out the buffer for new data.
 #undef max 
@@ -501,8 +500,8 @@ void Account::levelUp(std::string username, int numOfStatPoints){
     //place all stats in dataguard to be saved to server if the program is closed.
     guard.updateSaveValueMaxHealth(initHealth);
     guard.updateSaveValueArmor(initArmor);
-    guard.updateSaveValueMagicResistance(initMagicResistance);
     guard.updateSaveValuePhysicalDamageMax(initPhysicalDamage);
+    guard.updateSaveValueMagicResistance(initMagicResistance);
     guard.updateSaveValueMagicDamageMax(initMagicDamage);
     guard.updateSaveValueAgility(initAgility);
     guard.updateSaveValueStealth(initStealth);
