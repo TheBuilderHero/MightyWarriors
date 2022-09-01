@@ -198,10 +198,10 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
 
     display(50, 1, "Travel");
     display(16, 2, worldMap.getMapDescription(player.getLocation()));//Dakota please help me load the user's current location
-    display(32, 3, "Go North");             display(53, 3, "(Press \"1\")");
-    display(32, 4, "Go East");              display(53, 4, "(Press \"2\")");
-    display(32, 5, "Go South");             display(53, 5, "(Press \"3\")");
-    display(32, 6, "Go West");              display(53, 6, "(Press \"4\")");
+    display(32, 3, "Go North");             display(53, 3, "(Press \"Up Arrow\")");
+    display(32, 4, "Go East");              display(53, 4, "(Press \"Right Arrow\")");
+    display(32, 5, "Go South");             display(53, 5, "(Press \"Down Arrow\")");
+    display(32, 6, "Go West");              display(53, 6, "(Press \"Left Arrow\")");
     display(32, 7, "Return to Menu");       display(53, 7, "(Press \"0\")", false);
     map.displayMapOutline(); //draw the map outline to the screen
     map.displayLocations();
@@ -224,7 +224,7 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
                 lastLoopFailedTravel = false;
             }
         }
-        int value = numberPressWait(4, true);
+        int value = arrowPressWait(true);
         switch (value){
         case 0://Return to menu
             //menu(username); //causing duplicate menus
@@ -654,6 +654,48 @@ int Menu::numberPressWait(int maxRange, bool hasZeroOption){ //returns a value b
                 return 9;
                 break;
             }
+        }
+        if (hasZeroOption == true){
+            if (GetKeyState('0') < 0 && !zeroKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+                zeroKeyPressedLastLoop = true;
+            } else if (GetKeyState('0') >= 0 && zeroKeyPressedLastLoop){ // else 1 not pressed
+                zeroKeyPressedLastLoop = false;
+                return  0;
+                break;
+            }
+        }
+    }
+}
+int Menu::arrowPressWait(bool hasZeroOption){ //returns a value based on the key pressed
+    bool upKeyPressedLastLoop = false, rightKeyPressedLastLoop = false, downKeyPressedLastLoop = false, leftKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false;
+    while (1){
+        if (GetKeyState(VK_UP) < 0 && !upKeyPressedLastLoop) { //checks to make sure that the VK_UP key is pressed and makes sure it was not pressed last check
+            upKeyPressedLastLoop = true;
+        } else if (GetKeyState(VK_UP) >= 0 && upKeyPressedLastLoop){ // else VK_UP not pressed
+            upKeyPressedLastLoop = false;
+            return 1;
+            break;
+        }
+        if (GetKeyState(VK_RIGHT) < 0 && !rightKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+            rightKeyPressedLastLoop = true;
+        } else if (GetKeyState(VK_RIGHT) >= 0 && rightKeyPressedLastLoop){ // else 2 not pressed
+            rightKeyPressedLastLoop = false;
+            return 2;
+            break;
+        }
+        if (GetKeyState(VK_DOWN) < 0 && !downKeyPressedLastLoop) { //checks to make sure that the 3 key is pressed and makes sure it was not pressed last check
+            downKeyPressedLastLoop = true;
+        } else if (GetKeyState(VK_DOWN) >= 0 && downKeyPressedLastLoop){ // else 3 not pressed
+            downKeyPressedLastLoop = false;
+            return 3;
+            break;
+        }
+        if (GetKeyState(VK_LEFT) < 0 && !leftKeyPressedLastLoop) { //checks to make sure that the 4 key is pressed and makes sure it was not pressed last check
+            leftKeyPressedLastLoop = true;
+        } else if (GetKeyState(VK_LEFT) >= 0 && leftKeyPressedLastLoop){ // else 4 not pressed
+            leftKeyPressedLastLoop = false;
+            return 4;
+            break;
         }
         if (hasZeroOption == true){
             if (GetKeyState('0') < 0 && !zeroKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
