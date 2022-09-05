@@ -212,11 +212,11 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
     do{
         if (tempCurrentLocation == -1){
             tempCurrentLocation = map.getCurrentLocation();
-            display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled());
+            display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false, 12);
         } else {
             if (!lastLoopFailedTravel){
                 display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled());
-                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled());
+                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false, 12);
                 tempCurrentLocation = map.getCurrentLocation(); 
             } else {
                 for(int i = 0; i <= 50; i+=5){
@@ -441,9 +441,10 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
     display(32, 6, "Test Questing");            display(63, 6, "(type number \"5\")");
     display(32, 7, "Map Test");                 display(63, 7, "(type number \"6\")");
     display(32, 8, "Message Test SubCipher");   display(63, 8, "(type number \"7\")");
-    display(32, 9, "Exit Admin Menu");          display(63, 9, "(type number \"0\")", false);
+    display(32, 9, "Show Text Color");          display(63, 9, "(type number \"8\")");
+    display(32, 10, "Exit Admin Menu");         display(63, 10, "(type number \"0\")", false);
     
-    value = numberPressWait(7, true);
+    value = numberPressWait(8, true);
     switch (value)
     {
     case 0: //exit admin menu program
@@ -492,6 +493,19 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         string output;
         cout << serverMessage.sendToServer(code.cipher("22", code.subCipher("2test1","2test2","2test3","2test4","2test5","2test6","2test7","2test8","2test9","2test10","2test11","2test12","2test13","2test14","2test15","2test16","2test17","2test18","2test19","2test20","2test21","2test22")/**/, code.subCipher("3test1","3test2","3test3","3test4","3test5","3test6","3test7","3test8","3test9","3test10","3test11","3test12","3test13","3test14","3test15","3test16","3test17","3test18","3test19","3test20","3test21","3test22"), code.subCipher("4test1","4test2","4test3","4test4","4test5","4test6","4test7","4test8","4test9","4test10","4test11","4test12","4test13","4test14","4test15","4test16","4test17","4test18","4test19","4test20","4test21","4test22"), code.subCipher("5test1","5test2","5test3","5test4","5test5","5test6","5test7","5test8","5test9","5test10","5test11","5test12","5test13","5test14","5test15","5test16","5test17","5test18","5test19","5test20","5test21","5test22"), code.subCipher("6test1","6test2","6test3","6test4","6test5","6test6","6test7","6test8","6test9","6test10","6test11","6test12","6test13","6test14","6test15","6test16","6test17","6test18","6test19","6test20","6test21","6test22"), code.subCipher("7test1","7test2","7test3","7test4","7test5","7test6","7test7","7test8","7test9","7test10","7test11","7test12","7test13","7test14","7test15","7test16","7test17","7test18","7test19","7test20","7test21","7test22"), code.subCipher("8test1","8test2","8test3","8test4","8test5","8test6","8test7","8test8","8test9","8test10","8test11","8test12","8test13","8test14","8test15","8test16","8test17","8test18","8test19","8test20","8test21","8test22"), code.subCipher("9test1","9test2","9test3","9test4","9test5","9test6","9test7","9test8","9test9","9test10","9test11","9test12","9test13","9test14","9test15","9test16","9test17","9test18","9test19","9test20","9test21","9test22"), code.subCipher("10test1","10test2","10test3","10test4","10test5","10test6","10test7","10test8","10test9","10test10","10test11","10test12","10test13","10test14","10test15","10test16","10test17","10test18","10test19","10test20","10test21","10test22"), code.subCipher("11test1","11test2","11test3","11test4","11test5","11test6","11test7","11test8","11test9","11test10","11test11","11test12","11test13","11test14","11test15","11test16","11test17","11test18","11test19","11test20","11test21","11test22"), code.subCipher("12test1","12test2","12test3","12test4","12test5","12test6","12test7","12test8","12test9","12test10","12test11","12test12","12test13","12test14","12test15","12test16","12test17","12test18","12test19","12test20","12test21","12test22"), code.subCipher("13test1","13test2","13test3","13test4","13test5","13test6","13test7","13test8","13test9","13test10","13test11","13test12","13test13","13test14","13test15","13test16","13test17","13test18","13test19","13test20","13test21","13test22"), code.subCipher("14test1","14test2","14test3","14test4","14test5","14test6","14test7","14test8","14test9","14test10","14test11","14test12","14test13","14test14","14test15","14test16","14test17","14test18","14test19","14test20","14test21","14test22"), code.subCipher("15test1","15test2","15test3","15test4","15test5","15test6","15test7","15test8","15test9","15test10","15test11","15test12","15test13","15test14","15test15","15test16","15test17","15test18","15test19","15test20","15test21","15test22"), code.subCipher("16test1","16test2","16test3","16test4","16test5","16test6","16test7","16test8","16test9","16test10","16test11","16test12","16test13","16test14","16test15","16test16","16test17","16test18","16test19","16test20","16test21","16test22"), code.subCipher("17test1","17test2","17test3","17test4","17test5","17test6","17test7","17test8","17test9","17test10","17test11","17test12","17test13","17test14","17test15","17test16","17test17","17test18","17test19","17test20","17test21","17test22"), code.subCipher("18test1","18test2","18test3","18test4","18test5","18test6","18test7","18test8","18test9","18test10","18test11","18test12","18test13","18test14","18test15","18test16","18test17","18test18","18test19","18test20","18test21","18test22"), code.subCipher("19test1","19test2","19test3","19test4","19test5","19test6","19test7","19test8","19test9","19test10","19test11","19test12","19test13","19test14","19test15","19test16","19test17","19test18","19test19","19test20","19test21","19test22"), code.subCipher("20test1","20test2","20test3","20test4","20test5","20test6","20test7","20test8","20test9","20test10","20test11","20test12","20test13","20test14","20test15","20test16","20test17","20test18","20test19","20test20","20test21","20test22"), code.subCipher("21test1","21test2","21test3","21test4","21test5","21test6","21test7","21test8","21test9","21test10","21test11","21test12","21test13","21test14","21test15","21test16","21test17","21test18","21test19","21test20","21test21","21test22"), code.subCipher("22test1","22test2","22test3","22test4","22test5","22test6","22test7","22test8","22test9","22test10","22test11","22test12","22test13","22test14","22test15","22test16","22test17","22test18","22test19","22test20","22test21","22test22")/**/));
         //display(2,2, output, false, true);
+        system("pause");
+        break;
+    }
+    case 8:{
+        system("cls");
+        HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+        // you can loop k higher to see more color choices
+        for(int k = 1; k < 255; k++)
+        {
+            // pick the colorattribute k you want
+            SetConsoleTextAttribute(hConsole, k);
+            cout << k << " I want to be nice today!" << endl;
+        }
         system("pause");
         break;
     }
@@ -728,9 +742,11 @@ int Menu::getEnterKeyState(){
     return GetKeyState(VK_RETURN);
 }
 
-void Menu::display(int column, int row, string outputString, bool resetCursorPosition, bool addExtraRow) { //sets the display position of the text on the consol (allowing to display anywhere on the consol)
+void Menu::display(int column, int row, string outputString, bool resetCursorPosition, bool addExtraRow, int color) { //sets the display position of the text on the consol (allowing to display anywhere on the consol)
 	HANDLE screen = GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD position;
+    // pick the colorattribute k you want
+    SetConsoleTextAttribute(screen, color);
 
 	position.X = column; //column
 	position.Y = row; //row

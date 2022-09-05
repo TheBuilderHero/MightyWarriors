@@ -23,7 +23,7 @@ void Main::attemptStartGame(){
     while (!(answer == "n" || answer == "N")) { //This do while loop is intended to get them connected to the server.  If it fails it will prompt the user Y/N to retry connecting.
         system("cls");
         //answer = ""; // set the answer variable to some other value on the start of each loop.
-        string runningCurrentVersion = server.sendToServer(/*"31" + */code.cipher("0", "", to_string(gameVersion), to_string(gameMajorBuild), to_string(gameMinorBuild), to_string(gamePatch)));//check to see if the version the client is running is allowed to continue - the reponse is stored in "runningCurrentVersion"
+        string runningCurrentVersion = server.sendToServer(code.cipher("0", "", to_string(gameVersion), to_string(gameMajorBuild), to_string(gameMinorBuild), to_string(gamePatch)));//check to see if the version the client is running is allowed to continue - the reponse is stored in "runningCurrentVersion"
         //Before doing anything else... request required client version from server.
         //runningCurrentVersion = "true"; //for testing hard set true
         if (runningCurrentVersion == "true"){ //if we are running the current version then the program will start

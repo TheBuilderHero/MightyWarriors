@@ -28,7 +28,7 @@ class Menu {
         void waitForEnter(int enterCurrentlyPressed);
         int getEnterKeyState();
         void ClearConsoleInputBuffer();
-        void display(int column, int row, std::string outputString, bool resetCursorPosition = true, bool addExtraRow = true);
+        void display(int column, int row, std::string outputString, bool resetCursorPosition = true, bool addExtraRow = true, int color = 15);
         void display(int column, int row, std::string outputString, int lengthOfString, bool resetCursorPosition = false, bool addExtraRow = false);
         void clearDisplayRow(int row);
         std::string numberFormatting(double decimalNumber, int numberOfDecimals);
