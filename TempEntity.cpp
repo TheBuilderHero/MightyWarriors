@@ -5,6 +5,7 @@
 #include "Items.h"
 #include "Cipher.h"
 #include "ReachOutToServer.h"
+#include "Main.h"
 
 using namespace std;
 
@@ -106,10 +107,14 @@ TempEntity::TempEntity(string currentUsername, bool NewTempEntityProccess){ //in
     tempPsychicDamageString.erase(0, pos3 + minMaxDelimiter.length());
     setPsychicDamageMax(stoi(tempPsychicDamageString)); 
     //set location:
+    map.setCurrentLocation(stoi(code.getItem(2,12))); //<-----New set location system (We do not need to also store this value it temp entity)
+    //the following is from old navigation system that needs to be updated:
     setLocation(stoi(code.getItem(2,12)));
     if(getLocation() < 1 || getLocation() > 6){
         setLocation(1);
     }
+
+
     setRace(code.getItem(2,13));
     setKit(code.getItem(2,14));
     setWeapon(code.getItem(2,15));
