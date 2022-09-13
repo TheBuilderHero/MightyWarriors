@@ -9,6 +9,9 @@ class Map{
         int maxColumn, minColumn;
         int maxRow, minRow;
         static const int locationCount = 800;
+        int optionsHeight = 8;
+        int initalPosRow = minRow = 1 + optionsHeight;
+        int initalPosColumn = minColumn = 2;
 
         struct coords
         {
@@ -20,7 +23,7 @@ class Map{
         int currentLocation;
         std::string mapBlank = " ";
         std::string mapFilled = "X";
-        std::string mapUnfilled = "0";//to_string(locationConfirmedCount);
+        std::string mapUnfilled = " ";//to_string(locationConfirmedCount);
 
     public:
         void listAvalibleLocations(std::string username);

@@ -100,11 +100,11 @@ void Map::listAvalibleLocations(string username){
 
 void Map::displayMapOutline(){
     //Menu menu;
-    int optionsHeight = 8;
+    optionsHeight = 8;
     maxColumn = 170; //was 210
     maxRow = 42 + optionsHeight; //was 62
-    int initalPosRow = minRow = 1 + optionsHeight;
-    int initalPosColumn = minColumn = 2;
+    initalPosRow = minRow = 1 + optionsHeight;
+    initalPosColumn = minColumn = 2;
     menu.display(initalPosColumn,initalPosRow,"+");
     for (int posRow = initalPosRow+1; posRow < maxRow; posRow++){
         menu.display(initalPosColumn,posRow,"|");
@@ -244,6 +244,11 @@ void Map::displayLocations(){
     int posRow = minRow; //+1 for the inside of the outline
     for (int rowCount = minRow+1; rowCount < maxRow; rowCount++){ //added 1 to the minRow since this will then keep the output inside the outline
         //mapUnfilled = to_string(locationConfirmedCount); //tesing value
+
+        for(int columnPos = initalPosColumn+1; columnPos < pos[rowCount][0]; columnPos++){
+            menu.display(columnPos, rowCount, getMapBlank() ,false,false, 16);
+        }
+
         int currentPos = pos[rowCount][0];
         int lastInput1_0 = 1;
         //int currentPos = 5;
@@ -251,7 +256,7 @@ void Map::displayLocations(){
 
             if (lastInput1_0 == 1){ //used to put spaces between the 0's to spread out the look of the map
                 locationConfirmedCount++;
-                menu.display(currentPos, rowCount, getMapUnfilled() ,false,false);
+                menu.display(currentPos, rowCount, getMapUnfilled() ,false,false, 32);
                 possibleTravelLocations[locationConfirmedCount].x = currentPos;
                 possibleTravelLocations[locationConfirmedCount].y = rowCount;
                 //these two lines record all of the locations on the map so people can travel to them.
@@ -260,13 +265,26 @@ void Map::displayLocations(){
 
                 lastInput1_0 = 0;
             } else {
-                menu.display(currentPos, rowCount, getMapBlank());
+                menu.display(currentPos, rowCount, getMapBlank(), false, false, 32);
                 lastInput1_0++;
             }
             currentPos++;
         }
 
         // next map step:
+
+        int endpos;
+        try{
+            endpos = pos[rowCount][2];
+        } catch(...){
+            endpos = maxColumn;
+        }
+
+        if (endpos == 0) endpos = maxColumn;
+
+        for(int columnPos = pos[rowCount][1]+1; columnPos < endpos; columnPos++){
+            menu.display(columnPos, rowCount, getMapBlank() ,false,false, 16);
+        }
 
         lastInput1_0 = 1;
         //menu.display(15, 0, "Part 1"); //writes the 2nd portion of the map
@@ -275,7 +293,7 @@ void Map::displayLocations(){
             while (currentPos2 <= pos[rowCount][3]){
                 if (lastInput1_0 == 1){ //used to put spaces between the 0's to spread out the look of the map
                     locationConfirmedCount++;
-                    menu.display(currentPos2, rowCount, getMapUnfilled(),false,false);
+                    menu.display(currentPos2, rowCount, getMapUnfilled(),false,false, 32);
                     possibleTravelLocations[locationConfirmedCount].x = currentPos2;
                     possibleTravelLocations[locationConfirmedCount].y = rowCount;
                     //worldMap.locationsRecord(locationConfirmedCount, rowCount, currentPos); //map.setPossibleTravelLocations(locationConfirmedCount, rowCount, currentPos);
@@ -283,7 +301,7 @@ void Map::displayLocations(){
 
                     lastInput1_0 = 0;
                 } else {
-                    menu.display(currentPos2, rowCount, getMapBlank());
+                    menu.display(currentPos2, rowCount, getMapBlank(), false, false, 32);
                     lastInput1_0++;
                 }
                 currentPos2++;
@@ -291,6 +309,28 @@ void Map::displayLocations(){
         }
 
         //next map step:
+
+        int endpos2;
+        int startpos;
+        try{
+            endpos2 = pos[rowCount][4];
+        } catch(...){
+            menu.display(0, 1, "Failed endpos2",false,false, 15);
+        }
+        if (endpos2 == 0) endpos2 = maxColumn;
+        try{
+            startpos = pos[rowCount][3];
+            if(startpos > 0) startpos++;
+        } catch(...){
+            menu.display(0, 1, "Failed startpos",false,false, 15);
+        }
+        if (startpos == 0) startpos = pos[rowCount][1]+1;
+
+        for(int columnPos = startpos; columnPos < endpos2; columnPos++){
+            menu.display(columnPos, rowCount, getMapBlank() ,false,false, 16);
+        }
+        
+        
 
         lastInput1_0 = 1;
         //menu.display(30, 0, "Part 2"); //writes the 3rd portion of the map
@@ -300,7 +340,7 @@ void Map::displayLocations(){
 
                 if (lastInput1_0 == 1){ //used to put spaces between the 0's to spread out the look of the map
                     locationConfirmedCount++;
-                    menu.display(currentPos3, rowCount, getMapUnfilled(),false,false);
+                    menu.display(currentPos3, rowCount, getMapUnfilled(),false,false, 32);
                     possibleTravelLocations[locationConfirmedCount].x = currentPos3;
                     possibleTravelLocations[locationConfirmedCount].y = rowCount;
                     //worldMap.locationsRecord(locationConfirmedCount, rowCount, currentPos); //map.setPossibleTravelLocations(locationConfirmedCount, rowCount, currentPos);
@@ -308,12 +348,37 @@ void Map::displayLocations(){
 
                     lastInput1_0 = 0;
                 } else {
-                    menu.display(currentPos3, rowCount, getMapBlank());
+                    menu.display(currentPos3, rowCount, getMapBlank(), false, false, 32);
                     lastInput1_0++;
                 }
                 currentPos3++;
             }
         }
+        
+        int enter = 0;
+        int endpos3;
+        int startpos2;
+        try{
+            endpos3 = pos[rowCount][6];
+        } catch(...){
+            endpos3 = maxColumn;
+        }
+        if (endpos3 == 0 || endpos3 < 0 || endpos3 < maxColumn) endpos3 = maxColumn;
+        try{
+            //menu.waitForEnter(enter);
+            startpos2 = pos[rowCount][5];
+        } catch(...){
+            menu.display(0, 1, "Failed",false,false, 15);
+        }
+        if(startpos2 > 0){
+            startpos2++;
+            for(int columnPos = startpos2; columnPos < endpos3; columnPos++){
+                menu.display(columnPos, rowCount, getMapBlank(), false, false, 16);
+            }
+        }
+        
+        
+
         /*
         if (worldMap.getMapLocationValue() >= 0){
             //value is set properly
