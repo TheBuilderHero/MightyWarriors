@@ -24,6 +24,7 @@ class Menu {
         void changePass(std::string username);
         char yesOrNo();
         int numberPressWait(int maxRange, bool hasZeroOption = false);
+        int numberPressWaitSpecial(int maxRange, char key1, char key2 = 0, char key3 = 0, char key4 = 0, char key5 = 0, char key6 = 0, char key7 = 0, bool hasZeroOption = false);
         int arrowPressWait(bool hasZeroOption);
         void waitForEnter(int enterCurrentlyPressed);
         int getEnterKeyState();

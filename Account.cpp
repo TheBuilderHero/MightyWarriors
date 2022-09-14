@@ -224,7 +224,6 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
     menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
     int raceChoice = 0;
-    string input;
     char answer;
     bool exitNow = false;
     while(!exitNow){ //while the user has not selected one of the five options it will continue to ask them for an aswer.
@@ -244,13 +243,13 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
         cout << "5  Dryad" << endl;
         cout << " -> Dryads can reflect abilities back on an attacker" << endl << endl;
         cout << ">";
-        cin >> input;
         try{
-            raceChoice = stoi(input);
+            raceChoice = menu.numberPressWaitSpecial(5, 'A', 'P', 'R', 'I', 'L');
         } catch(...) {
             raceChoice = 0;
+            menu.display(0,0," Race selction issue ", false, true);
         }
-        if ((raceChoice <= 0 || raceChoice > 5) && (input.length() == 1 && raceChoice != 0)) {
+        if ((raceChoice <= 0 || raceChoice > 5) && (raceChoice != 100)) {
             cin.clear(); //this and the next resolve issues with infinitely looping invalid
             cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
             cout << "You have entered an invalid input, Please try again." << endl;
@@ -260,30 +259,28 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
             system("cls");
         } else {
             string raceName;
-            if(input == "april"){
+            switch(raceChoice){
+            case 1:
+                raceName = "Human";
+                break;
+            case 2:
+                raceName = "Ghost";
+                break;
+            case 3:
+                raceName = "Dino";
+                break;
+            case 4:
+                raceName = "Elf";
+                break;
+            case 5:
+                raceName = "Dryad";
+                break;
+            case 100:
                 raceName = "Mop";
-                raceChoice = 100;
-            } else {
-                switch(raceChoice){
-                case 1:
-                    raceName = "Human";
-                    break;
-                case 2:
-                    raceName = "Ghost";
-                    break;
-                case 3:
-                    raceName = "Dino";
-                    break;
-                case 4:
-                    raceName = "Elf";
-                    break;
-                case 5:
-                    raceName = "Dryad";
-                    break;
-                default:
-                    raceName = "not chosen";
-                    break;
-                }
+                break;
+            default:
+                raceName = "not chosen";
+                break;
             }
             
             bool answered = false;
@@ -332,7 +329,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
         cout << "6  Mentalist" << endl;
         cout << " -> Mentalists gain +2 on Mind and +2 onPsychic Attack" << endl << endl;
         cout << ">";
-        cin >> kitChoice;
+        kitChoice = menu.numberPressWait(6);
         if (kitChoice <= 0 || kitChoice > 6) {
             cin.clear(); //this and the next resolve issues with infinitely looping invalid
             cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
@@ -415,7 +412,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
         cout << "7  Black Book" << endl;
         cout << " -> +8 Magic Damage and +8 Physical Damage and +5 PsychicDamage" << endl << endl;
         cout << ">";
-        cin >> weaponChoice;
+        weaponChoice = menu.numberPressWait(7);
         if (weaponChoice <= 0 || weaponChoice > 7) {
             cin.clear(); //this and the next resolve issues with infinitely looping invalid
             cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
