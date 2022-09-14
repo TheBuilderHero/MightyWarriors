@@ -307,6 +307,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
             }
         }
     }
+    menu.ClearConsoleInputBuffer();
     menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
     //Now that the race has been chosen and validated move on to kit selection
@@ -386,7 +387,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
             }
         }
     }
-
+    menu.ClearConsoleInputBuffer();
 
     //Setup Player Weapon:
     menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
@@ -472,6 +473,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
             }
         }
     }
+    menu.ClearConsoleInputBuffer();
 
 
     server.sendToServer(code.cipher("8", username, to_string(raceChoice), to_string(kitChoice), to_string(weaponChoice))); //write race and kit to .dat file on server
@@ -792,41 +794,51 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
     string passwordE;
     int validLogon;
     switch (type){
-        case 1:
+        case 1:{
+            bool firstTimeAccount = false;
             menu.display(37, 1, "Logon Screen");
             menu.display(12, 2, "Please enter your username or type \"no\" if you do not have an account");
             menu.display(37, 3, "> ", false, false);
             cin >> usernameE;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
-            if(usernameE == newaccountMenu1 || usernameE == newaccountMenu2 || usernameE == newaccountMenu3 || usernameE == newaccountMenu4) createNewAccount();
-            menu.display(12, 4, "Please enter the password for the account");
-            menu.display(37, 5, "> ", false, false);
-            cin >> passwordE;
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
-            validLogon = stoi(server.sendToServer(code.cipher("3", usernameE, passwordE)));
-            if (validLogon == 1){//logon is valid
-                TempEntity player{usernameE, true};
-                menu.setPlayer(player); //setup temp entity to be used in the whole program
-                menu.menu(usernameE);
-            } else {
-                string invalidMessage = "Invalid Username or Password...";
-                menu.display(12, 0, invalidMessage, false, false);
-                menu.display(12+invalidMessage.length(), 0, "", false, false);
-                system("pause");
-                //logon is invalid
-                logonScreen();
+            if(usernameE == newaccountMenu1 || usernameE == newaccountMenu2 || usernameE == newaccountMenu3 || usernameE == newaccountMenu4) {
+                createNewAccount();
+                firstTimeAccount = true;
+            }
+            if (!firstTimeAccount){
+                menu.display(12, 4, "Please enter the password for the account");
+                menu.display(37, 5, "> ", false, false);
+                cin >> passwordE;
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
+                validLogon = stoi(server.sendToServer(code.cipher("3", usernameE, passwordE)));
+                if (validLogon == 1){//logon is valid
+                    TempEntity player{usernameE, true};
+                    menu.setPlayer(player); //setup temp entity to be used in the whole program
+                    menu.menu(usernameE);
+                } else {
+                    string invalidMessage = "Invalid Username or Password...";
+                    menu.display(12, 0, invalidMessage, false, true);
+                    menu.display(12+invalidMessage.length(), 1, "", false, true);
+                    system("pause");
+                    //logon is invalid
+                    logonScreen();
+                }
             }
             break;
-        case 2: //change password verification
+        }
+        case 2:{ //change password verification
             menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
             system("cls");
-            cout << "Please confirm your current credentials" << endl << "Please enter your username\n> ";
+            menu.display(19, 1, "Please confirm your current credentials");
+            menu.display(23, 2, "Please enter your username");
+            menu.display(37, 3, "> ", false, false);
             cin >> usernameE;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
-            cout << "Please enter the CURRENT password for the account\n> ";
+            menu.display(16, 2, "Please enter the CURRENT password for the account");
+            menu.display(37, 3, "> ", false, false);
             cin >> passwordE;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
@@ -836,18 +848,22 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
                 system("cls");
                 menu.changePass(usernameE);
             } else {
-                cout << "Invalid Username or Password..." << endl;
+                menu.display(20, 4, "Invalid Username or Password...", false, true);
                 system("pause");
                 //logon is invalid
                 logonScreen(); // try again
             }
             break;
-        case 3: // adminbypass panel
-            cout << "You are at the admin bypass panel" << endl << "Please enter the admin username\n> ";
+        }
+        case 3:{ // adminbypass panel
+            menu.display(18, 2, "You are at the admin bypass panel", false, false);
+            menu.display(18, 3, "Please enter the admin username", false, false);
+            menu.display(18, 4, ">", false, false);
             cin >> usernameE;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
-            cout << "Please enter the password for the account\n> ";
+            menu.display(18, 5, "Please enter the password for the account", false, false);
+            menu.display(18, 6, ">", false, false);
             cin >> passwordE;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
@@ -855,12 +871,13 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
             if (validLogon == 1){//logon is valid
                 menu.adminMenu(usernameE);
             } else {
-                cout << "Invalid Username or Password..." << endl;
+                menu.display(18, 7, "Invalid Username or Password...", false, true);
                 system("pause");
                 //logon is invalid
                 logonScreen();
             }
             break;
+        }
     }
 }
 
@@ -874,7 +891,9 @@ void Account::createNewAccount(){ //runs through the code to create a new user a
     //ask user for the username they would like to use
     menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
-    cout << "What would you like the username of your new account to be?" << endl << "Please type a valid username.\n> ";
+    menu.display(18, 2, "What would you like the username of your new account to be?", false, false);
+    menu.display(18, 3, "Please type a valid username.", false, false);
+    menu.display(18, 4, ">", false, false);
     cin >> username;
     cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
@@ -885,7 +904,7 @@ void Account::createNewAccount(){ //runs through the code to create a new user a
     if (username.find(code.getDelimiter()) != std::string::npos || username.find("&") != std::string::npos || username.find("=") != std::string::npos || username.find("'") != std::string::npos || username.find("-") != std::string::npos|| username.find("+") != std::string::npos|| username.find(",") != std::string::npos|| username.find("<") != std::string::npos|| username.find(">") != std::string::npos|| username.find("..") != std::string::npos) { // make sure the username is not using the delimiter and a few other characters //this list was taken from https://support.google.com/mail/answer/9211434?hl=en
         menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
-        cout << "The username " << username << " is not valid Please enter a different username." << endl;
+        menu.display(1, 1, "The username " + username + " is not valid Please enter a different username.", false, true);
         system("pause");
         logonScreen();
     } else {
@@ -894,7 +913,7 @@ void Account::createNewAccount(){ //runs through the code to create a new user a
         switch (valid){
             case 0:
             //the username is invalid so restart the process
-            cout << "The username " << username << " is not valid. Please enter a different username." << endl;
+            menu.display(1, 1, "The username " + username + " is not valid. Please enter a different username.", false, true);
             system("pause");
             menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
             system("cls");
@@ -904,21 +923,22 @@ void Account::createNewAccount(){ //runs through the code to create a new user a
             //username is valid
             //Menu menu;
             string createAccountCheck;
-            cout << "The username " << username << " is valid and you can use it as your username." << endl << "Would you like to continue and create an account with this username? (Y/N)" << endl << "> ";
+            menu.display(1, 1, "The username " + username + " is valid and you can use it as your username.", false, false);
+            menu.display(1, 2, "Would you like to continue and create an account with this username? (Y/N)", true, false);
             createAccountCheck = menu.yesOrNo();
             if(createAccountCheck == "y" || createAccountCheck == "Y"){
-                cout << "We will now create the account" << endl;
+                menu.display(1, 3, "We will now create the account", true, false);
                 server.sendToServer(code.cipher("2", username));
                 menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
                 system("cls");
                 account.createPlayer(username); // creates the Character for the user to use in the game
 
             } else if (createAccountCheck == "N" || createAccountCheck == "n"){
-                cout << "Account will not be created." << endl;
+                menu.display(1, 3, "Account will not be created.", false, true);
                 system("pause");
                 logonScreen();
             } else {
-                cout << "Input not recognized." << endl;
+                menu.display(1, 3, "Input not recognized.", false, true);
                 system("pause");
                 logonScreen();
             }
@@ -934,7 +954,7 @@ void Account::newOrExistingAccout(){ // asks and runs through everything for new
     menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
     string answer;
-    cout << "Do you have an account yet? (Y/N)" << endl;
+    menu.display(1, 1, "Do you have an account yet? (Y/N)", false, false);
     cin >> answer;
     
     //if yes bring them to the logon screen
@@ -957,7 +977,8 @@ void Account::newOrExistingAccout(){ // asks and runs through everything for new
         cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
         logonScreen(3);
     } else {
-        cout << "Your answer was not \"Y\" or \"N\"." << endl << "Please try again." << endl;
+        menu.display(1, 1, "Your answer was not \"Y\" or \"N\".", false, false);
+        menu.display(1, 2, "Please try again.", false, true);
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n'); // clear out cin buffer
         system("pause");//pause the window so the user can read the message, then they can press any key to continue.
@@ -971,9 +992,9 @@ void Account::introStory(int raceChoice, string username){ //this random story g
     srand((unsigned)time(0)); //takes a seed for the random number based on the time
     int randomStoryChoice;
     randomStoryChoice = (rand()%3)+1;
-
-    cout << "Welcome to the game Mighty Warriors!" << endl 
-    << storyTree(raceChoice, randomStoryChoice) << endl;
+    menu.display(1, 1, "Welcome to the game Mighty Warriors!", false, false);
+    menu.display(1, 2, storyTree(raceChoice, randomStoryChoice), false, true);
+    menu.display(1, 6, "", false, true);
     system("pause");
 }
 

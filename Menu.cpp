@@ -565,7 +565,8 @@ void Menu::changePass(string username){ //changes the users password
                 validPassword = false;
                 display(3,3,"The password you entered is invalid, Please try a different password.");
                 display(3,4,"Note, the password cannot contain: (){}[]|`¬¦! \"£$%^&*\"<>:;#~_-+=,@.");
-                display(3,5,"The password must also be atleast 4 charaters in length and not the same as your username.");
+                display(3,5,"The password must also be atleast 4 charaters in length and not the same as your username.", false, true);
+                system("pause");
                 break;
             } else {
                 //password does not contain character
@@ -580,6 +581,7 @@ void Menu::changePass(string username){ //changes the users password
     cin >> passwordConf;
     cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
+    
         
     if (passwordNew == passwordConf){
         server.sendToServer(code.cipher("4", username, passwordNew));
