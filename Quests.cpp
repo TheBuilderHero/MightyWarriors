@@ -159,6 +159,7 @@ void Quests::getQuestLog(string username, int quest){
 
     cout << output;
     menu.waitForEnter(menu.getEnterKeyState());
+    menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
 }
 
@@ -226,6 +227,7 @@ void Quests::getAvailableQuests(string username, int location){
 
     cout << endl;
     menu.waitForEnter(menu.getEnterKeyState());
+    menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
 }
 void Quests::getAvailableQuests(){//TempEntity based quest call
@@ -338,6 +340,7 @@ void Quests::getAvailableQuests(){//TempEntity based quest call
 
     cout << endl;
     //menu.waitForEnter(menu.getEnterKeyState());
+    menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
 }
 void Quests::makeChoice(){//I am thinking we should handle quests as an array
@@ -369,6 +372,7 @@ void Quests::makeChoice(){//I am thinking we should handle quests as an array
     if(choice == 0){
         return;
     }else if(choice == (options + 1)){
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         for(int i = 0; i < options; i++){
             if(getQuestDescription(player.getUsername(), questOption[i]) != ""){
@@ -377,6 +381,7 @@ void Quests::makeChoice(){//I am thinking we should handle quests as an array
         }
         menu.waitForEnter(menu.getEnterKeyState());
     }else{
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         doQuest(player.getUsername(), player.getLocation(), questOption[choice - 1]);
     }
@@ -473,6 +478,7 @@ void Quests::doQuest(string username, int location, int quest){
     if(noQuests){
         cout << "There are no Quests to do here.";
         menu.waitForEnter(menu.getEnterKeyState());
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
     }
 }
@@ -515,6 +521,7 @@ void Quests::quest1(string username, int step){
                 cout << "\nYou check the parchment again. The Void Cat's name is already fading.";
                 cout << "\nA new name writes itself: Morg the Goblin. Somehow you know he is in the Glacius Desert.\n";
                 menu.waitForEnter(menu.getEnterKeyState());
+                menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
                 system("cls");
                 player.setQuest1Progress(0, 1);
                 player.setBattleResult(false);

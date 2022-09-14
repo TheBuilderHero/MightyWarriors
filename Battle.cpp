@@ -18,6 +18,7 @@ using namespace std;
 
 /*
 void Battle::optionsOutput(string username, string enemyName, int playerHealth, int enemyHealth){
+    menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
     cout << endl << setfill(' ') << setw(20 + username.length()) << username  << setfill(' ') << setw(47 + enemyName.length()) << enemyName << endl; //print the current stats of both the enemy and the Player
     cout << endl << setfill(' ') << setw(30) << "Player Health: " << playerHealth << setfill(' ') << setw(50) << "Enemy Health: " << enemyHealth << endl; //print the current stats of both the enemy and the Player
@@ -28,6 +29,7 @@ void Battle::optionsOutput(string username, string enemyName, int playerHealth, 
     cout << setfill(' ') << setw(48) << "Ultimate Attack" << setfill(' ') << setw(18) <<"(type number \"R\")" << endl;
 }*/
 void Battle::optionsOutput(string username, string enemyName, int playerHealth, int enemyHealth, int playerMind, int enemyMind){
+    menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
     cout << endl << setfill(' ') << setw(20 + username.length()) << username  << setfill(' ') << setw(47 + enemyName.length()) << enemyName << endl; //print the current stats of both the enemy and the Player
     cout << endl << setfill(' ') << setw(30) << "Player Health: " << playerHealth << setfill(' ') << setw(50) << "Enemy Health: " << enemyHealth << endl; //print the current stats of both the enemy and the Player
@@ -61,6 +63,7 @@ void Battle::waitForButtonPress(string username, string &enemyName, bool &qKeyPr
             } else if (GetKeyState('R') < 0 && !rKeyPressedLastLoop && ultimateUses <= 0) {
                 cout << "You do not have any more ultimate uses..." << endl;
                 system("pause");
+                menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
                 system("cls");
                 optionsOutput(username, enemyName, playerHealth, enemyHealth); //re output the options for battle after clearing the terminal
             } else if (GetKeyState('R') >= 0){// else R not pressed
@@ -155,6 +158,7 @@ void Battle::startBattle(string username){
         }
 
         //reprint the stats and info:
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         optionsOutput(username, enemyName, playerHealth, enemyHealth);
 
@@ -173,22 +177,27 @@ void Battle::startBattle(string username){
     }
     //print out the result of the fight
     if (fightWon) { //the player has won the fight
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         //increase user xp, since fight was won.
         string playerLevel = server.sendToServer(code.cipher("14", username, enemyName, "WillNeedToFeedBackEnemyLevel")); //this will need to send the enemy level later on.
         cout <<  setfill(' ') << setw(57) << "You won the Battle!" << endl;
         cout <<  setfill(' ') << setw((77 - 16) - playerLevel.length()) << "Your level is: " << playerLevel << endl;
         system("pause");
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls"); 
         int currentPlayerLevel = account.getLevel(username);
         if(playerLevelAtStartOfFight < currentPlayerLevel){ //runs the level update for stats
             account.levelUp(username, currentPlayerLevel);
         }
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
     } else if (fightLost){ //the enemy has won the fight
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         cout <<  setfill(' ') << setw(58) << "You Lost the Battle!" << endl;
         system("pause");
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
     }
 
@@ -210,6 +219,7 @@ void Battle::startBattle(string username){
 }
 
 void Battle::questBattle(string username, int quest, int step){
+    menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
     bool qKeyPressedLastLoop = false, wKeyPressedLastLoop = false, eKeyPressedLastLoop = false, rKeyPressedLastLoop = false;
     bool playerBlocking = false;
@@ -274,6 +284,7 @@ void Battle::questBattle(string username, int quest, int step){
         }
 
         //reprint the stats and info:
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         optionsOutput(username, enemyName, playerHealth, enemyHealth, playerMind, enemyMind);
 
@@ -308,6 +319,7 @@ void Battle::questBattle(string username, int quest, int step){
     }
     //print out the result of the fight
     if (fightWon) { //the player has won the fight
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         //increase user xp, since fight was won.
         string playerLevel = server.sendToServer(code.cipher("14", username, to_string(enemyNum), "WillNeedToFeedBackEnemyLevel")); //this will need to send the enemy level later on.
@@ -319,6 +331,7 @@ void Battle::questBattle(string username, int quest, int step){
         cout <<  setfill(' ') << setw(57) << "You won the Battle!" << endl;
         cout <<  setfill(' ') << setw((77 - 16) - playerLevel.length()) << "Your level is: " << playerLevel << endl;
         system("pause");
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls"); 
         int currentPlayerLevel = account.getLevel(username);
         if(playerLevelAtStartOfFight < currentPlayerLevel){ //runs the level update for stats
@@ -330,8 +343,10 @@ void Battle::questBattle(string username, int quest, int step){
         }
         player.setBattleResult(true);
         player.setLocation(location);
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
     } else if (fightLost){ //the enemy has won the fight
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         if(playerMind <= 0){
             cout <<  setfill(' ') << setw(60) << "The Enemy broke your mind!" << endl;
@@ -340,6 +355,7 @@ void Battle::questBattle(string username, int quest, int step){
         }
         cout <<  setfill(' ') << setw(58) << "You Lost the Battle!" << endl;
         system("pause");
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
     }
     //cout << "Player ended Battle with " << player.getHealth() << " health!\n";
@@ -354,6 +370,7 @@ void Battle::tempEntBattle(TempEntity player){
 
 //probably not needed since the quest battle function does everything we need. I would like to use this and make one for travel combat.
 void Battle::standardBattle(TempEntity player){
+    menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
     TempEntity battlingStatsOfPlayer;
     battlingStatsOfPlayer = player; //setup a duplicate account we can use for changing player stats in battle
@@ -400,6 +417,7 @@ void Battle::standardBattle(TempEntity player){
         }
 
         //reprint the stats and info:
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         optionsOutput(player.getUsername(), enemyName, battlingStatsOfPlayer.getHealth(), enemyHealth);
 
@@ -425,22 +443,27 @@ void Battle::standardBattle(TempEntity player){
     }
     //print out the result of the fight
     if (fightWon) { //the player has won the fight
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         //increase user xp, since fight was won.
         string playerLevel = server.sendToServer(code.cipher("14", player.getUsername(), enemyName, "WillNeedToFeedBackEnemyLevel")); //this will need to send the enemy level later on.
         cout <<  setfill(' ') << setw(57) << "You won the Battle!" << endl;
         cout <<  setfill(' ') << setw((77 - 16) - playerLevel.length()) << "Your level is: " << playerLevel << endl;
         system("pause");
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls"); 
         int currentPlayerLevel = account.getLevel(player.getUsername());
         if(playerLevelAtStartOfFight < currentPlayerLevel){ //runs the level update for stats
             account.levelUp(player.getUsername(), currentPlayerLevel);
         }
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
     } else if (fightLost){ //the enemy has won the fight
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         cout <<  setfill(' ') << setw(58) << "You Lost the Battle!" << endl;
         system("pause");
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
     }
     //cout << "Player ended Battle with " << player.getHealth() << " health!\n";

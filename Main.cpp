@@ -21,6 +21,7 @@ void Main::attemptStartGame(){
     Cipher code;
     double attempts = 0;
     while (!(answer == "n" || answer == "N")) { //This do while loop is intended to get them connected to the server.  If it fails it will prompt the user Y/N to retry connecting.
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         //answer = ""; // set the answer variable to some other value on the start of each loop.
         string runningCurrentVersion = server.sendToServer(code.cipher("0", "", to_string(gameVersion), to_string(gameMajorBuild), to_string(gameMinorBuild), to_string(gamePatch)));//check to see if the version the client is running is allowed to continue - the reponse is stored in "runningCurrentVersion"

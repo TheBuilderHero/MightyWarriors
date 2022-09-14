@@ -35,6 +35,7 @@ void Account::setHealth(std::string username, int &remainingStatPoints, int numO
         initHealth = healthS;
         remainingStatPoints -= healthS;
     } else {
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
         initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initNaturalEnergy = initMind = initPsychicDamage = 0;
@@ -52,6 +53,7 @@ void Account::setArmor(std::string username, int &remainingStatPoints, int numOf
         initArmor = armorS;
         remainingStatPoints -= armorS;
     } else {
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
         initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initNaturalEnergy = initMind = initPsychicDamage = 0;
@@ -68,6 +70,7 @@ void Account::setMagicResistance(std::string username, int &remainingStatPoints,
         initMagicResistance = magicResistanceS;
         remainingStatPoints -= magicResistanceS;
     } else {
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
         initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initNaturalEnergy = initMind = initPsychicDamage = 0;
@@ -84,6 +87,7 @@ void Account::setPhysicalDamage(std::string username, int &remainingStatPoints, 
         initPhysicalDamage = attackS;
         remainingStatPoints -= attackS;
     } else {
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
         initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initNaturalEnergy = initMind = initPsychicDamage = 0;
@@ -100,6 +104,7 @@ void Account::setMagicDamage(std::string username, int &remainingStatPoints, int
         initMagicDamage = magicDamageS;
         remainingStatPoints -= magicDamageS;
     } else {
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
         initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initNaturalEnergy = initMind = initPsychicDamage = 0;
@@ -116,6 +121,7 @@ void Account::setAgility(std::string username, int &remainingStatPoints, int num
         initAgility = agilityS;
         remainingStatPoints -= agilityS;
     } else {
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
         initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initNaturalEnergy = initMind = initPsychicDamage = 0;
@@ -132,6 +138,7 @@ void Account::setStealth(std::string username, int &remainingStatPoints, int num
         initStealth = stealthS;
         remainingStatPoints -= stealthS;
     } else {
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
         initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initNaturalEnergy = initMind = initPsychicDamage = 0;
@@ -148,6 +155,7 @@ void Account::setStamina(std::string username, int &remainingStatPoints, int num
         initStamina = staminaS;
         remainingStatPoints -= staminaS;
     } else {
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
         initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initNaturalEnergy = initMind = initPsychicDamage = 0;
@@ -164,6 +172,7 @@ void Account::setNaturalEnergy(std::string username, int &remainingStatPoints, i
         initNaturalEnergy = naturalEnergyS;
         remainingStatPoints -= naturalEnergyS;
     } else {
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
         initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initNaturalEnergy = initMind = initPsychicDamage = 0;
@@ -180,6 +189,7 @@ void Account::setMind(std::string username, int &remainingStatPoints, int numOfS
         initMind = mindS;
         remainingStatPoints -= mindS;
     } else {
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
         initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initNaturalEnergy = initMind = initPsychicDamage = 0;
@@ -196,6 +206,7 @@ void Account::setPsychicDamage(std::string username, int &remainingStatPoints, i
         initPsychicDamage = mindS;
         remainingStatPoints -= mindS;
     } else {
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         cout << "You entered an invalid number of statpoints to be added." << endl << "Restarting this proccess so you can complete this task.";
         initHealth = initArmor = initMagicResistance = initPhysicalDamage = initMagicDamage = initAgility = initStealth = initStamina = initNaturalEnergy = initMind = initPsychicDamage = 0;
@@ -210,12 +221,14 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
 
     cout << "Welcome to Character creation!" << endl;
     system("pause");
+    menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
     int raceChoice = 0;
     string input;
     char answer;
     bool exitNow = false;
     while(!exitNow){ //while the user has not selected one of the five options it will continue to ask them for an aswer.
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         raceChoice = 0;
         cout << endl << "Select your Character's race:" << endl;
@@ -243,6 +256,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
             cout << "You have entered an invalid input, Please try again." << endl;
             raceChoice = 0;
             system("pause");
+            menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
             system("cls");
         } else {
             string raceName;
@@ -280,6 +294,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
                 if (answer != 'n' && answer !='N' && answer !='y' && answer !='Y') { //if they did not enter y, Y, n, or, N then we will tell them what they input is invalid and retry.
                     cout << "Unrecognized input." << "   Please enter a valid input." << endl;
                     system("pause");
+                    menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
                     system("cls");
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
@@ -292,11 +307,13 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
             }
         }
     }
+    menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
     //Now that the race has been chosen and validated move on to kit selection
     int kitChoice = 0;
     exitNow = false;
     while(!exitNow){ //while the user has not selected one of the four kit options it will continue to ask them for an aswer to kitChoice. << endl
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         kitChoice = 0;
         cout << endl << "Select your Character's kit:" << endl;
@@ -321,6 +338,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
             cout << "You have entered an invalid input, Please try again." << endl;
             kitChoice = 0;
             system("pause");
+            menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
             system("cls");
         } else {
             string kitName;
@@ -355,6 +373,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
                 if (answer != 'n' && answer !='N' && answer !='y' && answer !='Y') { //if they did not enter y, Y, n, or, N then we will tell them what they input is invalid and retry.
                     cout << "Unrecognized input." << "   Please enter a valid input." << endl;
                     system("pause");
+                    menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
                     system("cls");
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
@@ -370,10 +389,12 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
 
 
     //Setup Player Weapon:
+    menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
     int weaponChoice = 0;
     exitNow = false;
     while(!exitNow){ //while the user has not selected one of the weapon options it will continue to ask them for an answer to weaponChoice.
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         weaponChoice = 0;
         cout << endl << "Select your Character's weapon:" << endl;
@@ -400,6 +421,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
             cout << "You have entered an invalid input, Please try again." << endl;
             weaponChoice = 0;
             system("pause");
+            menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
             system("cls");
         } else {
             string weaponName;
@@ -437,6 +459,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
                 if (answer != 'n' && answer !='N' && answer !='y' && answer !='Y') { //if they did not enter y, Y, n, or, N then we will tell them what they input is invalid and retry.
                     cout << "Unrecognized input." << "   Please enter a valid input." << endl;
                     system("pause");
+                    menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
                     system("cls");
                     cin.clear();
                     cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
@@ -458,6 +481,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
     to_string(initStealth), to_string(initStamina), to_string(initNaturalEnergy), to_string(initMind), to_string(initPsychicDamage))); //These send the data to the server to be saved properly in the [username].stat file
     TempEntity player{username};
     menu.setPlayer(player);
+    menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
     introStory(raceChoice, username); //send the user to the intro story
     menu.changePass(username); //before sending them to the logon screen they need to set their new account's password.
@@ -467,9 +491,11 @@ void Account::levelUp(std::string username, int numOfStatPoints){
     ReachOutToServer server;
     restartLevelUp = false;
     int remainingStatPoints = numOfStatPoints;
+    menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
     cout << "(Health, Armor, Magic Resistance, Physical Damage, Magic Damage, Agility, Stealth, Stamina, NaturalEnergy, Mind, Pyschic Damage)" << endl << "You have " + to_string(remainingStatPoints) + " points that can be distributed among the above stats" << endl;
     system("pause");
+    menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
     cout << "You have " + to_string(remainingStatPoints) + " points that can be distributed among the above stats" << endl << endl << "Please enter the number of points to add to each stat." << endl << endl;
     setHealth(username, remainingStatPoints, numOfStatPoints);
@@ -485,6 +511,7 @@ void Account::levelUp(std::string username, int numOfStatPoints){
     if (remainingStatPoints > 0 && !restartLevelUp) setPsychicDamage(username, remainingStatPoints, numOfStatPoints);
     if (remainingStatPoints > 0 && !restartLevelUp) { //if the user did not use all their stat points we will restart the proccess
         cout << remainingStatPoints << endl;
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         cout << "You did not use all your Stat Points..." << endl << "Restarting this proccess so you can complete this task.";
         system("pause");
@@ -758,6 +785,7 @@ void Account::displayStats(std::string username, int bypass ,string usernameA){
 void Account::logonScreen(int type){ //defualt is case 1 - that is a standard logon... Case 2 is change password logon
     Cipher code;
     //Menu menu;
+    menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
     ReachOutToServer server;
     string usernameE;
@@ -792,6 +820,7 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
             }
             break;
         case 2: //change password verification
+            menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
             system("cls");
             cout << "Please confirm your current credentials" << endl << "Please enter your username\n> ";
             cin >> usernameE;
@@ -803,6 +832,7 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
             cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
             validLogon = stoi(server.sendToServer(code.cipher("3", usernameE, passwordE)));
             if (validLogon == 1){//logon is valid
+                menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
                 system("cls");
                 menu.changePass(usernameE);
             } else {
@@ -842,15 +872,18 @@ void Account::createNewAccount(){ //runs through the code to create a new user a
     string username; //declare the local username for the user creating their account
 
     //ask user for the username they would like to use
+    menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
     cout << "What would you like the username of your new account to be?" << endl << "Please type a valid username.\n> ";
     cin >> username;
     cin.clear();
     cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
+    menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
 
     //check to make sure the username is valid and not already taken
     if (username.find(code.getDelimiter()) != std::string::npos || username.find("&") != std::string::npos || username.find("=") != std::string::npos || username.find("'") != std::string::npos || username.find("-") != std::string::npos|| username.find("+") != std::string::npos|| username.find(",") != std::string::npos|| username.find("<") != std::string::npos|| username.find(">") != std::string::npos|| username.find("..") != std::string::npos) { // make sure the username is not using the delimiter and a few other characters //this list was taken from https://support.google.com/mail/answer/9211434?hl=en
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         cout << "The username " << username << " is not valid Please enter a different username." << endl;
         system("pause");
@@ -863,6 +896,7 @@ void Account::createNewAccount(){ //runs through the code to create a new user a
             //the username is invalid so restart the process
             cout << "The username " << username << " is not valid. Please enter a different username." << endl;
             system("pause");
+            menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
             system("cls");
             logonScreen();
             break;
@@ -875,6 +909,7 @@ void Account::createNewAccount(){ //runs through the code to create a new user a
             if(createAccountCheck == "y" || createAccountCheck == "Y"){
                 cout << "We will now create the account" << endl;
                 server.sendToServer(code.cipher("2", username));
+                menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
                 system("cls");
                 account.createPlayer(username); // creates the Character for the user to use in the game
 
@@ -896,6 +931,7 @@ void Account::createNewAccount(){ //runs through the code to create a new user a
 void Account::newOrExistingAccout(){ // asks and runs through everything for new accounts and if existing brings the user to the logon screen.
     Cipher code;
     //ask the user if they have an account with MightyWarrior game
+    menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
     string answer;
     cout << "Do you have an account yet? (Y/N)" << endl;
@@ -903,16 +939,19 @@ void Account::newOrExistingAccout(){ // asks and runs through everything for new
     
     //if yes bring them to the logon screen
     if(answer == "y" || answer == "Y"){
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
         logonScreen();
     } else if (answer == "n" || answer == "N") {//if no start the signup prossess
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
         createNewAccount(); // take user to the function for creatiing accounts 
     } else if (answer == "adminbypass"){
+        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
@@ -927,6 +966,7 @@ void Account::newOrExistingAccout(){ // asks and runs through everything for new
 }
 
 void Account::introStory(int raceChoice, string username){ //this random story generation should probably be moved onto the server.
+    menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
     srand((unsigned)time(0)); //takes a seed for the random number based on the time
     int randomStoryChoice;

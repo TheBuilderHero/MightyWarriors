@@ -57,6 +57,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
     int value;
     bool stayInMenu = true;
     while(stayInMenu){
+        display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         display(50, 1, "Menu");
         display(32, 2, "Go Questing");          display(53, 2, "(Press \"1\")");
@@ -142,6 +143,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         case 1:{//"Go Questing"//map for traveling and questing 
                 //We probably need a separate questing menu
             //Map map;
+            display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
             system("cls");
             //map.listAvalibleLocations(username);
             quest.setPlayer(player);
@@ -150,6 +152,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
             break;
         }
         case 2://travel option
+            display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
             system("cls");
             ClearConsoleInputBuffer();
             stillTraveling = true;
@@ -158,6 +161,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
             } while(stillTraveling);
             break;
         case 3://display stats
+            display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
             system("cls");
             ClearConsoleInputBuffer();
             displayStats();
@@ -172,6 +176,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
             break;
         }
         case 14:
+            display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
             system("cls");
             ClearConsoleInputBuffer();
             display(3,3,"October is a Beautiful month to get Married!");
@@ -179,12 +184,14 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
             system("pause");
             break;
         case 15:
+            display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
             system("cls");
             ClearConsoleInputBuffer();
             exitAdminMenu = false; //logon menu loop variable
             while (!exitAdminMenu) adminMenu(username);
             break;
         default:
+            display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
             system("cls");
             ClearConsoleInputBuffer();
             display(3, 3, "Invalid input, Please try again...", false);
@@ -195,6 +202,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
 }
 
 void Menu::travelMenu(string username){ //bring up the menu for travel
+    display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
 
     display(50, 1, "Travel");
@@ -212,11 +220,11 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
     do{
         if (tempCurrentLocation == -1){
             tempCurrentLocation = map.getCurrentLocation();
-            display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false, 12);
+            display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false, 44);
         } else {
             if (!lastLoopFailedTravel){
-                display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled());
-                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false, 12);
+                display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false, 44);
+                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false, 44);
                 tempCurrentLocation = map.getCurrentLocation(); 
             } else {
                 for(int i = 0; i <= 50; i+=5){
@@ -236,7 +244,6 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
         case 2:
         case 3:
         case 4:
-            //system("cls");
             ClearConsoleInputBuffer();
             worldMap.setPlayer(player);
             worldMap.travel(value, lastLoopFailedTravel); //changes current location
@@ -247,6 +254,7 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
             //menu(username);
             break;
         default:
+            display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
             system("cls");
             ClearConsoleInputBuffer();
             display(3, 3, "menu value somehow set impossibly!", false);
@@ -337,6 +345,7 @@ void Menu::displayInventory(){
     Items itemHandler;
     bool keepLooping = false;
     do{
+        display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         ClearConsoleInputBuffer();
         display(1, 1, "You are carrying the following:");                                   display(64, 1, "You can:");
@@ -358,6 +367,7 @@ void Menu::displayInventory(){
         if(choice == 1 || choice == 2){
             int items = 0;
             keepLooping = true;
+            display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
             system("cls");
             ClearConsoleInputBuffer();
             display(1, 1, "Trade which item?");
@@ -387,6 +397,7 @@ void Menu::displayInventory(){
 
 void Menu::accountInfo(string username){
     int answer;
+    display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
     display(44, 1, "Accout Info");
     display(32, 2, "Change Password");      display(53, 2, "(Press \"1\")");
@@ -400,22 +411,26 @@ void Menu::accountInfo(string username){
         //menu(username); //causing duplicate menus
         break;
     case 1: //change password
+        display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         ClearConsoleInputBuffer();
         account.logonScreen(2);
         break;
     case 2://logout
+        display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         ClearConsoleInputBuffer();
         account.logonScreen();
         break;
     case 3://display version and info
+        display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         ClearConsoleInputBuffer();
         getGameVersion();
         //menu(username);
         break;
     default:
+        display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         ClearConsoleInputBuffer();
         display(3, 3, "Invalid input, Please try again...", false);
@@ -428,6 +443,7 @@ void Menu::accountInfo(string username){
 void Menu::adminMenu (string username){ //The admin menu that will have more advanced options later
     ReachOutToServer server;
     string usernameE;
+    display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
     int value;
     bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, fiveKeyPressedLastLoop = false, 
@@ -452,14 +468,17 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         exitAdminMenu = true; //exit the admin menu
         break;
     case 1: //change password
+        display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         account.logonScreen(2);
         break;
     case 2://logout
+        display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         account.logonScreen();
         break;
     case 3://display stats
+        display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         display(3,3,"Please enter the username of the user for which you would like to view stats.");
         display(3,4,">",false,false);
@@ -469,11 +488,13 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         //adminMenu(username);
         break;
     case 4://display version and info
+        display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         getGameVersion();
         //adminMenu(username);
         break;
     case 5:{ //test Quests
+        display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         Quests tempQuest;
         int tempStep  = numberPressWait(8, true);//enter step number
@@ -481,6 +502,7 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         //adminMenu(username);
         break;}
     case 6:{
+        display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         //Map map;
         map.displayMapOutline();
@@ -488,6 +510,7 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         break;
     }
     case 7:{
+        display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         ReachOutToServer serverMessage;
         string output;
@@ -497,6 +520,7 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         break;
     }
     case 8:{
+        display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
         // you can loop k higher to see more color choices
@@ -510,6 +534,7 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         break;
     }
     default:
+        display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         display(3,3,"Invalid input, Please try again...", false);
         system("pause");
@@ -519,6 +544,7 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
 }
 
 void Menu::changePass(string username){ //changes the users password
+    display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
     ReachOutToServer server;
     string passwordNew;
@@ -546,6 +572,7 @@ void Menu::changePass(string username){ //changes the users password
                 validPassword = true;
             }
         }
+        display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
     }
     display(3,3,"Please enter a new password again for your account");
@@ -560,6 +587,7 @@ void Menu::changePass(string username){ //changes the users password
     } else {
         display(3,3,"Your passwords did not match, please try again...", false);
         system("pause");
+        display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         changePass(username);
     }

@@ -18,6 +18,7 @@ void Map::listAvalibleLocations(string username){
     Battle battle;
     int currentLevel = account.getLevel(username);
     int unlockedLocationsNum = 1;
+    menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
     menu.display(3,1, "Please select a place to go Questing by typing the corresponding number.");
     menu.display(3,2, "1 - Basic Fights");
@@ -65,7 +66,7 @@ void Map::listAvalibleLocations(string username){
             case 1:
                 quests.getAvailableQuests(username, 1);
                 quests.doQuest(username, answer, 1);
-                /*system("cls");
+                /*
                 menu.ClearConsoleInputBuffer();
                 battle.startBattle(username);*/
                 break;
