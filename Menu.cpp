@@ -715,11 +715,6 @@ int Menu::numberPressWait(int maxRange, bool hasZeroOption){ //returns a value b
 int Menu::numberPressWaitSpecial(int maxRange, char key1, char key2, char key3, char key4, char key5, char key6, char key7, bool hasZeroOption){ //returns a value based on the key pressed
     bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, fiveKeyPressedLastLoop = false, sixKeyPressedLastLoop = false,sevenKeyPressedLastLoop = false,eightKeyPressedLastLoop = false,nineKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false;
     bool keyOnePressedLastLoop = false, keyTwoPressedLastLoop = false, keyThreePressedLastLoop = false, keyFourPressedLastLoop = false, keyFivePressedLastLoop = false, keySixPressedLastLoop = false, keySevenPressedLastLoop = false;
-    unsigned int val1 = (unsigned char)key1 << CHAR_BIT | (unsigned char)key1;
-    unsigned int val2 = (unsigned char)key2 << CHAR_BIT | (unsigned char)key2;
-    unsigned int val3 = (unsigned char)key3 << CHAR_BIT | (unsigned char)key3;
-    unsigned int val4 = (unsigned char)key4 << CHAR_BIT | (unsigned char)key4;
-    unsigned int val5 = (unsigned char)key5 << CHAR_BIT | (unsigned char)key5;
 
     while (1){
         std::stringstream ss1;
@@ -743,67 +738,67 @@ int Menu::numberPressWaitSpecial(int maxRange, char key1, char key2, char key3, 
         std::string s5 = ss5.str();
         display(0,4, s5+"         ");
         if (key1 != 0 && key2 != 0 && key3 != 0 && key4 != 0 && key5 != 0 && key6 != 0 && key7 != 0){
-            if (GetKeyState(key1) < 0 && !keyOnePressedLastLoop) { //checks to make sure that the special keys are pressed and makes sure it was not pressed last check
+            if (GetAsyncKeyState(key1) < 0 && !keyOnePressedLastLoop) { //checks to make sure that the special keys are pressed and makes sure it was not pressed last check
                 keyOnePressedLastLoop = true;
-            } else if (GetKeyState(key2) < 0 && !keyTwoPressedLastLoop){
+            } else if (GetAsyncKeyState(key2) < 0 && !keyTwoPressedLastLoop){
                 keyTwoPressedLastLoop = true;
-            } else if (GetKeyState(key3) < 0 && !keyThreePressedLastLoop){
+            } else if (GetAsyncKeyState(key3) < 0 && !keyThreePressedLastLoop){
                 keyThreePressedLastLoop = true;
-            } else if (GetKeyState(key4) < 0 && !keyFourPressedLastLoop){
+            } else if (GetAsyncKeyState(key4) < 0 && !keyFourPressedLastLoop){
                 keyFourPressedLastLoop = true;
-            } else if (GetKeyState(key5) < 0 && !keyFivePressedLastLoop){
+            } else if (GetAsyncKeyState(key5) < 0 && !keyFivePressedLastLoop){
                 keyFivePressedLastLoop = true;
-            } else if (GetKeyState(key6) < 0 && !keySixPressedLastLoop){
+            } else if (GetAsyncKeyState(key6) < 0 && !keySixPressedLastLoop){
                 keySixPressedLastLoop = true;
-            } else if (GetKeyState(key7) < 0 && !keySevenPressedLastLoop){
+            } else if (GetAsyncKeyState(key7) < 0 && !keySevenPressedLastLoop){
                 keySevenPressedLastLoop = true;
-            } else if ((GetKeyState(key1) >= 0) && (GetKeyState(key2) >= 0) && (GetKeyState(key3) >= 0) && (GetKeyState(key4) >= 0) && (GetKeyState(key5) >= 0) && (GetKeyState(key6) >= 0) && (GetKeyState(key7) >= 0)){ // else special keys are not pressed
+            } else if ((GetAsyncKeyState(key1) >= 0) && (GetAsyncKeyState(key2) >= 0) && (GetAsyncKeyState(key3) >= 0) && (GetAsyncKeyState(key4) >= 0) && (GetAsyncKeyState(key5) >= 0) && (GetAsyncKeyState(key6) >= 0) && (GetAsyncKeyState(key7) >= 0)){ // else special keys are not pressed
                 keyOnePressedLastLoop = keyTwoPressedLastLoop = keyThreePressedLastLoop = keyFourPressedLastLoop = keyFivePressedLastLoop = keySixPressedLastLoop = keySevenPressedLastLoop = false;
             }
             if (keyOnePressedLastLoop && keyTwoPressedLastLoop && keyThreePressedLastLoop && keyFourPressedLastLoop && keyFivePressedLastLoop && keySixPressedLastLoop && keySevenPressedLastLoop) return 100; //if all keys have been pressed at some point without letting up on all of them they are good. 
         } else if (key1 != 0 && key2 != 0 && key3 != 0 && key4 != 0 && key5 != 0 && key6 != 0){
-            if (GetKeyState(key1) < 0 && !keyOnePressedLastLoop) { //checks to make sure that the special keys are pressed and makes sure it was not pressed last check
+            if (GetAsyncKeyState(key1) < 0 && !keyOnePressedLastLoop) { //checks to make sure that the special keys are pressed and makes sure it was not pressed last check
                 keyOnePressedLastLoop = true;
-            } else if (GetKeyState(key2) < 0 && !keyTwoPressedLastLoop){
+            } else if (GetAsyncKeyState(key2) < 0 && !keyTwoPressedLastLoop){
                 keyTwoPressedLastLoop = true;
-            } else if (GetKeyState(key3) < 0 && !keyThreePressedLastLoop){
+            } else if (GetAsyncKeyState(key3) < 0 && !keyThreePressedLastLoop){
                 keyThreePressedLastLoop = true;
-            } else if (GetKeyState(key4) < 0 && !keyFourPressedLastLoop){
+            } else if (GetAsyncKeyState(key4) < 0 && !keyFourPressedLastLoop){
                 keyFourPressedLastLoop = true;
-            } else if (GetKeyState(key5) < 0 && !keyFivePressedLastLoop){
+            } else if (GetAsyncKeyState(key5) < 0 && !keyFivePressedLastLoop){
                 keyFivePressedLastLoop = true;
-            } else if (GetKeyState(key6) < 0 && !keySixPressedLastLoop){
+            } else if (GetAsyncKeyState(key6) < 0 && !keySixPressedLastLoop){
                 keySixPressedLastLoop = true;
-            } else if ((GetKeyState(key1) >= 0) && (GetKeyState(key2) >= 0) && (GetKeyState(key3) >= 0) && (GetKeyState(key4) >= 0) && (GetKeyState(key5) >= 0) && (GetKeyState(key6) >= 0)){ // else special keys are not pressed
+            } else if ((GetAsyncKeyState(key1) >= 0) && (GetAsyncKeyState(key2) >= 0) && (GetAsyncKeyState(key3) >= 0) && (GetAsyncKeyState(key4) >= 0) && (GetAsyncKeyState(key5) >= 0) && (GetAsyncKeyState(key6) >= 0)){ // else special keys are not pressed
                 keyOnePressedLastLoop = keyTwoPressedLastLoop = keyThreePressedLastLoop = keyFourPressedLastLoop = keyFivePressedLastLoop = keySixPressedLastLoop = keySevenPressedLastLoop = false;
             }
             if (keyOnePressedLastLoop && keyTwoPressedLastLoop && keyThreePressedLastLoop && keyFourPressedLastLoop && keyFivePressedLastLoop && keySixPressedLastLoop) return 100; //if all keys have been pressed at some point without letting up on all of them they are good. 
         } else if (key1 != 0 && key2 != 0 && key3 != 0 && key4 != 0 && key5 != 0){
-            if (GetKeyState(key1) < 0 && !keyOnePressedLastLoop) { //checks to make sure that the special keys are pressed and makes sure it was not pressed last check
+            if (GetAsyncKeyState(key1) < 0 && !keyOnePressedLastLoop) { //checks to make sure that the special keys are pressed and makes sure it was not pressed last check
                 keyOnePressedLastLoop = true;
-            } else if (GetKeyState(key2) < 0 && !keyTwoPressedLastLoop){
+            } else if (GetAsyncKeyState(key2) < 0 && !keyTwoPressedLastLoop){
                 keyTwoPressedLastLoop = true;
-            } else if (GetKeyState(key3) < 0 && !keyThreePressedLastLoop){
+            } else if (GetAsyncKeyState(key3) < 0 && !keyThreePressedLastLoop){
                 keyThreePressedLastLoop = true;
-            } else if (GetKeyState(key4) < 0 && !keyFourPressedLastLoop){
+            } else if (GetAsyncKeyState(key4) < 0 && !keyFourPressedLastLoop){
                 keyFourPressedLastLoop = true;
-            } else if (GetKeyState(key5) < 0 && !keyFivePressedLastLoop){
+            } else if (GetAsyncKeyState(key5) < 0 && !keyFivePressedLastLoop){
                 keyFivePressedLastLoop = true;
-            }  else if ((GetKeyState(key1) >= 0) && (GetKeyState(key2) >= 0) && (GetKeyState(key3) >= 0) && (GetKeyState(key4) >= 0) && (GetKeyState(key5) >= 0)){ // else special keys are not pressed
+            }  else if ((GetAsyncKeyState(key1) >= 0) && (GetAsyncKeyState(key2) >= 0) && (GetAsyncKeyState(key3) >= 0) && (GetAsyncKeyState(key4) >= 0) && (GetAsyncKeyState(key5) >= 0)){ // else special keys are not pressed
                 keyOnePressedLastLoop = keyTwoPressedLastLoop = keyThreePressedLastLoop = keyFourPressedLastLoop = keyFivePressedLastLoop = keySixPressedLastLoop = keySevenPressedLastLoop = false;
             }
             if (keyOnePressedLastLoop && keyTwoPressedLastLoop && keyThreePressedLastLoop && keyFourPressedLastLoop && keyFivePressedLastLoop) return 100; //if all keys have been pressed at some point without letting up on all of them they are good. 
 
         } else if (key1 != 0 && key2 != 0 && key3 != 0 && key4 != 0){
-            if (GetKeyState(key1) < 0 && !keyOnePressedLastLoop) { //checks to make sure that the special keys are pressed and makes sure it was not pressed last check
+            if (GetAsyncKeyState(key1) < 0 && !keyOnePressedLastLoop) { //checks to make sure that the special keys are pressed and makes sure it was not pressed last check
                 keyOnePressedLastLoop = true;
-            } else if (GetKeyState(key2) < 0 && !keyTwoPressedLastLoop){
+            } else if (GetAsyncKeyState(key2) < 0 && !keyTwoPressedLastLoop){
                 keyTwoPressedLastLoop = true;
-            } else if (GetKeyState(key3) < 0 && !keyThreePressedLastLoop){
+            } else if (GetAsyncKeyState(key3) < 0 && !keyThreePressedLastLoop){
                 keyThreePressedLastLoop = true;
-            } else if (GetKeyState(key4) < 0 && !keyFourPressedLastLoop){
+            } else if (GetAsyncKeyState(key4) < 0 && !keyFourPressedLastLoop){
                 keyFourPressedLastLoop = true;
-            } else if ((GetKeyState(key1) >= 0) && (GetKeyState(key2) >= 0) && (GetKeyState(key3) >= 0) && (GetKeyState(key4) >= 0)){ // else special keys are not pressed
+            } else if ((GetAsyncKeyState(key1) >= 0) && (GetAsyncKeyState(key2) >= 0) && (GetAsyncKeyState(key3) >= 0) && (GetAsyncKeyState(key4) >= 0)){ // else special keys are not pressed
                 keyOnePressedLastLoop = keyTwoPressedLastLoop = keyThreePressedLastLoop = keyFourPressedLastLoop = keyFivePressedLastLoop = keySixPressedLastLoop = keySevenPressedLastLoop = false;
             }
             if (keyOnePressedLastLoop && keyTwoPressedLastLoop && keyThreePressedLastLoop && keyFourPressedLastLoop) return 100; //if all keys have been pressed at some point without letting up on all of them they are good.
