@@ -717,26 +717,6 @@ int Menu::numberPressWaitSpecial(int maxRange, char key1, char key2, char key3, 
     bool keyOnePressedLastLoop = false, keyTwoPressedLastLoop = false, keyThreePressedLastLoop = false, keyFourPressedLastLoop = false, keyFivePressedLastLoop = false, keySixPressedLastLoop = false, keySevenPressedLastLoop = false;
 
     while (1){
-        std::stringstream ss1;
-        ss1 << GetAsyncKeyState(key1);
-        std::string s1 = ss1.str();
-        display(0,0, s1+"         ");
-        std::stringstream ss2;
-        ss2 << GetAsyncKeyState(key2);
-        std::string s2 = ss2.str();
-        display(0,1, s2+"         ");
-        std::stringstream ss3;
-        ss3 << GetAsyncKeyState(key3);
-        std::string s3 = ss3.str();
-        display(0,2, s3+"         ");
-        std::stringstream ss4;
-        ss4 << GetAsyncKeyState(key4);
-        std::string s4 = ss4.str();
-        display(0,3, s4+"         ");
-        std::stringstream ss5;
-        ss5 << GetAsyncKeyState(key5);
-        std::string s5 = ss5.str();
-        display(0,4, s5+"         ");
         if (key1 != 0 && key2 != 0 && key3 != 0 && key4 != 0 && key5 != 0 && key6 != 0 && key7 != 0){
             if (GetAsyncKeyState(key1) < 0 && !keyOnePressedLastLoop) { //checks to make sure that the special keys are pressed and makes sure it was not pressed last check
                 keyOnePressedLastLoop = true;
@@ -752,8 +732,6 @@ int Menu::numberPressWaitSpecial(int maxRange, char key1, char key2, char key3, 
                 keySixPressedLastLoop = true;
             } else if (GetAsyncKeyState(key7) < 0 && !keySevenPressedLastLoop){
                 keySevenPressedLastLoop = true;
-            } else if ((GetAsyncKeyState(key1) >= 0) && (GetAsyncKeyState(key2) >= 0) && (GetAsyncKeyState(key3) >= 0) && (GetAsyncKeyState(key4) >= 0) && (GetAsyncKeyState(key5) >= 0) && (GetAsyncKeyState(key6) >= 0) && (GetAsyncKeyState(key7) >= 0)){ // else special keys are not pressed
-                keyOnePressedLastLoop = keyTwoPressedLastLoop = keyThreePressedLastLoop = keyFourPressedLastLoop = keyFivePressedLastLoop = keySixPressedLastLoop = keySevenPressedLastLoop = false;
             }
             if (keyOnePressedLastLoop && keyTwoPressedLastLoop && keyThreePressedLastLoop && keyFourPressedLastLoop && keyFivePressedLastLoop && keySixPressedLastLoop && keySevenPressedLastLoop) return 100; //if all keys have been pressed at some point without letting up on all of them they are good. 
         } else if (key1 != 0 && key2 != 0 && key3 != 0 && key4 != 0 && key5 != 0 && key6 != 0){
@@ -769,8 +747,6 @@ int Menu::numberPressWaitSpecial(int maxRange, char key1, char key2, char key3, 
                 keyFivePressedLastLoop = true;
             } else if (GetAsyncKeyState(key6) < 0 && !keySixPressedLastLoop){
                 keySixPressedLastLoop = true;
-            } else if ((GetAsyncKeyState(key1) >= 0) && (GetAsyncKeyState(key2) >= 0) && (GetAsyncKeyState(key3) >= 0) && (GetAsyncKeyState(key4) >= 0) && (GetAsyncKeyState(key5) >= 0) && (GetAsyncKeyState(key6) >= 0)){ // else special keys are not pressed
-                keyOnePressedLastLoop = keyTwoPressedLastLoop = keyThreePressedLastLoop = keyFourPressedLastLoop = keyFivePressedLastLoop = keySixPressedLastLoop = keySevenPressedLastLoop = false;
             }
             if (keyOnePressedLastLoop && keyTwoPressedLastLoop && keyThreePressedLastLoop && keyFourPressedLastLoop && keyFivePressedLastLoop && keySixPressedLastLoop) return 100; //if all keys have been pressed at some point without letting up on all of them they are good. 
         } else if (key1 != 0 && key2 != 0 && key3 != 0 && key4 != 0 && key5 != 0){
@@ -784,8 +760,6 @@ int Menu::numberPressWaitSpecial(int maxRange, char key1, char key2, char key3, 
                 keyFourPressedLastLoop = true;
             } else if (GetAsyncKeyState(key5) < 0 && !keyFivePressedLastLoop){
                 keyFivePressedLastLoop = true;
-            }  else if ((GetAsyncKeyState(key1) >= 0) && (GetAsyncKeyState(key2) >= 0) && (GetAsyncKeyState(key3) >= 0) && (GetAsyncKeyState(key4) >= 0) && (GetAsyncKeyState(key5) >= 0)){ // else special keys are not pressed
-                keyOnePressedLastLoop = keyTwoPressedLastLoop = keyThreePressedLastLoop = keyFourPressedLastLoop = keyFivePressedLastLoop = keySixPressedLastLoop = keySevenPressedLastLoop = false;
             }
             if (keyOnePressedLastLoop && keyTwoPressedLastLoop && keyThreePressedLastLoop && keyFourPressedLastLoop && keyFivePressedLastLoop) return 100; //if all keys have been pressed at some point without letting up on all of them they are good. 
 
@@ -798,8 +772,6 @@ int Menu::numberPressWaitSpecial(int maxRange, char key1, char key2, char key3, 
                 keyThreePressedLastLoop = true;
             } else if (GetAsyncKeyState(key4) < 0 && !keyFourPressedLastLoop){
                 keyFourPressedLastLoop = true;
-            } else if ((GetAsyncKeyState(key1) >= 0) && (GetAsyncKeyState(key2) >= 0) && (GetAsyncKeyState(key3) >= 0) && (GetAsyncKeyState(key4) >= 0)){ // else special keys are not pressed
-                keyOnePressedLastLoop = keyTwoPressedLastLoop = keyThreePressedLastLoop = keyFourPressedLastLoop = keyFivePressedLastLoop = keySixPressedLastLoop = keySevenPressedLastLoop = false;
             }
             if (keyOnePressedLastLoop && keyTwoPressedLastLoop && keyThreePressedLastLoop && keyFourPressedLastLoop) return 100; //if all keys have been pressed at some point without letting up on all of them they are good.
         } else if (key1 != 0 && key2 != 0 && key3 != 0){
