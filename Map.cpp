@@ -11,7 +11,16 @@
 
 using namespace std;
 
-//extern Menu menu;
+Map::Map(){
+    for(int i = 1; i <= CityCount; i++) allCities.cityLocation[i] = 1; //set all city locations to 1
+    for(int i = 1; i <= CityCount; i++) allCities.iconType[i] = getMapCity(); //set all city icons to standard
+    allCities.cityLocation[1] = City1Location;
+    allCities.cityLocation[2] = City2Location;
+    allCities.cityLocation[3] = City3Location;
+    allCities.cityLocation[4] = City4Location;
+    allCities.cityLocation[5] = City5Location;
+    allCities.cityLocation[6] = City6Location;
+}
 
 void Map::listAvalibleLocations(string username){
     Account account;
@@ -99,13 +108,11 @@ void Map::listAvalibleLocations(string username){
     }
 }
 
-void Map::displayMapOutline(){
-    //Menu menu;
-    optionsHeight = 8;
-    maxColumn = 170; //was 210
-    maxRow = 42 + optionsHeight; //was 62
-    initalPosRow = minRow = 1 + optionsHeight;
-    initalPosColumn = minColumn = 2;
+void Map::displayMapOutline(int maxColumnInput, int maxRowInput, int minColumnInput, int MinRowInput){
+    maxColumn = maxColumnInput;
+    maxRow = maxRowInput + optionsHeight;
+    initalPosRow = minRow = MinRowInput + optionsHeight;
+    initalPosColumn = minColumn = minColumnInput;
     menu.display(initalPosColumn,initalPosRow,"+");
     for (int posRow = initalPosRow+1; posRow < maxRow; posRow++){
         menu.display(initalPosColumn,posRow,"|");
@@ -124,8 +131,7 @@ void Map::displayMapOutline(){
     }
 }
 
-void Map::displayLocations(){
-    int optionsHeight = 8;
+void Map::fillInMap(){
     int const tempmaxRow = maxRow;
     int pos[tempmaxRow][6];
     int value = 2 + optionsHeight;
@@ -399,6 +405,36 @@ void Map::displayLocations(){
     }
 }
 
+void Map::writeLandmark(int locationValue, string iconType){
+    if(isCityLocation(locationValue)){
+        menu.display(possibleTravelLocations[locationValue].x, possibleTravelLocations[locationValue].y, iconType, true, false, 47);
+    }
+}
+
+void Map::writeLandmarks(){
+    for(int i = CityCount; i >= 1; i--) writeLandmark(allCities.cityLocation[i], allCities.iconType[i]);
+}
+
+bool Map::isCityLocation(int locationValue){
+    switch (locationValue)
+    {
+        case City1Location:
+            return true;
+        case City2Location:
+            return true;
+        case City3Location:
+            return true;
+        case City4Location:
+            return true;
+        case City5Location:
+            return true;
+        case City6Location:
+            return true;
+        default:
+            return false;
+    }
+}
+
 bool Map::canMoveFromCurrentLocation(int directionValue) { //1 for north, 2 for east, 3 for south, 4 for west
     switch (directionValue)
     {
@@ -482,7 +518,7 @@ bool Map::canMoveFromCurrentLocation(int directionValue) { //1 for north, 2 for 
     return false;
 }
 
-void Map::displayLocations(int city){
+void Map::fillInMap(int city){
     switch(city){
         case 1:
             break;
@@ -494,6 +530,6 @@ void Map::displayLocations(int city){
     }
 }
 
-void Map::displayLocations(int city, int town){
+void Map::fillInMap(int city, int town){
     
 }

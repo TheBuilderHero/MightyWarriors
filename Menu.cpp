@@ -209,15 +209,10 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
     display(50, 1, "Travel");
     display(16, 2, worldMap.getMapDescription(player.getLocation()));//Dakota please help me load the user's current location
     display(32, 4, "Use Arrow Keys to navegate the Map");
-    display(32, 7, "Return to Menu");       display(53, 7, "(Press \"0\")", false);
-
-    //display(32, 3, "Go North");             display(53, 3, "(Press \"Up Arrow\")");
-    //display(32, 4, "Go East");              display(53, 4, "(Press \"Right Arrow\")");
-    //display(32, 5, "Go South");             display(53, 5, "(Press \"Down Arrow\")");
-    //display(32, 6, "Go West");              display(53, 6, "(Press \"Left Arrow\")");
-    //display(32, 7, "Return to Menu");       display(53, 7, "(Press \"0\")", false);
-    map.displayMapOutline(); //draw the map outline to the screen
-    map.displayLocations();
+    display(32, 5, "Press 0 to Return to Menu");
+    map.displayMapOutline(map.getMapStandardMaxColumn(), map.getMapStandardMaxRow()); //draw the map outline to the screen
+    map.fillInMap();
+    map.writeLandmarks();
     setStillSimpleTraveling(true);// for the do while loop so we do not have to refresh the whole cmd
     int tempCurrentLocation = -1; //no location
     bool lastLoopFailedTravel = false;
@@ -509,7 +504,7 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         //Map map;
-        map.displayMapOutline();
+        map.displayMapOutline(map.getMapStandardMaxColumn(), map.getMapStandardMaxRow());
         waitForEnter(getEnterKeyState());
         break;
     }
