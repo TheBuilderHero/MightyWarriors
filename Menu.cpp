@@ -219,12 +219,26 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
     do{
         if (tempCurrentLocation == -1){
             tempCurrentLocation = map.getCurrentLocation();
-            display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false, 44);
+            if(map.isCityLocation(map.getCurrentLocation())){
+                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false, 44);
+            } else {
+                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false, 44);
+            }
         } else {
             if (!lastLoopFailedTravel){
-                display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false, 44);
-                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false, 44);
-                tempCurrentLocation = map.getCurrentLocation(); 
+                if(map.isCityLocation(tempCurrentLocation)){
+                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapCity(), true, false, 47);
+                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false, 44);
+                    tempCurrentLocation = map.getCurrentLocation(); 
+                } else if (map.isCityLocation(map.getCurrentLocation())){
+                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false, 44);
+                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false, 44);
+                    tempCurrentLocation = map.getCurrentLocation();
+                } else {
+                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false, 44);
+                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false, 44);
+                    tempCurrentLocation = map.getCurrentLocation(); 
+                }
             } else {
                 for(int i = 0; i <= 50; i+=5){
                     display(i,0, "     ");

@@ -13,14 +13,14 @@ class Map{
         static const int mapStandardMinColumn = 2, mapStandardMinRow = 1;
         static const int locationCount = 800;
         static const int CityCount = 6;
-        static const int City1Location = 637, City2Location = 602, City3Location = 603, City4Location = 604, City5Location = 605, City6Location = 606;
+        static const int City1Location = 127, City2Location = 217, City3Location = 285, City4Location = 310, City5Location = 506, City6Location = 637;
         int initalPosRow = minRow = 1 + optionsHeight;
         int initalPosColumn = minColumn = 2;
-        struct cities{
-            int cityLocation[CityCount+1]; //the +1 allows us to use the nice 1 - 6 values instead of 0 - 5
+        struct landmarks{
+            int landmarkLocation[CityCount+1]; //the +1 allows us to use the nice 1 - 6 values instead of 0 - 5
             std::string iconType[CityCount+1];
         };
-        cities allCities;
+        landmarks allCities;
 
         struct coords
         {
@@ -64,7 +64,7 @@ class Map{
         int getMapStandardMaxRow(){ return mapStandardMaxRow; }
         int getMapStandardMinColumn(){ return mapStandardMinColumn; }
         int getMapStandardMinRow(){ return mapStandardMinRow; }
-        cities getAllCities(){ return allCities; }
+        landmarks getAllCities(){ return allCities; }
         int getCityCount(){ return CityCount; }
 
 

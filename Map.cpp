@@ -12,14 +12,14 @@
 using namespace std;
 
 Map::Map(){
-    for(int i = 1; i <= CityCount; i++) allCities.cityLocation[i] = 1; //set all city locations to 1
+    for(int i = 1; i <= CityCount; i++) allCities.landmarkLocation[i] = 1; //set all city locations to 1
     for(int i = 1; i <= CityCount; i++) allCities.iconType[i] = getMapCity(); //set all city icons to standard
-    allCities.cityLocation[1] = City1Location;
-    allCities.cityLocation[2] = City2Location;
-    allCities.cityLocation[3] = City3Location;
-    allCities.cityLocation[4] = City4Location;
-    allCities.cityLocation[5] = City5Location;
-    allCities.cityLocation[6] = City6Location;
+    allCities.landmarkLocation[1] = City1Location;
+    allCities.landmarkLocation[2] = City2Location;
+    allCities.landmarkLocation[3] = City3Location;
+    allCities.landmarkLocation[4] = City4Location;
+    allCities.landmarkLocation[5] = City5Location;
+    allCities.landmarkLocation[6] = City6Location;
 }
 
 void Map::listAvalibleLocations(string username){
@@ -412,7 +412,7 @@ void Map::writeLandmark(int locationValue, string iconType){
 }
 
 void Map::writeLandmarks(){
-    for(int i = CityCount; i >= 1; i--) writeLandmark(allCities.cityLocation[i], allCities.iconType[i]);
+    for(int i = CityCount; i >= 1; i--) writeLandmark(allCities.landmarkLocation[i], allCities.iconType[i]);
 }
 
 bool Map::isCityLocation(int locationValue){
