@@ -237,7 +237,7 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
         cout << "2  Ghost" << endl;
         cout << " ->  Ghosts have a chance to etherealize, ignoring attacks" << endl << endl;
         cout << "3  Dino" << endl;
-        cout << " ->  You can play as a Dinosaur!!!" << endl << endl;
+        cout << " ->  Has a chance to stunce enemies every round" << endl << endl;
         cout << "4  Elf" << endl;
         cout << " -> Elves have a chance for an extra attack" << endl << endl;
         cout << "5  Dryad" << endl;
