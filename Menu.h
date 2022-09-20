@@ -9,6 +9,8 @@ class Menu {
         bool exitAdminMenu = false;
         bool stillTraveling = false;
         bool stillSimpleTraveling = false;// for the do while loop so we do not have to refresh the whole cmd
+        bool stillLandmarkSimpleTraveling = false;
+        bool cityTraveling = false;
     public:
         const int gameVersion     = 1;
         const int gameMajorBuild  = 0;
@@ -17,6 +19,7 @@ class Menu {
         void getGameVersion();
         void menu(std::string username);
         void travelMenu(std::string username);
+        void cityTravelMenu(std::string username);
         void displayStats();//This function uses a stored TempEntity to display player data
         void displayInventory();
         void accountInfo(std::string username);
@@ -30,8 +33,8 @@ class Menu {
         int getEnterKeyState();
         void ClearConsoleInputBuffer();
         void display(int column, int row, std::string outputString, bool resetCursorPosition = true, bool addExtraRow = true, int color = 15);
-        void display(int column, int row, std::string outputString, int lengthOfString, bool resetCursorPosition = false, bool addExtraRow = false);
-        void clearDisplayRow(int row);
+        void displayMessageWithPause(int column, int row, std::string outputString, bool resetCursorPosition = true, bool addExtraRow = true, int color = 15);
+        void clearDisplayRow(int row, int startingColumn = 0);
         std::string numberFormatting(double decimalNumber, int numberOfDecimals);
 
         void setPlayer(TempEntity playerE);
@@ -39,4 +42,8 @@ class Menu {
 
         void setStillSimpleTraveling(bool trueFalse) { stillSimpleTraveling = trueFalse; }
         bool getStillSimpleTraveling() { return stillSimpleTraveling; }
+        void setStillLandmarkSimpleTraveling(bool trueFalse) { stillLandmarkSimpleTraveling = trueFalse; }
+        bool getStillLandmarkSimpleTraveling() { return stillLandmarkSimpleTraveling; }
+        void setCityTraveling(bool trueFalse) { cityTraveling = trueFalse; }
+        bool getCityTraveling() { return cityTraveling; }
 };

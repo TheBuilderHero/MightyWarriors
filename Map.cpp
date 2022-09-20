@@ -248,7 +248,7 @@ void Map::fillInMap(){
     //Menu menu;
     int locationConfirmedCount = 0;
     //starting from top to bottom for the first number and left to right for the second number in pos1_1 - pos#_# 
-    int posRow = minRow; //+1 for the inside of the outline
+    int posRow = minRow;
     for (int rowCount = minRow+1; rowCount < maxRow; rowCount++){ //added 1 to the minRow since this will then keep the output inside the outline
         //mapUnfilled = to_string(locationConfirmedCount); //tesing value
 
@@ -264,8 +264,8 @@ void Map::fillInMap(){
             if (lastInput1_0 == 1){ //used to put spaces between the 0's to spread out the look of the map
                 locationConfirmedCount++;
                 menu.display(currentPos, rowCount, getMapUnfilled() ,false,false, 32);
-                possibleTravelLocations[locationConfirmedCount].x = currentPos;
-                possibleTravelLocations[locationConfirmedCount].y = rowCount;
+                possibleTravelLocations[locationConfirmedCount][0].x = currentPos; //the subNum of 0 means the parent location on the map
+                possibleTravelLocations[locationConfirmedCount][0].y = rowCount;
                 //these two lines record all of the locations on the map so people can travel to them.
                     //worldMap.locationsRecord(locationConfirmedCount, rowCount, currentPos); //map.setPossibleTravelLocations(locationConfirmedCount, rowCount, currentPos);
                     // Testing output:  cout << "Y: " + to_string(rowCount) + "X: " + to_string(currentPos) << endl;
@@ -301,8 +301,8 @@ void Map::fillInMap(){
                 if (lastInput1_0 == 1){ //used to put spaces between the 0's to spread out the look of the map
                     locationConfirmedCount++;
                     menu.display(currentPos2, rowCount, getMapUnfilled(),false,false, 32);
-                    possibleTravelLocations[locationConfirmedCount].x = currentPos2;
-                    possibleTravelLocations[locationConfirmedCount].y = rowCount;
+                    possibleTravelLocations[locationConfirmedCount][0].x = currentPos2;  //the subNum of 0 means the parent location on the map
+                    possibleTravelLocations[locationConfirmedCount][0].y = rowCount;
                     //worldMap.locationsRecord(locationConfirmedCount, rowCount, currentPos); //map.setPossibleTravelLocations(locationConfirmedCount, rowCount, currentPos);
                     // Testing output:  cout << "Y: " + to_string(rowCount) + "X: " + to_string(currentPos) << endl;
 
@@ -348,8 +348,8 @@ void Map::fillInMap(){
                 if (lastInput1_0 == 1){ //used to put spaces between the 0's to spread out the look of the map
                     locationConfirmedCount++;
                     menu.display(currentPos3, rowCount, getMapUnfilled(),false,false, 32);
-                    possibleTravelLocations[locationConfirmedCount].x = currentPos3;
-                    possibleTravelLocations[locationConfirmedCount].y = rowCount;
+                    possibleTravelLocations[locationConfirmedCount][0].x = currentPos3;
+                    possibleTravelLocations[locationConfirmedCount][0].y = rowCount;
                     //worldMap.locationsRecord(locationConfirmedCount, rowCount, currentPos); //map.setPossibleTravelLocations(locationConfirmedCount, rowCount, currentPos);
                     // Testing output:  cout << "Y: " + to_string(rowCount) + "X: " + to_string(currentPos) << endl;
 
@@ -407,7 +407,8 @@ void Map::fillInMap(){
 
 void Map::writeLandmark(int locationValue, string iconType){
     if(isCityLocation(locationValue)){
-        menu.display(possibleTravelLocations[locationValue].x, possibleTravelLocations[locationValue].y, iconType, true, false, 47);
+        menu.display(possibleTravelLocations[locationValue][0].x, possibleTravelLocations[locationValue][0].y, iconType, true, false, 47);
+        //for(int i = 1; i < map.locationCountLandmark)
     }
 }
 
@@ -441,8 +442,8 @@ bool Map::canMoveFromCurrentLocation(int directionValue) { //1 for north, 2 for 
         case 1:{
             int endVal = 0;
             for (int i = 0; i <= locationCount; i++){
-                if (possibleTravelLocations[i].x == possibleTravelLocations[getCurrentLocation()].x){
-                    if (possibleTravelLocations[i].y == possibleTravelLocations[getCurrentLocation()].y - 1){
+                if (possibleTravelLocations[i][0].x == possibleTravelLocations[getCurrentLocation()][0].x){
+                    if (possibleTravelLocations[i][0].y == possibleTravelLocations[getCurrentLocation()][0].y - 1){
                         setCurrentLocation(i);
                         return true;
                     }
@@ -459,8 +460,8 @@ bool Map::canMoveFromCurrentLocation(int directionValue) { //1 for north, 2 for 
         case 2:{
             int endVal = 0;
             for (int i = 0; i <= locationCount; i++){
-                if (possibleTravelLocations[i].x == possibleTravelLocations[getCurrentLocation()].x + 2){
-                    if (possibleTravelLocations[i].y == possibleTravelLocations[getCurrentLocation()].y){
+                if (possibleTravelLocations[i][0].x == possibleTravelLocations[getCurrentLocation()][0].x + 2){
+                    if (possibleTravelLocations[i][0].y == possibleTravelLocations[getCurrentLocation()][0].y){
                         setCurrentLocation(i);
                         return true;
                     }
@@ -477,8 +478,8 @@ bool Map::canMoveFromCurrentLocation(int directionValue) { //1 for north, 2 for 
         case 3:{
             int endVal = 0;
             for (int i = 0; i <= locationCount; i++){
-                if (possibleTravelLocations[i].x == possibleTravelLocations[getCurrentLocation()].x){
-                    if (possibleTravelLocations[i].y == possibleTravelLocations[getCurrentLocation()].y + 1){
+                if (possibleTravelLocations[i][0].x == possibleTravelLocations[getCurrentLocation()][0].x){
+                    if (possibleTravelLocations[i][0].y == possibleTravelLocations[getCurrentLocation()][0].y + 1){
                         setCurrentLocation(i);
                         return true;
                     }
@@ -495,8 +496,8 @@ bool Map::canMoveFromCurrentLocation(int directionValue) { //1 for north, 2 for 
         case 4:{
             int endVal = 0;
             for (int i = 0; i <= locationCount; i++){
-                if (possibleTravelLocations[i].x == possibleTravelLocations[getCurrentLocation()].x - 2){
-                    if (possibleTravelLocations[i].y == possibleTravelLocations[getCurrentLocation()].y){
+                if (possibleTravelLocations[i][0].x == possibleTravelLocations[getCurrentLocation()][0].x - 2){
+                    if (possibleTravelLocations[i][0].y == possibleTravelLocations[getCurrentLocation()][0].y){
                         setCurrentLocation(i);
                         return true;
                     }
@@ -518,18 +519,340 @@ bool Map::canMoveFromCurrentLocation(int directionValue) { //1 for north, 2 for 
     return false;
 }
 
-void Map::fillInMap(int city){
-    switch(city){
-        case 1:
+bool Map::canMoveFromCurrentLocationCity(int directionValue) { //1 for north, 2 for east, 3 for south, 4 for west
+    switch (directionValue)
+    {
+        case 1:{
+            int endVal = 0;
+            for (int i = 0; i <= locationCountLandmark; i++){
+                if (possibleTravelLocations[getCurrentLocation()][i].x == possibleTravelLocations[getCurrentLocation()][getCurrentLandmarkLocation()].x){
+                    if (possibleTravelLocations[getCurrentLocation()][i].y == possibleTravelLocations[getCurrentLocation()][getCurrentLandmarkLocation()].y - 1){
+                        setCurrentLandmarkLocation(i);
+                        return true;
+                    }
+                }
+                endVal++;
+            }
+            if (endVal >= locationCount){
+                //cout << "location travel failed" << endl;
+                //system("pause");
+                return false;
+            }
             break;
-        case 2:
+        }
+        case 2:{
+            int endVal = 0;
+            for (int i = 0; i <= locationCountLandmark; i++){
+                if (possibleTravelLocations[getCurrentLocation()][i].x == possibleTravelLocations[getCurrentLocation()][getCurrentLandmarkLocation()].x + 2){
+                    if (possibleTravelLocations[getCurrentLocation()][i].y == possibleTravelLocations[getCurrentLocation()][getCurrentLandmarkLocation()].y){
+                        setCurrentLandmarkLocation(i);
+                        return true;
+                    }
+                }
+                endVal++;
+            }
+            if (endVal >= locationCountLandmark){
+                //cout << "location travel failed" << endl;
+                //system("pause");
+                return false;
+            }
             break;
+        }
+        case 3:{
+            int endVal = 0;
+            for (int i = 0; i <= locationCountLandmark; i++){
+                if (possibleTravelLocations[getCurrentLocation()][i].x == possibleTravelLocations[getCurrentLocation()][getCurrentLandmarkLocation()].x){
+                    if (possibleTravelLocations[getCurrentLocation()][i].y == possibleTravelLocations[getCurrentLocation()][getCurrentLandmarkLocation()].y + 1){
+                        setCurrentLandmarkLocation(i);
+                        return true;
+                    }
+                }
+                endVal++;
+            }
+            if (endVal >= locationCountLandmark){
+                //cout << "location travel failed" << endl;
+                //system("pause");
+                return false;
+            }
+            break;
+        }
+        case 4:{
+            int endVal = 0;
+            for (int i = 0; i <= locationCountLandmark; i++){
+                if (possibleTravelLocations[getCurrentLocation()][i].x == possibleTravelLocations[getCurrentLocation()][getCurrentLandmarkLocation()].x - 2){
+                    if (possibleTravelLocations[getCurrentLocation()][i].y == possibleTravelLocations[getCurrentLocation()][getCurrentLandmarkLocation()].y){
+                        setCurrentLandmarkLocation(i);
+                        return true;
+                    }
+                }
+                endVal++;
+            }
+            if (endVal >= locationCountLandmark){
+                //cout << "location travel failed" << endl;
+                //system("pause");
+                return false;
+            }
+            break;
+        }
+    
+        default:{
+            return false;
+        }
+    }
+    return false;
+}
+
+void Map::fillInMap(int landmarkLocation){
+    int const tempmaxRow = mapCityStandardMaxRow;
+    int pos[tempmaxRow][6];
+    int value = 2 + optionsHeight;
+    switch(landmarkLocation){
+        case City1Location:{
+            for (int i = 0; i <= tempmaxRow; i++){ //set all values to null before setting
+                pos[i][5] = 0;
+                pos[i][4] = 0;
+                pos[i][3] = 0;
+                pos[i][2] = 0;
+                pos[i][1] = 0;
+                pos[i][0] = 0;
+            }
+            //main island asci data:
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//10
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//9
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//8
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//7
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//6
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//5
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//4
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//3
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//2
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//1
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//0
+            break;
+        }
+        case City2Location:{
+            for (int i = 0; i <= tempmaxRow; i++){ //set all values to null before setting
+                pos[i][5] = 0;
+                pos[i][4] = 0;
+                pos[i][3] = 0;
+                pos[i][2] = 0;
+                pos[i][1] = 0;
+                pos[i][0] = 0;
+            }
+            //main island asci data:
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//10
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//9
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//8
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//7
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//6
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//5
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//4
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//3
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//2
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//1
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//0
+            break;
+        }
+        case City3Location:{
+            for (int i = 0; i <= tempmaxRow; i++){ //set all values to null before setting
+                pos[i][5] = 0;
+                pos[i][4] = 0;
+                pos[i][3] = 0;
+                pos[i][2] = 0;
+                pos[i][1] = 0;
+                pos[i][0] = 0;
+            }
+            //main island asci data:
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//10
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//9
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//8
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//7
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//6
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//5
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//4
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//3
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//2
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//1
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//0
+            break;
+        }
+        case City4Location:{
+            for (int i = 0; i <= tempmaxRow; i++){ //set all values to null before setting
+                pos[i][5] = 0;
+                pos[i][4] = 0;
+                pos[i][3] = 0;
+                pos[i][2] = 0;
+                pos[i][1] = 0;
+                pos[i][0] = 0;
+            }
+            //main island asci data:
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//10
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//9
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//8
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//7
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//6
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//5
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//4
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//3
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//2
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//1
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//0
+            break;
+        }
+        case City5Location:{
+            for (int i = 0; i <= tempmaxRow; i++){ //set all values to null before setting
+                pos[i][5] = 0;
+                pos[i][4] = 0;
+                pos[i][3] = 0;
+                pos[i][2] = 0;
+                pos[i][1] = 0;
+                pos[i][0] = 0;
+            }
+            //main island asci data:
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//10
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//9
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//8
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//7
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//6
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//5
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//4
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//3
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//2
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//1
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//0
+            break;
+        }
+        case City6Location:{
+            for (int i = 0; i <= tempmaxRow; i++){ //set all values to null before setting
+                pos[i][5] = 0;
+                pos[i][4] = 0;
+                pos[i][3] = 0;
+                pos[i][2] = 0;
+                pos[i][1] = 0;
+                pos[i][0] = 0;
+            }
+            //main island asci data:
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//10
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//9
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//8
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//7
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//6
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//5
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//4
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//3
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//2
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//1
+            pos[value][1] = 36+50;
+            pos[value++][0] = 34+50;//0
+            break;
+        }
         default:
+            menu.displayMessageWithPause(0,0, "failed void Map::fillInMap(int landmarkLocation){ " , false, false);
             break;
 
     }
+    while (value < mapCityStandardMaxRow) {
+        pos[value][1] = mapCityStandardMaxRow - 1;//-1 for the inside of the outline
+        pos[value++][0] = mapCityStandardMaxRow;//+1 for the inside of the outline //was minColumn + 1 to fill the entire row
+    }
+    int locationConfirmedCount = 0;
+    for (int rowCount = mapCityStandardMinRow+1; rowCount < mapCityStandardMaxRow; rowCount++){ //added 1 to the minRow since this will then keep the output inside the outline
+        //mapUnfilled = to_string(locationConfirmedCount); //tesing value
+
+        for(int columnPos = mapCityStandardMinColumn+1; columnPos < pos[rowCount][0]; columnPos++){
+            menu.display(columnPos, rowCount, getMapBlank() ,false,false, 16);
+        }
+
+        int currentPos = pos[rowCount][0];
+        int lastInput1_0 = 1;
+        //int currentPos = 5;
+        while (currentPos <= pos[rowCount][1]){
+
+            if (lastInput1_0 == 1){ //used to put spaces between the 0's to spread out the look of the map
+                locationConfirmedCount++;
+                menu.display(currentPos, rowCount, getMapUnfilled() ,false,false, 32);
+                possibleTravelLocations[map.getCurrentLocation()][locationConfirmedCount].x = currentPos; //the subNum of 0 means the parent location on the map
+                possibleTravelLocations[map.getCurrentLocation()][locationConfirmedCount].y = rowCount;
+                //these two lines record all of the locations on the map so people can travel to them.
+                    //worldMap.locationsRecord(locationConfirmedCount, rowCount, currentPos); //map.setPossibleTravelLocations(locationConfirmedCount, rowCount, currentPos);
+                    // Testing output:  cout << "Y: " + to_string(rowCount) + "X: " + to_string(currentPos) << endl;
+
+                lastInput1_0 = 0;
+            } else {
+                menu.display(currentPos, rowCount, getMapBlank(), false, false, 32);
+                lastInput1_0++;
+            }
+            currentPos++;
+        }
+    }
+
 }
 
-void Map::fillInMap(int city, int town){
+void Map::fillInMap(int landmark, int subLandmark){
     
 }

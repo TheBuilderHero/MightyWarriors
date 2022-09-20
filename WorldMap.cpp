@@ -283,7 +283,7 @@ void WorldMap::travel(int direction, bool &failedTravel){
         //the following is code for the other travel system that probably needs some slight adjustments to the current system:
         encounter = false;
         srand(time(NULL)); 
-        if(rand() % 3 == 0){
+        if(rand() % 14 == 0){ //1 in 15
             encounter = true;
         }
         int location = player.getLocation();
@@ -318,11 +318,36 @@ void WorldMap::travel(int direction, bool &failedTravel){
         failedTravel = true;
         string messageFailure = "failed move   ";
         int messageFailureLength = messageFailure.length();
-        menu.display(0, 0, messageFailure, messageFailureLength);
-        system("pause");
+        menu.displayMessageWithPause(0, 0, messageFailure);
     }
 }
+void WorldMap::travelLandmark(int direction, bool &failedTravel){
+    bool ableToMove = true;
+    if(direction == 1){
+        ableToMove = map.canMoveFromCurrentLocationCity(direction);
+    }else if(direction == 2){
+        ableToMove = map.canMoveFromCurrentLocationCity(direction);
+    }else if(direction == 3){
+        ableToMove = map.canMoveFromCurrentLocationCity(direction);
+    }else if(direction == 4){
+        ableToMove = map.canMoveFromCurrentLocationCity(direction);
+    }
+    if (ableToMove){
+        failedTravel = false;
+        //guard.setPlayerMapLocation(map.getCurrentLocation()); //This might need an addition for city location information
 
+        //the following is code for the other travel system that probably needs some slight adjustments to the current system:
+        int location = player.getLocation();
+        getTravelMessage(player.getLocation(), direction);
+        menu.clearDisplayRow(2);
+        menu.display(16, 2, travelMessage1);
+    } else {
+        failedTravel = true;
+        string messageFailure = "failed move   ";
+        int messageFailureLength = messageFailure.length();
+        menu.displayMessageWithPause(0, 0, messageFailure);
+    }
+}
 /*
 void locationsRecord(int locationCount, int y, int x) {
     map.setPossibleTravelLocations(locationCount, y, x);

@@ -221,6 +221,22 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
             tempCurrentLocation = map.getCurrentLocation();
             if(map.isCityLocation(map.getCurrentLocation())){
                 display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false, 44);
+                //prompt for player to enter city:
+                int messageRow = map.getMapStandardMaxRow()/2;
+                int messageColumn = map.getMapStandardMaxColumn()+1;
+                display(messageColumn, messageRow, "Would you like to enter the Village? (Y/N)", true, false);
+                char entercity = yesOrNo(); //returns y or n
+                if (entercity == 'y'){
+                    display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
+                    system("cls");
+                    do{
+                        cityTravelMenu(username);
+                    } while (cityTraveling);
+                    setStillSimpleTraveling(false);
+                } else {
+                    //do not enter city
+                    clearDisplayRow(messageRow, messageColumn);
+                }
             } else {
                 display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false, 44);
             }
@@ -234,6 +250,24 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
                     display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false, 44);
                     display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false, 44);
                     tempCurrentLocation = map.getCurrentLocation();
+                    //prompt for player to enter city:
+                    int messageRow = map.getMapStandardMaxRow()/2;
+                    int messageColumn = map.getMapStandardMaxColumn()+1;
+                    display(messageColumn, messageRow, "Would you like to enter the Village? (Y/N)", false, false);
+                    char entercity = yesOrNo(); //returns y or n
+                    if (entercity == 'y'){
+                        display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
+                        system("cls");
+                        do{
+                            cityTravelMenu(username);
+                        } while (cityTraveling);
+                        setStillSimpleTraveling(false);
+                    } else {
+                        //do not enter city
+                        clearDisplayRow(messageRow, messageColumn);
+                    }
+
+                    //if yes then enter city.
                 } else {
                     display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false, 44);
                     display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false, 44);
@@ -249,7 +283,6 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
         int value = arrowPressWait(true);
         switch (value){
         case 0://Return to menu
-            //menu(username); //causing duplicate menus
             stillTraveling = false;
             setStillSimpleTraveling(false);
             break;
@@ -276,6 +309,87 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
             break;
         }
     } while (getStillSimpleTraveling());
+    
+}
+
+void Menu::cityTravelMenu(string username){ //bring up the menu for travel
+    display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
+    system("cls");
+
+    display(50, 1, "City Travel");
+    //display(16, 2, worldMap.getMapDescription(player.getLocation()));//Dakota please help me load the user's current location
+    display(32, 4, "Use Arrow Keys to navegate the City");
+    display(32, 5, "Press 0 to Return to Menu");
+    map.displayMapOutline(map.getMapCityStandardMaxColumn(), map.getMapCityStandardMaxRow(), map.getMapCityStandardMinColumn(), map.getMapCityStandardMinRow()); //draw the map outline to the screen
+    //map.fillInMap();
+    //map.writeLandmarks();
+    setStillLandmarkSimpleTraveling(true);// for the do while loop so we do not have to refresh the whole cmd
+    int tempCurrentLocation = -1; //no location
+    bool lastLoopFailedTravel = false;
+    if (map.getCurrentLandmarkLocation() < 1) map.setCurrentLandmarkLocation(1);
+    do{
+        if (tempCurrentLocation == -1){
+            tempCurrentLocation = map.getCurrentLandmarkLocation();
+            /*
+            if(map.isCityLocation(map.getCurrentLocation())){
+                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false, 44);
+            } else {
+                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false, 44);
+            }
+            */
+            display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapFilled(),true,false, 44);
+        } else {
+            if (!lastLoopFailedTravel){
+                /*
+                if(map.isCityLocation(tempCurrentLocation)){
+                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapCity(), true, false, 47);
+                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false, 44);
+                    tempCurrentLocation = map.getCurrentLocation(); 
+                } else if (map.isCityLocation(map.getCurrentLocation())){
+                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false, 44);
+                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false, 44);
+                    tempCurrentLocation = map.getCurrentLocation();
+                } else {
+                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false, 44);
+                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false, 44);
+                    tempCurrentLocation = map.getCurrentLocation(); 
+                }
+                */
+
+                display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), tempCurrentLocation), map.getPossibleTravelLocationsY(map.getCurrentLocation(), tempCurrentLocation), map.getMapUnfilled(), true, false, 44);
+                display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapFilled(),true,false, 44);
+                tempCurrentLocation = map.getCurrentLandmarkLocation(); 
+            } else {
+                for(int i = 0; i <= 50; i+=5){
+                    display(i,0, "     ");
+                }
+                lastLoopFailedTravel = false;
+            }
+        }
+        int value = arrowPressWait(true);
+        switch (value){
+        case 0://Return to menu
+            setCityTraveling(false);
+            setStillLandmarkSimpleTraveling(false);
+            break;
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+            ClearConsoleInputBuffer();
+            worldMap.setPlayer(player);
+            worldMap.travelLandmark(value, lastLoopFailedTravel); //changes current location
+            setPlayer(worldMap.getPlayer());
+            break;
+        default:
+            display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
+            system("cls");
+            ClearConsoleInputBuffer();
+            display(3, 3, "menu value somehow set impossibly!", false);
+            system("pause");
+            break;
+        }
+    } while (getStillLandmarkSimpleTraveling());
     
 }
 
@@ -549,8 +663,7 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
     default:
         display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
-        display(3,3,"Invalid input, Please try again...", false);
-        system("pause");
+        displayMessageWithPause(3,3,"Invalid input, Please try again...");
         //adminMenu(username);
         break;
     }
@@ -600,7 +713,7 @@ void Menu::changePass(string username){ //changes the users password
         server.sendToServer(code.cipher("4", username, passwordNew));
         //menu(username);
     } else {
-        display(3,3,"Your passwords did not match, please try again...", false);
+        display(3,3,"Your passwords did not match, please try again...", false, true);
         system("pause");
         display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
@@ -995,14 +1108,22 @@ void Menu::display(int column, int row, string outputString, bool resetCursorPos
     }
 }
 
-void Menu::display(int column, int row, std::string outputString, int lengthOfString, bool resetCursorPosition, bool addExtraRow){
-    display(column, row, outputString, resetCursorPosition, addExtraRow);
-    display(column+lengthOfString, row, " ", resetCursorPosition, addExtraRow);
+void Menu::displayMessageWithPause(int column, int row, std::string outputString, bool resetCursorPosition, bool addExtraRow, int color){
+    try{
+        int lengthOfString = outputString.length();
+        display(column, row, outputString, true, false, color);
+        display(column+lengthOfString, row, " ", false, false, color);
+        system("pause");
+        display(0, 0, "", resetCursorPosition, addExtraRow, color);
+    } catch(...){
+       cout << "issues with Menu::displayMessageWithPause function" << endl;
+       system("pause") ;
+    }
 }
 
-void Menu::clearDisplayRow(int row){
-    for(int i = 0; i <= 200; i++){
-    display(i, row, " ", true, false);
+void Menu::clearDisplayRow(int row, int startingColumn){
+    for(int i = startingColumn; i <= 350; i++){
+    display(i, row, "  ", true, false);
     }
 }
 
