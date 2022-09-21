@@ -605,7 +605,7 @@ bool Map::canMoveFromCurrentLocationCity(int directionValue) { //1 for north, 2 
 void Map::fillInMap(int landmarkLocation){
     int const tempmaxRow = getMapCityStandardMaxRow() + optionsHeight;
     int pos[tempmaxRow][6];
-    int value = getMapCityStandardMaxRow() + optionsHeight;
+    int value = getMapCityStandardMinRow()+ optionsHeight;
     switch(landmarkLocation){
         case City1Location:{
             for (int i = 0; i <= tempmaxRow; i++){ //set all values to null before setting
@@ -617,26 +617,46 @@ void Map::fillInMap(int landmarkLocation){
                 pos[i][0] = 0;
             }
             //city asci data:
-            pos[value][1] = getMapCityStandardMaxColumn()-2;
-            pos[value++][0] = getMapCityStandardMinColumn()+2;//10
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//9
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//8
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//7
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//6
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//5
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//4
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//3
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//2
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//1
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//20
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//19
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//18
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//17
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//16
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//15
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//14
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//13
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//12
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//11
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//10
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//9
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//8
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//7
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//6
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//5
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//4
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//3
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//2
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//1
             break;
         }
         case City2Location:{
@@ -649,26 +669,46 @@ void Map::fillInMap(int landmarkLocation){
                 pos[i][0] = 0;
             }
             //city asci data:
-            pos[value][1] = getMapCityStandardMaxColumn()-2;
-            pos[value++][0] = getMapCityStandardMinColumn()+2;//10
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//9
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//8
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//7
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//6
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//5
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//4
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//3
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//2
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//1
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//20
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//19
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//18
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//17
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//16
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//15
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//14
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//13
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//12
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//11
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//10
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//9
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//8
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//7
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//6
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//5
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//4
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//3
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//2
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//1
             break;
         }
         case City3Location:{
@@ -681,26 +721,46 @@ void Map::fillInMap(int landmarkLocation){
                 pos[i][0] = 0;
             }
             //city asci data:
-            pos[value][1] = getMapCityStandardMaxColumn()-2;
-            pos[value++][0] = getMapCityStandardMinColumn()+2;//10
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//9
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//8
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//7
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//6
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//5
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//4
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//3
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//2
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//1
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//20
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//19
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//18
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//17
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//16
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//15
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//14
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//13
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//12
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//11
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//10
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//9
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//8
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//7
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//6
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//5
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//4
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//3
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//2
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//1
             break;
         }
         case City4Location:{
@@ -713,26 +773,46 @@ void Map::fillInMap(int landmarkLocation){
                 pos[i][0] = 0;
             }
             //city asci data:
-            pos[value][1] = getMapCityStandardMaxColumn()-2;
-            pos[value++][0] = getMapCityStandardMinColumn()+2;//10
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//9
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//8
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//7
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//6
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//5
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//4
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//3
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//2
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//1
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//20
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//19
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//18
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//17
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//16
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//15
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//14
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//13
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//12
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//11
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//10
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//9
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//8
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//7
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//6
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//5
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//4
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//3
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//2
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//1
             break;
         }
         case City5Location:{
@@ -745,26 +825,46 @@ void Map::fillInMap(int landmarkLocation){
                 pos[i][0] = 0;
             }
             //city asci data:
-            pos[value][1] = getMapCityStandardMaxColumn()-2;
-            pos[value++][0] = getMapCityStandardMinColumn()+2;//10
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//9
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//8
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//7
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//6
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();;//5
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//4
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//3
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//2
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//1
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//20
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//19
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//18
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//17
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//16
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//15
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//14
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//13
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//12
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//11
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//10
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//9
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//8
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//7
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//6
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//5
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//4
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//3
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//2
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//1
             break;
         }
         case City6Location:{
@@ -777,26 +877,46 @@ void Map::fillInMap(int landmarkLocation){
                 pos[i][0] = 0;
             }
             //city asci data:
-            pos[value][1] = getMapCityStandardMaxColumn()-2;
-            pos[value++][0] = getMapCityStandardMinColumn()+2;//10
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//9
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//8
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//7
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//6
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//5
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//4
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//3
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//2
-            pos[value][1] = getMapCityStandardMaxColumn();
-            pos[value++][0] = getMapCityStandardMinColumn();//1
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//20
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//19
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//18
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//17
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//16
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//15
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//14
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//13
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//12
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//11
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//10
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//9
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//8
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//7
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//6
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//5
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//4
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//3
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//2
+            pos[value][1] = getMapCityStandardMaxColumn()-1;
+            pos[value++][0] = getMapCityStandardMinColumn()+1;//1
             break;
         }
         default:
@@ -804,12 +924,13 @@ void Map::fillInMap(int landmarkLocation){
             break;
 
     }
+    /*
     while (value < getMapCityStandardMaxRow()) {
         pos[value][1] = getMapCityStandardMaxColumn() - 1;//-1 for the inside of the outline
         pos[value++][0] = getMapCityStandardMaxColumn();//+1 for the inside of the outline //was minColumn + 1 to fill the entire row
-    }
+    }*/
     int locationConfirmedCount = 0;
-    for (int rowCount = getMapCityStandardMinRow(); rowCount < getMapCityStandardMaxRow(); rowCount++){ //added 1 to the minRow since this will then keep the output inside the outline
+    for (int rowCount = getMapCityStandardMinRow()+optionsHeight+1; rowCount < getMapCityStandardMaxRow()+optionsHeight; rowCount++){ //added 1 to the minRow since this will then keep the output inside the outline
         //mapUnfilled = to_string(locationConfirmedCount); //tesing value
 
         for(int columnPos = mapCityStandardMinColumn+1; columnPos < pos[rowCount][0]; columnPos++){

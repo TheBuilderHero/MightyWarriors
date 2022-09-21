@@ -11,10 +11,10 @@ class Map{
         int maxColumn, minColumn;
         static const int mapStandardMaxColumn = 170, mapStandardMaxRow = 42;
         static const int mapStandardMinColumn = 2, mapStandardMinRow = 1;
-        static const int mapCityStandardMaxColumn = 94, mapCityStandardMaxRow = 26;
-        static const int mapCityStandardMinColumn = 74, mapCityStandardMinRow = 16;
+        static const int mapCityStandardMaxColumn = 64, mapCityStandardMaxRow = 26;
+        static const int mapCityStandardMinColumn = 24, mapCityStandardMinRow = 6;
         static const int locationCount = 800;
-        static const int locationCountLandmark = 200;
+        static const int locationCountLandmark = 400;
         static const int CityCount = 6;
         static const int City1Location = 127, City2Location = 217, City3Location = 285, City4Location = 310, City5Location = 506, City6Location = 637;
         int initalPosRow = minRow = 1 + optionsHeight;

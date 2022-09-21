@@ -216,10 +216,11 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
     setStillSimpleTraveling(true);// for the do while loop so we do not have to refresh the whole cmd
     int tempCurrentLocation = -1; //no location
     bool lastLoopFailedTravel = false;
+    bool leavingVillage = false;
     do{
         if (tempCurrentLocation == -1){
             tempCurrentLocation = map.getCurrentLocation();
-            if(map.isCityLocation(map.getCurrentLocation())){
+            if(map.isCityLocation(map.getCurrentLocation()) && !leavingVillage){
                 display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false, 44);
                 //prompt for player to enter city:
                 int messageRow = map.getMapStandardMaxRow()/2;
@@ -233,6 +234,7 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
                         cityTravelMenu(username);
                     } while (cityTraveling);
                     setStillSimpleTraveling(false);
+                    leavingVillage = true;
                 } else {
                     //do not enter city
                     clearDisplayRow(messageRow, messageColumn);
@@ -242,11 +244,11 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
             }
         } else {
             if (!lastLoopFailedTravel){
-                if(map.isCityLocation(tempCurrentLocation)){
+                if(map.isCityLocation(tempCurrentLocation) && !leavingVillage){
                     display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapCity(), true, false, 47);
                     display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false, 44);
                     tempCurrentLocation = map.getCurrentLocation(); 
-                } else if (map.isCityLocation(map.getCurrentLocation())){
+                } else if (map.isCityLocation(map.getCurrentLocation()) && !leavingVillage){
                     display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false, 44);
                     display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false, 44);
                     tempCurrentLocation = map.getCurrentLocation();
@@ -262,6 +264,7 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
                             cityTravelMenu(username);
                         } while (cityTraveling);
                         setStillSimpleTraveling(false);
+                        leavingVillage = true;
                     } else {
                         //do not enter city
                         clearDisplayRow(messageRow, messageColumn);
@@ -280,33 +283,35 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
                 lastLoopFailedTravel = false;
             }
         }
-        int value = arrowPressWait(true);
-        switch (value){
-        case 0://Return to menu
-            stillTraveling = false;
-            setStillSimpleTraveling(false);
-            break;
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-            ClearConsoleInputBuffer();
-            worldMap.setPlayer(player);
-            worldMap.travel(value, lastLoopFailedTravel); //changes current location
-            setPlayer(worldMap.getPlayer());
-            //cout << "still Traveling? " << getStillSimpleTraveling(); // for testing
-            //waitForEnter(getEnterKeyState());// for testing
-            //map.setCurrentLocation(1);
-            //menu(username);
-            break;
-        default:
-            display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
-            system("cls");
-            ClearConsoleInputBuffer();
-            display(3, 3, "menu value somehow set impossibly!", false);
-            system("pause");
-            //menu(username);
-            break;
+        if (!leavingVillage){
+            int value = arrowPressWait(true);
+            switch (value){
+            case 0://Return to menu
+                stillTraveling = false;
+                setStillSimpleTraveling(false);
+                break;
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+                ClearConsoleInputBuffer();
+                worldMap.setPlayer(player);
+                worldMap.travel(value, lastLoopFailedTravel); //changes current location
+                setPlayer(worldMap.getPlayer());
+                //cout << "still Traveling? " << getStillSimpleTraveling(); // for testing
+                //waitForEnter(getEnterKeyState());// for testing
+                //map.setCurrentLocation(1);
+                //menu(username);
+                break;
+            default:
+                display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
+                system("cls");
+                ClearConsoleInputBuffer();
+                display(3, 3, "menu value somehow set impossibly!", false);
+                system("pause");
+                //menu(username);
+                break;
+            }
         }
     } while (getStillSimpleTraveling());
     
@@ -320,7 +325,7 @@ void Menu::cityTravelMenu(string username){ //bring up the menu for travel
     //display(16, 2, worldMap.getMapDescription(player.getLocation()));//Dakota please help me load the user's current location
     display(32, 4, "Use Arrow Keys to navegate the City");
     display(32, 5, "Press 0 to Return to Menu");
-    //map.displayMapOutline(map.getMapCityStandardMaxColumn(), map.getMapCityStandardMaxRow(), map.getMapCityStandardMinColumn(), map.getMapCityStandardMinRow()); //draw the map outline to the screen
+    map.displayMapOutline(map.getMapCityStandardMaxColumn(), map.getMapCityStandardMaxRow(), map.getMapCityStandardMinColumn(), map.getMapCityStandardMinRow()); //draw the map outline to the screen
     map.fillInMap(map.getCurrentLocation());
     //map.writeLandmarks();
     setStillLandmarkSimpleTraveling(true);// for the do while loop so we do not have to refresh the whole cmd
