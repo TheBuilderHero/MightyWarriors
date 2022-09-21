@@ -34,7 +34,6 @@ class Map{
         coords possibleTravelLocations[locationCount][locationCountLandmark]; //these are all the places coordinates which a player can travel
         int currentLocation;
         int currentLandmarkLocation;
-        int currentlyEnteredLandmarkLocation;
         std::string mapBlank = " ";
         std::string mapFilled = "X";
         std::string mapUnfilled = " ";
@@ -59,7 +58,7 @@ class Map{
         bool canMoveFromCurrentLocation(int directionValue);
         bool canMoveFromCurrentLocationCity(int directionValue);
         void setCurrentLocation(int num) { currentLocation = num; }
-        int getCurrentLocation() {if (currentLocation > 0) { return currentLocation;} else { return currentLocation = 1; } }
+        int getCurrentLocation() {if (currentLocation > 0) { return currentLocation;} else { return currentLocation = 282; } }
         void setCurrentLandmarkLocation(int num) { currentLandmarkLocation = num; }
         int getCurrentLandmarkLocation() {if (currentLandmarkLocation > 0) { return currentLandmarkLocation;} else { return currentLandmarkLocation = 1; } }
 

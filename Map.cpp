@@ -603,9 +603,9 @@ bool Map::canMoveFromCurrentLocationCity(int directionValue) { //1 for north, 2 
 }
 
 void Map::fillInMap(int landmarkLocation){
-    int const tempmaxRow = mapCityStandardMaxRow;
+    int const tempmaxRow = getMapCityStandardMaxRow() + optionsHeight;
     int pos[tempmaxRow][6];
-    int value = 2 + optionsHeight;
+    int value = getMapCityStandardMaxRow() + optionsHeight;
     switch(landmarkLocation){
         case City1Location:{
             for (int i = 0; i <= tempmaxRow; i++){ //set all values to null before setting
@@ -616,29 +616,27 @@ void Map::fillInMap(int landmarkLocation){
                 pos[i][1] = 0;
                 pos[i][0] = 0;
             }
-            //main island asci data:
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//10
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//9
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//8
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//7
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//6
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//5
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//4
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//3
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//2
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//1
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//0
+            //city asci data:
+            pos[value][1] = getMapCityStandardMaxColumn()-2;
+            pos[value++][0] = getMapCityStandardMinColumn()+2;//10
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//9
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//8
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//7
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//6
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//5
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//4
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//3
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//2
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//1
             break;
         }
         case City2Location:{
@@ -650,29 +648,27 @@ void Map::fillInMap(int landmarkLocation){
                 pos[i][1] = 0;
                 pos[i][0] = 0;
             }
-            //main island asci data:
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//10
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//9
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//8
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//7
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//6
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//5
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//4
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//3
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//2
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//1
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//0
+            //city asci data:
+            pos[value][1] = getMapCityStandardMaxColumn()-2;
+            pos[value++][0] = getMapCityStandardMinColumn()+2;//10
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//9
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//8
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//7
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//6
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//5
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//4
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//3
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//2
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//1
             break;
         }
         case City3Location:{
@@ -684,29 +680,27 @@ void Map::fillInMap(int landmarkLocation){
                 pos[i][1] = 0;
                 pos[i][0] = 0;
             }
-            //main island asci data:
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//10
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//9
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//8
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//7
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//6
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//5
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//4
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//3
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//2
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//1
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//0
+            //city asci data:
+            pos[value][1] = getMapCityStandardMaxColumn()-2;
+            pos[value++][0] = getMapCityStandardMinColumn()+2;//10
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//9
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//8
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//7
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//6
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//5
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//4
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//3
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//2
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//1
             break;
         }
         case City4Location:{
@@ -718,29 +712,27 @@ void Map::fillInMap(int landmarkLocation){
                 pos[i][1] = 0;
                 pos[i][0] = 0;
             }
-            //main island asci data:
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//10
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//9
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//8
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//7
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//6
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//5
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//4
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//3
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//2
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//1
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//0
+            //city asci data:
+            pos[value][1] = getMapCityStandardMaxColumn()-2;
+            pos[value++][0] = getMapCityStandardMinColumn()+2;//10
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//9
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//8
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//7
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//6
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//5
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//4
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//3
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//2
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//1
             break;
         }
         case City5Location:{
@@ -752,29 +744,27 @@ void Map::fillInMap(int landmarkLocation){
                 pos[i][1] = 0;
                 pos[i][0] = 0;
             }
-            //main island asci data:
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//10
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//9
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//8
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//7
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//6
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//5
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//4
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//3
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//2
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//1
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//0
+            //city asci data:
+            pos[value][1] = getMapCityStandardMaxColumn()-2;
+            pos[value++][0] = getMapCityStandardMinColumn()+2;//10
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//9
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//8
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//7
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//6
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();;//5
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//4
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//3
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//2
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//1
             break;
         }
         case City6Location:{
@@ -786,29 +776,27 @@ void Map::fillInMap(int landmarkLocation){
                 pos[i][1] = 0;
                 pos[i][0] = 0;
             }
-            //main island asci data:
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//10
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//9
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//8
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//7
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//6
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//5
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//4
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//3
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//2
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//1
-            pos[value][1] = 36+50;
-            pos[value++][0] = 34+50;//0
+            //city asci data:
+            pos[value][1] = getMapCityStandardMaxColumn()-2;
+            pos[value++][0] = getMapCityStandardMinColumn()+2;//10
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//9
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//8
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//7
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//6
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//5
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//4
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//3
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//2
+            pos[value][1] = getMapCityStandardMaxColumn();
+            pos[value++][0] = getMapCityStandardMinColumn();//1
             break;
         }
         default:
@@ -816,16 +804,16 @@ void Map::fillInMap(int landmarkLocation){
             break;
 
     }
-    while (value < mapCityStandardMaxRow) {
-        pos[value][1] = mapCityStandardMaxRow - 1;//-1 for the inside of the outline
-        pos[value++][0] = mapCityStandardMaxRow;//+1 for the inside of the outline //was minColumn + 1 to fill the entire row
+    while (value < getMapCityStandardMaxRow()) {
+        pos[value][1] = getMapCityStandardMaxColumn() - 1;//-1 for the inside of the outline
+        pos[value++][0] = getMapCityStandardMaxColumn();//+1 for the inside of the outline //was minColumn + 1 to fill the entire row
     }
     int locationConfirmedCount = 0;
-    for (int rowCount = mapCityStandardMinRow+1; rowCount < mapCityStandardMaxRow; rowCount++){ //added 1 to the minRow since this will then keep the output inside the outline
+    for (int rowCount = getMapCityStandardMinRow(); rowCount < getMapCityStandardMaxRow(); rowCount++){ //added 1 to the minRow since this will then keep the output inside the outline
         //mapUnfilled = to_string(locationConfirmedCount); //tesing value
 
         for(int columnPos = mapCityStandardMinColumn+1; columnPos < pos[rowCount][0]; columnPos++){
-            menu.display(columnPos, rowCount, getMapBlank() ,false,false, 16);
+            menu.display(columnPos, rowCount, getMapUnfilled() ,false,false, 16);
         }
 
         int currentPos = pos[rowCount][0];
