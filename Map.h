@@ -16,14 +16,26 @@ class Map{
         static const int locationCount = 800;
         static const int locationCountLandmark = 400;
         static const int CityCount = 6;
-        static const int City1Location = 127, City2Location = 217, City3Location = 285, City4Location = 310, City5Location = 506, City6Location = 637;
+        static const int city1ObjectCount = 3, city2ObjectCount = 4, city3ObjectCount = 5, city4ObjectCount = 6, city5ObjectCount = 7, city6ObjectCount = 8;
+        static const int maxCityObjectCount = 8;
+        //in each all of the below we do not use the first value of index 0
+        const int interactiveLandmarkCount[CityCount+1] = {0, city1ObjectCount, city2ObjectCount, city3ObjectCount, city4ObjectCount, city5ObjectCount, city6ObjectCount}; //the number of landmarks per city
+        const std::string cityNames[CityCount+1] = {"hi","hi","hi","hi","hi","hi","hi"};
+        const int cityLocation[CityCount+1] = {0, 127, 217, 285, 310, 506, 637};
+        const int inCity1Locations[city1ObjectCount+1] = {0, 2, 3, 4};
+        const int inCity2Locations[city2ObjectCount+1] = {0, 2, 3, 4, 5};
+        const int inCity3Locations[city3ObjectCount+1] = {0, 2, 3, 4, 5, 6};
+        const int inCity4Locations[city4ObjectCount+1] = {0, 2, 3, 4, 5, 6, 7};
+        const int inCity5Locations[city5ObjectCount+1] = {0, 2, 3, 4, 5, 6, 7, 8};
+        const int inCity6Locations[city6ObjectCount+1] = {0, 2, 3, 4, 5, 6, 7, 8, 9};
+
         int initalPosRow = minRow = 1 + optionsHeight;
         int initalPosColumn = minColumn = 2;
         struct landmarks{
-            int landmarkLocation[CityCount+1]; //the +1 allows us to use the nice 1 - 6 values instead of 0 - 5
-            std::string iconType[CityCount+1];
+            int landmarkLocation[CityCount+1][maxCityObjectCount+1]; //the +1 allows us to use the nice 1 - 6 values instead of 0 - 5
+            std::string iconType[CityCount+1][maxCityObjectCount+1];
         };
-        landmarks allCities;
+        landmarks allLandmarks;
 
         struct coords
         {
@@ -47,13 +59,17 @@ class Map{
         void fillInMap(int landmark); //displays map of city
         void fillInMap(int landmark, int subLandmark); //displays map of town
         void writeLandmark(int locationValue, std::string iconType);
+        void writeLandmarkObject(int locationValue);
         void writeLandmarks();
+        void writeLandmarksObjects(/*int objectCount*/);
+
 
 
         TempEntity getPlayer(){ return player ;}
         void setPlayer(TempEntity playerE){ player = playerE; }
 
         bool isCityLocation(int locationValue);
+        int whichCity(int locationValue);
 
         bool canMoveFromCurrentLocation(int directionValue);
         bool canMoveFromCurrentLocationCity(int directionValue);
@@ -80,7 +96,7 @@ class Map{
 
 
 
-        landmarks getAllCities(){ return allCities; }
+        landmarks getAllCities(){ return allLandmarks; }
         int getCityCount(){ return CityCount; }
 
 
@@ -88,4 +104,7 @@ class Map{
         std::string getMapFilled() { return mapFilled; }
         std::string getMapUnfilled() { return mapUnfilled; }
         std::string getMapCity() { return mapCity; }
+
+        int getLocationCountLandmark() { return locationCountLandmark; }
+        int getInteractiveLandmarkCount(int landmarkID) { return interactiveLandmarkCount[landmarkID];} //basically landmarkID is just the city value 1 - 6
 };

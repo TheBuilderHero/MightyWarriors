@@ -12,14 +12,59 @@
 using namespace std;
 
 Map::Map(){
-    for(int i = 1; i <= CityCount; i++) allCities.landmarkLocation[i] = 1; //set all city locations to 1
-    for(int i = 1; i <= CityCount; i++) allCities.iconType[i] = getMapCity(); //set all city icons to standard
-    allCities.landmarkLocation[1] = City1Location;
-    allCities.landmarkLocation[2] = City2Location;
-    allCities.landmarkLocation[3] = City3Location;
-    allCities.landmarkLocation[4] = City4Location;
-    allCities.landmarkLocation[5] = City5Location;
-    allCities.landmarkLocation[6] = City6Location;
+    for(int i = 1; i <= CityCount; i++) allLandmarks.landmarkLocation[i][0] = 1; //set all city locations to 1
+    for(int i = 1; i <= CityCount; i++) allLandmarks.iconType[i][0] = getMapCity(); //set all city icons to standard
+
+    for(int i = 1; i <= CityCount; i++) allLandmarks.landmarkLocation[i][0] = cityLocation[i]; //val allows to ease expansion
+
+    for(int i = 1; i <= CityCount; i++) {
+        for(int i1 = 1; i1 <= CityCount; i1++) allLandmarks.landmarkLocation[i1][i] = 0; //set all landmarks in city locations to 0
+        for(int i2 = 1; i2 <= CityCount; i2++) allLandmarks.iconType[i2][i] = getMapCity(); //set all icons to standard
+    }
+    for(int city = 1; city <= CityCount; city++){
+        switch (city)
+        {
+        case 1:
+            for(int i = 1; i <= interactiveLandmarkCount[city]; i++) {
+                allLandmarks.landmarkLocation[city][i] = inCity1Locations[i];
+                allLandmarks.iconType[city][i] = getMapCity(); //allows to ease expansion
+            }
+            break;
+        case 2:
+            for(int i = 1; i <= interactiveLandmarkCount[city]; i++) {
+                allLandmarks.landmarkLocation[city][i] = inCity2Locations[i]; //val allows to ease expansion
+                allLandmarks.iconType[city][i] = getMapCity(); //allows to ease expansion
+            }
+            break;
+        case 3:
+            for(int i = 1; i <= interactiveLandmarkCount[city]; i++) {
+                allLandmarks.landmarkLocation[city][i] = inCity3Locations[i]; //val allows to ease expansion
+                allLandmarks.iconType[city][i] = getMapCity(); //allows to ease expansion
+            }
+            break;
+        case 4:
+            for(int i = 1; i <= interactiveLandmarkCount[city]; i++) {
+                allLandmarks.landmarkLocation[city][i] = inCity4Locations[i]; //val allows to ease expansion
+                allLandmarks.iconType[city][i] = getMapCity(); //allows to ease expansion
+            }
+            break;
+        case 5:
+            for(int i = 1; i <= interactiveLandmarkCount[city]; i++) {
+                allLandmarks.landmarkLocation[city][i] = inCity5Locations[i]; //val allows to ease expansion
+                allLandmarks.iconType[city][i] = getMapCity(); //allows to ease expansion
+            }
+            break;
+        case 6:
+            for(int i = 1; i <= interactiveLandmarkCount[city]; i++) {
+                allLandmarks.landmarkLocation[city][i] = inCity6Locations[i]; //val allows to ease expansion
+                allLandmarks.iconType[city][i] = getMapCity(); //allows to ease expansion
+            }
+            break;
+        
+        default:
+            break;
+        }
+    }
 }
 
 void Map::listAvalibleLocations(string username){
@@ -412,28 +457,43 @@ void Map::writeLandmark(int locationValue, string iconType){
     }
 }
 
+void Map::writeLandmarkObject(int locationValue){
+    //if (locationValue){
+        menu.display(possibleTravelLocations[getCurrentLocation()][locationValue].x, possibleTravelLocations[getCurrentLocation()][locationValue].y, allLandmarks.iconType[getCurrentLocation()][locationValue], true, false, 47);
+    //}
+    //if(isCityLocation(locationValue)){
+        //for(int i = 1; i < map.locationCountLandmark)
+    //}
+}
+
 void Map::writeLandmarks(){
-    for(int i = CityCount; i >= 1; i--) writeLandmark(allCities.landmarkLocation[i], allCities.iconType[i]);
+    for(int i = CityCount; i >= 1; i--) writeLandmark(allLandmarks.landmarkLocation[i][0], allLandmarks.iconType[i][0]);
+}
+
+void Map::writeLandmarksObjects(/*int objectCount*/){ //this needs to be setup for cities
+    int city = whichCity(getCurrentLocation());
+    menu.displayMessageWithPause(0,0, "city: " + to_string(city) + "::");
+    int numberOfLandmarks = getInteractiveLandmarkCount(city);
+    menu.displayMessageWithPause(0,0, "numberOfLandmarks: " + to_string(numberOfLandmarks) + "::");
+    for(int i = numberOfLandmarks; i >= 1; i--) writeLandmarkObject(allLandmarks.landmarkLocation[city][i]);
 }
 
 bool Map::isCityLocation(int locationValue){
-    switch (locationValue)
-    {
-        case City1Location:
+    for(int i = 1; i <= CityCount; i++){
+        if (locationValue == cityLocation[i]){
             return true;
-        case City2Location:
-            return true;
-        case City3Location:
-            return true;
-        case City4Location:
-            return true;
-        case City5Location:
-            return true;
-        case City6Location:
-            return true;
-        default:
-            return false;
+        }
     }
+    return false;
+}
+
+int Map::whichCity(int locationValue){
+    for(int i = 1; i <= CityCount; i++){
+        if (locationValue == cityLocation[i]){
+            return i;
+        }
+    }
+    return 0;
 }
 
 bool Map::canMoveFromCurrentLocation(int directionValue) { //1 for north, 2 for east, 3 for south, 4 for west
@@ -603,11 +663,12 @@ bool Map::canMoveFromCurrentLocationCity(int directionValue) { //1 for north, 2 
 }
 
 void Map::fillInMap(int landmarkLocation){
+    int city = whichCity(landmarkLocation);
     int const tempmaxRow = getMapCityStandardMaxRow() + optionsHeight;
     int pos[tempmaxRow][6];
     int value = getMapCityStandardMinRow()+ optionsHeight;
-    switch(landmarkLocation){
-        case City1Location:{
+    switch(city){
+        case 1:{
             for (int i = 0; i <= tempmaxRow; i++){ //set all values to null before setting
                 pos[i][5] = 0;
                 pos[i][4] = 0;
@@ -659,7 +720,7 @@ void Map::fillInMap(int landmarkLocation){
             pos[value++][0] = getMapCityStandardMinColumn()+1;//1
             break;
         }
-        case City2Location:{
+        case 2:{
             for (int i = 0; i <= tempmaxRow; i++){ //set all values to null before setting
                 pos[i][5] = 0;
                 pos[i][4] = 0;
@@ -711,7 +772,7 @@ void Map::fillInMap(int landmarkLocation){
             pos[value++][0] = getMapCityStandardMinColumn()+1;//1
             break;
         }
-        case City3Location:{
+        case 3:{
             for (int i = 0; i <= tempmaxRow; i++){ //set all values to null before setting
                 pos[i][5] = 0;
                 pos[i][4] = 0;
@@ -763,7 +824,7 @@ void Map::fillInMap(int landmarkLocation){
             pos[value++][0] = getMapCityStandardMinColumn()+1;//1
             break;
         }
-        case City4Location:{
+        case 4:{
             for (int i = 0; i <= tempmaxRow; i++){ //set all values to null before setting
                 pos[i][5] = 0;
                 pos[i][4] = 0;
@@ -815,7 +876,7 @@ void Map::fillInMap(int landmarkLocation){
             pos[value++][0] = getMapCityStandardMinColumn()+1;//1
             break;
         }
-        case City5Location:{
+        case 5:{
             for (int i = 0; i <= tempmaxRow; i++){ //set all values to null before setting
                 pos[i][5] = 0;
                 pos[i][4] = 0;
@@ -867,7 +928,7 @@ void Map::fillInMap(int landmarkLocation){
             pos[value++][0] = getMapCityStandardMinColumn()+1;//1
             break;
         }
-        case City6Location:{
+        case 6:{
             for (int i = 0; i <= tempmaxRow; i++){ //set all values to null before setting
                 pos[i][5] = 0;
                 pos[i][4] = 0;

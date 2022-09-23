@@ -221,7 +221,7 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
         if (tempCurrentLocation == -1){
             tempCurrentLocation = map.getCurrentLocation();
             if(map.isCityLocation(map.getCurrentLocation()) && !leavingVillage){
-                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false, 44);
+                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false,46);
                 //prompt for player to enter city:
                 int messageRow = map.getMapStandardMaxRow()/2;
                 int messageColumn = map.getMapStandardMaxColumn()+1;
@@ -240,17 +240,17 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
                     clearDisplayRow(messageRow, messageColumn);
                 }
             } else {
-                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false, 44);
+                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false,46);
             }
         } else {
             if (!lastLoopFailedTravel){
                 if(map.isCityLocation(tempCurrentLocation) && !leavingVillage){
                     display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapCity(), true, false, 47);
-                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false, 44);
+                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false,46);
                     tempCurrentLocation = map.getCurrentLocation(); 
                 } else if (map.isCityLocation(map.getCurrentLocation()) && !leavingVillage){
-                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false, 44);
-                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false, 44);
+                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false,46);
+                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false,46);
                     tempCurrentLocation = map.getCurrentLocation();
                     //prompt for player to enter city:
                     int messageRow = map.getMapStandardMaxRow()/2;
@@ -272,8 +272,8 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
 
                     //if yes then enter city.
                 } else {
-                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false, 44);
-                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false, 44);
+                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false,46);
+                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false,46);
                     tempCurrentLocation = map.getCurrentLocation(); 
                 }
             } else {
@@ -320,14 +320,13 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
 void Menu::cityTravelMenu(string username){ //bring up the menu for travel
     display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
-
     display(50, 1, "City Travel");
     //display(16, 2, worldMap.getMapDescription(player.getLocation()));//Dakota please help me load the user's current location
     display(32, 4, "Use Arrow Keys to navegate the City");
     display(32, 5, "Press 0 to Return to Menu");
     map.displayMapOutline(map.getMapCityStandardMaxColumn(), map.getMapCityStandardMaxRow(), map.getMapCityStandardMinColumn(), map.getMapCityStandardMinRow()); //draw the map outline to the screen
     map.fillInMap(map.getCurrentLocation());
-    //map.writeLandmarks();
+    map.writeLandmarksObjects();
     setStillLandmarkSimpleTraveling(true);// for the do while loop so we do not have to refresh the whole cmd
     int tempCurrentLocation = -1; //no location
     bool lastLoopFailedTravel = false;
@@ -337,32 +336,32 @@ void Menu::cityTravelMenu(string username){ //bring up the menu for travel
             tempCurrentLocation = map.getCurrentLandmarkLocation();
             /*
             if(map.isCityLocation(map.getCurrentLocation())){
-                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false, 44);
+                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false,46);
             } else {
-                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false, 44);
+                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false,46);
             }
             */
-            display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapFilled(),true,false, 44);
+            display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapFilled(),true,false,46);
         } else {
             if (!lastLoopFailedTravel){
                 /*
                 if(map.isCityLocation(tempCurrentLocation)){
                     display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapCity(), true, false, 47);
-                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false, 44);
+                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false,46);
                     tempCurrentLocation = map.getCurrentLocation(); 
                 } else if (map.isCityLocation(map.getCurrentLocation())){
-                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false, 44);
-                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false, 44);
+                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false,46);
+                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false,46);
                     tempCurrentLocation = map.getCurrentLocation();
                 } else {
-                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false, 44);
-                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false, 44);
+                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false,46);
+                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false,46);
                     tempCurrentLocation = map.getCurrentLocation(); 
                 }
                 */
 
-                display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), tempCurrentLocation), map.getPossibleTravelLocationsY(map.getCurrentLocation(), tempCurrentLocation), map.getMapUnfilled(), true, false, 44);
-                display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapFilled(),true,false, 44);
+                display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), tempCurrentLocation), map.getPossibleTravelLocationsY(map.getCurrentLocation(), tempCurrentLocation), map.getMapUnfilled(), true, false,46);
+                display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapFilled(),true,false,46);
                 tempCurrentLocation = map.getCurrentLandmarkLocation(); 
             } else {
                 for(int i = 0; i <= 50; i+=5){
