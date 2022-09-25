@@ -56,7 +56,7 @@ class Map{
         void listAvalibleLocations(std::string username);
         void displayMapOutline(int maxColumnInput = mapStandardMaxColumn, int maxRowInput = mapStandardMaxRow, int minColumnInput = mapStandardMinColumn, int minRowInput = mapStandardMinRow);
         void fillInMap(); //displays world map
-        void fillInMap(int landmark); //displays map of city
+        void fillInLandmarkMap(); //displays map of city
         void fillInMap(int landmark, int subLandmark); //displays map of town
         void writeLandmark(int locationValue, std::string iconType);
         void writeLandmarkObject(int locationValue);

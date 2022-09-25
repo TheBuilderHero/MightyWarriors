@@ -458,12 +458,12 @@ void Map::writeLandmark(int locationValue, string iconType){
 }
 
 void Map::writeLandmarkObject(int locationValue){
-    //if (locationValue){
-        menu.display(possibleTravelLocations[getCurrentLocation()][locationValue].x, possibleTravelLocations[getCurrentLocation()][locationValue].y, allLandmarks.iconType[getCurrentLocation()][locationValue], true, false, 47);
-    //}
-    //if(isCityLocation(locationValue)){
+    if (locationValue){
+        menu.display(possibleTravelLocations[getCurrentLocation()][locationValue].x, possibleTravelLocations[getCurrentLocation()][locationValue].y, allLandmarks.iconType[whichCity(getCurrentLocation())][locationValue], true, false, 47);
+    }
+    if(isCityLocation(locationValue)){
         //for(int i = 1; i < map.locationCountLandmark)
-    //}
+    }
 }
 
 void Map::writeLandmarks(){
@@ -472,9 +472,9 @@ void Map::writeLandmarks(){
 
 void Map::writeLandmarksObjects(/*int objectCount*/){ //this needs to be setup for cities
     int city = whichCity(getCurrentLocation());
-    menu.displayMessageWithPause(0,0, "city: " + to_string(city) + "::");
+    //menu.displayMessageWithPause(0,0, "city: " + to_string(city) + "::");
     int numberOfLandmarks = getInteractiveLandmarkCount(city);
-    menu.displayMessageWithPause(0,0, "numberOfLandmarks: " + to_string(numberOfLandmarks) + "::");
+    //menu.displayMessageWithPause(0,0, "numberOfLandmarks: " + to_string(numberOfLandmarks) + "::");
     for(int i = numberOfLandmarks; i >= 1; i--) writeLandmarkObject(allLandmarks.landmarkLocation[city][i]);
 }
 
@@ -662,8 +662,8 @@ bool Map::canMoveFromCurrentLocationCity(int directionValue) { //1 for north, 2 
     return false;
 }
 
-void Map::fillInMap(int landmarkLocation){
-    int city = whichCity(landmarkLocation);
+void Map::fillInLandmarkMap(){
+    int city = whichCity(getCurrentLocation());
     int const tempmaxRow = getMapCityStandardMaxRow() + optionsHeight;
     int pos[tempmaxRow][6];
     int value = getMapCityStandardMinRow()+ optionsHeight;
@@ -981,7 +981,7 @@ void Map::fillInMap(int landmarkLocation){
             break;
         }
         default:
-            menu.displayMessageWithPause(0,0, "failed void Map::fillInMap(int landmarkLocation){ " , false, false);
+            menu.displayMessageWithPause(0,0, "failed void Map::fillInLandmarkMap(){ " , false, false);
             break;
 
     }

@@ -325,7 +325,7 @@ void Menu::cityTravelMenu(string username){ //bring up the menu for travel
     display(32, 4, "Use Arrow Keys to navegate the City");
     display(32, 5, "Press 0 to Return to Menu");
     map.displayMapOutline(map.getMapCityStandardMaxColumn(), map.getMapCityStandardMaxRow(), map.getMapCityStandardMinColumn(), map.getMapCityStandardMinRow()); //draw the map outline to the screen
-    map.fillInMap(map.getCurrentLocation());
+    map.fillInLandmarkMap();
     map.writeLandmarksObjects();
     setStillLandmarkSimpleTraveling(true);// for the do while loop so we do not have to refresh the whole cmd
     int tempCurrentLocation = -1; //no location
