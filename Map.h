@@ -17,7 +17,7 @@ class Map{
         static const int locationCountLandmark = 400;
         static const int CityCount = 6;
         static const int city1ObjectCount = 3, city2ObjectCount = 4, city3ObjectCount = 5, city4ObjectCount = 6, city5ObjectCount = 7, city6ObjectCount = 8;
-        static const int maxCityObjectCount = 8;
+        static const int maxCityObjectCount = 8+1; //+1 so that all cities locations work properly (For some reason the last city was having issues with location and icon)
         //in each all of the below we do not use the first value of index 0
         const int interactiveLandmarkCount[CityCount+1] = {0, city1ObjectCount, city2ObjectCount, city3ObjectCount, city4ObjectCount, city5ObjectCount, city6ObjectCount}; //the number of landmarks per city
         const std::string cityNames[CityCount+1] = {"hi","hi","hi","hi","hi","hi","hi"};

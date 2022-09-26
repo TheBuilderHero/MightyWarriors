@@ -15,11 +15,11 @@ Map::Map(){
     for(int i = 1; i <= CityCount; i++) allLandmarks.landmarkLocation[i][0] = 1; //set all city locations to 1
     for(int i = 1; i <= CityCount; i++) allLandmarks.iconType[i][0] = getMapCity(); //set all city icons to standard
 
-    for(int i = 1; i <= CityCount; i++) allLandmarks.landmarkLocation[i][0] = cityLocation[i]; //val allows to ease expansion
+    for(int i = 1; i <= CityCount; i++) allLandmarks.landmarkLocation[i][0] = cityLocation[i]; //set locations of each city
 
-    for(int i = 1; i <= CityCount; i++) {
+    for(int i = 1; i <= maxCityObjectCount; i++) {
         for(int i1 = 1; i1 <= CityCount; i1++) allLandmarks.landmarkLocation[i1][i] = 0; //set all landmarks in city locations to 0
-        for(int i2 = 1; i2 <= CityCount; i2++) allLandmarks.iconType[i2][i] = getMapCity(); //set all icons to standard
+        for(int i2 = 1; i2 <= CityCount; i2++) allLandmarks.iconType[i2][i] = getMapCity(); //set city objects to standard city icon
     }
     for(int city = 1; city <= CityCount; city++){
         switch (city)
@@ -461,9 +461,11 @@ void Map::writeLandmarkObject(int locationValue){
     if (locationValue){
         menu.display(possibleTravelLocations[getCurrentLocation()][locationValue].x, possibleTravelLocations[getCurrentLocation()][locationValue].y, allLandmarks.iconType[whichCity(getCurrentLocation())][locationValue], true, false, 47);
     }
+    /*
     if(isCityLocation(locationValue)){
         //for(int i = 1; i < map.locationCountLandmark)
     }
+    */
 }
 
 void Map::writeLandmarks(){
@@ -472,9 +474,7 @@ void Map::writeLandmarks(){
 
 void Map::writeLandmarksObjects(/*int objectCount*/){ //this needs to be setup for cities
     int city = whichCity(getCurrentLocation());
-    //menu.displayMessageWithPause(0,0, "city: " + to_string(city) + "::");
     int numberOfLandmarks = getInteractiveLandmarkCount(city);
-    //menu.displayMessageWithPause(0,0, "numberOfLandmarks: " + to_string(numberOfLandmarks) + "::");
     for(int i = numberOfLandmarks; i >= 1; i--) writeLandmarkObject(allLandmarks.landmarkLocation[city][i]);
 }
 
