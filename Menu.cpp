@@ -221,7 +221,7 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
         if (tempCurrentLocation == -1){
             tempCurrentLocation = map.getCurrentLocation();
             if(map.isCityLocation(map.getCurrentLocation()) && !leavingVillage){
-                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false,46);
+                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false,41);
                 //prompt for player to enter city:
                 int messageRow = map.getMapStandardMaxRow()/2;
                 int messageColumn = map.getMapStandardMaxColumn()+1;
@@ -240,17 +240,38 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
                     clearDisplayRow(messageRow, messageColumn);
                 }
             } else {
-                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false,46);
+                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false,41);
             }
         } else {
             if (!lastLoopFailedTravel){
-                if(map.isCityLocation(tempCurrentLocation) && !leavingVillage){
+                if(map.isCityLocation(tempCurrentLocation) && !leavingVillage && map.isCityLocation(map.getCurrentLocation())){
                     display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapCity(), true, false, 47);
-                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false,46);
+                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false,41);
+                    tempCurrentLocation = map.getCurrentLocation();
+                    //prompt for player to enter city:
+                    int messageRow = map.getMapStandardMaxRow()/2;
+                    int messageColumn = map.getMapStandardMaxColumn()+1;
+                    display(messageColumn, messageRow, "Would you like to enter the Village? (Y/N)", false, false);
+                    char entercity = yesOrNo(); //returns y or n
+                    if (entercity == 'y'){
+                        display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
+                        system("cls");
+                        do{
+                            cityTravelMenu(username);
+                        } while (cityTraveling);
+                        setStillSimpleTraveling(false);
+                        leavingVillage = true;
+                    } else {
+                        //do not enter city
+                        clearDisplayRow(messageRow, messageColumn);
+                    }
+                } else if(map.isCityLocation(tempCurrentLocation) && !leavingVillage){
+                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapCity(), true, false, 47);
+                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false,41);
                     tempCurrentLocation = map.getCurrentLocation(); 
                 } else if (map.isCityLocation(map.getCurrentLocation()) && !leavingVillage){
-                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false,46);
-                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false,46);
+                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false,41);
+                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false,41);
                     tempCurrentLocation = map.getCurrentLocation();
                     //prompt for player to enter city:
                     int messageRow = map.getMapStandardMaxRow()/2;
@@ -272,8 +293,8 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
 
                     //if yes then enter city.
                 } else {
-                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false,46);
-                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false,46);
+                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false,41);
+                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false,41);
                     tempCurrentLocation = map.getCurrentLocation(); 
                 }
             } else {
@@ -332,37 +353,77 @@ void Menu::cityTravelMenu(string username){ //bring up the menu for travel
     bool lastLoopFailedTravel = false;
     if (map.getCurrentLandmarkLocation() < 1) map.setCurrentLandmarkLocation(1);
     do{
+        //displayMessageWithPause(0, 0, "Current location a Landmark: " + to_string(map.isLandmarkObjectInteractiveLocation(map.getCurrentLandmarkLocation())), false, false);
         if (tempCurrentLocation == -1){
             tempCurrentLocation = map.getCurrentLandmarkLocation();
-            /*
-            if(map.isCityLocation(map.getCurrentLocation())){
-                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false,46);
+            if(map.isLandmarkObjectInteractiveLocation(map.getCurrentLandmarkLocation())){
+                display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapCity(),true,false,41);
+                //prompt for player to enter city:
+                int messageRow = map.getMapCityStandardMaxRow()/2;
+                int messageColumn = map.getMapCityStandardMaxColumn()+1;
+                display(messageColumn, messageRow, "Would you like to talk with the Villager? (Y/N)", false, false);
+                char interact = yesOrNo(); //returns y or n
+                if (interact == 'y'){
+                    //leavingVillage = true;
+                    displayMessageWithPause(messageColumn, messageRow, "Dialog apears here", false, false);
+                    clearDisplayRow(messageRow, messageColumn);
+                } else {
+                    //do not enter city
+                    clearDisplayRow(messageRow, messageColumn);
+                }
             } else {
-                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false,46);
+                display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapFilled(),true,false,41);
             }
-            */
-            display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapFilled(),true,false,46);
+            //display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapFilled(),true,false,41);
         } else {
             if (!lastLoopFailedTravel){
-                /*
-                if(map.isCityLocation(tempCurrentLocation)){
-                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapCity(), true, false, 47);
-                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false,46);
-                    tempCurrentLocation = map.getCurrentLocation(); 
-                } else if (map.isCityLocation(map.getCurrentLocation())){
-                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false,46);
-                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false,46);
-                    tempCurrentLocation = map.getCurrentLocation();
+                if(map.isLandmarkObjectInteractiveLocation(tempCurrentLocation) && map.isLandmarkObjectInteractiveLocation(map.getCurrentLandmarkLocation())){
+                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), tempCurrentLocation), map.getPossibleTravelLocationsY(map.getCurrentLocation(), tempCurrentLocation), map.getMapCity(), true, false, 47);
+                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapCity(),true,false,41);
+                    tempCurrentLocation = map.getCurrentLandmarkLocation();
+                    //prompt for player to enter city:
+                    int messageRow = map.getMapCityStandardMaxRow()/2;
+                    int messageColumn = map.getMapCityStandardMaxColumn()+1;
+                    display(messageColumn, messageRow, "Would you like to talk with the Villager? (Y/N)", false, false);
+                    char interact = yesOrNo(); //returns y or n
+                    if (interact == 'y'){
+                        //leavingVillage = true;
+                        displayMessageWithPause(messageColumn, messageRow, "Dialog apears here", false, false);
+                        clearDisplayRow(messageRow, messageColumn);
+                    } else {
+                        //do not enter city
+                        clearDisplayRow(messageRow, messageColumn);
+                    } 
+                } else if(map.isLandmarkObjectInteractiveLocation(tempCurrentLocation)){
+                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), tempCurrentLocation), map.getPossibleTravelLocationsY(map.getCurrentLocation(), tempCurrentLocation), map.getMapCity(), true, false, 47);
+                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapFilled(),true,false,41);
+                    tempCurrentLocation = map.getCurrentLandmarkLocation(); 
+                } else if (map.isLandmarkObjectInteractiveLocation(map.getCurrentLandmarkLocation())){
+                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), tempCurrentLocation), map.getPossibleTravelLocationsY(map.getCurrentLocation(), tempCurrentLocation), map.getMapUnfilled(), true, false,47);
+                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapCity(),true,false,41);
+                    tempCurrentLocation = map.getCurrentLandmarkLocation();
+                    //prompt for player to enter city:
+                    int messageRow = map.getMapCityStandardMaxRow()/2;
+                    int messageColumn = map.getMapCityStandardMaxColumn()+1;
+                    display(messageColumn, messageRow, "Would you like to talk with the Villager? (Y/N)", false, false);
+                    char interact = yesOrNo(); //returns y or n
+                    if (interact == 'y'){
+                        //leavingVillage = true;
+                        displayMessageWithPause(messageColumn, messageRow, "Dialog apears here", false, false);
+                        clearDisplayRow(messageRow, messageColumn);
+                    } else {
+                        //do not enter city
+                        clearDisplayRow(messageRow, messageColumn);
+                    }
                 } else {
-                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false,46);
-                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false,46);
-                    tempCurrentLocation = map.getCurrentLocation(); 
+                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), tempCurrentLocation), map.getPossibleTravelLocationsY(map.getCurrentLocation(), tempCurrentLocation), map.getMapUnfilled(), true, false,47);
+                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapFilled(),true,false,41);
+                    tempCurrentLocation = map.getCurrentLandmarkLocation(); 
                 }
-                */
 
-                display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), tempCurrentLocation), map.getPossibleTravelLocationsY(map.getCurrentLocation(), tempCurrentLocation), map.getMapUnfilled(), true, false,46);
-                display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapFilled(),true,false,46);
-                tempCurrentLocation = map.getCurrentLandmarkLocation(); 
+                //display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), tempCurrentLocation), map.getPossibleTravelLocationsY(map.getCurrentLocation(), tempCurrentLocation), map.getMapUnfilled(), true, false,41);
+                //display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapFilled(),true,false,41);
+                //tempCurrentLocation = map.getCurrentLandmarkLocation(); 
             } else {
                 for(int i = 0; i <= 50; i+=5){
                     display(i,0, "     ");

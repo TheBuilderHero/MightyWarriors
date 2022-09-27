@@ -69,6 +69,7 @@ class Map{
         void setPlayer(TempEntity playerE){ player = playerE; }
 
         bool isCityLocation(int locationValue);
+        bool isLandmarkObjectInteractiveLocation(int locationValue);
         int whichCity(int locationValue);
 
         bool canMoveFromCurrentLocation(int directionValue);

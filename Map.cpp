@@ -487,6 +487,71 @@ bool Map::isCityLocation(int locationValue){
     return false;
 }
 
+bool Map::isLandmarkObjectInteractiveLocation(int locationValue){
+    int potentialLandmarkCount;
+    switch(whichCity(getCurrentLocation())){
+        case 1:{
+            potentialLandmarkCount = city1ObjectCount;
+            for(int i = 1; i <= potentialLandmarkCount; i++){
+                if (locationValue == inCity1Locations[i]){
+                    return true;
+                }
+            }
+            break;
+        }
+        case 2:{
+            potentialLandmarkCount = city2ObjectCount;
+            for(int i = 1; i <= potentialLandmarkCount; i++){
+                if (locationValue == inCity2Locations[i]){
+                    return true;
+                }
+            }
+            break;
+        }
+        case 3:{
+            potentialLandmarkCount = city3ObjectCount;
+            for(int i = 1; i <= potentialLandmarkCount; i++){
+                if (locationValue == inCity3Locations[i]){
+                    return true;
+                }
+            }
+            break;
+        }
+        case 4:{
+            potentialLandmarkCount = city4ObjectCount;
+            for(int i = 1; i <= potentialLandmarkCount; i++){
+                if (locationValue == inCity4Locations[i]){
+                    return true;
+                }
+            }
+            break;
+        }
+        case 5:{
+            potentialLandmarkCount = city5ObjectCount;
+            for(int i = 1; i <= potentialLandmarkCount; i++){
+                if (locationValue == inCity5Locations[i]){
+                    return true;
+                }
+            }
+            break;
+        }
+        case 6:{
+            potentialLandmarkCount = city6ObjectCount;
+            for(int i = 1; i <= potentialLandmarkCount; i++){
+                if (locationValue == inCity6Locations[i]){
+                    return true;
+                }
+            }
+            break;
+        }
+        default:{ //this means that it is not a landmark location.
+            //menu.displayMessageWithPause(0,0,"Issue with switch(locationValue) in bool Map::isLandmarkObjectInteractiveLocation(int locationValue)");
+            break;
+        }
+    }
+    return false;
+}
+
 int Map::whichCity(int locationValue){
     for(int i = 1; i <= CityCount; i++){
         if (locationValue == cityLocation[i]){
