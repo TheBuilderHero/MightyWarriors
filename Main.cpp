@@ -13,6 +13,7 @@ using namespace std;
 //global variable declarations:
 Menu menu;
 DataGuard guard;
+Interactions interactions;
  
 void Main::attemptStartGame(){
     string answer;

@@ -1,13 +1,15 @@
 #include "Menu.h"
 #include "Map.h"
+#include "Interactions.h"
 #include "DataGuard.h"
 
 #pragma once
 
 //This file holds the global variables for the program.
-/************Global Variables**************/
+/************Global Variables to be shared**************/
 extern Menu menu;
 extern Map map;
+extern Interactions interactions;
 extern DataGuard guard;
 /******************************************/
 

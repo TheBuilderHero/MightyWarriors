@@ -21,6 +21,7 @@
                 "DataGuard.cpp",
                 "Items.cpp",
                 "Main.cpp",
+                "Interactions.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 " -lws2_32",

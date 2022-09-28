@@ -17,6 +17,7 @@
 #include "Quests.h"
 #include "DataGuard.h"
 #include "Items.h"
+#include "Interactions.h"
 
 #undef min // these are needed for the cin.ignore statments to clear out the buffer for new data.
 #undef max 
@@ -365,8 +366,12 @@ void Menu::cityTravelMenu(string username){ //bring up the menu for travel
                 char interact = yesOrNo(); //returns y or n
                 if (interact == 'y'){
                     //leavingVillage = true;
-                    displayMessageWithPause(messageColumn, messageRow, "Dialog apears here", false, false);
-                    clearDisplayRow(messageRow, messageColumn);
+                    interactions.interact();
+                    setStillLandmarkSimpleTraveling(false); //gonna need this for the map getting refreshed
+                    setCityTraveling(true);
+                    break;
+                    //displayMessageWithPause(messageColumn, messageRow, "Dialog apears here", false, false);
+                    //clearDisplayRow(messageRow, messageColumn);
                 } else {
                     //do not enter city
                     clearDisplayRow(messageRow, messageColumn);
@@ -388,8 +393,12 @@ void Menu::cityTravelMenu(string username){ //bring up the menu for travel
                     char interact = yesOrNo(); //returns y or n
                     if (interact == 'y'){
                         //leavingVillage = true;
-                        displayMessageWithPause(messageColumn, messageRow, "Dialog apears here", false, false);
-                        clearDisplayRow(messageRow, messageColumn);
+                        interactions.interact();
+                        setStillLandmarkSimpleTraveling(false); //gonna need this for the map getting refreshed
+                        setCityTraveling(true);
+                        break;
+                        //displayMessageWithPause(messageColumn, messageRow, "Dialog apears here", false, false);
+                        //clearDisplayRow(messageRow, messageColumn);
                     } else {
                         //do not enter city
                         clearDisplayRow(messageRow, messageColumn);
@@ -409,8 +418,12 @@ void Menu::cityTravelMenu(string username){ //bring up the menu for travel
                     char interact = yesOrNo(); //returns y or n
                     if (interact == 'y'){
                         //leavingVillage = true;
-                        displayMessageWithPause(messageColumn, messageRow, "Dialog apears here", false, false);
-                        clearDisplayRow(messageRow, messageColumn);
+                        interactions.interact();
+                        setStillLandmarkSimpleTraveling(false); //gonna need this for the map getting refreshed
+                        setCityTraveling(true);
+                        break;
+                        //displayMessageWithPause(messageColumn, messageRow, "Dialog apears here", false, false);
+                        //clearDisplayRow(messageRow, messageColumn);
                     } else {
                         //do not enter city
                         clearDisplayRow(messageRow, messageColumn);
