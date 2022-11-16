@@ -140,6 +140,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         switch (value)
         {
         case 0:
+            guard.updateGuardData(player);
             exit(1);
             break;
         case 1:{//"Go Questing"//map for traveling and questing 
@@ -203,14 +204,15 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
     }
 }
 
+//We need to make the map smaller so it fits in a windowed console
 void Menu::travelMenu(string username){ //bring up the menu for travel
     display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
 
     display(50, 1, "Travel");
-    display(16, 2, worldMap.getMapDescription(player.getLocation()));//Dakota please help me load the user's current location
-    display(32, 4, "Use Arrow Keys to navegate the Map");
-    display(32, 5, "Press 0 to Return to Menu");
+    //display(16, 2, worldMap.getMapDescription(player.getLocation()));//This is unneeded with the new map system
+    display(32, 2, "Use Arrow Keys to navegate the Map");
+    display(32, 3, "Press 0 to Return to Menu");
     map.displayMapOutline(map.getMapStandardMaxColumn(), map.getMapStandardMaxRow()); //draw the map outline to the screen
     map.fillInMap();
     map.writeLandmarks();
@@ -320,6 +322,7 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
                 worldMap.setPlayer(player);
                 worldMap.travel(value, lastLoopFailedTravel); //changes current location
                 setPlayer(worldMap.getPlayer());
+
                 //cout << "still Traveling? " << getStillSimpleTraveling(); // for testing
                 //waitForEnter(getEnterKeyState());// for testing
                 //map.setCurrentLocation(1);

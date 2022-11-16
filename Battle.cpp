@@ -223,7 +223,7 @@ void Battle::questBattle(string username, int quest, int step){
     system("cls");
     bool qKeyPressedLastLoop = false, wKeyPressedLastLoop = false, eKeyPressedLastLoop = false, rKeyPressedLastLoop = false;
     bool playerBlocking = false;
-    int playerHealth, enemyHealth, playerMind, enemyMind;
+    int playerHealth, enemyHealth, playerMind, enemyMind, XPDrop;
     int playerLevelAtStartOfFight = 0;
     int ultimateUses = 1;
     string enemyName = "";
@@ -252,6 +252,7 @@ void Battle::questBattle(string username, int quest, int step){
         enemyMind = stoi(code.getItemS(8));
         enemyName = code.getItemS(1);
         enemyNum = stoi(code.getItemS(7));
+        XPDrop = stoi(code.getItemS(9));
     } catch(std::invalid_argument) {
         cout << "Battle initialization failed";
         system("pause");
@@ -329,6 +330,7 @@ void Battle::questBattle(string username, int quest, int step){
             cout <<  setfill(' ') << setw(60) << "You kicked the Enemy's brass!" << endl;
         }
         cout <<  setfill(' ') << setw(57) << "You won the Battle!" << endl;
+        cout <<  setfill(' ') << setw(57) << "You earned " << XPDrop << " experience!" << endl;
         cout <<  setfill(' ') << setw((77 - 16) - playerLevel.length()) << "Your level is: " << playerLevel << endl;
         system("pause");
         menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.

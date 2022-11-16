@@ -287,36 +287,35 @@ void WorldMap::travel(int direction, bool &failedTravel){
             encounter = true;
         }
         int location = player.getLocation();
-        getTravelMessage(player.getLocation(), direction);
+        //getTravelMessage(player.getLocation(), direction);
         if(encounter){
             menu.setStillSimpleTraveling(false);//no longer simple traveling (The cmd will have to re-output the travel menu.)
             menu.clearDisplayRow(2);
-            menu.display(16, 2, travelMessage1);
+            menu.display(16, 2, "ENCOUNTER!");
             menu.waitForEnter(menu.getEnterKeyState());
             Battle battle;
             battle.setPlayer(player);
             battle.questBattle(player.getUsername(), 100, 10);
             setPlayer(battle.getPlayer());
             if(!player.getBattleResult()){
-                menu.display(16, 2, "Having been defeated, you return to whence you came.");
+                menu.display(16, 2, "Having been defeated, you return crying to whence you came.");
                 menu.waitForEnter(menu.getEnterKeyState());
                 //cout << "still Traveling? " << menu.getStillSimpleTraveling();
                 //menu.waitForEnter(menu.getEnterKeyState());
                 return;
             }else{
                 //cout << "still Traveling? " << menu.getStillSimpleTraveling();
-                //menu.waitForEnter(menu.getEnterKeyState());
-                menu.display(16, 2, travelMessage2);
+                menu.display(16, 2, "You may resume travelling now.");
                 menu.waitForEnter(menu.getEnterKeyState());
                 player.setBattleResult(false);
             }        
         } else {
-            menu.clearDisplayRow(2);
-            menu.display(16, 2, travelMessage1);
+            //menu.clearDisplayRow(2);
+            menu.display(16, 4, "You moved hooray!");
         }
     } else {
         failedTravel = true;
-        string messageFailure = "failed move   ";
+        string messageFailure = "Oops! You can't go there!";
         int messageFailureLength = messageFailure.length();
         menu.displayMessageWithPause(0, 0, messageFailure);
     }

@@ -72,8 +72,8 @@ public:
     int getSaveValuePsychicDamageMin(){ return minPsychicDamage; }
     int getSaveValuePsychicDamageMax(){ return maxPsychicDamage; }
     //Other:
-    int getSaveValueCurrentXP(){ return xp; }
-    int getSaveValueLevel(){ return level; }
+    int getSaveValueCurrentXP(){ return playerData.getCurrentXP(); }
+    int getSaveValueLevel(){ return playerData.getLevel(); }
     int getPlayerMapLocation() { return locationNum; };
 
     void saveAllData();
