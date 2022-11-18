@@ -71,10 +71,12 @@ public:
     int getSaveValueMind(){ return mind; }
     int getSaveValuePsychicDamageMin(){ return minPsychicDamage; }
     int getSaveValuePsychicDamageMax(){ return maxPsychicDamage; }
+    
     //Other:
     int getSaveValueCurrentXP(){ return playerData.getCurrentXP(); }
     int getSaveValueLevel(){ return playerData.getLevel(); }
-    int getPlayerMapLocation() { return locationNum; };
+    int getPlayerMapLocation() { return locationNum; }
+    std::string getInventoryString(); //this is for data saving purposes, not for client use
 
     void saveAllData();
 };

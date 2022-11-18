@@ -139,12 +139,12 @@ TempEntity::TempEntity(string currentUsername, bool NewTempEntityProccess){ //in
     for(int i = 0; i < INVENTORY_SPACES; i++){
         setInventory(i, 0); //setting all spaces to 0 for now.
     }
-    for(int i = 0; i < 12; i++){
-        setInventory(i, (i % 7) + 1);
+    for(int i = 0; i < inventorySize; i++){
+        setInventory(i, stoi(code.getItem(4, (i+3))));
         
     }
-    setPrimaryHand(itemHandler.getNumber(getWeapon()));
-    setOffHand(0);    
+    setPrimaryHand(stoi(code.getItem(4, 1)));
+    setOffHand(stoi(code.getItem(4, 2)));    
 }
 TempEntity::TempEntity(){//blank constructor if no username has been provided so far
     health = armor = magicResistance = physicalDamageMin = physicalDamageMax = magicDamageMin = magicDamageMax = agility = stealth = stamina = naturalEnergy = 0;
