@@ -11,6 +11,7 @@
 #include "Battle.h"
 #include "Passives.h"
 #include "TempEntity.h"
+#include "Items.h"
 
 //extern Menu menu;
 
@@ -245,14 +246,14 @@ void Battle::questBattle(string username, int quest, int step){
         fightWon = fightLost = false; //set both lost and won to false
         code.decipherS(server.sendToServer(code.cipher("7", username, to_string(quest), to_string(step)))); //request the current stats of a enemy from the server //pull data from the server regarding the enemy to fight
         enemyHealth = stoi(code.getItemS(2)); //set enemy health
-        if(quest == 1 && step == 0){
-            if(enemyHealth > 10)
-                enemyHealth = 10;
-        }
         enemyMind = stoi(code.getItemS(8));
         enemyName = code.getItemS(1);
         enemyNum = stoi(code.getItemS(7));
         XPDrop = stoi(code.getItemS(9));
+        if(enemyNum == 2){
+            if(enemyHealth > 10)
+                enemyHealth = 10;
+        }
     } catch(std::invalid_argument) {
         cout << "Battle initialization failed";
         system("pause");
@@ -330,9 +331,14 @@ void Battle::questBattle(string username, int quest, int step){
             cout <<  setfill(' ') << setw(60) << "You kicked the Enemy's brass!" << endl;
         }
         cout <<  setfill(' ') << setw(57) << "You won the Battle!" << endl;
-        cout <<  setfill(' ') << setw(57) << "You earned " << XPDrop << " experience!" << endl;
+        cout <<  setfill(' ') << setw(47) << "You earned " << XPDrop << " experience!" << endl;
         cout <<  setfill(' ') << setw((77 - 16) - playerLevel.length()) << "Your level is: " << playerLevel << endl;
+        srand(time(NULL)); 
+        Items item;
+        int itemDrop = (rand() % 7) + 1;
+        cout << setfill(' ') << setw(47) << "The Enemy dropped a " << item.getName(itemDrop) << "!" << endl;
         system("pause");
+        player.addInventoryItem(itemDrop);
         menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls"); 
         int currentPlayerLevel = account.getLevel(username);

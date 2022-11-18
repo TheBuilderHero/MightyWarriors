@@ -345,6 +345,65 @@ void TempEntity::sortInventory(){
     }
 }
 
+void TempEntity::addInventoryItem(int itemNum){
+    for(int i = 0; i < inventorySize; i++){
+        if(inventory[i] == 0){
+            inventory[i] = itemNum;
+            return;
+        }
+    }
+    if(offHand == 0){
+        offHand = itemNum;
+        return;
+    }
+    if(primaryHand == 0){
+        primaryHand = itemNum;
+        return;
+    }
+    system("cls");
+    Items itemHandler;
+    bool noDecision = true;
+    while(noDecision){
+        menu.display(1, 1, "You can't carry the " + itemHandler.getName(itemNum) + ". You can either:");
+        menu.display(1, 2, "Drop something    (Press \"1\")");
+        menu.display(1, 3, "Discard new item  (Press \"2\")");
+
+        int choice = menu.numberPressWait(2);
+        if(choice == 1){
+            int droppedItem = dropItem();
+            if(droppedItem != 0){
+                inventory[inventorySize - 1] = itemNum;
+                noDecision = false;
+            }
+        }else{
+            noDecision = false;
+        }
+        system("cls");
+    }
+}
+
+int TempEntity::dropItem(){
+    Items itemHandler;
+    int items = 0;
+    system("cls");
+    menu.display(1, 1, "If you drop something, you might not find it later. Drop which item?");
+    for(int i = 0; i < 8; i++){
+        menu.display(1, 2 + i, itemHandler.getName(inventory[i])); menu.display(32, 2 + i, ("Press \"" + to_string(i + 1) + "\""));
+        items++;
+        if(inventory[i] == 0){
+            i = 24;
+        }
+    }
+    menu.display(24, 2 + items, "Cancel: Press \"0\"");
+    int choice = menu.numberPressWait(items, true);
+    if(choice != 0){
+        inventory[choice - 1] = 0;
+        sortInventory();
+    }
+    system("cls");
+    return choice;
+}
+
 //Richard functions:
 string TempEntity::getName(){
     return name;
