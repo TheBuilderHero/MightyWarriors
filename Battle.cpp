@@ -338,17 +338,17 @@ void Battle::questBattle(string username, int quest, int step){
         int itemDrop = (rand() % 7) + 1;
         cout << setfill(' ') << setw(47) << "The Enemy dropped a " << item.getName(itemDrop) << "!" << endl;
         system("pause");
-        player.addInventoryItem(itemDrop);
         menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls"); 
         int currentPlayerLevel = account.getLevel(username);
         if(playerLevelAtStartOfFight < currentPlayerLevel){ //runs the level update for stats
             account.levelUp(username, currentPlayerLevel);
-            TempEntity playerE{username};
+            TempEntity playerE{username, false};
             setPlayer(playerE);
         }else{
             player.setCurrentXP(account.getCurrentXPForNextLevel(username));//This was added because XP was not updating in player stats after battles
         }
+        player.addInventoryItem(itemDrop);
         player.setBattleResult(true);
         player.setLocation(location);
         menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
