@@ -10,6 +10,7 @@
 using namespace std;
 
 TempEntity::TempEntity(string currentUsername){
+    try{
     //causing issues with starting the program without the server running.
     //It gives a stoi error:
     
@@ -67,9 +68,15 @@ TempEntity::TempEntity(string currentUsername){
     setWDamageType(code.getItemS(8));
     setEDamageType(code.getItemS(9));
     setRDamageType(code.getItemS(10));
+    }
+    catch(...){
+        cout << endl << "Critical Failure in TempEntity::TempEntity(string currentUsername){" << endl;
+        system("pause");
+    }
     
 }
 TempEntity::TempEntity(string currentUsername, bool NewTempEntityProccess){ //initallizes all player info by pulling it from the server in one request
+    try{
 
     string minMaxDelimiter = " - ";
     setUsername(currentUsername);
@@ -145,6 +152,12 @@ TempEntity::TempEntity(string currentUsername, bool NewTempEntityProccess){ //in
     }
     setPrimaryHand(stoi(code.getItem(4, 1)));
     setOffHand(stoi(code.getItem(4, 2)));    
+    
+    }
+    catch(...){
+        cout << endl << "Critical Failure in TempEntity::TempEntity(string currentUsername, bool NewTempEntityProccess){" << endl;
+        system("pause");
+    }
 }
 TempEntity::TempEntity(){//blank constructor if no username has been provided so far
     health = armor = magicResistance = physicalDamageMin = physicalDamageMax = magicDamageMin = magicDamageMax = agility = stealth = stamina = naturalEnergy = 0;
