@@ -593,7 +593,11 @@ void Menu::displayInventory(){
             }else{
                 int tempItem;
                 tempItem = (choice == 1) ? player.getPrimaryHand() : player.getOffHand();
-                (choice == 1) ? player.setPrimaryHand(player.getInventory(choice2 - 1)) : player.setOffHand(player.getInventory(choice2 - 1));
+                (choice == 1) ? (player.setPrimaryHand(player.getInventory(choice2 - 1)), 
+                    player.setPhysicalDamageMax(player.getPhysicalDamageMin()+itemHandler.getPhysicalDamage(player.getPrimaryHand())), 
+                    player.setMagicDamageMax(player.getMagicDamageMin()+itemHandler.getMagicDamage(player.getPrimaryHand())),
+                    player.setPsychicDamageMax(player.getPsychicDamageMin()+itemHandler.getPsychicDamage(player.getPrimaryHand()))) 
+                    : player.setOffHand(player.getInventory(choice2 - 1));
                 player.setInventory(choice2 - 1, tempItem);
                 player.sortInventory();
             }
