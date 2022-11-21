@@ -51,7 +51,7 @@ void Battle::waitForButtonPress(string username, string &enemyName, bool &qKeyPr
         {
             if (GetKeyState('R') < 0 && !rKeyPressedLastLoop && ultimateUses > 0) {//checks to make sure that the key is pressed and makes sure it was not pressed last check
                 playerAttackType = player.getRDamageType();
-                playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, rOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
+                playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, rOption, to_string(player.getPrimaryHand())))); //gets damage info from the server to determine the amount inflicted on the enemy;
                 code.decipherS(server.sendToServer(code.cipher("11"))); //ask if enemy is blocking next attack and get BLOCK_REDUCTION_VALUE from server
                 enemyBlocking = stoi(code.getItemS(1)); //set enemyBlocking from server
                 if(playerAttackType != "Psychic"){
@@ -72,7 +72,7 @@ void Battle::waitForButtonPress(string username, string &enemyName, bool &qKeyPr
             }
             if (GetKeyState('E') < 0 && eKeyPressedLastLoop == false) {//checks to make sure that the key is pressed and makes sure it was not pressed last check
                 playerAttackType = player.getEDamageType();
-                playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, eOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
+                playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, eOption, to_string(player.getPrimaryHand())))); //gets damage info from the server to determine the amount inflicted on the enemy;
                 code.decipherS(server.sendToServer(code.cipher("11"))); //ask if enemy is blocking next attack and get BLOCK_REDUCTION_VALUE from server
                 enemyBlocking = stoi(code.getItemS(1)); //set enemyBlocking from server
                 if(playerAttackType != "Psychic"){
@@ -88,7 +88,7 @@ void Battle::waitForButtonPress(string username, string &enemyName, bool &qKeyPr
                 //This ability now blocks instead of inflicts damage
                 playerBlocking = true;
                 //The following commenet out was for the damage aspect of this ability:
-                    /*playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, wOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
+                    /*playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, wOption, to_string(player.getPrimaryHand())))); //gets damage info from the server to determine the amount inflicted on the enemy;
                     code.decipherS(server.sendToServer(code.cipher("11"))); //ask if enemy is blocking next attack and get BLOCK_REDUCTION_VALUE from server
                     enemyBlocking = stoi(code.getItemS(1)); //set enemyBlocking from server
                     if (!enemyBlocking) enemyHealth -= playerAttack; //if the enemy is not blocking do full damage otherwise reduce it by the BLOCK_REDUCTION_VALUE sent over by the server.
@@ -103,7 +103,7 @@ void Battle::waitForButtonPress(string username, string &enemyName, bool &qKeyPr
             }
             if (GetKeyState('Q') < 0 && !qKeyPressedLastLoop) { //checks to make sure that the key is pressed and makes sure it was not pressed last check - also check ultimate uses
                 playerAttackType = player.getQDamageType();
-                playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, qOption))); //gets damage info from the server to determine the amount inflicted on the enemy;
+                playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, qOption, to_string(player.getPrimaryHand())))); //gets damage info from the server to determine the amount inflicted on the enemy;
                 code.decipherS(server.sendToServer(code.cipher("11"))); //ask if enemy is blocking next attack and get BLOCK_REDUCTION_VALUE from server
                 enemyBlocking = stoi(code.getItemS(1)); //set enemyBlocking from server
                 if(playerAttackType != "Psychic"){
@@ -239,7 +239,8 @@ void Battle::questBattle(string username, int quest, int step){
     //Initalize all variables
     try {
         playerLevelAtStartOfFight = account.getLevel(username);
-        code.decipherS(server.sendToServer(code.cipher("6", username))); //request the current stats of this user from the server //pull info from the server to get the Player's Character info
+        guard.updateGuardData(player);
+        code.decipherS(server.sendToServer(code.cipher("6", username, guard.getInventoryString()))); //request the current stats of this user from the server //pull info from the server to get the Player's Character info
         playerHealth = stoi(code.getItemS(1)); //set player health
         playerMind = stoi(code.getItemS(10));
         //player.setHealth(playerHealth);
