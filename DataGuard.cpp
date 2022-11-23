@@ -55,10 +55,10 @@ void DataGuard::updateSaveValueMagicResistance(int addMagicResistance){
     magicResistance += addMagicResistance;
 }
 void DataGuard::updateSaveValuePhysicalDamageMin(int addPhysicalDamageMin){
-    maxPhysicalDamage += addPhysicalDamageMin;
+    minPhysicalDamage += addPhysicalDamageMin;
 }
 void DataGuard::updateSaveValuePhysicalDamageMax(int addPhysicalDamageMax){
-    minPhysicalDamage += addPhysicalDamageMax;
+    maxPhysicalDamage += addPhysicalDamageMax;
 }
 void DataGuard::updateSaveValueMagicDamageMin(int addMagicDamageMin){
     minMagicDamage += addMagicDamageMin;
@@ -113,7 +113,7 @@ void DataGuard::saveAllData(){
     ReachOutToServer server;
     Cipher code;
     //write the stats to file so that they are stored to be opened again later.
-    if(guard.getSaveValueHealth() > 0 || guard.getSaveValueArmor() > 0 || guard.getSaveValueMagicResistance() > 0 || guard.getSaveValuePhysicalDamageMax() > 0 || guard.getSaveValueMagicDamageMax() > 0 || guard.getSaveValueAgility() > 0 || guard.getSaveValueStealth() > 0 || guard.getSaveValueStamina() > 0 || guard.getSaveValueNaturalEnergy() > 0 || guard.getSaveValueMaxMind() > 0 || guard.getSaveValuePsychicDamageMax() > 0) string wasAbleToSave = server.sendToServer(code.cipher("16", guard.getPlayerUsername(), to_string(guard.getSaveValueHealth()), to_string(guard.getSaveValueArmor()), to_string(guard.getSaveValueMagicResistance()), to_string(guard.getSaveValuePhysicalDamageMax()), to_string(guard.getSaveValueMagicDamageMax()), to_string(guard.getSaveValueAgility()), to_string(guard.getSaveValueStealth()), to_string(guard.getSaveValueStamina()), to_string(guard.getSaveValueNaturalEnergy()), to_string(guard.getSaveValueMaxMind()), to_string(guard.getSaveValuePsychicDamageMax()))); //Save data only if one of them has been changed.
+    if(guard.getSaveValueMaxHealth() > 0 || guard.getSaveValueArmor() > 0 || guard.getSaveValueMagicResistance() > 0 || guard.getSaveValuePhysicalDamageMax() > 0 || guard.getSaveValueMagicDamageMax() > 0 || guard.getSaveValueAgility() > 0 || guard.getSaveValueStealth() > 0 || guard.getSaveValueStamina() > 0 || guard.getSaveValueNaturalEnergy() > 0 || guard.getSaveValueMaxMind() > 0 || guard.getSaveValuePsychicDamageMax() > 0) string wasAbleToSave = server.sendToServer(code.cipher("16", guard.getPlayerUsername(), to_string(guard.getSaveValueMaxHealth()), to_string(guard.getSaveValueArmor()), to_string(guard.getSaveValueMagicResistance()), to_string(guard.getSaveValuePhysicalDamageMax()), to_string(guard.getSaveValueMagicDamageMax()), to_string(guard.getSaveValueAgility()), to_string(guard.getSaveValueStealth()), to_string(guard.getSaveValueStamina()), to_string(guard.getSaveValueNaturalEnergy()), to_string(guard.getSaveValueMaxMind()), to_string(guard.getSaveValuePsychicDamageMax()))); //Save data only if one of them has been changed.
     //All other data updates:
-    string wasAbleToSave = server.sendToServer(code.cipher("24", guard.getPlayerUsername(), code.subCipher(to_string(guard.getSaveValueHealth()), to_string(guard.getSaveValueArmor()), to_string(guard.getSaveValueMagicResistance()), to_string(guard.getSaveValuePhysicalDamageMax()), to_string(guard.getSaveValueMagicDamageMax()), to_string(guard.getSaveValueAgility()), to_string(guard.getSaveValueStealth()), to_string(guard.getSaveValueStamina()), to_string(guard.getSaveValueNaturalEnergy()), to_string(guard.getSaveValueMaxMind()), to_string(guard.getSaveValuePsychicDamageMax()),/* (end of user stats) Now level and xp->*/ to_string(guard.getSaveValueLevel()), to_string(guard.getSaveValueCurrentXP()), /* Now for the location */ to_string(guard.getPlayerMapLocation())), getInventoryString()));
+    string wasAbleToSave = server.sendToServer(code.cipher("24", guard.getPlayerUsername(), code.subCipher(to_string(guard.getSaveValueMaxHealth()), to_string(guard.getSaveValueArmor()), to_string(guard.getSaveValueMagicResistance()), to_string(guard.getSaveValuePhysicalDamageMax()), to_string(guard.getSaveValueMagicDamageMax()), to_string(guard.getSaveValueAgility()), to_string(guard.getSaveValueStealth()), to_string(guard.getSaveValueStamina()), to_string(guard.getSaveValueNaturalEnergy()), to_string(guard.getSaveValueMaxMind()), to_string(guard.getSaveValuePsychicDamageMax()),/* (end of user stats) Now level and xp->*/ to_string(guard.getSaveValueLevel()), to_string(guard.getSaveValueCurrentXP()), /* Now for the location */ to_string(guard.getPlayerMapLocation())), getInventoryString()));
 }
