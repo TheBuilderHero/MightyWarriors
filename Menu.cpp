@@ -616,7 +616,8 @@ void Menu::accountInfo(string username){
     display(32, 3, "Logout");               display(53, 3, "(Press \"2\")");
     display(32, 4, "Info");                 display(53, 4, "(Press \"3\")");
     display(32, 5, "Back to Main Menu");    display(53, 5, "(Press \"0\")");
-    answer = numberPressWait(3, true);
+    display(32, 6, "Test Level Up");        display(53, 6, "(Press \"4\")");
+    answer = numberPressWait(4, true);
     switch (answer)
     {
     case 0: //back to main menu
@@ -640,6 +641,9 @@ void Menu::accountInfo(string username){
         ClearConsoleInputBuffer();
         getGameVersion();
         //menu(username);
+        break;
+    case 4:
+        player.levelUp();
         break;
     default:
         display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
@@ -809,14 +813,14 @@ void Menu::changePass(string username){ //changes the users password
 }
 
 char Menu::yesOrNo(){ //waits for a user to click the y or n key
-    bool yKeyPressedLastLoop = false;
-    bool nKeyPressedLastLoop = false;
+    bool yKeyPressedLastLoop = true;
+    bool nKeyPressedLastLoop = true;
     while (1){
-        if (GetKeyState('Y') < 0 || GetKeyState('y') < 0 && !yKeyPressedLastLoop) { //checks to make sure that the 3 key is pressed and makes sure it was not pressed last check
+        if (GetKeyState('Y') < 0 /*|| GetKeyState('y') < 0 */&& !yKeyPressedLastLoop) { //checks to make sure that the 3 key is pressed and makes sure it was not pressed last check
             yKeyPressedLastLoop = true;
             ClearConsoleInputBuffer();
             return 'y';
-        } else if (GetKeyState('y') >= 0 || GetKeyState('Y') >= 0){ // else 1 not pressed
+        } else if (/*GetKeyState('y') >= 0 || */GetKeyState('Y') >= 0){ // else 1 not pressed
             yKeyPressedLastLoop = false;
         }
         if (GetKeyState('N') < 0 || GetKeyState('n') < 0 && !nKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
