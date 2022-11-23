@@ -338,7 +338,8 @@ void TempEntity::updateLevel(int addLevel){
     level += addLevel;
 }
 void TempEntity::levelUp(){
-    level++; 
+    //Probably should have the level increase occur here
+    //level++; 
     int cursor = 4, statPoints = getLevel();
     bool finished = false;
     int healthBonus = 0, armorBonus = 0, magicResBonus = 0, physDamBonus = 0, magDamBonus = 0, agilityBonus = 0, stealthBonus = 0, staminaBonus = 0, nEnergyBonus = 0, mindBonus = 0, psychDamBonus = 0;
@@ -358,7 +359,7 @@ void TempEntity::levelUp(){
     menu.display(16, 12, "Increase Natural Energy:", false); menu.display(52, 12, to_string(nEnergyBonus), false);
     menu.display(16, 13, "Increase Mind:", false); menu.display(52, 13, to_string(mindBonus), false);
     menu.display(16, 14, "Increase Psychic Damage:", false); menu.display(52, 14, to_string(psychDamBonus), false);
-    menu.display(16, 16, "Press \"0\" to Exit");
+    menu.display(16, 16, "Press \"0\" to Finish");
 
     while(!finished){
         
@@ -391,18 +392,18 @@ void TempEntity::levelUp(){
             break;
         case 2:
             if(statPoints > 0){
-                statPoints--; menu.display(35, 2, to_string(statPoints));
-                if(cursor == 4){ healthBonus++; menu.display(52, cursor, to_string(healthBonus));}
-                else if(cursor == 5){ armorBonus++; menu.display(52, cursor, to_string(armorBonus));}
-                else if(cursor == 6){ magicResBonus++; menu.display(52, cursor, to_string(magicResBonus));}
-                else if(cursor == 7){ physDamBonus++; menu.display(52, cursor, to_string(physDamBonus));}
-                else if(cursor == 8){ magDamBonus++; menu.display(52, cursor, to_string(magDamBonus));}
-                else if(cursor == 9){ agilityBonus++; menu.display(52, cursor, to_string(agilityBonus));}
-                else if(cursor == 10){ stealthBonus++; menu.display(52, cursor, to_string(stealthBonus));}
-                else if(cursor == 11){ staminaBonus++; menu.display(52, cursor, to_string(staminaBonus));}
-                else if(cursor == 12){ nEnergyBonus++; menu.display(52, cursor, to_string(nEnergyBonus));}
-                else if(cursor == 13){ mindBonus++; menu.display(52, cursor, to_string(mindBonus));}
-                else if(cursor == 14){ psychDamBonus++; menu.display(52, cursor, to_string(psychDamBonus));}
+                statPoints--; menu.display(35, 2, to_string(statPoints) + " ");
+                if(cursor == 4){ healthBonus++; menu.display(52, cursor, to_string(healthBonus) + " ");}
+                else if(cursor == 5){ armorBonus++; menu.display(52, cursor, to_string(armorBonus) + " ");}
+                else if(cursor == 6){ magicResBonus++; menu.display(52, cursor, to_string(magicResBonus) + " ");}
+                else if(cursor == 7){ physDamBonus++; menu.display(52, cursor, to_string(physDamBonus) + " ");}
+                else if(cursor == 8){ magDamBonus++; menu.display(52, cursor, to_string(magDamBonus) + " ");}
+                else if(cursor == 9){ agilityBonus++; menu.display(52, cursor, to_string(agilityBonus) + " ");}
+                else if(cursor == 10){ stealthBonus++; menu.display(52, cursor, to_string(stealthBonus) + " ");}
+                else if(cursor == 11){ staminaBonus++; menu.display(52, cursor, to_string(staminaBonus) + " ");}
+                else if(cursor == 12){ nEnergyBonus++; menu.display(52, cursor, to_string(nEnergyBonus) + " ");}
+                else if(cursor == 13){ mindBonus++; menu.display(52, cursor, to_string(mindBonus) + " ");}
+                else if(cursor == 14){ psychDamBonus++; menu.display(52, cursor, to_string(psychDamBonus) + " ");}
             }
             break;
         case 3:
@@ -412,18 +413,18 @@ void TempEntity::levelUp(){
             break;
         case 4:
         if(statPoints < level){
-                statPoints++; menu.display(35, 2, to_string(statPoints));
-                if(cursor == 4){ healthBonus--; menu.display(52, cursor, to_string(healthBonus));}
-                else if(cursor == 5){ armorBonus--; menu.display(52, cursor, to_string(armorBonus));}
-                else if(cursor == 6){ magicResBonus--; menu.display(52, cursor, to_string(magicResBonus));}
-                else if(cursor == 7){ physDamBonus--; menu.display(52, cursor, to_string(physDamBonus));}
-                else if(cursor == 8){ magDamBonus--; menu.display(52, cursor, to_string(magDamBonus));}
-                else if(cursor == 9){ agilityBonus--; menu.display(52, cursor, to_string(agilityBonus));}
-                else if(cursor == 10){ stealthBonus--; menu.display(52, cursor, to_string(stealthBonus));}
-                else if(cursor == 11){ staminaBonus--; menu.display(52, cursor, to_string(staminaBonus));}
-                else if(cursor == 12){ nEnergyBonus--; menu.display(52, cursor, to_string(nEnergyBonus));}
-                else if(cursor == 13){ mindBonus--; menu.display(52, cursor, to_string(mindBonus));}
-                else if(cursor == 14){ psychDamBonus--; menu.display(52, cursor, to_string(psychDamBonus));}
+                statPoints++; menu.display(35, 2, to_string(statPoints) + " ");
+                if(cursor == 4){ healthBonus--; menu.display(52, cursor, to_string(healthBonus) + " ");}
+                else if(cursor == 5){ armorBonus--; menu.display(52, cursor, to_string(armorBonus) + " ");}
+                else if(cursor == 6){ magicResBonus--; menu.display(52, cursor, to_string(magicResBonus) + " ");}
+                else if(cursor == 7){ physDamBonus--; menu.display(52, cursor, to_string(physDamBonus) + " ");}
+                else if(cursor == 8){ magDamBonus--; menu.display(52, cursor, to_string(magDamBonus) + " ");}
+                else if(cursor == 9){ agilityBonus--; menu.display(52, cursor, to_string(agilityBonus) + " ");}
+                else if(cursor == 10){ stealthBonus--; menu.display(52, cursor, to_string(stealthBonus) + " ");}
+                else if(cursor == 11){ staminaBonus--; menu.display(52, cursor, to_string(staminaBonus) + " ");}
+                else if(cursor == 12){ nEnergyBonus--; menu.display(52, cursor, to_string(nEnergyBonus) + " ");}
+                else if(cursor == 13){ mindBonus--; menu.display(52, cursor, to_string(mindBonus) + " ");}
+                else if(cursor == 14){ psychDamBonus--; menu.display(52, cursor, to_string(psychDamBonus) + " ");}
             }
             break;
         default:
@@ -447,6 +448,18 @@ void TempEntity::levelUp(){
     updateMind(mindBonus);
     updatePsychicDamageMin(psychDamBonus);
     updatePsychicDamageMax(psychDamBonus);
+
+    guard.updateSaveValueMaxHealth(healthBonus);
+    guard.updateSaveValueArmor(armorBonus);
+    guard.updateSaveValuePhysicalDamageMax(physDamBonus);
+    guard.updateSaveValueMagicResistance(magicResBonus);
+    guard.updateSaveValueMagicDamageMax(magDamBonus);
+    guard.updateSaveValueAgility(agilityBonus);
+    guard.updateSaveValueStealth(stealthBonus);
+    guard.updateSaveValueStamina(staminaBonus);
+    guard.updateSaveValueNaturalEnergy(nEnergyBonus);
+    guard.updateSaveValueMaxMind(mindBonus);
+    guard.updateSaveValuePsychicDamageMax(psychDamBonus);
     
 }
 

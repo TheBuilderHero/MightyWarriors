@@ -333,11 +333,28 @@ void Battle::questBattle(string username, int quest, int step){
         }
         cout <<  setfill(' ') << setw(57) << "You won the Battle!" << endl;
         cout <<  setfill(' ') << setw(47) << "You earned " << XPDrop << " experience!" << endl;
+        int itemDrop = 0;
+        srand(time(NULL));
+        if(rand() % 5 == 0){
+            Items item;
+            itemDrop = (rand() % 8) + 1;
+            if(itemDrop == 8 && rand() % 4 > 0){
+
+            }else{
+                cout << setfill(' ') << setw(47) << "The Enemy dropped a " << item.getName(itemDrop) << "!" << endl;
+            }
+        }
+        system("pause");
+        if(itemDrop > 0) player.addInventoryItem(itemDrop);
         menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls"); 
         int currentPlayerLevel = account.getLevel(username);
         if(playerLevelAtStartOfFight < currentPlayerLevel){ //runs the level update for stats
             //shiny new code
+            //putting this here temporarily, we should probably load xp data client-side
+            TempEntity playerE{username, false};
+            setPlayer(playerE);
+
             player.levelUp();
             
             //old code
@@ -348,18 +365,7 @@ void Battle::questBattle(string username, int quest, int step){
         }else{
             player.setCurrentXP(account.getCurrentXPForNextLevel(username));//This was added because XP was not updating in player stats after battles
         }
-        srand(time(NULL));
-        if(rand() % 5 == 0){
-            Items item;
-            int itemDrop = (rand() % 8) + 1;
-            if(itemDrop == 8 && rand() % 4 > 0){
-
-            }else{
-                cout << setfill(' ') << setw(47) << "The Enemy dropped a " << item.getName(itemDrop) << "!" << endl;
-                system("pause");
-                player.addInventoryItem(itemDrop);
-            }
-        }
+        
         player.setBattleResult(true);
         player.setLocation(location);
         menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.

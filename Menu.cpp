@@ -616,8 +616,7 @@ void Menu::accountInfo(string username){
     display(32, 3, "Logout");               display(53, 3, "(Press \"2\")");
     display(32, 4, "Info");                 display(53, 4, "(Press \"3\")");
     display(32, 5, "Back to Main Menu");    display(53, 5, "(Press \"0\")");
-    display(32, 6, "Test Level Up");        display(53, 6, "(Press \"4\")");
-    answer = numberPressWait(4, true);
+    answer = numberPressWait(3, true);
     switch (answer)
     {
     case 0: //back to main menu
@@ -641,9 +640,6 @@ void Menu::accountInfo(string username){
         ClearConsoleInputBuffer();
         getGameVersion();
         //menu(username);
-        break;
-    case 4:
-        player.levelUp();
         break;
     default:
         display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
