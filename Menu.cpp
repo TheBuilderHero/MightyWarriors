@@ -557,7 +557,7 @@ void Menu::displayStats(){
 }
 void Menu::displayInventory(){
     Items itemHandler;
-    bool keepLooping = false;
+    bool keepLooping = true;
     do{
         display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
@@ -565,48 +565,68 @@ void Menu::displayInventory(){
         display(1, 1, "You are carrying the following:");                                   display(64, 1, "You can:");
         display(1, 2, "Main Hand: " + itemHandler.getName(player.getPrimaryHand()));        display(64, 2, "Move Weapon to Primary Hand (Press \"1\")");
         display(1, 3, "Off Hand: " + itemHandler.getName(player.getOffHand()));             display(64, 3, "Move Weapon to Off Hand     (Press \"2\")");
-        display(1, 5, "Pack:");                                                             display(64, 4, "Exit                        (Press \"0\")");
+        display(1, 5, "Pack:");                                                             display(64, 4, "Drop something              (Press \"3\")");
+                                                                                            display(64, 5, "Exit                        (Press \"0\")");
+
+        int items = 0;
         for(int i = 0; i < player.getInventorySize(); i++){
             if(player.getInventory(i) == 0){
                 if(i == 0){
-                    display(1, 6, "Empty", false);
+                    display(1, 6, "Your pack is empty", false);
                 }
                 i = 24;
             }else{
                 display(1, 6 + i, itemHandler.getName(player.getInventory(i)), false);
+                items++;
             }        
         }
 
-        int choice = numberPressWait(2, true);
+        int choice = numberPressWait(3, true);
         if(choice == 1 || choice == 2){
-            int items = 0;
+            int page = 0;
             keepLooping = true;
-            display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
-            system("cls");
-            ClearConsoleInputBuffer();
-            display(1, 1, "Trade which item?");
-            for(int i = 0; i < 8; i++){
-                display(1, 2 + i, itemHandler.getName(player.getInventory(i))); display(32, 2 + i, ("Press \"" + to_string(i + 1) + "\""));
-                items++;
-                if(player.getInventory(i) == 0){
-                    i = 24;
+            bool keepKeepLooping = true;
+            while(keepKeepLooping){
+                display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
+                system("cls");
+                ClearConsoleInputBuffer();
+                display(1, 1, "Trade which item?");
+                int items2 = 0;
+                for(int i = 0; i < 8; i++){
+                    if(i < 8){
+                        display(1, 2 + i, itemHandler.getName(player.getInventory(i + (page*8)))); display(32, 2 + i, ("Press \"" + to_string(i + 1) + "\""));
+                    }
+                    items2++;
+                    if(player.getInventory(i + (page*8)) == 0 || i > player.getInventorySize() - (page*8)){
+                        i = 24;
+                    }
+                }
+                if(items > (page+1)*8){
+                    display(1, 11, "Next Page");
+                    display(32, 11, "Press \"9\"");
+                    items2++;
+                }
+                display(24, 3 + items2, "Cancel: Press \"0\"");
+                int choice2 = numberPressWait(items2, true);
+                if(choice2 == 0){
+                    keepKeepLooping = false;
+                }if(choice2 == 9){
+                    page++;
+                }else{
+                    int tempItem, tempItemLoc = choice2 - 1 + (page*8);
+                    tempItem = (choice == 1) ? player.getPrimaryHand() : player.getOffHand();
+                    (choice == 1) ? (player.setPrimaryHand(player.getInventory(tempItemLoc)), 
+                        player.setPhysicalDamageMax(player.getPhysicalDamageMin()+itemHandler.getPhysicalDamage(player.getPrimaryHand())), 
+                        player.setMagicDamageMax(player.getMagicDamageMin()+itemHandler.getMagicDamage(player.getPrimaryHand())),
+                        player.setPsychicDamageMax(player.getPsychicDamageMin()+itemHandler.getPsychicDamage(player.getPrimaryHand()))) 
+                        : player.setOffHand(player.getInventory(tempItemLoc));
+                    player.setInventory(tempItemLoc, tempItem);
+                    player.sortInventory();
+                    keepKeepLooping = false;
                 }
             }
-            display(24, 2 + items, "Cancel: Press \"0\"");
-            int choice2 = numberPressWait(items, true);
-            if(choice2 == 0){
-
-            }else{
-                int tempItem;
-                tempItem = (choice == 1) ? player.getPrimaryHand() : player.getOffHand();
-                (choice == 1) ? (player.setPrimaryHand(player.getInventory(choice2 - 1)), 
-                    player.setPhysicalDamageMax(player.getPhysicalDamageMin()+itemHandler.getPhysicalDamage(player.getPrimaryHand())), 
-                    player.setMagicDamageMax(player.getMagicDamageMin()+itemHandler.getMagicDamage(player.getPrimaryHand())),
-                    player.setPsychicDamageMax(player.getPsychicDamageMin()+itemHandler.getPsychicDamage(player.getPrimaryHand()))) 
-                    : player.setOffHand(player.getInventory(choice2 - 1));
-                player.setInventory(choice2 - 1, tempItem);
-                player.sortInventory();
-            }
+        }else if(choice == 3){
+            player.dropItem();
         }else{
             keepLooping = false;
         }
