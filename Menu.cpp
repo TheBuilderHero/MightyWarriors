@@ -28,7 +28,7 @@ Cipher code; //declare the new instance of Cipher class
 Account account;
 Battle battle;
 WorldMap worldMap;
-Map map;
+//Map map;
 Quests quest;
 
 void fnExit(); //prototype from source.cpp
@@ -139,10 +139,11 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         }
         switch (value)
         {
-        case 0:
+        case 0:{
             guard.updateGuardData(player);
             exit(1);
             break;
+        }
         case 1:{//"Go Questing"//map for traveling and questing 
                 //We probably need a separate questing menu
             //Map map;
@@ -154,7 +155,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
             setPlayer(quest.getPlayer());
             break;
         }
-        case 2://travel option
+        case 2:{//travel option
             display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
             system("cls");
             ClearConsoleInputBuffer();
@@ -163,13 +164,15 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
             travelMenu(username);
             } while(stillTraveling);
             break;
-        case 3://display stats
+        }
+        case 3:{//display stats
             display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
             system("cls");
             ClearConsoleInputBuffer();
             displayStats();
             //account.displayStats(username);
             break;
+        }
         case 4:{
             displayInventory();
             break;
@@ -178,7 +181,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
             accountInfo(username);
             break;
         }
-        case 14:
+        case 14:{
             display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
             system("cls");
             ClearConsoleInputBuffer();
@@ -186,20 +189,23 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
             display(3,4,"Dakota loves Beautiful!", false);
             system("pause");
             break;
-        case 15:
+        }
+        case 15:{
             display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
             system("cls");
             ClearConsoleInputBuffer();
             exitAdminMenu = false; //logon menu loop variable
             while (!exitAdminMenu) adminMenu(username);
             break;
-        default:
+        }
+        default:{
             display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
             system("cls");
             ClearConsoleInputBuffer();
             display(3, 3, "Invalid input, Please try again...", false);
             system("pause");
             break;
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 #include <string>
+#include <vector>
 #include "TempEntity.h"
 
 #pragma once
@@ -15,25 +16,32 @@ class Map{
         static const int mapCityStandardMinColumn = 24, mapCityStandardMinRow = 6;
         static const int locationCount = 800;
         static const int locationCountLandmark = 400;
-        static const int CityCount = 6;
-        static const int city1ObjectCount = 3, city2ObjectCount = 4, city3ObjectCount = 5, city4ObjectCount = 6, city5ObjectCount = 7, city6ObjectCount = 8;
         static const int maxCityObjectCount = 8+1; //+1 so that all cities locations work properly (For some reason the last city was having issues with location and icon)
         //in each all of the below we do not use the first value of index 0
-        const int interactiveLandmarkCount[CityCount+1] = {0, city1ObjectCount, city2ObjectCount, city3ObjectCount, city4ObjectCount, city5ObjectCount, city6ObjectCount}; //the number of landmarks per city
-        const std::string cityNames[CityCount+1] = {"hi","hi","hi","hi","hi","hi","hi"};
-        const int cityLocation[CityCount+1] = {0, 127, 217, 285, 310, 506, 637};
-        const int inCity1Locations[city1ObjectCount+1] = {0, 2, 3, 4};
-        const int inCity2Locations[city2ObjectCount+1] = {0, 2, 3, 4, 5};
-        const int inCity3Locations[city3ObjectCount+1] = {0, 2, 3, 4, 5, 6};
-        const int inCity4Locations[city4ObjectCount+1] = {0, 2, 3, 4, 5, 6, 7};
-        const int inCity5Locations[city5ObjectCount+1] = {0, 2, 3, 4, 5, 6, 7, 8};
-        const int inCity6Locations[city6ObjectCount+1] = {0, 2, 3, 4, 5, 6, 7, 8, 9};
+        struct{
+            const std::vector<std::string> names {"hi","hi","hi","hi","hi","hi","hi"};
+            const std::vector<int> location {0, 127, 217, 285, 310, 506, 637};
+        } city;
+        //This vector holds all the locations within the given cities with which a player can interact.
+        const std::vector<std::vector<int>> inCityLocations =   { 
+                                                                { }, //empty vector for holding index 0
+                                                                { 0,2,3,4 },
+                                                                { 0,2,3,4,5 },
+                                                                { 0,2,3,4,5,6 },
+                                                                { 0,2,3,4,5,6,7 },
+                                                                { 0,2,3,4,5,6,7,8 },
+                                                                { 0,2,3,4,5,6,7,8,9 }
+                                                                };
+        int CityCount = ((int)inCityLocations.size()-1);
+        //const std::vector<int> interactiveLandmarkCount {0, (int)inCityLocations[1].size()-1, (int)inCityLocations[2].size()-1, (int)inCityLocations[3].size()-1, (int)inCityLocations[4].size()-1, (int)inCityLocations[5].size()-1, (int)inCityLocations[6].size()-1}; //the number of landmarks per city
 
         int initalPosRow = minRow = 1 + optionsHeight;
         int initalPosColumn = minColumn = 2;
         struct landmarks{
-            int landmarkLocation[CityCount+1][maxCityObjectCount+1]; //the +1 allows us to use the nice 1 - 6 values instead of 0 - 5
-            std::string iconType[CityCount+1][maxCityObjectCount+1];
+            //int landmarkLocation[CityCount+1][maxCityObjectCount+1]; //the +1 allows us to use the nice 1 - 6 values instead of 0 - 5
+            //std::string iconType[CityCount+1][maxCityObjectCount+1];
+            std::vector<std::vector<int>> landmarkLocation; //the +1 allows us to use the nice 1 - 6 values instead of 0 - 5
+            std::vector<std::vector<std::string>> iconType;
         };
         landmarks allLandmarks;
 
@@ -98,7 +106,7 @@ class Map{
 
 
         landmarks getAllCities(){ return allLandmarks; }
-        int getCityCount(){ return CityCount; }
+        int getCityCount(){ return inCityLocations.size()-1; }
 
 
         std::string getMapBlank() { return mapBlank; }
@@ -107,5 +115,5 @@ class Map{
         std::string getMapCity() { return mapCity; }
 
         int getLocationCountLandmark() { return locationCountLandmark; }
-        int getInteractiveLandmarkCount(int landmarkID) { return interactiveLandmarkCount[landmarkID];} //basically landmarkID is just the city value 1 - 6
+        int getInteractiveLandmarkCount(int landmarkID) { return (int)inCityLocations[landmarkID].size()-1;} //basically landmarkID is just the city value 1 - 6
 };

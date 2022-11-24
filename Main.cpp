@@ -12,6 +12,7 @@ using namespace std;
 
 //global variable declarations:
 Menu menu;
+Map map;
 DataGuard guard;
 Interactions interactions;
  
@@ -31,6 +32,7 @@ void Main::attemptStartGame(){
         if (runningCurrentVersion == "true"){ //if we are running the current version then the program will start
             //this was causing an issues with pausing the logon screen from apearing//menu.ClearConsoleInputBuffer();//clear keyboard input from the yesNo prompt - this seems to remove the keyboard input
             //This is the start of the program
+            menu.ClearConsoleInputBuffer();
             account.logonScreen(); //ask whether the user has an account or not
         } else if (runningCurrentVersion == "FailedConnect") { //If the client is unable to connect to the server inform the client
             cout << "The Server is currently Offline for either maintanance or other reasons..." << endl << "Would you like to try connecting again? (Y/N) [Attempt: " << attempts << "]\n>";
