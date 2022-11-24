@@ -337,6 +337,131 @@ void TempEntity::updateCurrentXP(int addXP){
 void TempEntity::updateLevel(int addLevel){
     level += addLevel;
 }
+void TempEntity::levelUp(){
+    //Probably should have the level increase occur here
+    //level++; 
+    int cursor = 4, statPoints = getLevel();
+    bool finished = false;
+    int healthBonus = 0, armorBonus = 0, magicResBonus = 0, physDamBonus = 0, magDamBonus = 0, agilityBonus = 0, stealthBonus = 0, staminaBonus = 0, nEnergyBonus = 0, mindBonus = 0, psychDamBonus = 0;
+
+    system("cls");
+    menu.display(32, 1, "!!! LEVEL UP !!!");//midpoint 8-9
+    menu.display(26, 2, "You have " + to_string(statPoints) + " points remaining.");//midpoint 14-15 or 15
+
+    menu.display(16, 4, "Increase Health:", false); menu.display(52, 4, to_string(healthBonus), false);
+    menu.display(16, 5, "Increase Armor:", false); menu.display(52, 5, to_string(armorBonus), false);
+    menu.display(16, 6, "Increase Magic Resistance:", false); menu.display(52, 6, to_string(magicResBonus), false);
+    menu.display(16, 7, "Increase Physical Damage:", false); menu.display(52, 7, to_string(physDamBonus), false);
+    menu.display(16, 8, "Increase Magic Damage:", false); menu.display(52, 8, to_string(magDamBonus), false);
+    menu.display(16, 9, "Increase Agility:", false); menu.display(52, 9, to_string(agilityBonus), false);
+    menu.display(16, 10, "Increase Stealth:", false); menu.display(52, 10, to_string(stealthBonus), false);
+    menu.display(16, 11, "Increase Stamina:", false); menu.display(52, 11, to_string(staminaBonus), false);
+    menu.display(16, 12, "Increase Natural Energy:", false); menu.display(52, 12, to_string(nEnergyBonus), false);
+    menu.display(16, 13, "Increase Mind:", false); menu.display(52, 13, to_string(mindBonus), false);
+    menu.display(16, 14, "Increase Psychic Damage:", false); menu.display(52, 14, to_string(psychDamBonus), false);
+    menu.display(16, 16, "Press \"0\" to Finish");
+
+    while(!finished){
+        
+        
+        menu.display(51, cursor, "<");
+            menu.display(54, cursor, ">");
+
+        int value = menu.arrowPressWait(true);
+        switch(value){
+        case 0:{
+            menu.display(52, 16, "Are you sure? (Y/N)");
+            char ynResponse = menu.yesOrNo();
+            if(ynResponse == 'y'||ynResponse == 'Y'){
+                if(statPoints > 0){
+                    menu.display(16, 17, "YOU STILL HAVE POINTS TO SPEND! ARE YOU SUPER SURE??? (Y/N)");
+                    char ynResponse2 = menu.yesOrNo();
+                    if(ynResponse2 == 'y'||ynResponse2 == 'Y') finished = true;
+                    else{
+                        menu.display(16, 17, "                                                          ");
+                        menu.display(52, 16, "                   ");
+                    }
+                }else finished = true;
+            }else menu.display(52, 16, "                   ");
+            break;
+        }
+        case 1:
+            menu.display(51, cursor, " ");
+            menu.display(54, cursor, " ");
+            if(cursor > 4) cursor--;            
+            break;
+        case 2:
+            if(statPoints > 0){
+                statPoints--; menu.display(35, 2, to_string(statPoints) + " ");
+                if(cursor == 4){ healthBonus++; menu.display(52, cursor, to_string(healthBonus) + " ");}
+                else if(cursor == 5){ armorBonus++; menu.display(52, cursor, to_string(armorBonus) + " ");}
+                else if(cursor == 6){ magicResBonus++; menu.display(52, cursor, to_string(magicResBonus) + " ");}
+                else if(cursor == 7){ physDamBonus++; menu.display(52, cursor, to_string(physDamBonus) + " ");}
+                else if(cursor == 8){ magDamBonus++; menu.display(52, cursor, to_string(magDamBonus) + " ");}
+                else if(cursor == 9){ agilityBonus++; menu.display(52, cursor, to_string(agilityBonus) + " ");}
+                else if(cursor == 10){ stealthBonus++; menu.display(52, cursor, to_string(stealthBonus) + " ");}
+                else if(cursor == 11){ staminaBonus++; menu.display(52, cursor, to_string(staminaBonus) + " ");}
+                else if(cursor == 12){ nEnergyBonus++; menu.display(52, cursor, to_string(nEnergyBonus) + " ");}
+                else if(cursor == 13){ mindBonus++; menu.display(52, cursor, to_string(mindBonus) + " ");}
+                else if(cursor == 14){ psychDamBonus++; menu.display(52, cursor, to_string(psychDamBonus) + " ");}
+            }
+            break;
+        case 3:
+            menu.display(51, cursor, " ");
+            menu.display(54, cursor, " ");
+            if(cursor < 14) cursor++;
+            break;
+        case 4:
+        if(statPoints < level){
+                statPoints++; menu.display(35, 2, to_string(statPoints) + " ");
+                if(cursor == 4){ healthBonus--; menu.display(52, cursor, to_string(healthBonus) + " ");}
+                else if(cursor == 5){ armorBonus--; menu.display(52, cursor, to_string(armorBonus) + " ");}
+                else if(cursor == 6){ magicResBonus--; menu.display(52, cursor, to_string(magicResBonus) + " ");}
+                else if(cursor == 7){ physDamBonus--; menu.display(52, cursor, to_string(physDamBonus) + " ");}
+                else if(cursor == 8){ magDamBonus--; menu.display(52, cursor, to_string(magDamBonus) + " ");}
+                else if(cursor == 9){ agilityBonus--; menu.display(52, cursor, to_string(agilityBonus) + " ");}
+                else if(cursor == 10){ stealthBonus--; menu.display(52, cursor, to_string(stealthBonus) + " ");}
+                else if(cursor == 11){ staminaBonus--; menu.display(52, cursor, to_string(staminaBonus) + " ");}
+                else if(cursor == 12){ nEnergyBonus--; menu.display(52, cursor, to_string(nEnergyBonus) + " ");}
+                else if(cursor == 13){ mindBonus--; menu.display(52, cursor, to_string(mindBonus) + " ");}
+                else if(cursor == 14){ psychDamBonus--; menu.display(52, cursor, to_string(psychDamBonus) + " ");}
+            }
+            break;
+        default:
+            cout << "Yo I don't know what happened bruh" << endl;
+            break;
+        }
+
+    }
+
+    updateMaxHealth(healthBonus);
+    updateArmor(armorBonus);
+    updateMagicResistance(magicResBonus);
+    updatePhysicalDamageMin(physDamBonus);
+    updatePhysicalDamageMax(physDamBonus);
+    updateMagicDamageMin(magDamBonus);
+    updateMagicDamageMax(magDamBonus);
+    updateAgility(agilityBonus);
+    updateStealth(stealthBonus);
+    updateStamina(staminaBonus);
+    updateNaturalEnergy(nEnergyBonus);
+    updateMind(mindBonus);
+    updatePsychicDamageMin(psychDamBonus);
+    updatePsychicDamageMax(psychDamBonus);
+
+    guard.updateSaveValueMaxHealth(healthBonus);
+    guard.updateSaveValueArmor(armorBonus);
+    guard.updateSaveValuePhysicalDamageMax(physDamBonus);
+    guard.updateSaveValueMagicResistance(magicResBonus);
+    guard.updateSaveValueMagicDamageMax(magDamBonus);
+    guard.updateSaveValueAgility(agilityBonus);
+    guard.updateSaveValueStealth(stealthBonus);
+    guard.updateSaveValueStamina(staminaBonus);
+    guard.updateSaveValueNaturalEnergy(nEnergyBonus);
+    guard.updateSaveValueMaxMind(mindBonus);
+    guard.updateSaveValuePsychicDamageMax(psychDamBonus);
+    
+}
 
 void TempEntity::updateInventorySize(int addInventory){
     inventorySize += addInventory;

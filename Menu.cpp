@@ -815,14 +815,14 @@ void Menu::changePass(string username){ //changes the users password
 }
 
 char Menu::yesOrNo(){ //waits for a user to click the y or n key
-    bool yKeyPressedLastLoop = false;
-    bool nKeyPressedLastLoop = false;
+    bool yKeyPressedLastLoop = true;
+    bool nKeyPressedLastLoop = true;
     while (1){
-        if (GetKeyState('Y') < 0 || GetKeyState('y') < 0 && !yKeyPressedLastLoop) { //checks to make sure that the 3 key is pressed and makes sure it was not pressed last check
+        if (GetKeyState('Y') < 0 /*|| GetKeyState('y') < 0 */&& !yKeyPressedLastLoop) { //checks to make sure that the 3 key is pressed and makes sure it was not pressed last check
             yKeyPressedLastLoop = true;
             ClearConsoleInputBuffer();
             return 'y';
-        } else if (GetKeyState('y') >= 0 || GetKeyState('Y') >= 0){ // else 1 not pressed
+        } else if (/*GetKeyState('y') >= 0 || */GetKeyState('Y') >= 0){ // else 1 not pressed
             yKeyPressedLastLoop = false;
         }
         if (GetKeyState('N') < 0 || GetKeyState('n') < 0 && !nKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check

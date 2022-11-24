@@ -129,6 +129,7 @@ class TempEntity{
 
         void updateCurrentXP(int addXP);
         void updateLevel(int addLevel);
+        void levelUp();
 
         void updateInventorySize(int addInventory);
         void addInventoryItem(int itemNum);
