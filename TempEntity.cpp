@@ -523,21 +523,49 @@ void TempEntity::addInventoryItem(int itemNum){
 int TempEntity::dropItem(){
     Items itemHandler;
     int items = 0;
-    system("cls");
-    menu.display(1, 1, "If you drop something, you might not find it later. Drop which item?");
-    for(int i = 0; i < 8; i++){
-        menu.display(1, 2 + i, itemHandler.getName(inventory[i])); menu.display(32, 2 + i, ("Press \"" + to_string(i + 1) + "\""));
-        items++;
-        if(inventory[i] == 0){
-            i = 24;
+    int page = 0;
+    int choice = 0;
+    bool keepLooping;
+    for(int i = 0; i < getInventorySize(); i++){
+        if(getInventory(i) != 0){
+            items++;
+        }else{
+            break;
         }
     }
-    menu.display(24, 2 + items, "Cancel: Press \"0\"");
-    int choice = menu.numberPressWait(items, true);
-    if(choice != 0){
-        inventory[choice - 1] = 0;
-        sortInventory();
-    }
+    do{
+        keepLooping = false;
+        int items2 = 0;
+        system("cls");
+        menu.display(1, 1, "If you drop something, you might not find it later. Drop which item?");
+        for(int i = 0; i < 8; i++){
+            if(items2 + (page*8) < items){
+                menu.display(1, 2 + i, itemHandler.getName(inventory[i + (page*8)])); menu.display(32, 2 + i, ("Press \"" + to_string(i + 1) + "\""));
+                items2++;
+            }
+            if(inventory[i] == 0){
+                i = 24;
+            }
+        }
+        if(items - (page*8) > 9){
+            menu.display(1, 11, "Next Page");
+            menu.display(32, 11, "Press \"9\"");
+            items2++;
+        }else if(items - (page*8) == 9){
+            menu.display(1, 10, itemHandler.getName(getInventory(8 + (page*8))));
+            menu.display(32, 10, "Press \"9\"");
+            items2++;
+        }
+        menu.display(24, 3 + items2, "Cancel: Press \"0\"");
+        choice = menu.numberPressWait(items2, true);
+        if(choice == 9 && items - (page*8) != 9){
+            page++;
+            keepLooping = true;
+        }else if(choice != 0){
+            inventory[choice - 1 + (page*8)] = 0;
+            sortInventory();
+        }
+    }while(keepLooping);
     system("cls");
     return choice;
 }

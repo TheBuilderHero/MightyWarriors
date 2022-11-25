@@ -606,7 +606,11 @@ void Menu::displayInventory(){
                         i = 24;
                     }
                 }
-                if(items > (page+1)*8){
+                if(items == 8){
+                    display(1, 10, "Empty");
+                    display(32, 10, "Press \"9\"");
+                    items2++;
+                }else if(items - (page*8) > 8){
                     display(1, 11, "Next Page");
                     display(32, 11, "Press \"9\"");
                     items2++;
@@ -615,7 +619,7 @@ void Menu::displayInventory(){
                 int choice2 = numberPressWait(items2, true);
                 if(choice2 == 0){
                     keepKeepLooping = false;
-                }else if(choice2 == 9){
+                }else if(choice2 == 9 && items - (page*8) != 8){
                     page++;
                 }else{
                     int tempItem, tempItemLoc = choice2 - 1 + (page*8);
