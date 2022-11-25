@@ -580,6 +580,11 @@ void Menu::displayInventory(){
                 items++;
             }        
         }
+        if(items >= player.getInventorySize()){
+            display(1, 7 + items, "Your inventory is full", false);
+        }else{
+            display(1, 7+items, "You have " + to_string(player.getInventorySize() - items) + " spaces remaining");
+        }
 
         int choice = numberPressWait(3, true);
         if(choice == 1 || choice == 2){
@@ -593,11 +598,11 @@ void Menu::displayInventory(){
                 display(1, 1, "Trade which item?");
                 int items2 = 0;
                 for(int i = 0; i < 8; i++){
-                    if(i < 8){
+                    if(!(items2 + (page*8) >= player.getInventorySize())){
                         display(1, 2 + i, itemHandler.getName(player.getInventory(i + (page*8)))); display(32, 2 + i, ("Press \"" + to_string(i + 1) + "\""));
+                        items2++;
                     }
-                    items2++;
-                    if(player.getInventory(i + (page*8)) == 0 || i > player.getInventorySize() - (page*8)){
+                    if(player.getInventory(i + (page*8)) == 0){
                         i = 24;
                     }
                 }
@@ -610,7 +615,7 @@ void Menu::displayInventory(){
                 int choice2 = numberPressWait(items2, true);
                 if(choice2 == 0){
                     keepKeepLooping = false;
-                }if(choice2 == 9){
+                }else if(choice2 == 9){
                     page++;
                 }else{
                     int tempItem, tempItemLoc = choice2 - 1 + (page*8);
