@@ -21,6 +21,7 @@ class TempEntity{
         //int quest1Progress[2];
         std::string name;
         bool battleWon = false;
+        int enemyNumber = 0;//This is for tempEntities in group battles
 
         int INVENTORY_SPACES = 24; //this should be the max inventory (I guess)
         int inventory[24]; //if inventory changes, this number should be updated
@@ -70,6 +71,8 @@ class TempEntity{
         int getOffHand(){ return offHand; }
         int getInventorySize(){ return inventorySize; }
 
+        int getEnemyNumber(){ return enemyNumber; }
+
         //setter functions:
         void setUsername(std::string newUsername);
         void setLocation(int currentLocationValue);
@@ -108,6 +111,8 @@ class TempEntity{
         void setOffHand(int itemNum);
         void setInventorySize(int newInventorySize);
 
+        void setEnemyNumber(int number){ enemyNumber = number; }
+
         //updater functions:
         //Stats:
         void updateMaxHealth(int addHealth);
@@ -137,7 +142,7 @@ class TempEntity{
         int dropItem();
 
         //Richards old and outdated and completely unusued (totally lame) functions:
-        std::string getName();
+        std::string getName();//This one is not useless anymore
         void setName(std::string newName);
         void damage(int damage);
         void heal(int healing);
