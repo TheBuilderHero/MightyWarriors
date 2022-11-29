@@ -238,13 +238,18 @@ void Battle::questBattle(string username, int quest, int step){
     Account account;
 
     //Oh boy I'm trying some monster groups now
-    srand(time(NULL));
-    int numberOfEnemies = (rand()%10) + 1;
-    cout << "You will be fighting " << numberOfEnemies << " enemies..." << endl;
-    if(numberOfEnemies == 10){
-        cout << "You are in for a slogging..." << endl;
+    int numberOfEnemies;
+    if(quest < 10){
+        numberOfEnemies = 1;
+    }else{
+        srand(time(NULL));
+        numberOfEnemies = (rand()%10) + 1;
+        cout << "You will be fighting " << numberOfEnemies << " enemies..." << endl;
+        if(numberOfEnemies == 10){
+            cout << "You are in for a slogging..." << endl;
+        }
+        system("pause");
     }
-    system("pause");
     system("cls");
     std::vector<TempEntity> enemies(numberOfEnemies);
     
@@ -283,7 +288,7 @@ void Battle::questBattle(string username, int quest, int step){
     menu.display(16, 2, "Health: " + to_string(playerHealth));
     menu.display(16, 3, "Mind: " + to_string(playerMind));
     for(int i = 0; i < numberOfEnemies; i++){
-        menu.display(48, 1 + i, enemies.at(i).getName());
+        menu.display(54, 1 + i, enemies.at(i).getName());
         menu.display(72, 1 + i, "Health: " + to_string(enemies.at(i).getHealth()));
         menu.display(88, 1 + i, "Mind: " + to_string(enemies.at(i).getMind()));
     }
@@ -294,27 +299,31 @@ void Battle::questBattle(string username, int quest, int step){
         int playerAttack = 0;
         string playerAttackType;//set in the genius optionsOutput function   <-- this seems incorrect
         int enemyBlocking = 0;
+        int killCount = 0;
 
         menu.display(8, 8, "Choose an enemy to attack");
         menu.display(8, 9, "(Press \"0\" to confirm)");
         bool enemyPicked = false;
+            menu.display(50, cursor, "-->");
+            if(numberOfEnemies == 1){
+                enemyPicked = true;
+            }
         while(!enemyPicked){//outputs the options for battle
-            menu.display(45, cursor, "-->");
             int choice = menu.arrowPressWait(true);
             if(choice == 0){
                 enemyPicked = true;
             }else if(choice == 1){
-                menu.display(45, cursor, "   ");
+                menu.display(50, cursor, "   ");
                 if(cursor > 1){
                     cursor--;
                 }
-                menu.display(45, cursor, "-->");
+                menu.display(50, cursor, "-->");
             }else if(choice == 3){
-                menu.display(45, cursor, "   ");
+                menu.display(50, cursor, "   ");
                 if(cursor < numberOfEnemies){
                     cursor++;
                 }
-                menu.display(45, cursor, "-->");
+                menu.display(50, cursor, "-->");
             }
         }
         menu.display(8, 8, "                         ");
@@ -334,64 +343,84 @@ void Battle::questBattle(string username, int quest, int step){
         menu.display(8, 11, "                       ");
         if(playerAttackType == "Psychic"){
             enemies.at(cursor-1).updateMind(-playerAttack);
-            menu.display(8, 24, "Your mental attack hits the enemy's mind for " + to_string(playerAttack) + " damage", false);
+            menu.display(8, 24, "Your mental attack hits the " + enemies.at(cursor-1).getName() + "'s mind for " + to_string(playerAttack) + " damage", false);
             system("pause");
-            menu.display(8, 24, "                                                                                   ");
-            menu.display(8, 25, "                                                                                   ");
+            menu.display(8, 24, "                                                                                            ");
+            menu.display(8, 25, "                                                                                            ");
             
             menu.display(94, cursor, "        ");
-            menu.display(94, cursor, to_string(enemies.at(cursor-1).getMind()));
+            if(enemies.at(cursor-1).getMind() <= 0){
+                menu.display(94, cursor, "BROKE");
+            }else{
+                menu.display(94, cursor, to_string(enemies.at(cursor-1).getMind()));
+            }
         }else{
             enemies.at(cursor-1).updateHealth(-playerAttack);
-            menu.display(8, 24, "Your attack hits the enemy for " + to_string(playerAttack) + " damage", false);
+            menu.display(8, 24, "Your attack hits the " + enemies.at(cursor-1).getName() + " for " + to_string(playerAttack) + " damage", false);
             system("pause");
-            menu.display(8, 24, "                                                                     ");
-            menu.display(8, 25, "                                                                     ");
+            menu.display(8, 24, "                                                                              ");
+            menu.display(8, 25, "                                                                              ");
             
             menu.display(80, cursor, "        ");
-            menu.display(80, cursor, to_string(enemies.at(cursor-1).getHealth()));
+            if(enemies.at(cursor-1).getHealth() <= 0){
+                menu.display(80, cursor, "DEAD");
+            }else{
+                menu.display(80, cursor, to_string(enemies.at(cursor-1).getHealth()));
+            }
         }
 
         //check if enemy is dead:
-        if (enemies.at(cursor-1).getHealth() <= 0 || enemies.at(cursor-1).getMind() <= 0){
+        for(int i = 0; i < numberOfEnemies; i++){
+            if (enemies.at(i).getHealth() <= 0 || enemies.at(i).getMind() <= 0){
+                killCount++;
+            }else{
+                i = numberOfEnemies;
+            }
+        }
+        if(killCount >= numberOfEnemies){
             fightWon = true;
             break;
         }
 
-        //Enemy's turn to attack:
-        code.decipherS(server.sendToServer(code.cipher("10", username, enemies.at(cursor-1).getName(), to_string(playerBlocking))));
-        int enemyAttack = stoi(code.getItemS(1));
-        enemyAttack = (enemyBlocking) ? 0 : enemyAttack; //set attack to 0 damage if enemy is blocking
-        string enemyAttackType = code.getItemS(2);
+        for(int i = 0; i < numberOfEnemies; i++){
+            //Enemy's turn to attack:
+            if(enemies.at(i).getHealth() > 0 && enemies.at(i).getMind() > 0){
+                code.decipherS(server.sendToServer(code.cipher("10", username, enemies.at(i).getName(), to_string(playerBlocking))));
+                int enemyAttack = stoi(code.getItemS(1));
+                if(i + 1 == cursor){
+                    enemyAttack = (enemyBlocking) ? 0 : enemyAttack; //set attack to 0 damage if enemy is blocking
+                }
+                string enemyAttackType = code.getItemS(2);
 
-        //check during battle passives:
-        Passives passive;
-        passive.duringBattleEnemyAttackPassives();
+                //check during battle passives:
+                Passives passive;
+                passive.duringBattleEnemyAttackPassives();
 
-        if(enemyAttackType == "Psychic"){
-            menu.display(8, 24, "The enemy's mental attack hits your mind for " + to_string(enemyAttack) + " damage", false);
-            system("pause");
-            menu.display(8, 24, "                                                                                  ");
-            menu.display(8, 25, "                                                                                  ");
-            playerMind -= enemyAttack;
-            player.setMind(playerMind);
-            enemyAttack = 0;
-            
-            menu.display(22, 3, "        ");
-            menu.display(22, 3, to_string(playerMind));
-        }else{
-            menu.display(8, 24, "The enemy's attack hits you for " + to_string(enemyAttack) + " damage", false);
-            system("pause");
-            menu.display(8, 24, "                                                                     ");
-            menu.display(8, 25, "                                                                     ");
-            playerHealth -= enemyAttack;
-            player.setHealth(playerHealth);
-            enemyAttack = 0;
-            
-            menu.display(24, 2, "        ");
-            menu.display(24, 2, to_string(playerHealth));
+                if(enemyAttackType == "Psychic"){
+                    menu.display(8, 24, "The " + enemies.at(i).getName() + "'s mental attack hits your mind for " + to_string(enemyAttack) + " damage", false);
+                    system("pause");
+                    menu.display(8, 24, "                                                                                  ");
+                    menu.display(8, 25, "                                                                                  ");
+                    playerMind -= enemyAttack;
+                    player.setMind(playerMind);
+                    enemyAttack = 0;
+                    
+                    menu.display(22, 3, "        ");
+                    menu.display(22, 3, to_string(playerMind));
+                }else{
+                    menu.display(8, 24, "The " + enemies.at(i).getName() + "'s attack hits you for " + to_string(enemyAttack) + " damage", false);
+                    system("pause");
+                    menu.display(8, 24, "                                                                     ");
+                    menu.display(8, 25, "                                                                     ");
+                    playerHealth -= enemyAttack;
+                    player.setHealth(playerHealth);
+                    enemyAttack = 0;
+                    
+                    menu.display(24, 2, "        ");
+                    menu.display(24, 2, to_string(playerHealth));
+                }
+            }
         }
-
         if (playerHealth <= 0 || playerMind <= 0) {
             fightLost = true;
             break;
@@ -401,15 +430,8 @@ void Battle::questBattle(string username, int quest, int step){
     if (fightWon) { //the player has won the fight
         menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
-        //increase user xp, since fight was won.
-        string playerLevel = server.sendToServer(code.cipher("14", username, to_string(enemyNum), "WillNeedToFeedBackEnemyLevel")); //this will need to send the enemy level later on.
-        if(enemyMind <= 0){
-            cout <<  setfill(' ') << setw(60) << "You broke the Enemy's mind!" << endl;
-        }else{
-            cout <<  setfill(' ') << setw(60) << "You kicked the Enemy's brass!" << endl;
-        }
-        cout <<  setfill(' ') << setw(57) << "You won the Battle!" << endl;
-        cout <<  setfill(' ') << setw(47) << "You earned " << XPDrop << " experience!" << endl;
+        menu.display(48, 1, getVictoryMessage());
+        menu.display(48, 2, "You earned " + to_string(XPDrop) + " experience!");
         int itemDrop = 0;
         srand(time(NULL));
         if(rand() % 5 == 0){
@@ -418,28 +440,32 @@ void Battle::questBattle(string username, int quest, int step){
             if(itemDrop == 8 && rand() % 4 > 0){
 
             }else{
-                cout << setfill(' ') << setw(47) << "The Enemy dropped a " << item.getName(itemDrop) << "!" << endl;
+                menu.display(48, 3 , "The Enemy dropped a " + item.getName(itemDrop) + "! "), false;
             }
         }
         system("pause");
         menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls"); 
-        int currentPlayerLevel = account.getLevel(username);
-        if(playerLevelAtStartOfFight < currentPlayerLevel){ //runs the level update for stats
-            //shiny new code
-            //putting this here temporarily, we should probably load xp data client-side
-            TempEntity playerE{username, false};
-            setPlayer(playerE);
+        //increase user xp, since fight was won.
+        for(int i = 0; i < numberOfEnemies; i++){
+            string playerLevel = server.sendToServer(code.cipher("14", username, to_string(enemies.at(i).getEnemyNumber()), "WillNeedToFeedBackEnemyLevel")); //this will need to send the enemy level later on.
+            int currentPlayerLevel = account.getLevel(username);
+            if(playerLevelAtStartOfFight < currentPlayerLevel){ //runs the level update for stats
+                //shiny new code
+                //putting this here temporarily, we should probably load xp data client-side
+                TempEntity playerE{username, false};
+                setPlayer(playerE);
 
-            player.levelUp();
-            
-            //old code
-            /*account.levelUp(username, currentPlayerLevel);
-            TempEntity playerE{username, false};
-            setPlayer(playerE);
-            */
-        }else{
-            player.setCurrentXP(account.getCurrentXPForNextLevel(username));//This was added because XP was not updating in player stats after battles
+                player.levelUp();
+                
+                //old code
+                /*account.levelUp(username, currentPlayerLevel);
+                TempEntity playerE{username, false};
+                setPlayer(playerE);
+                */
+            }else{
+                player.setCurrentXP(account.getCurrentXPForNextLevel(username));//This was added because XP was not updating in player stats after battles
+            }
         }
         
         if(itemDrop > 0) player.addInventoryItem(itemDrop); //need to put this after the level up otherwise item will be lost
@@ -450,12 +476,8 @@ void Battle::questBattle(string username, int quest, int step){
     } else if (fightLost){ //the enemy has won the fight
         menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
-        if(playerMind <= 0){
-            cout <<  setfill(' ') << setw(60) << "The Enemy broke your mind!" << endl;
-        }else{
-            cout <<  setfill(' ') << setw(60) << "The Enemy kicked your brass!" << endl;
-        }
-        cout <<  setfill(' ') << setw(58) << "You Lost the Battle!" << endl;
+        menu.display(48, 1, getDefeatMessage());
+        menu.display(48, 2, "You suck!", false);
         system("pause");
         menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
@@ -751,6 +773,64 @@ void Battle::standardBattle(TempEntity player){
     //system("pause");
 }
 
+string Battle::getVictoryMessage(){
+    int numberOfMessages = 2;
+    srand(time(NULL));
+    int message = rand()%numberOfMessages;
+
+    switch(message){
+        case 0:
+            return "You kicked the enemy's brass!";
+            break;
+        case 1:
+            return "You wrecked the enemy's world!";
+            break;
+        default:
+            return "You are winner!";
+            break;
+    }
+}
+string Battle::getDefeatMessage(){
+    int numberOfMessages = 10;
+    srand(time(NULL));
+    int message = rand()%numberOfMessages;
+
+    switch(message){
+        case 0:
+            return "The enemy kicked your brass!";
+            break;
+        case 1:
+            return "The enemy wrecked your world!";
+            break;
+        case 2:
+            return "The enemy triumphs over your pathetic might!";
+            break;
+        case 3:
+            return "The enemy dances on your mangled corpse!";
+            break;
+        case 4:
+            return "The enemy teabags you in the face!";
+            break;
+        case 5:
+            return "The enemy makes you cry like a baby!";
+            break;
+        case 6:
+            return "The enemy crushes your dreams!";
+            break;
+        case 7:
+            return "Victory is NOT yours, loser!";
+            break;
+        case 8:
+            return "Get thyself defeated!";
+            break;
+        case 9:
+            return "Return to kindergarten!";
+            break;
+        default:
+            return "You a noob!";
+            break;
+    }
+}
 
 int Battle::getPlayerHealth(){
     //return player.getHealth();

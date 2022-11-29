@@ -227,6 +227,7 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
     bool lastLoopFailedTravel = false;
     bool leavingVillage = false;
     do{
+        clearDisplayRow(0);
         if (tempCurrentLocation == -1){
             tempCurrentLocation = map.getCurrentLocation();
             if(map.isCityLocation(map.getCurrentLocation()) && !leavingVillage){

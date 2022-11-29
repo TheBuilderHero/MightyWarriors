@@ -23,4 +23,7 @@ class Battle{//This class will have all the functions needed for the algorythms 
 
         TempEntity getPlayer(){ return player ;}
         void setPlayer(TempEntity playerE){ player = playerE; }
+
+        std::string getVictoryMessage();
+        std::string getDefeatMessage();
 };
