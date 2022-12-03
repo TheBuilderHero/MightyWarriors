@@ -63,11 +63,10 @@ void Battle::waitForButtonPress(string username, string &enemyName, bool &qKeyPr
                 rKeyPressedLastLoop = true;
                 break;
             } else if (GetKeyState('R') < 0 && !rKeyPressedLastLoop && ultimateUses <= 0) {
-                cout << "You do not have any more ultimate uses..." << endl;
+                menu.display(8, 13, "You do not have any more ultimate uses, okay?", false);
                 system("pause");
-                menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
-                system("cls");
-                optionsOutput(username, enemyName, playerHealth, enemyHealth); //re output the options for battle after clearing the terminal
+                menu.display(8, 13, "                                             ");
+                menu.display(8, 14, "                                             ");
             } else if (GetKeyState('R') >= 0){// else R not pressed
                 rKeyPressedLastLoop = false;
             }
@@ -430,8 +429,8 @@ void Battle::questBattle(string username, int quest, int step){
     if (fightWon) { //the player has won the fight
         menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
-        menu.display(48, 1, getVictoryMessage());
-        menu.display(48, 2, "You earned " + to_string(XPDrop) + " experience!");
+        menu.display(24, 1, getVictoryMessage());
+        menu.display(24, 2, "You earned " + to_string(XPDrop) + " experience!", false);
         int itemDrop = 0;
         srand(time(NULL));
         if(rand() % 5 == 0){
@@ -440,7 +439,7 @@ void Battle::questBattle(string username, int quest, int step){
             if(itemDrop == 8 && rand() % 4 > 0){
 
             }else{
-                menu.display(48, 3 , "The Enemy dropped a " + item.getName(itemDrop) + "! "), false;
+                menu.display(24, 3 , "The Enemy dropped a " + item.getName(itemDrop) + "! "), false;
             }
         }
         system("pause");
@@ -476,8 +475,8 @@ void Battle::questBattle(string username, int quest, int step){
     } else if (fightLost){ //the enemy has won the fight
         menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
-        menu.display(48, 1, getDefeatMessage());
-        menu.display(48, 2, "You suck!", false);
+        menu.display(24, 1, getDefeatMessage());
+        menu.display(24, 2, "You suck!", false);
         system("pause");
         menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
