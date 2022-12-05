@@ -706,9 +706,10 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
     display(32, 7, "Map Test");                 display(63, 7, "(type number \"6\")");
     display(32, 8, "Message Test SubCipher");   display(63, 8, "(type number \"7\")");
     display(32, 9, "Show Text Color");          display(63, 9, "(type number \"8\")");
-    display(32, 10, "Exit Admin Menu");         display(63, 10, "(type number \"0\")", false);
+    display(32, 10, "Test Battle");             display(63, 10, "(type number \"9\")");
+    display(32, 11, "Exit Admin Menu");         display(63, 11, "(type number \"0\")", false);
     
-    value = numberPressWait(8, true);
+    value = numberPressWait(9, true);
     switch (value)
     {
     case 0: //exit admin menu program
@@ -779,6 +780,13 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
             cout << k << " I want to be nice today!" << endl;
         }
         system("pause");
+        break;
+    }
+    case 9:{
+        battle.setPlayer(player);
+        battle.questBattle(username, 100, 0);
+        setPlayer(battle.getPlayer());
+        player.setBattleResult(false);
         break;
     }
     default:

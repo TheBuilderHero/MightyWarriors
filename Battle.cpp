@@ -397,9 +397,9 @@ void Battle::questBattle(string username, int quest, int step){
             break;
         }
 
-        code.decipher(server.sendToServer(code.cipher("26", username, code.subCipher(enemies.at(0).getName(), enemies.at(1).getName(), enemies.at(2).getName(), enemies.at(3).getName(), enemies.at(4).getName(),
-        enemies.at(5).getName(), enemies.at(6).getName(), enemies.at(7).getName(), enemies.at(8).getName(), enemies.at(9).getName(), enemies.at(10).getName(), enemies.at(11).getName(), enemies.at(12).getName(), 
-        enemies.at(13).getName(), enemies.at(14).getName(), enemies.at(15).getName(), enemies.at(16).getName(), enemies.at(17).getName(), enemies.at(18).getName(), enemies.at(19).getName()), to_string(playerBlocking), to_string(numberOfEnemies))), true);
+        code.decipher(server.sendToServer(code.cipher("26", username, code.subCipher(to_string(enemies.at(0).getEnemyNumber()), to_string(enemies.at(1).getEnemyNumber()), to_string(enemies.at(2).getEnemyNumber()), to_string(enemies.at(3).getEnemyNumber()), to_string(enemies.at(4).getEnemyNumber()),
+        to_string(enemies.at(5).getEnemyNumber()), to_string(enemies.at(6).getEnemyNumber()), to_string(enemies.at(7).getEnemyNumber()), to_string(enemies.at(8).getEnemyNumber()), to_string(enemies.at(9).getEnemyNumber()), to_string(enemies.at(10).getEnemyNumber()), to_string(enemies.at(11).getEnemyNumber()), to_string(enemies.at(12).getEnemyNumber()), 
+        to_string(enemies.at(13).getEnemyNumber()), to_string(enemies.at(14).getEnemyNumber()), to_string(enemies.at(15).getEnemyNumber()), to_string(enemies.at(16).getEnemyNumber()), to_string(enemies.at(17).getEnemyNumber()), to_string(enemies.at(18).getEnemyNumber()), to_string(enemies.at(19).getEnemyNumber())), to_string(playerBlocking), to_string(numberOfEnemies))), true);
         for(int i = 0; i < numberOfEnemies; i++){
             //Enemy's turn to attack:
             if(enemies.at(i).getHealth() > 0 && enemies.at(i).getMind() > 0){
