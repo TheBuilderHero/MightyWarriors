@@ -243,12 +243,24 @@ void Battle::questBattle(string username, int quest, int step){
     }else{
         srand(time(NULL));
         numberOfEnemies = (rand()%10) + 1;
-        cout << "You will be fighting " << numberOfEnemies << " enemies..." << endl;
+        /*cout << "You will be fighting " << numberOfEnemies << " enemies..." << endl;
         if(numberOfEnemies == 10){
             cout << "You are in for a slogging..." << endl;
         }
+        system("pause");*/
+    }
+    
+    srand(time(NULL));
+    bool potatoFight = false;
+    if(rand()%5 == 0){
+        potatoFight = true;
+        numberOfEnemies = 10;
+        for(int i = 0; i < 1000; i++)
+        cout << "POTATO FIGHT!!! ";
+        cout << "\n\nYou're doomed. :)";
         system("pause");
     }
+    
     system("cls");
     std::vector<TempEntity> enemies(numberOfEnemies);
     
@@ -262,13 +274,14 @@ void Battle::questBattle(string username, int quest, int step){
         playerMind = stoi(code.getItemS(10));
         //player.setHealth(playerHealth);
         fightWon = fightLost = false; //set both lost and won to false
+        
+        code.decipher(server.sendToServer(code.cipher("25", username, to_string(quest), to_string(step), to_string(numberOfEnemies), to_string(potatoFight))), true); //Get a trash ton of enemy info for a group fight!
         for(int i = 0; i < numberOfEnemies; i++){
-            code.decipherS(server.sendToServer(code.cipher("7", username, to_string(quest), to_string(step)))); //request the current stats of a enemy from the server //pull data from the server regarding the enemy to fight
-            enemies.at(i).setHealth(stoi(code.getItemS(2))); //set enemy health
-            enemies.at(i).setMind(stoi(code.getItemS(8)));
-            enemies.at(i).setName(code.getItemS(1));
-            enemies.at(i).setEnemyNumber(stoi(code.getItemS(7)));
-            XPDrop += stoi(code.getItemS(9));
+            enemies.at(i).setName(code.getItem(i+2, 1));
+            enemies.at(i).setEnemyNumber(stoi(code.getItem(i+2, 2)));
+            enemies.at(i).setHealth(stoi(code.getItem(i+2, 3))); //set enemy health
+            enemies.at(i).setMind(stoi(code.getItem(i+2, 4)));
+            XPDrop += stoi(code.getItem(i+2, 5));
             if(enemies.at(i).getEnemyNumber() == 2){
                 if(enemies.at(i).getHealth() > 10)
                     enemies.at(i).setHealth(10);
