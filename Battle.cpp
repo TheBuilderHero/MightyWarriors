@@ -258,7 +258,7 @@ void Battle::questBattle(string username, int quest, int step){
         for(int i = 0; i < 1000; i++)
         cout << "POTATO FIGHT!!! ";
         cout << "\n\nYou're doomed. :)\n";
-        system("pause");*/
+        system("pause");
     }
     
     srand(time(NULL));
