@@ -254,10 +254,10 @@ void Battle::questBattle(string username, int quest, int step){
     bool potatoFight = false;
     if(rand()%5 == 0){
         potatoFight = true;
-        numberOfEnemies = 10;
+        numberOfEnemies = 20;
         for(int i = 0; i < 1000; i++)
         cout << "POTATO FIGHT!!! ";
-        cout << "\n\nYou're doomed. :)";
+        cout << "\n\nYou're doomed. :)\n";
         system("pause");
     }
     
