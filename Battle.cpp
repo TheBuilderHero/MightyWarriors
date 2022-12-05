@@ -241,6 +241,7 @@ void Battle::questBattle(string username, int quest, int step){
 
     //Oh boy I'm trying some monster groups now
     int numberOfEnemies;
+    bool potatoFight = false;
     if(quest < 10){
         numberOfEnemies = 1;
     }else{
@@ -251,18 +252,17 @@ void Battle::questBattle(string username, int quest, int step){
             cout << "You are in for a slogging..." << endl;
         }
         system("pause");*/
-    }
-    
-    srand(time(NULL));
-    bool potatoFight = false;
-    if(rand()%5 == 0){
-        potatoFight = true;
-        numberOfEnemies = 20;
-        for(int i = 0; i < 1000; i++)
-        cout << "POTATO FIGHT!!! ";
-        cout << "\n\nYou're doomed. :)\n";
-        system("pause");
-    }    
+        
+        srand(time(NULL));
+        if(rand()%5 == 0){
+            potatoFight = true;
+            numberOfEnemies = 20;
+            for(int i = 0; i < 1000; i++)
+            cout << "POTATO FIGHT!!! ";
+            cout << "\n\nYou're doomed. :)\n";
+            system("pause");
+        }  
+    }  
     
     system("cls");
     std::vector<TempEntity> enemies(20);//Max number of enemies is 20
