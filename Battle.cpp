@@ -52,12 +52,13 @@ void Battle::waitForButtonPress(string username, string &enemyName, bool &qKeyPr
         {
             if (GetKeyState('R') < 0 && !rKeyPressedLastLoop && ultimateUses > 0) {//checks to make sure that the key is pressed and makes sure it was not pressed last check
                 playerAttackType = player.getRDamageType();
-                playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, rOption, to_string(player.getPrimaryHand())))); //gets damage info from the server to determine the amount inflicted on the enemy;
-                code.decipherS(server.sendToServer(code.cipher("11"))); //ask if enemy is blocking next attack and get BLOCK_REDUCTION_VALUE from server
-                enemyBlocking = stoi(code.getItemS(1)); //set enemyBlocking from server
+                //playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, rOption, to_string(player.getPrimaryHand())))); //gets damage info from the server to determine the amount inflicted on the enemy;
+                code.decipherS(server.sendToServer(code.cipher("9", username, enemyName, rOption, to_string(player.getPrimaryHand())))); //ask if enemy is blocking next attack and get BLOCK_REDUCTION_VALUE from server
+                playerAttack = stoi(code.getItemS(1));
+                enemyBlocking = stoi(code.getItemS(2)); //set enemyBlocking from server
                 if(playerAttackType != "Psychic"){
                     if (!enemyBlocking) enemyHealth -= playerAttack; //if the enemy is not blocking do full damage otherwise reduce it by the BLOCK_REDUCTION_VALUE sent over by the server.
-                    if (enemyBlocking) enemyHealth -= (playerAttack *= stod(code.getItemS(2))); //reduce attack by BLOCK_REDUCTION_VALUE
+                    if (enemyBlocking) enemyHealth -= (playerAttack *= stod(code.getItemS(3))); //reduce attack by BLOCK_REDUCTION_VALUE
                 }
                 ultimateUses--; //take away one of the ult uses.
                 rKeyPressedLastLoop = true;
@@ -72,12 +73,13 @@ void Battle::waitForButtonPress(string username, string &enemyName, bool &qKeyPr
             }
             if (GetKeyState('E') < 0 && eKeyPressedLastLoop == false) {//checks to make sure that the key is pressed and makes sure it was not pressed last check
                 playerAttackType = player.getEDamageType();
-                playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, eOption, to_string(player.getPrimaryHand())))); //gets damage info from the server to determine the amount inflicted on the enemy;
-                code.decipherS(server.sendToServer(code.cipher("11"))); //ask if enemy is blocking next attack and get BLOCK_REDUCTION_VALUE from server
-                enemyBlocking = stoi(code.getItemS(1)); //set enemyBlocking from server
+                //playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, eOption, to_string(player.getPrimaryHand())))); //gets damage info from the server to determine the amount inflicted on the enemy;
+                code.decipherS(server.sendToServer(code.cipher("9", username, enemyName, eOption, to_string(player.getPrimaryHand())))); //ask if enemy is blocking next attack and get BLOCK_REDUCTION_VALUE from server
+                playerAttack = stoi(code.getItemS(1));
+                enemyBlocking = stoi(code.getItemS(2)); //set enemyBlocking from server
                 if(playerAttackType != "Psychic"){
                     if (!enemyBlocking) enemyHealth -= playerAttack; //if the enemy is not blocking do full damage otherwise reduce it by the BLOCK_REDUCTION_VALUE sent over by the server.
-                    if (enemyBlocking) enemyHealth -= (playerAttack *= stod(code.getItemS(2))); //reduce attack by BLOCK_REDUCTION_VALUE
+                    if (enemyBlocking) enemyHealth -= (playerAttack *= stod(code.getItemS(3))); //reduce attack by BLOCK_REDUCTION_VALUE
                 }
                 eKeyPressedLastLoop = true;
                 break;
@@ -103,12 +105,13 @@ void Battle::waitForButtonPress(string username, string &enemyName, bool &qKeyPr
             }
             if (GetKeyState('Q') < 0 && !qKeyPressedLastLoop) { //checks to make sure that the key is pressed and makes sure it was not pressed last check - also check ultimate uses
                 playerAttackType = player.getQDamageType();
-                playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, qOption, to_string(player.getPrimaryHand())))); //gets damage info from the server to determine the amount inflicted on the enemy;
-                code.decipherS(server.sendToServer(code.cipher("11"))); //ask if enemy is blocking next attack and get BLOCK_REDUCTION_VALUE from server
-                enemyBlocking = stoi(code.getItemS(1)); //set enemyBlocking from server
+                //playerAttack = stoi(server.sendToServer(code.cipher("9", username, enemyName, qOption, to_string(player.getPrimaryHand())))); //gets damage info from the server to determine the amount inflicted on the enemy;
+                code.decipherS(server.sendToServer(code.cipher("9", username, enemyName, qOption, to_string(player.getPrimaryHand())))); //ask if enemy is blocking next attack and get BLOCK_REDUCTION_VALUE from server
+                playerAttack = stoi(code.getItemS(1));
+                enemyBlocking = stoi(code.getItemS(2)); //set enemyBlocking from server
                 if(playerAttackType != "Psychic"){
                     if (!enemyBlocking) enemyHealth -= playerAttack; //if the enemy is not blocking do full damage otherwise reduce it by the BLOCK_REDUCTION_VALUE sent over by the server.
-                    if (enemyBlocking) enemyHealth -= (playerAttack *= stod(code.getItemS(2))); //reduce attack by BLOCK_REDUCTION_VALUE
+                    if (enemyBlocking) enemyHealth -= (playerAttack *= stod(code.getItemS(3))); //reduce attack by BLOCK_REDUCTION_VALUE
                 }
                 qKeyPressedLastLoop = true;
                 break;
@@ -259,22 +262,10 @@ void Battle::questBattle(string username, int quest, int step){
         cout << "POTATO FIGHT!!! ";
         cout << "\n\nYou're doomed. :)\n";
         system("pause");
-    }
-    
-    srand(time(NULL));
-    bool potatoFight = false;
-    if(rand()%5 == 0){
-        potatoFight = true;
-        numberOfEnemies = 20;
-        for(int i = 0; i < 1000; i++)
-        cout << "POTATO FIGHT!!! ";
-        cout << "\n\nYou're doomed. :)\n";
-        system("pause");
-    }
-    
+    }    
     
     system("cls");
-    std::vector<TempEntity> enemies(numberOfEnemies);
+    std::vector<TempEntity> enemies(20);//Max number of enemies is 20
     
     //**************************
     //Initalize all variables
@@ -406,15 +397,17 @@ void Battle::questBattle(string username, int quest, int step){
             break;
         }
 
+        code.decipher(server.sendToServer(code.cipher("26", username, code.subCipher(enemies.at(0).getName(), enemies.at(1).getName(), enemies.at(2).getName(), enemies.at(3).getName(), enemies.at(4).getName(),
+        enemies.at(5).getName(), enemies.at(6).getName(), enemies.at(7).getName(), enemies.at(8).getName(), enemies.at(9).getName(), enemies.at(10).getName(), enemies.at(11).getName(), enemies.at(12).getName(), 
+        enemies.at(13).getName(), enemies.at(14).getName(), enemies.at(15).getName(), enemies.at(16).getName(), enemies.at(17).getName(), enemies.at(18).getName(), enemies.at(19).getName()), to_string(playerBlocking), to_string(numberOfEnemies))), true);
         for(int i = 0; i < numberOfEnemies; i++){
             //Enemy's turn to attack:
             if(enemies.at(i).getHealth() > 0 && enemies.at(i).getMind() > 0){
-                code.decipherS(server.sendToServer(code.cipher("10", username, enemies.at(i).getName(), to_string(playerBlocking))));
-                int enemyAttack = stoi(code.getItemS(1));
+                int enemyAttack = stoi(code.getItem(i+2, 1));
                 if(i + 1 == cursor){
                     enemyAttack = (enemyBlocking) ? 0 : enemyAttack; //set attack to 0 damage if enemy is blocking
                 }
-                string enemyAttackType = code.getItemS(2);
+                string enemyAttackType = code.getItem(i+2, 2);
 
                 //check during battle passives:
                 Passives passive;
@@ -464,7 +457,7 @@ void Battle::questBattle(string username, int quest, int step){
             if(itemDrop == 8 && rand() % 4 > 0){
 
             }else{
-                menu.display(24, 3 , "The Enemy dropped a " + item.getName(itemDrop) + "! "), false;
+                menu.display(24, 3 , "The Enemy dropped a " + item.getName(itemDrop) + "! ", false);
             }
         }
         system("pause");
