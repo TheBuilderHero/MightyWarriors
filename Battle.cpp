@@ -258,8 +258,20 @@ void Battle::questBattle(string username, int quest, int step){
         for(int i = 0; i < 1000; i++)
         cout << "POTATO FIGHT!!! ";
         cout << "\n\nYou're doomed. :)\n";
+        system("pause");*/
+    }
+    
+    srand(time(NULL));
+    bool potatoFight = false;
+    if(rand()%5 == 0){
+        potatoFight = true;
+        numberOfEnemies = 20;
+        for(int i = 0; i < 1000; i++)
+        cout << "POTATO FIGHT!!! ";
+        cout << "\n\nYou're doomed. :)\n";
         system("pause");
     }
+    
     
     system("cls");
     std::vector<TempEntity> enemies(numberOfEnemies);
