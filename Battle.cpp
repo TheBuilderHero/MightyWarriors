@@ -308,6 +308,7 @@ void Battle::questBattle(string username, int quest, int step){
         menu.display(88, 1 + i, "Mind: " + to_string(enemies.at(i).getMind()));
     }
     int cursor = 1;
+    int randomizer = 0;
     //Start Battle clearing the screen
     while (!fightWon && !fightLost){//loop through displaying the stats and having the player pick options until the fight is won or lost
         int combatVal = 0;
@@ -315,6 +316,7 @@ void Battle::questBattle(string username, int quest, int step){
         string playerAttackType;//set in the genius optionsOutput function   <-- this seems incorrect
         int enemyBlocking = 0;
         int killCount = 0;
+        randomizer += 127;
 
         menu.display(8, 8, "Choose an enemy to attack");
         menu.display(8, 9, "(Press \"0\" to confirm)");
@@ -356,9 +358,12 @@ void Battle::questBattle(string username, int quest, int step){
         menu.display(8, 9, "                       ");
         menu.display(8, 10, "                       ");
         menu.display(8, 11, "                       ");
+        if(enemies.at(cursor-1).getEnemyNumber() == 13){
+            enemyName = "normal potato";
+        }
         if(playerAttackType == "Psychic"){
             enemies.at(cursor-1).updateMind(-playerAttack);
-            menu.display(8, 24, "Your mental attack hits the " + enemies.at(cursor-1).getName() + "'s mind for " + to_string(playerAttack) + " damage", false);
+            menu.display(8, 24, "Your mental attack hits the " + enemyName + "'s mind for " + to_string(playerAttack) + " damage", false);
             system("pause");
             menu.display(8, 24, "                                                                                            ");
             menu.display(8, 25, "                                                                                            ");
@@ -371,7 +376,7 @@ void Battle::questBattle(string username, int quest, int step){
             }
         }else{
             enemies.at(cursor-1).updateHealth(-playerAttack);
-            menu.display(8, 24, "Your attack hits the " + enemies.at(cursor-1).getName() + " for " + to_string(playerAttack) + " damage", false);
+            menu.display(8, 24, "Your attack hits the " + enemyName + " for " + to_string(playerAttack) + " damage", false);
             system("pause");
             menu.display(8, 24, "                                                                              ");
             menu.display(8, 25, "                                                                              ");
@@ -399,11 +404,17 @@ void Battle::questBattle(string username, int quest, int step){
 
         code.decipher(server.sendToServer(code.cipher("26", username, code.subCipher(to_string(enemies.at(0).getEnemyNumber()), to_string(enemies.at(1).getEnemyNumber()), to_string(enemies.at(2).getEnemyNumber()), to_string(enemies.at(3).getEnemyNumber()), to_string(enemies.at(4).getEnemyNumber()),
         to_string(enemies.at(5).getEnemyNumber()), to_string(enemies.at(6).getEnemyNumber()), to_string(enemies.at(7).getEnemyNumber()), to_string(enemies.at(8).getEnemyNumber()), to_string(enemies.at(9).getEnemyNumber()), to_string(enemies.at(10).getEnemyNumber()), to_string(enemies.at(11).getEnemyNumber()), to_string(enemies.at(12).getEnemyNumber()), 
-        to_string(enemies.at(13).getEnemyNumber()), to_string(enemies.at(14).getEnemyNumber()), to_string(enemies.at(15).getEnemyNumber()), to_string(enemies.at(16).getEnemyNumber()), to_string(enemies.at(17).getEnemyNumber()), to_string(enemies.at(18).getEnemyNumber()), to_string(enemies.at(19).getEnemyNumber())), to_string(playerBlocking), to_string(numberOfEnemies))), true);
+        to_string(enemies.at(13).getEnemyNumber()), to_string(enemies.at(14).getEnemyNumber()), to_string(enemies.at(15).getEnemyNumber()), to_string(enemies.at(16).getEnemyNumber()), to_string(enemies.at(17).getEnemyNumber()), to_string(enemies.at(18).getEnemyNumber()), to_string(enemies.at(19).getEnemyNumber())), to_string(playerBlocking), to_string(numberOfEnemies), to_string(randomizer))), true);
         for(int i = 0; i < numberOfEnemies; i++){
             //Enemy's turn to attack:
             if(enemies.at(i).getHealth() > 0 && enemies.at(i).getMind() > 0){
                 int enemyAttack = stoi(code.getItem(i+2, 1));
+                string emenyName;
+                if(enemies.at(i).getEnemyNumber() == 13){
+                    emenyName = "normal potato";
+                }else{
+                    emenyName = enemies.at(i).getName();
+                }
                 if(i + 1 == cursor){
                     enemyAttack = (enemyBlocking) ? 0 : enemyAttack; //set attack to 0 damage if enemy is blocking
                 }
@@ -414,7 +425,7 @@ void Battle::questBattle(string username, int quest, int step){
                 passive.duringBattleEnemyAttackPassives();
 
                 if(enemyAttackType == "Psychic"){
-                    menu.display(8, 24, "The " + enemies.at(i).getName() + "'s mental attack hits your mind for " + to_string(enemyAttack) + " damage", false);
+                    menu.display(8, 24, "The " + emenyName + "'s mental attack hits your mind for " + to_string(enemyAttack) + " damage", false);
                     system("pause");
                     menu.display(8, 24, "                                                                                  ");
                     menu.display(8, 25, "                                                                                  ");
@@ -425,7 +436,7 @@ void Battle::questBattle(string username, int quest, int step){
                     menu.display(22, 3, "        ");
                     menu.display(22, 3, to_string(playerMind));
                 }else{
-                    menu.display(8, 24, "The " + enemies.at(i).getName() + "'s attack hits you for " + to_string(enemyAttack) + " damage", false);
+                    menu.display(8, 24, "The " + emenyName + "'s attack hits you for " + to_string(enemyAttack) + " damage", false);
                     system("pause");
                     menu.display(8, 24, "                                                                     ");
                     menu.display(8, 25, "                                                                     ");
