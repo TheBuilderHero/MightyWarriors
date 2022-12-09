@@ -426,6 +426,10 @@ void Battle::questBattle(string username, int quest, int step){
 
                 if(enemyAttackType == "Psychic"){
                     menu.display(8, 24, "The " + emenyName + "'s mental attack hits your mind for " + to_string(enemyAttack) + " damage", false);
+                    system("pause");
+                    menu.display(8, 24, "                                                                                  ");
+                    menu.display(8, 25, "                                                                                  ");
+                    
                     playerMind -= enemyAttack;
                     player.setMind(playerMind);
                     enemyAttack = 0;
@@ -434,6 +438,10 @@ void Battle::questBattle(string username, int quest, int step){
                     menu.display(22, 3, to_string(playerMind));
                 }else{
                     menu.display(8, 24, "The " + emenyName + "'s attack hits you for " + to_string(enemyAttack) + " damage", false);
+                    system("pause");
+                    menu.display(8, 24, "                                                                     ");
+                    menu.display(8, 25, "                                                                     ");
+                    
                     playerHealth -= enemyAttack;
                     player.setHealth(playerHealth);
                     enemyAttack = 0;
