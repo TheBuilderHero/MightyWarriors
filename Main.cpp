@@ -50,3 +50,55 @@ void Main::attemptStartGame(){
         attempts++;
     } //; //while the user has not selected to stop trying to connect loop
 }
+
+void Main::setupConsole(){
+    maxsc();
+    //fullsc();
+
+    CONSOLE_FONT_INFOEX cfi;
+    cfi.cbSize = sizeof(cfi);
+    cfi.nFont = 0;
+    cfi.dwFontSize.X = 8;                   // Width of each character in the font
+    cfi.dwFontSize.Y = 16;                  // Height
+    cfi.FontFamily = FF_DONTCARE;
+    cfi.FontWeight = FW_NORMAL;
+    std::wcscpy(cfi.FaceName, L"Consolas"); // Choose your font
+    SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
+
+    CONSOLE_SCREEN_BUFFER_INFOEX consolesize;
+
+	consolesize.cbSize=sizeof(consolesize);
+
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	GetConsoleScreenBufferInfoEx(hConsole,&consolesize);
+
+	COORD c;
+	c.X = 237;
+	c.Y = 120;
+	consolesize.dwSize = c;
+
+	consolesize.srWindow.Left = 0;
+	consolesize.srWindow.Right = 237;
+	consolesize.srWindow.Top = 0;
+	consolesize.srWindow.Bottom = 120;
+
+	SetConsoleScreenBufferInfoEx(hConsole, &consolesize);
+}
+
+
+void Main::maxsc()
+{
+    HWND Hwnd = GetForegroundWindow();
+    ShowWindow(Hwnd, SW_MAXIMIZE);
+}
+void Main::fullsc()
+{
+    HWND Hwnd = GetForegroundWindow();
+    int x = GetSystemMetrics(SM_CXSCREEN);
+    int y = GetSystemMetrics(SM_CYSCREEN);
+    LONG winstyle = GetWindowLong(Hwnd, GWL_STYLE);
+    SetWindowLong(Hwnd, GWL_STYLE, (winstyle | WS_POPUP | WS_MAXIMIZE) & ~WS_CAPTION & ~WS_THICKFRAME & ~WS_BORDER);
+    SetWindowPos(Hwnd,HWND_TOP,0,0,x,y,0);
+
+}

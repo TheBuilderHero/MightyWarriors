@@ -24,5 +24,8 @@ class Main {
         //********************************************
 
     public:
+    void fullsc();
+    void maxsc();
+    void setupConsole();
     void attemptStartGame();
 };
