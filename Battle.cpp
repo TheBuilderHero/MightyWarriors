@@ -277,7 +277,13 @@ void Battle::questBattle(string username, int quest, int step){
         playerMind = stoi(code.getItemS(10));
         //player.setHealth(playerHealth);
         fightWon = fightLost = false; //set both lost and won to false
-        
+    } catch(std::invalid_argument) {
+        menu.display(0, 1, "Battle initialization failed Code#: 1",false, true);
+        system("pause");
+        return;
+    }
+
+    try{
         code.decipher(server.sendToServer(code.cipher("25", username, to_string(quest), to_string(step), to_string(numberOfEnemies), to_string(potatoFight))), true); //Get a trash ton of enemy info for a group fight!
         for(int i = 0; i < numberOfEnemies; i++){
             enemies.at(i).setName(code.getItem(i+2, 1));
@@ -291,7 +297,7 @@ void Battle::questBattle(string username, int quest, int step){
             }
         }
     } catch(std::invalid_argument) {
-        cout << "Battle initialization failed";
+        menu.display(0, 1, "Battle initialization failed Code#: 2",false, true);
         system("pause");
         return;
     }
