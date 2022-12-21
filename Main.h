@@ -28,4 +28,5 @@ class Main {
     void maxsc();
     void setupConsole();
     void attemptStartGame();
+    void preLoadGameTest();
 };

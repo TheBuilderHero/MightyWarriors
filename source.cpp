@@ -8,6 +8,7 @@ int main(){ //Starts the program if the clients version is compatable with the s
 
     Main main;
     main.setupConsole();
+    main.preLoadGameTest();
     main.attemptStartGame();
     return 0;
 }

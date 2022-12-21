@@ -1,4 +1,5 @@
 #include <string>
+#include <vector>
 
 #include "Main.h"
 #include "Cipher.h"
@@ -747,4 +748,9 @@ string Cipher::getItemS(int itemNumberToReturn){
         return "Default Output Given";
         break;
     }
+}
+
+vector<string>* Cipher::decipherVector(string* message){
+
+    return &recivedMessage;
 }

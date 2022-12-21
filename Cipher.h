@@ -1,4 +1,5 @@
 #include <string>
+#include <vector>
 
 #pragma once
 
@@ -6,10 +7,13 @@ class Cipher {
     private:
     std::string delimiter = "~"; //a character that marks the beginning or end of a unit of data
     std::string subDelimiter = "="; //a character that marks the beginning or end of a unit of data
+    std::string sudSubDelimiter = "#";
     int responseType;
     std::string item[22];//item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14, item15, item16, item17, item18, item19, item20, item21, item22; // declare the variables that are being used to store the message from the client - some use item1
     std::string subItem[22][22];
     std::string itemS1, itemS2, itemS3, itemS4, itemS5, itemS6, itemS7, itemS8, itemS9, itemS10, itemS11, itemS12, itemS13, itemS14, itemS15, itemS16, itemS17, itemS18, itemS19, itemS20, itemS21, itemS22; //these variables are for the use of decipherS so that the cipher and decipher variables do not get mixed up with it.
+    std::vector<std::string> recivedMessage;
+    std::vector<std::string> MESSAGE;
 
     public:
     
@@ -27,4 +31,8 @@ class Cipher {
     int getResponseType() { return responseType; }
     std::string getItem(int itemNumberToReturn, int subItemNumber = 0); //default is 0 meaning that it is not considered to have subItems
     std::string getItemS(int itemNumberToReturn);
+
+    //vector sending and reciving:
+    std::vector<std::string>* decipherVector(std::string* message);
+
 };

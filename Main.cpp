@@ -86,6 +86,14 @@ void Main::setupConsole(){
 	SetConsoleScreenBufferInfoEx(hConsole, &consolesize);
 }
 
+void Main::preLoadGameTest(){
+    ReachOutToServer server;
+    Cipher code;
+    cout << "message:" << endl;
+    string info = server.sendToServer(code.cipher("27"));
+    cout << info << endl;
+    system("pause");
+}
 
 void Main::maxsc()
 {

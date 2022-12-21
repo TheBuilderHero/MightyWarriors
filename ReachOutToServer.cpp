@@ -106,7 +106,7 @@ string ReachOutToServer::sendToServer(string aMessage) {
         int sendResult3 = send(sock, to_string(messageFromSeverLength).c_str(), to_string(messageFromSeverLength).size() + 1, 0); //Tell the server we know the length of the data that is going to be sent. It can send it now.
         if (sendResult3 != SOCKET_ERROR) {
             //wait for response
-            ZeroMemory(buf, 8192); //doubled from 4096
+            ZeroMemory(buf, 8192);  //doubled from 4096
             int bytesRecived = recv(sock, buf, messageFromSeverLength, MSG_WAITALL);
             //cout << buf << endl; //this was four trouble shooting
             //system("pause");
@@ -198,7 +198,7 @@ string ReachOutToServer::sendToServer(string aMessage) {
             return statInfo; //returns the deliminated version of the data from server.  This info can then be proccessed by the function decipherS function making us able to call on itemS1 - 6
             //That is is just trying to say call the function decipherS() on sendToServer() so that you can use the output.
             break;
-        case 6:{ //whole message return since option 6 selected. - Able to use subDelimination.
+        case 6:{ //whole message return since option 6 selected. - Able to use subDelimination. //can be used for endless vector delimination:
             int workingInt = 0;
             if (s[0].length() > 0) {
                 //cout << s[0] << endl << endl; //used for testing the large cipher messages
@@ -211,6 +211,12 @@ string ReachOutToServer::sendToServer(string aMessage) {
             return s[workingInt]; //return the whole message from the server without editting it.
             break;
         }
+        case 7:{
+            string fullMessage;
+            fullMessage = ss.str();
+            return fullMessage;
+            break;
+        }
         case 0: //Client version validity check
             return code.getItem(2);
             break;
@@ -219,11 +225,6 @@ string ReachOutToServer::sendToServer(string aMessage) {
             return s[0];
     }
 }
-
-
-//# include <winsock.h>
-//# include <iostream>
-//using namespace std;
 
 string ReachOutToServer::getIPFromHostName(char * hostname) {    
   WSADATA ws;
