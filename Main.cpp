@@ -14,7 +14,7 @@ using namespace std;
 Menu menu;
 Map map;
 DataGuard guard;
-Interactions interactions;
+Interactions interactions(1);
  
 void Main::attemptStartGame(){
     string answer;
@@ -90,7 +90,7 @@ void Main::preLoadGameTest(){
     ReachOutToServer server;
     Cipher code;
     cout << "message:" << endl;
-    string info = server.sendToServer(code.cipher("27"));
+    string info = server.sendToServer("~27~");
     cout << info << endl;
     system("pause");
 }

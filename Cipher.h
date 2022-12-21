@@ -5,9 +5,10 @@
 
 class Cipher {
     private:
-    std::string delimiter = "~"; //a character that marks the beginning or end of a unit of data
-    std::string subDelimiter = "="; //a character that marks the beginning or end of a unit of data
-    std::string sudSubDelimiter = "#";
+    std::string delimiterLayer1 = "~"; //a character that marks the beginning or end of a unit of data
+    std::string delimiterLayer2 = "="; //a character that marks the beginning or end of a unit of data
+    std::string delimiterLayer3 = "|";
+    std::string delimiterLayer4 = "+";
     int responseType;
     std::string item[22];//item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14, item15, item16, item17, item18, item19, item20, item21, item22; // declare the variables that are being used to store the message from the client - some use item1
     std::string subItem[22][22];
@@ -27,7 +28,10 @@ class Cipher {
     std::string subCipher(std::string item1= "", std::string item2= "", std::string item3= "", std::string item4= "", std::string item5= "", std::string item6= "", std::string item7= "", std::string item8= "", std::string item9= "", std::string item10= "", std::string item11= "", std::string item12= "", std::string item13= "", std::string item14= "", std::string item15= "", std::string item16= "", std::string item17= "", std::string item18= "", std::string item19= "", std::string item20= "", std::string item21= "", std::string item22= "");// the default values have been set to "" in case no input is given
 
     //return for the private variables:
-    std::string getDelimiter() { return delimiter; }
+    std::string getDelimiterLayer1() { return delimiterLayer1; }
+    std::string getDelimiterLayer2() { return delimiterLayer2; }
+    std::string getDelimiterLayer3() { return delimiterLayer3; }
+    std::string getDelimiterLayer4() { return delimiterLayer4; }
     int getResponseType() { return responseType; }
     std::string getItem(int itemNumberToReturn, int subItemNumber = 0); //default is 0 meaning that it is not considered to have subItems
     std::string getItemS(int itemNumberToReturn);

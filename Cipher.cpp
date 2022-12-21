@@ -21,11 +21,11 @@ string Cipher::decipher(char messageFromClient[], bool hasSubItems){
     string token, output;
     int loopPass = 0;
     size_t pos = 0; // position variable for removing the delimiters to view the message
-    while ((pos = s.find(delimiter)) != std::string::npos) {
+    while ((pos = s.find(delimiterLayer1)) != std::string::npos) {
         token = s.substr(0, pos);
         output = token;
         str_file_content += std::string(token); // we do not need to add spaces between the information for now so I removed: + std::string(" ")
-        s.erase(0, pos + delimiter.length());
+        s.erase(0, pos + delimiterLayer1.length());
         switch (loopPass){
             case 1://the first item enclosed in delimiters
             if (output.length() > 0) {
@@ -179,13 +179,13 @@ string Cipher::decipher(string messageFromClient, bool hasSubItems){
     string token, output;
     int loopPass = 0;
     size_t pos = 0; // position variable for removing the delimiters to view the message
-    while ((pos = s.find(delimiter)) != std::string::npos) {
+    while ((pos = s.find(delimiterLayer1)) != std::string::npos) {
         token = s.substr(0, pos);
         output = token;
         str_file_content += std::string(token); // we do not need to add spaces between the information for now so I removed: + std::string(" ")
-        s.erase(0, pos + delimiter.length());
+        s.erase(0, pos + delimiterLayer1.length());
         switch (loopPass){
-            case 1://the first item enclosed in delimiters
+            case 1://the first item enclosed in delimiterLayer1s
             if (output.length() > 0) {
                 try{ 
                     responseType = stoi(output);
@@ -335,12 +335,12 @@ string Cipher::subDecipher(string subMessageFromClient, int rootItem){
     string str_file_content;
     string token, output;
     int loopPass = 0;
-    size_t pos = 0; // position variable for removing the subDelimiters to view the message
-    while ((pos = s.find(subDelimiter)) != std::string::npos) {
+    size_t pos = 0; // position variable for removing the delimiterLayer2s to view the message
+    while ((pos = s.find(delimiterLayer2)) != std::string::npos) {
         token = s.substr(0, pos);
         output = token;
         str_file_content += std::string(token); // we do not need to add spaces between the information for now so I removed: + std::string(" ")
-        s.erase(0, pos + subDelimiter.length());
+        s.erase(0, pos + delimiterLayer2.length());
         switch (loopPass){
             case 1://the first item enclosed in subDelimiters
             if (output.length() > 0) subItem[rootItem][1] = output; // we many need to change the variable to an int with stoi(output) later but right now we just want a string version
@@ -426,11 +426,11 @@ string Cipher::decipherS(string messageFromClient){
     string token, output;
     int loopPass = 0;
     size_t pos = 0; // position variable for removing the delimiters to view the message
-    while ((pos = s.find(delimiter)) != std::string::npos) {
+    while ((pos = s.find(delimiterLayer1)) != std::string::npos) {
         token = s.substr(0, pos);
         output = token;
         str_file_content += std::string(token); // we do not need to add spaces between the information for now so I removed: + std::string(" ")
-        s.erase(0, pos + delimiter.length());
+        s.erase(0, pos + delimiterLayer1.length());
         switch (loopPass){
             case 1://the first item enclosed in delimiters
             if (output.length() > 0) itemS1 = output; // we many need to change the variable to an int with stoi(output) later but right now we just want a string version
@@ -512,7 +512,7 @@ string Cipher::cipher(string typeOfRequest, string username, string item3, strin
     string str_file_content;
     int loopPass = 1; // start the loop at 1 so that there is no extra spaces
     while (loopPass <= numberOfItems) {
-        str_file_content += delimiter; // this will add the seperating delimiter before the a given item
+        str_file_content += delimiterLayer1; // this will add the seperating delimiter before the a given item
         switch (loopPass){
             case 1:
             if (typeOfRequest.length() > 0) str_file_content += typeOfRequest;
@@ -583,7 +583,7 @@ string Cipher::cipher(string typeOfRequest, string username, string item3, strin
         }
         loopPass++;
     }
-    str_file_content += delimiter; // this will add the seperating delimiter after all the data
+    str_file_content += delimiterLayer1; // this will add the seperating delimiter after all the data
     return str_file_content;
 }
 
@@ -594,7 +594,7 @@ string Cipher::subCipher(string item1, string item2, string item3, string item4,
     string str_file_content;
     int loopPass = 1; // start the loop at 1 so that there is no extra spaces
     while (loopPass <= numberOfItems) {
-        str_file_content += subDelimiter; // this will add the seperating subDelimiter before the a given item
+        str_file_content += delimiterLayer2; // this will add the seperating subDelimiter before the a given item
         switch (loopPass){
             case 1:
             if (item1.length() > 0) str_file_content += item1;
@@ -665,7 +665,7 @@ string Cipher::subCipher(string item1, string item2, string item3, string item4,
         }
         loopPass++;
     }
-    str_file_content += subDelimiter; // this will add the seperating subDelimiter after all the data
+    str_file_content += delimiterLayer2; // this will add the seperating subDelimiter after all the data
     return str_file_content;
 }
 
