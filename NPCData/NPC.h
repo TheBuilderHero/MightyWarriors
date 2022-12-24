@@ -9,8 +9,7 @@ class NPC{
         int npcID;
         std::vector<std::vector<std::string>> dialogue;
     public:
-        NPC(std::string name, int assignedLandmark);
-        std::string getDialoguePath() { return std::string("./NPCData/dialogue.txt"); }
+        NPC(std::string name, int assignedLandmark, std::string& dialogueMissionList);
         int getNpcID(){ return npcID; }
         std::string getDialogue(int number, int part){ return dialogue[number][part];}
         int getDialoguePartCount() { int i = dialogue.size(); return i; }

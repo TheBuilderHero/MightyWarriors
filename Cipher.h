@@ -17,6 +17,40 @@ class Cipher {
     std::vector<std::string> MESSAGE;
 
     public:
+    enum SEND_TYPE { VECTOR_SEND };
+    enum DATA_TYPE { DIALOGUE_INFO, STAT_INFO, ENEMY_INFO };
+    //enumeration convertion:
+    enum SEND_TYPE convertToSEND_TYPE(std::string &input){
+        //if these are changed we need to then update them on the server side:
+        if(input == "7"){
+            return VECTOR_SEND;
+        }
+    }
+    enum DATA_TYPE convertToDATA_TYPE(std::string &input){
+        //if these are changed we need to then update them on the server side:
+        if (input == "dialogue") return DIALOGUE_INFO;
+        if (input == "stats") return STAT_INFO;
+        if (input == "enemyinfo") return ENEMY_INFO;
+        return DIALOGUE_INFO;
+    }
+    //enumeration convertion:
+    std::string convertSEND_TYPEToString(const enum SEND_TYPE &input){
+        //if these are changed we need to then update them on the client side:
+        switch(input){
+            case 0: return "7";
+            default: return "7"; 
+        }
+    }
+    std::string convertDATA_TYPEToString(const enum DATA_TYPE &input){
+        //if these are changed we need to then update them on the client side:
+        switch(input){
+            case 0: return "dialogue"; 
+            case 1: return "stats"; 
+            case 2: return "enemyinfo";
+            default: return ""; 
+        }
+    }
+
     
     std::string decipher(char messageFromClient[], bool hasSubItems = false);//this function is intended to pull out the delimiters from a message and the data associated with each request
     std::string decipher(std::string messageFromClient, bool hasSubItems = false);//this function is intended to pull out the delimiters from a message and the data associated with each request - string version.

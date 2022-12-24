@@ -1,16 +1,52 @@
 #include "NPC.h"
 #include "../globalVariables.h"
-#include <fstream>
+#include "../Cipher.h"
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
-NPC::NPC(std::string name, int assignedLandmark){
+NPC::NPC(string name, int assignedLandmark, string& dialogueMissionList){
+    cout << "started NPC contructor..." << endl;
+    Cipher code;
+    string token;
     string line;
-    ifstream dialogueFile;
-    dialogueFile.open(getDialoguePath());
+    size_t posLayer3 = 0; // position variable for removing the delimiters to view the message
+    size_t posLayer4 = 0; // position variable for removing the delimiters to view the message
     int runningdialogueNumber = -1; //start at (-1) so after adding 1 the index of 0 will get the first test case
-    while(getline(dialogueFile, line)){
+                
+    //declar vector for holding each mission:
+    vector<string> tempLayer3;
+    //(dialogueMissionList).
+
+    //remove the first delimiter at the start or the later3 information:
+    if ((posLayer3 = dialogueMissionList.find(code.getDelimiterLayer3())) != std::string::npos) dialogueMissionList.erase(0, posLayer3 + code.getDelimiterLayer3().length());
+    //run through all the data adding it to the vector layer3
+    while ((posLayer3 = dialogueMissionList.find(code.getDelimiterLayer3())) != std::string::npos) {
+        token = dialogueMissionList.substr(0, posLayer3);
+        tempLayer3.emplace_back(token);
+        dialogueMissionList.erase(0, posLayer3 + code.getDelimiterLayer3().length());
+    }
+    cout << "Starting STage 2" << endl;
+    for(int i3 = 0; i3 < tempLayer3.size(); i3++){
+        //increase vector size to add new data
+        dialogue.resize(dialogue.size()+1);
+        //vector for holding each line of dialogue in a given mission:
+        vector<string> tempLayer4;
+
+        //remove the first delimiter at the start or the later4 information:
+        if ((posLayer4 = tempLayer3.at(i3).find(code.getDelimiterLayer4())) != std::string::npos) tempLayer3.at(i3).erase(0, posLayer4 + code.getDelimiterLayer4().length());
+        while ((posLayer4 = tempLayer3.at(i3).find(code.getDelimiterLayer4())) != std::string::npos) {
+            token = tempLayer3.at(i3).substr(0, posLayer4);
+            dialogue.at(i3).emplace_back(token);//this replaces the following line:
+            //tempLayer4.emplace_back(token);
+            tempLayer3.at(i3).erase(0, posLayer4 + code.getDelimiterLayer4().length());
+        }
+        //dialogue.at(i3).emplace_back(tempLayer4);
+    }
+    cout << "variable assignment .." << endl;
+    /*
+    while(getline(dialogueMissionList, line)){
         bool singleExceptionRun = false;
         static bool recordingDialogue = false; 
         static bool getDialogueNumber = false; 
@@ -64,6 +100,7 @@ NPC::NPC(std::string name, int assignedLandmark){
             getDialogueNumber = false;
         }
     }
+    */
     this->assignedLandmark = assignedLandmark;
     this->name = name;
     npcID = setUIDForNPC();
@@ -82,5 +119,6 @@ string NPC::getAllDialogue(){
             }
         }
     }
+    system("pause");
     return "stuff";
 }
