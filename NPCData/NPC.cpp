@@ -7,7 +7,7 @@
 using namespace std;
 
 NPC::NPC(string name, int assignedLandmark, string& dialogueMissionList){
-    cout << "started NPC contructor..." << endl;
+    //cout << "started NPC contructor..." << endl;
     Cipher code;
     string token;
     string line;
@@ -27,7 +27,7 @@ NPC::NPC(string name, int assignedLandmark, string& dialogueMissionList){
         tempLayer3.emplace_back(token);
         dialogueMissionList.erase(0, posLayer3 + code.getDelimiterLayer3().length());
     }
-    cout << "Starting STage 2" << endl;
+    //cout << "Starting STage 2" << endl;
     for(int i3 = 0; i3 < tempLayer3.size(); i3++){
         //increase vector size to add new data
         dialogue.resize(dialogue.size()+1);
@@ -44,7 +44,7 @@ NPC::NPC(string name, int assignedLandmark, string& dialogueMissionList){
         }
         //dialogue.at(i3).emplace_back(tempLayer4);
     }
-    cout << "variable assignment .." << endl;
+    //cout << "variable assignment .." << endl;
     this->assignedLandmark = assignedLandmark;
     this->name = name;
     npcID = setUIDForNPC();

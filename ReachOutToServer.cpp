@@ -5,6 +5,7 @@
 #include <cstring>
 
 #include "ReachOutToServer.h"
+#include "globalVariables.h"
 #include "Cipher.h"
 
 using namespace std;
@@ -285,13 +286,13 @@ string ReachOutToServer::getIPFromHostName(char * hostname) {
 
 void ReachOutToServer::requestFromServer(string requestID){
     Cipher code;
-    std::string serverData = sendToServer("~27~");
+    std::string serverData = sendToServer("~"+requestID+"~");
     string token;
     size_t posLayer1 = 0; // position variable for removing the delimiters to view the message
     size_t posLayer2 = 0; // position variable for removing the delimiters to view the message
     vector<string> layer1;
     vector<string> layer2;
-    cout << "STarting Phase 1 interations:" << endl;
+    //cout << "STarting Phase 1 interations:" << endl;
     //remove the server send value first before processing the rest of the data:
     posLayer1 = serverData.find(code.getDelimiterLayer1());
     serverData.erase(0, posLayer1 + code.getDelimiterLayer1().length());
@@ -350,7 +351,7 @@ void ReachOutToServer::requestFromServer(string requestID){
                     npcs.emplace_back(npcName,stoi(npcLocation),lines);
                 }
                 catch(invalid_argument){
-                    //cout << "Critical Failure in \"Interactions::Interactions()\" -> npcs.emplace_back(npcName,stoi(npcLocation),layer2.at(i2));" << endl;
+                    cout << "Critical Failure in \"Interactions::Interactions()\" -> npcs.emplace_back(npcName,stoi(npcLocation),layer2.at(i2));" << endl;
                     system("pause");
                 }
             }
