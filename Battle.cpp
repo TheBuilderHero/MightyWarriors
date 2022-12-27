@@ -349,10 +349,10 @@ void Battle::questBattle(string username, int quest, int step){
 
         menu.display(8, 8, "Choose an enemy to attack");
         menu.display(8, 9, "(Press \"0\" to confirm)");
-        menu.clearDisplayRow(10,8);
-        menu.clearDisplayRow(11,8);
-        menu.clearDisplayRow(12,8);
-        menu.clearDisplayRow(13,8);
+        menu.display(8, 10, "                       ");
+        menu.display(8, 11, "                            ");
+        menu.display(8, 12, "                            ");
+        menu.display(8, 13, "                            ");
         bool enemyPicked = false;
             menu.display(50, cursor, "-->");
             if(numberOfEnemies == 1){
@@ -400,9 +400,9 @@ void Battle::questBattle(string username, int quest, int step){
         menu.display(8, 8, "                       ");
         menu.display(8, 9, "                       ");
         menu.display(8, 10, "                       ");
-        menu.display(8, 11, "                       ");
-        menu.clearDisplayRow(12,8);
-        menu.clearDisplayRow(13,8);
+        menu.display(8, 11, "                            ");
+        menu.display(8, 12, "                            ");
+        menu.display(8, 13, "                            ");
         if(enemies.at(cursor-1).getEnemyNumber() == 13){
             enemyName = "normal potato";
         }
