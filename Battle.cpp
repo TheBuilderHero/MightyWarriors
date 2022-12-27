@@ -41,10 +41,11 @@ void Battle::optionsOutput(string username, string enemyName, int playerHealth, 
     cout << setfill(' ') << setw(38) << "Block" << setfill(' ') << setw(28) <<"(type number \"W\")" << endl;
     cout << setfill(' ') << setw(40) << "Utility" << setfill(' ') << setw(26) <<"(type number \"E\")" << endl;
     cout << setfill(' ') << setw(48) << "Ultimate Attack" << setfill(' ') << setw(18) <<"(type number \"R\")" << endl;
+    cout << setfill(' ') << setw(48) << "Deselect" << setfill(' ') << setw(18) <<"(type number \"0\")" << endl;
 }
 
 //loops till the player presses one of Q W E R
-void Battle::waitForButtonPress(string username, string &enemyName, bool &qKeyPressedLastLoop, bool &wKeyPressedLastLoop, bool &eKeyPressedLastLoop, bool &rKeyPressedLastLoop, bool &playerBlocking, int playerHealth, int &enemyHealth, int &ultimateUses, int &combatVal, int &playerAttack, int &enemyBlocking, string &playerAttackType){
+void Battle::waitForButtonPress(string username, string &enemyName, bool &zeroPressKeyPressedLastLoop, bool &lPressKeyPressedLastLoop, bool &qKeyPressedLastLoop, bool &wKeyPressedLastLoop, bool &eKeyPressedLastLoop, bool &rKeyPressedLastLoop, bool &playerBlocking, int playerHealth, int &enemyHealth, int &ultimateUses, int &combatVal, int &playerAttack, int &enemyBlocking, string &playerAttackType){
     ReachOutToServer server;
     Cipher code;
     string qOption = "1", wOption = "2", eOption = "3", rOption = "4";
@@ -118,11 +119,25 @@ void Battle::waitForButtonPress(string username, string &enemyName, bool &qKeyPr
             } else if (GetKeyState('Q') >= 0){ // else Q not pressed
                 qKeyPressedLastLoop = false;
             }
+            if (GetKeyState('0') < 0 && !zeroPressKeyPressedLastLoop) { //checks to make sure that the key is pressed and makes sure it was not pressed last check - also check ultimate uses
+                zeroPressKeyPressedLastLoop = true;
+                lazyZeroPressCheck = true;
+            } else if (GetKeyState('0') >= 0){ // else Q not pressed
+                zeroPressKeyPressedLastLoop = false;
+                if(lazyZeroPressCheck) break;
+            }
+            if (GetKeyState('L') < 0 && !lPressKeyPressedLastLoop) { //checks to make sure that the key is pressed and makes sure it was not pressed last check - also check ultimate uses
+                lPressKeyPressedLastLoop = true;
+                lazyLPressCheck = true;
+            } else if (GetKeyState('L') >= 0){ // else Q not pressed
+                lPressKeyPressedLastLoop = false;
+                if(lazyLPressCheck) break;
+            }
         }
 }
 
 void Battle::startBattle(string username){
-    bool qKeyPressedLastLoop = false, wKeyPressedLastLoop = false, eKeyPressedLastLoop = false, rKeyPressedLastLoop = false;
+    bool zeroPressKeyPressedLastLoop = false, lPressKeyPressedLastLoop = false, qKeyPressedLastLoop = false, wKeyPressedLastLoop = false, eKeyPressedLastLoop = false, rKeyPressedLastLoop = false;
     bool playerBlocking = false;
     int playerHealth, enemyHealth;
     int ultimateUses = 1;
@@ -150,7 +165,15 @@ void Battle::startBattle(string username){
         optionsOutput(username, enemyName, playerHealth, enemyHealth); //outputs the options for battle
         
         //loops till the player presses one of Q W E R
-        waitForButtonPress(username,enemyName,qKeyPressedLastLoop,wKeyPressedLastLoop,eKeyPressedLastLoop,rKeyPressedLastLoop,playerBlocking,playerHealth,enemyHealth,ultimateUses,combatVal,playerAttack,enemyBlocking, playerAttackType);
+        waitForButtonPress(username,enemyName,zeroPressKeyPressedLastLoop,lPressKeyPressedLastLoop,qKeyPressedLastLoop,wKeyPressedLastLoop,eKeyPressedLastLoop,rKeyPressedLastLoop,playerBlocking,playerHealth,enemyHealth,ultimateUses,combatVal,playerAttack,enemyBlocking, playerAttackType);
+        if (lazyZeroPressCheck) {
+            lazyZeroPressCheck = false;
+            continue;
+        }
+        if (lazyLPressCheck) {
+            lazyLPressCheck = false;
+            break;
+        }
         
         cout << "Your attack hits the enemy for " << playerAttack << " damage" << endl;
         system("pause");
@@ -225,7 +248,7 @@ void Battle::startBattle(string username){
 void Battle::questBattle(string username, int quest, int step){
     menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
-    bool qKeyPressedLastLoop = false, wKeyPressedLastLoop = false, eKeyPressedLastLoop = false, rKeyPressedLastLoop = false;
+    bool zeroPressKeyPressedLastLoop = false, lPressKeyPressedLastLoop = false, qKeyPressedLastLoop = false, wKeyPressedLastLoop = false, eKeyPressedLastLoop = false, rKeyPressedLastLoop = false;
     bool playerBlocking = false;
     int playerHealth, enemyHealth, playerMind, enemyMind, XPDrop;
     int playerLevelAtStartOfFight = 0;
@@ -326,6 +349,10 @@ void Battle::questBattle(string username, int quest, int step){
 
         menu.display(8, 8, "Choose an enemy to attack");
         menu.display(8, 9, "(Press \"0\" to confirm)");
+        menu.clearDisplayRow(10,8);
+        menu.clearDisplayRow(11,8);
+        menu.clearDisplayRow(12,8);
+        menu.clearDisplayRow(13,8);
         bool enemyPicked = false;
             menu.display(50, cursor, "-->");
             if(numberOfEnemies == 1){
@@ -359,11 +386,23 @@ void Battle::questBattle(string username, int quest, int step){
         menu.display(8, 9, "'W' for Block");
         menu.display(8, 10, "'E' for Utility Attack");
         menu.display(8, 11, "'R' for Ultimate Attack");
-        waitForButtonPress(username, enemyName, qKeyPressedLastLoop, wKeyPressedLastLoop, eKeyPressedLastLoop, rKeyPressedLastLoop, playerBlocking, playerHealth, enemyHealth, ultimateUses, combatVal, playerAttack, enemyBlocking, playerAttackType);
+        menu.display(8, 12, "'0' to change your selection");
+        menu.display(8, 13, "'L' to Run from the Battle");
+        waitForButtonPress(username, enemyName, zeroPressKeyPressedLastLoop, lPressKeyPressedLastLoop, qKeyPressedLastLoop, wKeyPressedLastLoop, eKeyPressedLastLoop, rKeyPressedLastLoop, playerBlocking, playerHealth, enemyHealth, ultimateUses, combatVal, playerAttack, enemyBlocking, playerAttackType);
+        if (lazyZeroPressCheck) {
+            lazyZeroPressCheck = false;
+            continue;
+        }
+        if (lazyLPressCheck) {
+            lazyLPressCheck = false;
+            break;
+        }
         menu.display(8, 8, "                       ");
         menu.display(8, 9, "                       ");
         menu.display(8, 10, "                       ");
         menu.display(8, 11, "                       ");
+        menu.clearDisplayRow(12,8);
+        menu.clearDisplayRow(13,8);
         if(enemies.at(cursor-1).getEnemyNumber() == 13){
             enemyName = "normal potato";
         }
@@ -715,7 +754,7 @@ void Battle::standardBattle(TempEntity player){
     battlingStatsOfPlayer = player; //setup a duplicate account we can use for changing player stats in battle
 
     //setup other variables:
-    bool qKeyPressedLastLoop = false, wKeyPressedLastLoop = false, eKeyPressedLastLoop = false, rKeyPressedLastLoop = false;
+    bool zeroPressKeyPressedLastLoop = false, lPressKeyPressedLastLoop = false, qKeyPressedLastLoop = false, wKeyPressedLastLoop = false, eKeyPressedLastLoop = false, rKeyPressedLastLoop = false;
     bool playerBlocking = false;
     int enemyHealth;
     int playerLevelAtStartOfFight = 0;
@@ -741,7 +780,16 @@ void Battle::standardBattle(TempEntity player){
         optionsOutput(player.getUsername(), enemyName, battlingStatsOfPlayer.getHealth(), enemyHealth); //outputs the options for battle
         
         //loops till the player presses one of Q W E R
-        waitForButtonPress(player.getUsername(),enemyName,qKeyPressedLastLoop,wKeyPressedLastLoop,eKeyPressedLastLoop,rKeyPressedLastLoop,playerBlocking, battlingStatsOfPlayer.getHealth(),enemyHealth,ultimateUses,combatVal,playerAttack,enemyBlocking, playerAttackType);
+        waitForButtonPress(player.getUsername(),enemyName,zeroPressKeyPressedLastLoop,lPressKeyPressedLastLoop,qKeyPressedLastLoop,wKeyPressedLastLoop,eKeyPressedLastLoop,rKeyPressedLastLoop,playerBlocking, battlingStatsOfPlayer.getHealth(),enemyHealth,ultimateUses,combatVal,playerAttack,enemyBlocking, playerAttackType);
+        if (lazyZeroPressCheck) {
+            lazyZeroPressCheck = false;
+            continue;
+        }
+        if (lazyLPressCheck) {
+            lazyLPressCheck = false;
+            break;
+        }
+
 
         //check during battle passives of player's attack:
         passive.duringBattlePlayerAttackPassives();
