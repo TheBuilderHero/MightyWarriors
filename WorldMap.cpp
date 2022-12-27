@@ -298,6 +298,8 @@ void WorldMap::travel(int direction, bool &failedTravel){
             battle.questBattle(player.getUsername(), 100, 10);
             setPlayer(battle.getPlayer());
             if(!player.getBattleResult()){
+                menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
+                system("cls");
                 menu.display(16, 2, "Having been defeated, you return crying to whence you came.");
                 menu.waitForEnter(menu.getEnterKeyState());
                 //cout << "still Traveling? " << menu.getStillSimpleTraveling();
