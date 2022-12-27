@@ -1,5 +1,5 @@
 #include "NPC.h"
-#include "../globalVariables.h"
+#include "../Main.h"
 #include "../Cipher.h"
 #include <iostream>
 #include <vector>
@@ -68,9 +68,8 @@ string NPC::getAllDialogue(){
 }
 
 string NPC::getNPCforLocation(int location){
-    int locationNPCID;
 
-    for (int i = 0; i < getLastAssignedUIDForNPC(); i++){
+    for (int i = 0; i < map.getLocationCountLandmark(); i++){
         if (location == npcs.at(i).assignedLandmark){
             return npcs.at(i).getName();
         }

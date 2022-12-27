@@ -2,7 +2,6 @@
 #include "Cipher.h"
 #include "Interactions.h"
 #include "Main.h"
-#include "globalVariables.h"
 #include <string>
 
 using namespace std;

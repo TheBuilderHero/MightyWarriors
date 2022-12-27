@@ -23,7 +23,6 @@
                 "Main.cpp",
                 "Interactions.cpp",
                 "NPCData\\NPC.cpp",
-                "globalVariables.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 " -lws2_32",

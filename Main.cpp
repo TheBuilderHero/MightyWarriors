@@ -8,6 +8,9 @@
 #include "Battle.h"
 #include "DataGuard.h"
 
+#include "NPCData/NPC.h"
+#include <vector>
+
 using namespace std;
 
 //global variable declarations:
@@ -15,6 +18,8 @@ Menu menu;
 Map map;
 DataGuard guard;
 Interactions interactions;
+std::vector<NPC> npcs;
+static int currentID = 0;
  
 void Main::attemptStartGame(){
     string answer;
@@ -57,7 +62,7 @@ void Main::attemptStartGame(){
 void Main::setupConsole(){
     maxsc();
     //fullsc();
-    setTextSize(6);
+    setTextSize(8);
     CONSOLE_SCREEN_BUFFER_INFOEX consolesize;
 
 	consolesize.cbSize=sizeof(consolesize);
@@ -114,4 +119,12 @@ void Main::fullsc()
     SetWindowLong(Hwnd, GWL_STYLE, (winstyle | WS_POPUP | WS_MAXIMIZE) & ~WS_CAPTION & ~WS_THICKFRAME & ~WS_BORDER);
     SetWindowPos(Hwnd,HWND_TOP,0,0,x,y,0);
 
+}
+
+unsigned int setUIDForNPC(){
+    return currentID++;
+}
+
+unsigned int getLastAssignedUIDForNPC(){
+    return currentID-1;
 }

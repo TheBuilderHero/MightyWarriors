@@ -2,8 +2,11 @@
 #include "Map.h"
 #include "Interactions.h"
 #include "DataGuard.h"
-
+#include <vector>
+#include "NPCData/NPC.h"
 #pragma once
+
+
 
 //This file holds the global variables for the program.
 /************Global Variables to be shared**************/
@@ -11,6 +14,9 @@ extern Menu menu;
 extern Map map;
 extern Interactions interactions;
 extern DataGuard guard;
+extern std::vector<NPC> npcs;
+extern unsigned int setUIDForNPC();
+extern unsigned int getLastAssignedUIDForNPC();
 /******************************************/
 
 class Main {

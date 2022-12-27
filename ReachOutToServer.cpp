@@ -5,7 +5,7 @@
 #include <cstring>
 
 #include "ReachOutToServer.h"
-#include "globalVariables.h"
+#include "Main.h"
 #include "Cipher.h"
 
 using namespace std;

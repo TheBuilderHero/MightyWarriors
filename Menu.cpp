@@ -53,7 +53,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
     //guard.updateGuardData(getPlayer());
     //end of program close code.
 
-    bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, fiveKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false,
+    bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, fiveKeyPressedLastLoop = false, sixKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false,
     nKeyPressedLastLoop = false, iKeyPressedLastLoop = false, aKeyPressedLastLoop = false, 
     controlKeyPressedLastLoop = false, altKeyPressedLastLoop = false ,kKeyPressedLastLoop = false;
     int value;
@@ -67,7 +67,8 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         display(32, 4, "Stats");                display(53, 4, "(Press \"3\")");
         display(32, 5, "Inventory");            display(53, 5, "(Press \"4\")");
         display(32, 6, "Account Info");         display(53, 6, "(Press \"5\")");
-        display(32, 7, "Exit");                 display(53, 7, "(Press \"0\")");
+        display(32, 7, "Options");              display(53, 7, "(Press \"6\")");
+        display(32, 8, "Exit");                 display(53, 8, "(Press \"0\")");
         while (1){
             if (GetKeyState('0') < 0 && !zeroKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
                 zeroKeyPressedLastLoop = true;
@@ -109,6 +110,13 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
             } else if (GetKeyState('5') >= 0 && fiveKeyPressedLastLoop){ // else 5 not pressed
                 fiveKeyPressedLastLoop = false;
                 value = 5;
+                break;
+            }
+            if (GetKeyState('6') < 0 && !sixKeyPressedLastLoop) { //checks to make sure that the 6 key is pressed and makes sure it was not pressed last check
+                sixKeyPressedLastLoop = true;
+            } else if (GetKeyState('6') >= 0 && sixKeyPressedLastLoop){ // else 6 not pressed
+                sixKeyPressedLastLoop = false;
+                value = 6;
                 break;
             }
 
@@ -179,6 +187,34 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         }
         case 5:{
             accountInfo(username);
+            break;
+        }
+        case 6:{
+            Main main;
+            bool exitOptions = false;
+            static int zoom = 8;
+            do{
+                display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
+                system("cls");
+                display(50, 3, "Options");
+                display(32, 4, "Increase text size press \"1\"");
+                display(32, 5, "Decrease text size press \"2\"");
+                display(40, 6, "Exit Options press \"0\"");
+                int output = numberPressWait(2,true);
+                if(output == 1){
+                    clearDisplayRow(7,32);
+                    main.setTextSize(++zoom);
+                } else if (output == 2){
+                    if (zoom != 0) {
+                        clearDisplayRow(7,32);
+                        main.setTextSize(--zoom);
+                    } else {
+                        display(32,7,"Minimum zoom has been reached!");
+                    }
+                } else {
+                    exitOptions = true;
+                }
+            } while(!exitOptions);
             break;
         }
         case 14:{
