@@ -376,7 +376,7 @@ void Menu::cityTravelMenu(string username){ //bring up the menu for travel
                 char interact = yesOrNo(); //returns y or n
                 if (interact == 'y'){
                     //leavingVillage = true;
-                    interactions.interact(map.getCurrentLandmarkLocation());
+                    interactions.interact(map.getCurrentLocation());
                     setStillLandmarkSimpleTraveling(false); //gonna need this for the map getting refreshed
                     setCityTraveling(true);
                     break;
@@ -403,7 +403,7 @@ void Menu::cityTravelMenu(string username){ //bring up the menu for travel
                     char interact = yesOrNo(); //returns y or n
                     if (interact == 'y'){
                         //leavingVillage = true;
-                        interactions.interact(map.getCurrentLandmarkLocation());
+                        interactions.interact(map.getCurrentLocation());
                         setStillLandmarkSimpleTraveling(false); //gonna need this for the map getting refreshed
                         setCityTraveling(true);
                         break;
@@ -428,7 +428,7 @@ void Menu::cityTravelMenu(string username){ //bring up the menu for travel
                     char interact = yesOrNo(); //returns y or n
                     if (interact == 'y'){
                         //leavingVillage = true;
-                        interactions.interact(map.getCurrentLandmarkLocation());
+                        interactions.interact(map.getCurrentLocation());
                         setStillLandmarkSimpleTraveling(false); //gonna need this for the map getting refreshed
                         setCityTraveling(true);
                         break;

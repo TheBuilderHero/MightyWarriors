@@ -57,17 +57,7 @@ void Main::attemptStartGame(){
 void Main::setupConsole(){
     maxsc();
     //fullsc();
-
-    CONSOLE_FONT_INFOEX cfi;
-    cfi.cbSize = sizeof(cfi);
-    cfi.nFont = 0;
-    cfi.dwFontSize.X = 8;                   // Width of each character in the font
-    cfi.dwFontSize.Y = 16;                  // Height
-    cfi.FontFamily = FF_DONTCARE;
-    cfi.FontWeight = FW_NORMAL;
-    std::wcscpy(cfi.FaceName, L"Consolas"); // Choose your font
-    SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
-
+    setTextSize(6);
     CONSOLE_SCREEN_BUFFER_INFOEX consolesize;
 
 	consolesize.cbSize=sizeof(consolesize);
@@ -87,6 +77,18 @@ void Main::setupConsole(){
 	consolesize.srWindow.Bottom = 120;
 
 	SetConsoleScreenBufferInfoEx(hConsole, &consolesize);
+}
+
+void Main::setTextSize(int size){
+    CONSOLE_FONT_INFOEX cfi;
+    cfi.cbSize = sizeof(cfi);
+    cfi.nFont = 0;
+    cfi.dwFontSize.X = size;  //8                 // Width of each character in the font
+    cfi.dwFontSize.Y = 2*size; //16                 // Height
+    cfi.FontFamily = FF_DONTCARE;
+    cfi.FontWeight = FW_NORMAL;
+    std::wcscpy(cfi.FaceName, L"Consolas"); // Choose your font
+    SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
 }
 
 void Main::preLoadGameTest(){

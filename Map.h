@@ -10,7 +10,7 @@ class Map{
         int optionsHeight = 6;
         int maxRow, minRow;
         int maxColumn, minColumn;
-        static const int mapStandardMaxColumn = 170, mapStandardMaxRow = 42;
+        static const int mapStandardMaxColumn = 112, mapStandardMaxRow = 42;
         static const int mapStandardMinColumn = 2, mapStandardMinRow = 1;
         static const int mapCityStandardMaxColumn = 64, mapCityStandardMaxRow = 26;
         static const int mapCityStandardMinColumn = 24, mapCityStandardMinRow = 6;

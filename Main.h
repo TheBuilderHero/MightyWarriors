@@ -29,4 +29,5 @@ class Main {
     void setupConsole();
     void attemptStartGame();
     void preLoadGameTest();
+    void setTextSize(int size);
 };
