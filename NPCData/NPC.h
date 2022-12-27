@@ -16,4 +16,5 @@ class NPC{
         int getDialogueCount(int number) { int i = dialogue[number].size(); return i; }
         std::string getAllDialogue();
         std::string getName() { return name; }
+        std::string getNPCforLocation(int location);
 };

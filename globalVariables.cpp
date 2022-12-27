@@ -3,8 +3,12 @@
 #include <vector>
 
 std::vector<NPC> npcs;
+static int currentID = 0;
 
 unsigned int setUIDForNPC(){
-    static int currentID = 0;
     return currentID++;
+}
+
+unsigned int getLastAssignedUIDForNPC(){
+    return currentID-1;
 }

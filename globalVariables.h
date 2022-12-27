@@ -4,3 +4,4 @@
 
 extern std::vector<NPC> npcs;
 extern unsigned int setUIDForNPC();
+extern unsigned int getLastAssignedUIDForNPC();

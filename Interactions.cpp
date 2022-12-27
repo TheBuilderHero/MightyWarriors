@@ -18,10 +18,11 @@ Interactions::Interactions(){ //build all character interactions by getting them
     //std::cout << "Constructor 1 running!" << std::endl;
 }
 
-void Interactions::interact(){
+void Interactions::interact(int location){ //
     menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
-    menu.displayMessageWithPause(25, 10, "Dialogue...");
+    menu.displayMessageWithPause(25, 10, npcs.at(0).getNPCforLocation(location));
+    //menu.displayMessageWithPause(25, 10, "Dialogue...");
 }
 
 void Interactions::setLocationInteractionDialogue(std::string line){

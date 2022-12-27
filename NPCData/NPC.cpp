@@ -66,3 +66,15 @@ string NPC::getAllDialogue(){
     system("pause");
     return "stuff";
 }
+
+string NPC::getNPCforLocation(int location){
+    int locationNPCID;
+
+    for (int i = 0; i < getLastAssignedUIDForNPC(); i++){
+        if (location == npcs.at(i).assignedLandmark){
+            return npcs.at(i).getName();
+        }
+    }
+
+    return "none";
+}
