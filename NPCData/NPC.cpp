@@ -45,62 +45,6 @@ NPC::NPC(string name, int assignedLandmark, string& dialogueMissionList){
         //dialogue.at(i3).emplace_back(tempLayer4);
     }
     cout << "variable assignment .." << endl;
-    /*
-    while(getline(dialogueMissionList, line)){
-        bool singleExceptionRun = false;
-        static bool recordingDialogue = false; 
-        static bool getDialogueNumber = false; 
-        static int dialogueNumber = -1;
-        static int lineNum = 0;
-        if(getDialogueNumber) {
-            runningdialogueNumber++;
-            try {
-                dialogueNumber = stoi(line);
-                if (dialogueNumber != runningdialogueNumber) { //prevent incrimentations to dialogue greater than 1
-                    throw dialogueNumber;
-                }
-            } 
-            catch(invalid_argument){ //runs if there is no mission number
-                dialogueNumber = runningdialogueNumber;
-                singleExceptionRun = true;
-
-                //Let user know that something went wrong with dialogue incrementation:
-                cout << "Warning! Initialization NPC while(getline(cin, line)) -> if(getDialogueNumber) -> Stoi(line) -> Missing Dialogue Number" << endl;
-            }
-            catch(int failed){ //runs since there is a mission number but it is out of order
-                dialogueNumber = runningdialogueNumber;
-                
-                //Let user know that something went wrong with dialogue incrementation:
-                cout << "Warning! Initialization NPC while(getline(cin, line)) -> if(getDialogueNumber) -> Stoi(line) -> incrimentation to dialogue greater or less than 1" << endl;
-            }
-            catch(...){
-                //Let user know that something went wrong:
-                cout << "Warning! Initialization NPC while(getline(cin, line)) -> if(getDialogueNumber) -> Stoi(line) -> Defalult Case" << endl;
-            }
-        }
-        if (line == "~"+name+"~"){
-            recordingDialogue = true;
-            getDialogueNumber = true;
-            dialogue.resize(dialogue.size()+1);
-        }
-        if (line == "~/"+name+"~"){
-            recordingDialogue = false;
-            dialogueNumber = -1;
-            lineNum = 0;
-        }
-        if((!getDialogueNumber && recordingDialogue) || singleExceptionRun){
-            //Working to add dialogue into memory
-            dialogue[dialogueNumber].resize(dialogue[dialogueNumber].size()+1);
-            dialogue[dialogueNumber][lineNum]= line;
-            lineNum++;
-            //cout << lineNum << " : Recorded : Size: " << dialogue[dialogueNumber].size() << endl;
-            singleExceptionRun = false;
-        } 
-        if (dialogueNumber >= 0 && recordingDialogue) {
-            getDialogueNumber = false;
-        }
-    }
-    */
     this->assignedLandmark = assignedLandmark;
     this->name = name;
     npcID = setUIDForNPC();

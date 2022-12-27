@@ -12,5 +12,6 @@ private:
 public:
     std::string sendToServer(std::string aMessage);
     std::string getIPFromHostName(char * hostname);
+    void requestFromServer(std::string requestID);
 
 };
