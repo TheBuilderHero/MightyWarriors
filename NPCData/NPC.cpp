@@ -77,3 +77,10 @@ string NPC::getNPCforLocation(int location){
 
     return "none";
 }
+
+int NPC::getNPCIDforName(string characterName){
+    for(int i = 0; i < npcs.size(); i++){
+        if(npcs.at(i).getName() == characterName) return npcs.at(i).getNpcID();
+    }
+    return -1;
+}

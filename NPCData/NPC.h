@@ -17,4 +17,5 @@ class NPC{
         std::string getAllDialogue();
         std::string getName() { return name; }
         std::string getNPCforLocation(int location);
+        int getNPCIDforName(std::string characterName);
 };
