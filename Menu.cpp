@@ -190,31 +190,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
             break;
         }
         case 6:{
-            Main main;
-            bool exitOptions = false;
-            static int zoom = 8;
-            do{
-                display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
-                system("cls");
-                display(50, 3, "Options");
-                display(32, 4, "Increase text size press \"1\"");
-                display(32, 5, "Decrease text size press \"2\"");
-                display(40, 6, "Exit Options press \"0\"");
-                int output = numberPressWait(2,true);
-                if(output == 1){
-                    clearDisplayRow(7,32);
-                    main.setTextSize(++zoom);
-                } else if (output == 2){
-                    if (zoom != 0) {
-                        clearDisplayRow(7,32);
-                        main.setTextSize(--zoom);
-                    } else {
-                        display(32,7,"Minimum zoom has been reached!");
-                    }
-                } else {
-                    exitOptions = true;
-                }
-            } while(!exitOptions);
+            options();
             break;
         }
         case 14:{
@@ -1183,9 +1159,10 @@ int Menu::numberPressWaitSpecial(int maxRange, char key1, char key2, char key3, 
         }
     }
 }
-int Menu::arrowPressWait(bool hasZeroOption){ //returns a value based on the key pressed
-    bool upKeyPressedLastLoop = false, rightKeyPressedLastLoop = false, downKeyPressedLastLoop = false, leftKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false;
+int Menu::arrowPressWait(bool hasZeroOption, bool hasUpOption, bool hasRightOption, bool hasDownOption, bool hasLeftOption, bool hasROption){ //returns a value based on the key pressed starting at 1 - UP going around clockwise to 4 - Left
+    bool upKeyPressedLastLoop = false, rightKeyPressedLastLoop = false, downKeyPressedLastLoop = false, leftKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false, rKeyPressedLastLoop = false;
     while (1){
+        if (hasUpOption == true){
         if (GetKeyState(VK_UP) < 0 && !upKeyPressedLastLoop) { //checks to make sure that the VK_UP key is pressed and makes sure it was not pressed last check
             upKeyPressedLastLoop = true;
         } else if (GetKeyState(VK_UP) >= 0 && upKeyPressedLastLoop){ // else VK_UP not pressed
@@ -1193,26 +1170,42 @@ int Menu::arrowPressWait(bool hasZeroOption){ //returns a value based on the key
             return 1;
             break;
         }
-        if (GetKeyState(VK_RIGHT) < 0 && !rightKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
-            rightKeyPressedLastLoop = true;
-        } else if (GetKeyState(VK_RIGHT) >= 0 && rightKeyPressedLastLoop){ // else 2 not pressed
-            rightKeyPressedLastLoop = false;
-            return 2;
-            break;
         }
-        if (GetKeyState(VK_DOWN) < 0 && !downKeyPressedLastLoop) { //checks to make sure that the 3 key is pressed and makes sure it was not pressed last check
-            downKeyPressedLastLoop = true;
-        } else if (GetKeyState(VK_DOWN) >= 0 && downKeyPressedLastLoop){ // else 3 not pressed
-            downKeyPressedLastLoop = false;
-            return 3;
-            break;
+        if (hasRightOption == true){
+            if (GetKeyState(VK_RIGHT) < 0 && !rightKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+                rightKeyPressedLastLoop = true;
+            } else if (GetKeyState(VK_RIGHT) >= 0 && rightKeyPressedLastLoop){ // else 2 not pressed
+                rightKeyPressedLastLoop = false;
+                return 2;
+                break;
+            }
         }
-        if (GetKeyState(VK_LEFT) < 0 && !leftKeyPressedLastLoop) { //checks to make sure that the 4 key is pressed and makes sure it was not pressed last check
-            leftKeyPressedLastLoop = true;
-        } else if (GetKeyState(VK_LEFT) >= 0 && leftKeyPressedLastLoop){ // else 4 not pressed
-            leftKeyPressedLastLoop = false;
-            return 4;
-            break;
+        if (hasDownOption == true){
+            if (GetKeyState(VK_DOWN) < 0 && !downKeyPressedLastLoop) { //checks to make sure that the 3 key is pressed and makes sure it was not pressed last check
+                downKeyPressedLastLoop = true;
+            } else if (GetKeyState(VK_DOWN) >= 0 && downKeyPressedLastLoop){ // else 3 not pressed
+                downKeyPressedLastLoop = false;
+                return 3;
+                break;
+            }
+        }
+        if (hasLeftOption == true){
+            if (GetKeyState(VK_LEFT) < 0 && !leftKeyPressedLastLoop) { //checks to make sure that the 4 key is pressed and makes sure it was not pressed last check
+                leftKeyPressedLastLoop = true;
+            } else if (GetKeyState(VK_LEFT) >= 0 && leftKeyPressedLastLoop){ // else 4 not pressed
+                leftKeyPressedLastLoop = false;
+                return 4;
+                break;
+            }
+        }
+        if (hasROption == true){
+            if (GetKeyState('R') < 0 && !rKeyPressedLastLoop) { //checks to make sure that the R key is pressed and makes sure it was not pressed last check
+                rKeyPressedLastLoop = true;
+            } else if (GetKeyState('R') >= 0 && rKeyPressedLastLoop){ // else R not pressed
+                rKeyPressedLastLoop = false;
+                return  5;
+                break;
+            }
         }
         if (hasZeroOption == true){
             if (GetKeyState('0') < 0 && !zeroKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
@@ -1305,4 +1298,51 @@ void Menu::setPlayer(TempEntity playerE){
 }
 TempEntity Menu::getPlayer(){
     return player;
+}
+
+void Menu::options(){
+    Main main;
+    bool exitOptions = false;
+    const int DEFAULT_ZOOM = 8;
+    static int zoom = 8;
+    static int scaleY = 2*zoom;
+    do{
+        display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
+        system("cls");
+        display(50, 3, "Options");
+        display(32, 4, "Modify Text size using the Arrow keys");
+        display(32, 5, "Reset to default \"R\"");
+        display(40, 6, "Exit Options press \"0\"");
+        int output = arrowPressWait(true, true, true, true, true, true); //up and down
+        //int output = numberPressWait(2,true);
+        if(output == 1){
+            if (zoom != 0) {
+                clearDisplayRow(7,32);
+                main.setTextSize(--zoom);
+                scaleY = 2*zoom;
+            } else {
+                display(32,7,"Minimum zoom has been reached!");
+            }
+        } else if (output == 2){
+            clearDisplayRow(7,32);
+            main.setTextSize(zoom, ++scaleY);
+        } else if (output == 3){
+            clearDisplayRow(7,32);
+            main.setTextSize(++zoom);
+            scaleY = 2*zoom;
+        } else if (output == 4){
+            if (scaleY != 0) {
+                clearDisplayRow(7,32);
+                main.setTextSize(zoom, --scaleY);
+            } else {
+                display(32,7,"Minimum Y scale has been reached!");
+            }
+        } else if (output == 5){
+                clearDisplayRow(7,32);
+                main.setTextSize(DEFAULT_ZOOM);
+                scaleY = 2*DEFAULT_ZOOM;
+        } else if (output == 0) {
+            exitOptions = true;
+        }
+    } while(!exitOptions);
 }

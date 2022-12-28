@@ -36,4 +36,5 @@ class Main {
     void attemptStartGame();
     void preLoadGameTest();
     void setTextSize(int size);
+    void setTextSize(int scaleX, int scaleY);
 };

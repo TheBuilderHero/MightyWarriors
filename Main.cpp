@@ -85,11 +85,14 @@ void Main::setupConsole(){
 }
 
 void Main::setTextSize(int size){
+    setTextSize(size, 2*size);
+}
+void Main::setTextSize(int scaleX, int scaleY){
     CONSOLE_FONT_INFOEX cfi;
     cfi.cbSize = sizeof(cfi);
     cfi.nFont = 0;
-    cfi.dwFontSize.X = size;  //8                 // Width of each character in the font
-    cfi.dwFontSize.Y = 2*size; //16                 // Height
+    cfi.dwFontSize.X = scaleX;  //8                 // Width of each character in the font
+    cfi.dwFontSize.Y = scaleY; //16                 // Height
     cfi.FontFamily = FF_DONTCARE;
     cfi.FontWeight = FW_NORMAL;
     std::wcscpy(cfi.FaceName, L"Consolas"); // Choose your font

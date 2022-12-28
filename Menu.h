@@ -28,7 +28,7 @@ class Menu {
         char yesOrNo();
         int numberPressWait(int maxRange, bool hasZeroOption = false);
         int numberPressWaitSpecial(int maxRange, char key1, char key2 = 0, char key3 = 0, char key4 = 0, char key5 = 0, char key6 = 0, char key7 = 0, bool hasZeroOption = false);
-        int arrowPressWait(bool hasZeroOption);
+        int arrowPressWait(bool hasZeroOption = false, bool hasUpOption = true, bool hasRightOption = true, bool hasDownOption = true, bool hasLeftOption = true, bool hasROption = false);//returns a value based on the key pressed starting at 1 - UP going around clockwise to 4 - Left
         void waitForEnter(int enterCurrentlyPressed);
         int getEnterKeyState();
         void ClearConsoleInputBuffer();
@@ -36,6 +36,7 @@ class Menu {
         void displayMessageWithPause(int column, int row, std::string outputString, bool resetCursorPosition = true, bool addExtraRow = true, int color = 15);
         void clearDisplayRow(int row, int startingColumn = 0);
         std::string numberFormatting(double decimalNumber, int numberOfDecimals);
+        void options();
 
         void setPlayer(TempEntity playerE);
         TempEntity getPlayer();
