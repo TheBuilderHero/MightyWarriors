@@ -18,6 +18,7 @@ Menu menu;
 Map map;
 DataGuard guard;
 Interactions interactions;
+//WorldMap worldMap; //Map map;
 std::vector<NPC> npcs;
 static int currentID = 0;
  

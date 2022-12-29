@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
-#include "TempEntity.h"
+#include "Main.h"
+//#include "Menu.h"
 
 #pragma once
 
@@ -18,7 +19,10 @@ class WorldMap{
         void travel(int direction, bool &failedTravel);
         void travelLandmark(int direction, bool &failedTravel);
         TempEntity getPlayer(){ return player; }
-        void setPlayer(TempEntity playerE){ player = playerE; }
+        void setPlayer(TempEntity playerE){ 
+            player = playerE; 
+            menu.displayMessageWithPause(0,0,"updated pos wMP"+to_string(player.getLandmarkLocation()));
+            }
 
         /*
         void locationsRecord(int locationCount, int y, int x);

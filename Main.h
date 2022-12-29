@@ -1,10 +1,15 @@
+#pragma once
 #include "Menu.h"
 #include "Map.h"
 #include "Interactions.h"
 #include "DataGuard.h"
 #include <vector>
+#include "TempEntity.h"
 #include "NPCData/NPC.h"
-#pragma once
+//#include "WorldMap.h"
+//#include "WorldMap.h"
+#include "Battle.h"
+//#pragma once
 
 
 
@@ -14,6 +19,7 @@ extern Menu menu;
 extern Map map;
 extern Interactions interactions;
 extern DataGuard guard;
+//extern WorldMap worldMap;
 extern std::vector<NPC> npcs;
 extern unsigned int setUIDForNPC();
 extern unsigned int getLastAssignedUIDForNPC();

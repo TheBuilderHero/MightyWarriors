@@ -12,6 +12,29 @@
 using namespace std;
 
 Map::Map(){
+    inCityLocations.resize(7); //empty vector for holding index 0 but then 6 city locations
+    //set all the vectors 0 value to 0 because these will not be used in the city code:
+    inCityLocations.at(1).emplace_back(0);
+    inCityLocations.at(2).emplace_back(0);
+    inCityLocations.at(3).emplace_back(0);
+    inCityLocations.at(4).emplace_back(0);
+    inCityLocations.at(5).emplace_back(0);
+    inCityLocations.at(6).emplace_back(0);
+    //These are all going to be used for locations of people in the city
+    unsigned short value = 5;
+    if(isCityUID(value)) inCityLocations.at(1).emplace_back(value);
+    value = 6;
+    if(isCityUID(value)) inCityLocations.at(2).push_back(value);
+    value = 7;    
+    if(isCityUID(value)) inCityLocations.at(3).push_back(value);
+    value = 8;
+    if(isCityUID(value)) inCityLocations.at(4).push_back(value);
+    value = 9;
+    if(isCityUID(value)) inCityLocations.at(5).push_back(value);
+    value = 10;
+    if(isCityUID(value)) inCityLocations.at(6).push_back(value);
+
+    CityCount = ((int)inCityLocations.size()-1);
     static int i = 0;
     allLandmarks.landmarkLocation.resize(inCityLocations.size());
     allLandmarks.iconType.resize(inCityLocations.size());
@@ -421,14 +444,14 @@ void Map::fillInMap(){
     }
 }
 
-void Map::writeLandmark(int locationValue, string iconType){
+void Map::writeLandmark(int locationValue, string iconType){//write on world map
     if(isCityLocation(locationValue)){
         menu.display(possibleTravelLocations[locationValue][0].x, possibleTravelLocations[locationValue][0].y, iconType, true, false, 47);
         //for(int i = 1; i < map.locationCountLandmark)
     }
 }
 
-void Map::writeLandmarkObject(int locationValue){
+void Map::writeLandmarkObject(int locationValue){//write on city map
     if (locationValue){
         menu.display(possibleTravelLocations[getCurrentLocation()][locationValue].x, possibleTravelLocations[getCurrentLocation()][locationValue].y, allLandmarks.iconType[whichCity(getCurrentLocation())][locationValue], true, false, 47);
     }
@@ -637,7 +660,7 @@ bool Map::canMoveFromCurrentLocationCity(int directionValue) { //1 for north, 2 
                 }
                 endVal++;
             }
-            if (endVal >= locationCount){
+            if (endVal >= locationCountLandmark){
                 //cout << "location travel failed" << endl;
                 //system("pause");
                 return false;
@@ -1069,4 +1092,14 @@ void Map::fillInLandmarkMap(){
 
 void Map::fillInMap(int landmark, int subLandmark){
     
+}
+bool Map::isCityUID(unsigned short id){
+    static std::vector<unsigned short> UIDs;
+    for (int i = 0; i < UIDs.size(); i++){
+        if(UIDs.at(i) == id){
+            return false;
+        }
+    }
+    UIDs.emplace_back(id);
+    return true;
 }

@@ -374,26 +374,25 @@ void Menu::cityTravelMenu(string username){ //bring up the menu for travel
     setStillLandmarkSimpleTraveling(true);// for the do while loop so we do not have to refresh the whole cmd
     int tempCurrentLocation = -1; //no location
     bool lastLoopFailedTravel = false;
-    if (map.getCurrentLandmarkLocation() < 1) map.setCurrentLandmarkLocation(1);
+    int messageRow = map.getMapCityStandardMaxRow()/2;
+    int messageColumn = map.getMapCityStandardMaxColumn()+1;
+    if (map.getCurrentLandmarkLocation() < 1) map.setCurrentLandmarkLocation(map.getCityStartLocation());
     do{
+        //for testing:
         //displayMessageWithPause(0, 0, "Current location a Landmark: " + to_string(map.isLandmarkObjectInteractiveLocation(map.getCurrentLandmarkLocation())), false, false);
-        if (tempCurrentLocation == -1){
+        if (tempCurrentLocation == -1){//if they have not yet traveled
             tempCurrentLocation = map.getCurrentLandmarkLocation();
-            if(map.isLandmarkObjectInteractiveLocation(map.getCurrentLandmarkLocation())){
+            if(map.isLandmarkObjectInteractiveLocation(map.getCurrentLandmarkLocation())){//is the current location a city/generic landmark location
                 display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapCity(),true,false,41);
                 //prompt for player to enter city:
-                int messageRow = map.getMapCityStandardMaxRow()/2;
-                int messageColumn = map.getMapCityStandardMaxColumn()+1;
                 display(messageColumn, messageRow, "Would you like to talk with the Villager? (Y/N)", false, false);
                 char interact = yesOrNo(); //returns y or n
                 if (interact == 'y'){
                     //leavingVillage = true;
-                    interactions.interact(map.getCurrentLocation());
+                    interactions.interact(map.getCurrentLocation()); //add location in city to this
                     setStillLandmarkSimpleTraveling(false); //gonna need this for the map getting refreshed
                     setCityTraveling(true);
                     break;
-                    //displayMessageWithPause(messageColumn, messageRow, "Dialog apears here", false, false);
-                    //clearDisplayRow(messageRow, messageColumn);
                 } else {
                     //do not enter city
                     clearDisplayRow(messageRow, messageColumn);
@@ -401,7 +400,6 @@ void Menu::cityTravelMenu(string username){ //bring up the menu for travel
             } else {
                 display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapFilled(),true,false,41);
             }
-            //display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapFilled(),true,false,41);
         } else {
             if (!lastLoopFailedTravel){
                 if(map.isLandmarkObjectInteractiveLocation(tempCurrentLocation) && map.isLandmarkObjectInteractiveLocation(map.getCurrentLandmarkLocation())){
@@ -409,8 +407,6 @@ void Menu::cityTravelMenu(string username){ //bring up the menu for travel
                     display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapCity(),true,false,41);
                     tempCurrentLocation = map.getCurrentLandmarkLocation();
                     //prompt for player to enter city:
-                    int messageRow = map.getMapCityStandardMaxRow()/2;
-                    int messageColumn = map.getMapCityStandardMaxColumn()+1;
                     display(messageColumn, messageRow, "Would you like to talk with the Villager? (Y/N)", false, false);
                     char interact = yesOrNo(); //returns y or n
                     if (interact == 'y'){
@@ -419,8 +415,6 @@ void Menu::cityTravelMenu(string username){ //bring up the menu for travel
                         setStillLandmarkSimpleTraveling(false); //gonna need this for the map getting refreshed
                         setCityTraveling(true);
                         break;
-                        //displayMessageWithPause(messageColumn, messageRow, "Dialog apears here", false, false);
-                        //clearDisplayRow(messageRow, messageColumn);
                     } else {
                         //do not enter city
                         clearDisplayRow(messageRow, messageColumn);
@@ -434,8 +428,6 @@ void Menu::cityTravelMenu(string username){ //bring up the menu for travel
                     display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapCity(),true,false,41);
                     tempCurrentLocation = map.getCurrentLandmarkLocation();
                     //prompt for player to enter city:
-                    int messageRow = map.getMapCityStandardMaxRow()/2;
-                    int messageColumn = map.getMapCityStandardMaxColumn()+1;
                     display(messageColumn, messageRow, "Would you like to talk with the Villager? (Y/N)", false, false);
                     char interact = yesOrNo(); //returns y or n
                     if (interact == 'y'){
@@ -444,8 +436,6 @@ void Menu::cityTravelMenu(string username){ //bring up the menu for travel
                         setStillLandmarkSimpleTraveling(false); //gonna need this for the map getting refreshed
                         setCityTraveling(true);
                         break;
-                        //displayMessageWithPause(messageColumn, messageRow, "Dialog apears here", false, false);
-                        //clearDisplayRow(messageRow, messageColumn);
                     } else {
                         //do not enter city
                         clearDisplayRow(messageRow, messageColumn);
@@ -455,10 +445,6 @@ void Menu::cityTravelMenu(string username){ //bring up the menu for travel
                     display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapFilled(),true,false,41);
                     tempCurrentLocation = map.getCurrentLandmarkLocation(); 
                 }
-
-                //display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), tempCurrentLocation), map.getPossibleTravelLocationsY(map.getCurrentLocation(), tempCurrentLocation), map.getMapUnfilled(), true, false,41);
-                //display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapFilled(),true,false,41);
-                //tempCurrentLocation = map.getCurrentLandmarkLocation(); 
             } else {
                 for(int i = 0; i <= 50; i+=5){
                     display(i,0, "     ");

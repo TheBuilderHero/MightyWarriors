@@ -17,7 +17,7 @@ class TempEntity{
         int NUMBER_OF_QUESTS = 7;
         int level, currentXP, XPForNextLevel;
         std::string race, kit, weapon, qDamageType, wDamageType, eDamageType, rDamageType;
-        int location, quest1Progress[7];
+        int location, landmarkLocation, quest1Progress[7];
         //int quest1Progress[2];
         std::string name;
         bool battleWon = false;
@@ -36,6 +36,7 @@ class TempEntity{
         //getter functions:
         std::string getUsername() { return username; }
         int getLocation() { return location; }
+        int getLandmarkLocation() { return landmarkLocation; }
         int getQuest1Progress(int questNumber){ return quest1Progress[questNumber - 1]; }
         //stats:
         int getMaxHealth(){ return maxHealth; }
@@ -76,6 +77,7 @@ class TempEntity{
         //setter functions:
         void setUsername(std::string newUsername);
         void setLocation(int currentLocationValue);
+        void setLandmarkLocation(int currentLandmarkLocationValue);
         void setQuest1Progress(int questNumber, int newProgress);
         //stats:
         void setMaxHealth(int newHealth);

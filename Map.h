@@ -23,17 +23,8 @@ class Map{
             const std::vector<int> location {0, 127, 217, 285, 310, 506, 637};
         } city;
         //This vector holds all the locations within the given cities with which a player can interact.
-        const std::vector<std::vector<int>> inCityLocations =   { 
-                                                                { }, //empty vector for holding index 0
-                                                                { 0,2,3,4 },
-                                                                { 0,2,3,4,5 },
-                                                                { 0,2,3,4,5,6 },
-                                                                { 0,2,3,4,5,6,7 },
-                                                                { 0,2,3,4,5,6,7,8 },
-                                                                { 0,2,3,4,5,6,7,8,9 }
-                                                                };
-        int CityCount = ((int)inCityLocations.size()-1);
-        //const std::vector<int> interactiveLandmarkCount {0, (int)inCityLocations[1].size()-1, (int)inCityLocations[2].size()-1, (int)inCityLocations[3].size()-1, (int)inCityLocations[4].size()-1, (int)inCityLocations[5].size()-1, (int)inCityLocations[6].size()-1}; //the number of landmarks per city
+        std::vector<std::vector<int>> inCityLocations;
+        int CityCount;
 
         int initalPosRow = minRow = 1 + optionsHeight;
         int initalPosColumn = minColumn = 2;
@@ -58,6 +49,8 @@ class Map{
         std::string mapFilled = "X";
         std::string mapUnfilled = " ";
         std::string mapCity = "0";
+        int cityStartLocation = 200;
+        int worldStartLocation = 282;
 
     public:
         Map();
@@ -73,8 +66,12 @@ class Map{
 
 
 
-        TempEntity getPlayer(){ return player ;}
-        void setPlayer(TempEntity playerE){ player = playerE; }
+        TempEntity getPlayer(){ return player;}
+        void setPlayer(TempEntity playerE){ 
+            player = playerE; 
+            std::cout << "updated pos MP" << std::endl;
+            system("pause");
+        }
 
         bool isCityLocation(int locationValue);
         bool isLandmarkObjectInteractiveLocation(int locationValue);
@@ -83,13 +80,10 @@ class Map{
         bool canMoveFromCurrentLocation(int directionValue);
         bool canMoveFromCurrentLocationCity(int directionValue);
         void setCurrentLocation(int num) { currentLocation = num; }
-        int getCurrentLocation() {if (currentLocation > 0) { return currentLocation;} else { return currentLocation = 282; } }
+        int getCurrentLocation() {if (currentLocation > 0) { return currentLocation;} else { return currentLocation = getWorldStartLocation(); } }
         void setCurrentLandmarkLocation(int num) { currentLandmarkLocation = num; }
-        int getCurrentLandmarkLocation() {if (currentLandmarkLocation > 0) { return currentLandmarkLocation;} else { return currentLandmarkLocation = 1; } }
+        int getCurrentLandmarkLocation() {if (currentLandmarkLocation > 0) { return currentLandmarkLocation;} else { return currentLandmarkLocation = getCityStartLocation(); } }
 
-        /*
-        void setPossibleTravelLocations(int num, int x, int y) { possibleTravelLocations[num].x = x; possibleTravelLocations[num].y = y; std::cout << " xs: " << possibleTravelLocations[num].x << " ys: " << possibleTravelLocations[num].y << std::endl; }
-        */
         int getPossibleTravelLocationsX(int num, int subNum = 0) { return possibleTravelLocations[num][subNum].x; }
         int getPossibleTravelLocationsY(int num, int subNum = 0) { return possibleTravelLocations[num][subNum].y; }
         int getMapStandardMaxColumn(){ return mapStandardMaxColumn; }
@@ -116,4 +110,8 @@ class Map{
 
         int getLocationCountLandmark() { return locationCountLandmark; }
         int getInteractiveLandmarkCount(int landmarkID) { return (int)inCityLocations[landmarkID].size()-1;} //basically landmarkID is just the city value 1 - 6
+        int getCityStartLocation() { return cityStartLocation; }
+        int getWorldStartLocation() { return worldStartLocation; }
+
+        bool isCityUID(unsigned short id);
 };

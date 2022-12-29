@@ -1,6 +1,5 @@
 #include "ReachOutToServer.h"
 #include "Cipher.h"
-#include "Interactions.h"
 #include "Main.h"
 #include <string>
 

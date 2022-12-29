@@ -161,7 +161,7 @@ TempEntity::TempEntity(string currentUsername, bool NewTempEntityProccess){ //in
 }
 TempEntity::TempEntity(){//blank constructor if no username has been provided so far
     health = armor = magicResistance = physicalDamageMin = physicalDamageMax = magicDamageMin = magicDamageMax = agility = stealth = stamina = naturalEnergy = 0;
-    location = 1;
+    location = 200;
     for(int i = 0; i < NUMBER_OF_QUESTS; i++){
         quest1Progress[i] = 0;
     }
@@ -183,6 +183,9 @@ void TempEntity::setUsername(string newUsername){
 }
 void TempEntity::setLocation(int currentLocationValue){
     location = currentLocationValue;
+}
+void TempEntity::setLandmarkLocation(int currentLandmarkLocationValue){
+    landmarkLocation = currentLandmarkLocationValue;
 }
 void TempEntity::setQuest1Progress(int questNumber, int newProgress){
     quest1Progress[questNumber] = newProgress;

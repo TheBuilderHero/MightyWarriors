@@ -1,12 +1,12 @@
 #include <iostream>
 #include <string>
-
-#include "Main.h"
 #include "WorldMap.h"
 #include "Battle.h"
 #include "Menu.h"
 #include "Map.h"
 #include "DataGuard.h"
+
+#include "Main.h"
 
 using namespace std;
 
@@ -338,35 +338,14 @@ void WorldMap::travelLandmark(int direction, bool &failedTravel){
         //guard.setPlayerMapLocation(map.getCurrentLocation()); //This might need an addition for city location information
 
         //the following is code for the other travel system that probably needs some slight adjustments to the current system:
-        int location = player.getLocation();
-        getTravelMessage(player.getLocation(), direction);
+        int location = player.getLandmarkLocation();
+        getTravelMessage(location, direction);
         menu.clearDisplayRow(2);
         menu.display(16, 2, travelMessage1);
     } else {
         failedTravel = true;
-        string messageFailure = "failed move   ";
+        string messageFailure = "failed move ";
         int messageFailureLength = messageFailure.length();
         menu.displayMessageWithPause(0, 0, messageFailure);
     }
 }
-/*
-void locationsRecord(int locationCount, int y, int x) {
-    map.setPossibleTravelLocations(locationCount, y, x);
-}
-
-int getLocationX(int num) {
-    return map.getPossibleTravelLocationsX(num);
-}
-
-int getLocationY(int num) {
-    return map.getPossibleTravelLocationsY(num);
-}
-*/
-/*void WorldMap::travelEncounter(string username){
-    srand(time(NULL)); 
-    if(rand() % 3 == 0){
-        cout << "\nAn enemy surprises you!\n";
-        Battle battle;
-        battle.questBattle(username, 100, 10);
-    }
-}*/
