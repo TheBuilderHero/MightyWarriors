@@ -570,6 +570,29 @@ int TempEntity::dropItem(){
     return choice;
 }
 
+void TempEntity::battleInitialize(){
+    passives.setAllTrue();
+
+    health = maxHealth + passives.getBonusHealth();
+    mind = maxMind;
+}
+int TempEntity::calculateMagicalDamage(){
+    srand(time(NULL));
+    return magicDamageMin + (rand() % (magicDamageMax - magicDamageMin + 1)) - 1;
+}
+int TempEntity::calculatePhysicalDamage(){
+    srand(time(NULL));
+    return physicalDamageMin + (rand() % (physicalDamageMax - physicalDamageMin + 1)) - 1;
+}
+
+void TempEntity::setStunned(bool stun){
+    passives.setStunned(stun);
+}
+
+Passives TempEntity::getPassives(){
+    return passives;
+}
+
 //Richard functions:
 string TempEntity::getName(){
     return name;

@@ -269,7 +269,12 @@ void Battle::questBattle(string username, int quest, int step){
         numberOfEnemies = 1;
     }else{
         srand(time(NULL));
-        numberOfEnemies = (rand()%10) + 1;
+        numberOfEnemies = (rand()%6) + 1;
+        for(int i = 0; i < 4; i++){
+            if(rand()%4 == 0){
+                numberOfEnemies += 1;
+            }
+        }
         /*cout << "You will be fighting " << numberOfEnemies << " enemies..." << endl;
         if(numberOfEnemies == 10){
             cout << "You are in for a slogging..." << endl;
@@ -277,7 +282,7 @@ void Battle::questBattle(string username, int quest, int step){
         system("pause");*/
         
         srand(time(NULL));
-        if(rand()%5 == 0){
+        if(rand()%20 == 0){
             potatoFight = true;
             numberOfEnemies = 20;
             for(int i = 0; i < 1000; i++)
@@ -295,9 +300,10 @@ void Battle::questBattle(string username, int quest, int step){
     try {
         playerLevelAtStartOfFight = player.getLevel();
         guard.updateGuardData(player);
-        code.decipherS(server.sendToServer(code.cipher("6", username, guard.getInventoryString()))); //request the current stats of this user from the server //pull info from the server to get the Player's Character info
-        playerHealth = stoi(code.getItemS(1)); //set player health
-        playerMind = stoi(code.getItemS(10));
+        //code.decipherS(server.sendToServer(code.cipher("6", username, guard.getInventoryString()))); //request the current stats of this user from the server //pull info from the server to get the Player's Character info
+        player.battleInitialize();
+        playerHealth = player.getHealth(); //set player health
+        playerMind = player.getMind();
         //player.setHealth(playerHealth);
         fightWon = fightLost = false; //set both lost and won to false
     } catch(std::invalid_argument) {
@@ -347,104 +353,112 @@ void Battle::questBattle(string username, int quest, int step){
         int killCount = 0;
         randomizer += 127;
 
-        menu.display(8, 8, "Choose an enemy to attack");
-        menu.display(8, 9, "(Press \"0\" to confirm)");
-        menu.display(8, 10, "                       ");
-        menu.display(8, 11, "                            ");
-        menu.display(8, 12, "                            ");
-        menu.display(8, 13, "                            ");
-        bool enemyPicked = false;
-            menu.display(50, cursor, "-->");
-            if(numberOfEnemies == 1){
-                enemyPicked = true;
-            }
-        while(!enemyPicked){//outputs the options for battle
-            int choice = menu.arrowPressWait(true);
-            if(choice == 0){
-                enemyPicked = true;
-            }else if(choice == 1){
-                menu.display(50, cursor, "   ");
-                if(cursor > 1){
-                    cursor--;
-                }
-                menu.display(50, cursor, "-->");
-            }else if(choice == 3){
-                menu.display(50, cursor, "   ");
-                if(cursor < numberOfEnemies){
-                    cursor++;
-                }
-                menu.display(50, cursor, "-->");
-            }
-        }
-        menu.display(8, 8, "                         ");
-        menu.display(8, 9, "                         ");
-        
-        //loops till the player presses one of Q W E R
-        enemyName = enemies.at(cursor-1).getName();
-        enemyHealth = enemies.at(cursor-1).getHealth();
-        menu.display(8, 8, "'Q' for Primary Attack");
-        menu.display(8, 9, "'W' for Block");
-        menu.display(8, 10, "'E' for Utility Attack");
-        menu.display(8, 11, "'R' for Ultimate Attack");
-        menu.display(8, 12, "'0' to change your selection");
-        menu.display(8, 13, "'L' to Run from the Battle");
-        waitForButtonPress(username, enemyName, zeroPressKeyPressedLastLoop, lPressKeyPressedLastLoop, qKeyPressedLastLoop, wKeyPressedLastLoop, eKeyPressedLastLoop, rKeyPressedLastLoop, playerBlocking, playerHealth, enemyHealth, ultimateUses, combatVal, playerAttack, enemyBlocking, playerAttackType);
-        if (lazyZeroPressCheck) {
-            lazyZeroPressCheck = false;
-            continue;
-        }
-        if (lazyLPressCheck) {
-            lazyLPressCheck = false;
-            break;
-        }
-        menu.display(8, 8, "                       ");
-        menu.display(8, 9, "                       ");
-        menu.display(8, 10, "                       ");
-        menu.display(8, 11, "                            ");
-        menu.display(8, 12, "                            ");
-        menu.display(8, 13, "                            ");
-        if(enemies.at(cursor-1).getEnemyNumber() == 13){
-            enemyName = "normal potato";
-        }
-        if(playerAttackType == "Psychic"){
-            enemies.at(cursor-1).updateMind(-playerAttack);
-            menu.display(8, 24, "Your mental attack hits the " + enemyName + "'s mind for " + to_string(playerAttack) + " damage", false);
-            system("pause");
-            menu.display(8, 24, "                                                                                            ");
-            menu.display(8, 25, "                                                                                            ");
-            
-            menu.display(94, cursor, "        ");
-            if(enemies.at(cursor-1).getMind() <= 0){
-                menu.display(94, cursor, "BROKE");
-            }else{
-                menu.display(94, cursor, to_string(enemies.at(cursor-1).getMind()));
-            }
+        if(player.getPassives().isStunned()){
+            menu.display(8, 8, "You are stunned. Press enter...");
+            menu.waitForEnter(menu.getEnterKeyState());
+            menu.display(8, 8, "                               ");
+            player.setStunned(false);
         }else{
-            enemies.at(cursor-1).updateHealth(-playerAttack);
-            menu.display(8, 24, "Your attack hits the " + enemyName + " for " + to_string(playerAttack) + " damage", false);
-            system("pause");
-            menu.display(8, 24, "                                                                              ");
-            menu.display(8, 25, "                                                                              ");
+            menu.display(8, 8, "Choose an enemy to attack");
+            menu.display(8, 9, "(Press \"0\" to confirm)");
+            menu.display(8, 10, "                       ");
+            menu.display(8, 11, "                            ");
+            menu.display(8, 12, "                            ");
+            menu.display(8, 13, "                            ");
+            bool enemyPicked = false;
+                menu.display(50, cursor, "-->");
+                if(numberOfEnemies == 1){
+                    enemyPicked = true;
+                }
+            while(!enemyPicked){//outputs the options for battle
+                int choice = menu.arrowPressWait(true);
+                if(choice == 0){
+                    enemyPicked = true;
+                }else if(choice == 1){
+                    menu.display(50, cursor, "   ");
+                    if(cursor > 1){
+                        cursor--;
+                    }
+                    menu.display(50, cursor, "-->");
+                }else if(choice == 3){
+                    menu.display(50, cursor, "   ");
+                    if(cursor < numberOfEnemies){
+                        cursor++;
+                    }
+                    menu.display(50, cursor, "-->");
+                }
+            }
+            menu.display(8, 8, "                         ");
+            menu.display(8, 9, "                         ");
             
-            menu.display(80, cursor, "        ");
-            if(enemies.at(cursor-1).getHealth() <= 0){
-                menu.display(80, cursor, "DEAD");
-            }else{
-                menu.display(80, cursor, to_string(enemies.at(cursor-1).getHealth()));
+            //loops till the player presses one of Q W E R
+            enemyName = enemies.at(cursor-1).getName();
+            enemyHealth = enemies.at(cursor-1).getHealth();
+            menu.display(8, 8, "'Q' for Primary Attack");
+            menu.display(8, 9, "'W' for Block");
+            menu.display(8, 10, "'E' for Utility Attack");
+            menu.display(8, 11, "'R' for Ultimate Attack");
+            menu.display(8, 12, "'0' to change your selection");
+            menu.display(8, 13, "'L' to Run from the Battle");
+            waitForButtonPress(username, enemyName, zeroPressKeyPressedLastLoop, lPressKeyPressedLastLoop, qKeyPressedLastLoop, wKeyPressedLastLoop, eKeyPressedLastLoop, rKeyPressedLastLoop, playerBlocking, playerHealth, enemyHealth, ultimateUses, combatVal, playerAttack, enemyBlocking, playerAttackType);
+            
+            menu.display(8, 8, "                       ");
+            menu.display(8, 9, "                       ");
+            menu.display(8, 10, "                       ");
+            menu.display(8, 11, "                            ");
+            menu.display(8, 12, "                            ");
+            menu.display(8, 13, "                            ");
+            if (lazyZeroPressCheck) {
+                lazyZeroPressCheck = false;
+                continue;
             }
-        }
+            if (lazyLPressCheck) {
+                lazyLPressCheck = false;
+                break;
+            }
+            if(enemies.at(cursor-1).getEnemyNumber() == 13){
+                enemyName = "normal potato";
+            }
+            if(playerAttackType == "Psychic"){
+                enemies.at(cursor-1).updateMind(-playerAttack);
+                menu.display(8, 24, "Your mental attack hits the " + enemyName + "'s mind for " + to_string(playerAttack) + " damage", false);
+                system("pause");
+                menu.display(8, 24, "                                                                                            ");
+                menu.display(8, 25, "                                                                                            ");
+                
+                menu.display(94, cursor, "        ");
+                if(enemies.at(cursor-1).getMind() <= 0){
+                    menu.display(94, cursor, "BROKE");
+                }else{
+                    menu.display(94, cursor, to_string(enemies.at(cursor-1).getMind()));
+                }
+            }else{
+                enemies.at(cursor-1).updateHealth(-playerAttack);
+                menu.display(8, 24, "Your attack hits the " + enemyName + " for " + to_string(playerAttack) + " damage", false);
+                system("pause");
+                menu.display(8, 24, "                                                                              ");
+                menu.display(8, 25, "                                                                              ");
+                
+                menu.display(80, cursor, "        ");
+                if(enemies.at(cursor-1).getHealth() <= 0){
+                    menu.display(80, cursor, "DEAD");
+                }else{
+                    menu.display(80, cursor, to_string(enemies.at(cursor-1).getHealth()));
+                }
+            }
 
-        //check if enemy is dead:
-        for(int i = 0; i < numberOfEnemies; i++){
-            if (enemies.at(i).getHealth() <= 0 || enemies.at(i).getMind() <= 0){
-                killCount++;
-            }else{
-                i = numberOfEnemies;
+            //check if enemy is dead:
+            for(int i = 0; i < numberOfEnemies; i++){
+                if (enemies.at(i).getHealth() <= 0 || enemies.at(i).getMind() <= 0){
+                    killCount++;
+                }else{
+                    i = numberOfEnemies;
+                }
             }
-        }
-        if(killCount >= numberOfEnemies){
-            fightWon = true;
-            break;
+            if(killCount >= numberOfEnemies){
+                fightWon = true;
+                break;
+            }
         }
 
         code.decipher(server.sendToServer(code.cipher("26", username, code.subCipher(to_string(enemies.at(0).getEnemyNumber()), to_string(enemies.at(1).getEnemyNumber()), to_string(enemies.at(2).getEnemyNumber()), to_string(enemies.at(3).getEnemyNumber()), to_string(enemies.at(4).getEnemyNumber()),
@@ -453,6 +467,12 @@ void Battle::questBattle(string username, int quest, int step){
         for(int i = 0; i < numberOfEnemies; i++){
             //Enemy's turn to attack:
             if(enemies.at(i).getHealth() > 0 && enemies.at(i).getMind() > 0){
+                bool stun = false;
+                if(rand()%4 == 0){
+                    stun = true;
+                    player.setStunned(stun);
+                }
+
                 int enemyAttack = stoi(code.getItem(i+2, 1));
                 string emenyName;
                 if(enemies.at(i).getEnemyNumber() == 13){
@@ -469,11 +489,22 @@ void Battle::questBattle(string username, int quest, int step){
                 Passives passive;
                 passive.duringBattleEnemyAttackPassives();
 
-                if(enemyAttackType == "Psychic"){
-                    menu.display(8, 24, "The " + emenyName + "'s mental attack hits your mind for " + to_string(enemyAttack) + " damage", false);
+                if(enemies.at(i).getPassives().isStunned()){
+                    menu.display(8, 24, "The " + emenyName + " is stunned, so it does not attack.", false);
                     system("pause");
                     menu.display(8, 24, "                                                                                  ");
                     menu.display(8, 25, "                                                                                  ");
+                    enemies.at(i).setStunned(false);
+                }
+                if(enemyAttackType == "Psychic"){
+                    menu.display(8, 24, "The " + emenyName + "'s mental attack hits your mind for " + to_string(enemyAttack) + " damage", false);
+                    if(stun){
+                        menu.display(8, 25, "You are stunned!", false);
+                    }
+                    system("pause");
+                    menu.display(8, 24, "                                                                                  ");
+                    menu.display(8, 25, "                                                                                  ");
+                    menu.display(8, 26, "                                                                                  ");
                     
                     playerMind -= enemyAttack;
                     player.setMind(playerMind);
@@ -483,9 +514,13 @@ void Battle::questBattle(string username, int quest, int step){
                     menu.display(22, 3, to_string(playerMind));
                 }else{
                     menu.display(8, 24, "The " + emenyName + "'s attack hits you for " + to_string(enemyAttack) + " damage", false);
+                    if(stun){
+                        menu.display(8, 25, "You are stunned!", false);
+                    }
                     system("pause");
                     menu.display(8, 24, "                                                                     ");
                     menu.display(8, 25, "                                                                     ");
+                    menu.display(8, 26, "                                                                     ");
                     
                     playerHealth -= enemyAttack;
                     player.setHealth(playerHealth);
@@ -858,7 +893,7 @@ void Battle::standardBattle(TempEntity player){
 }
 
 string Battle::getVictoryMessage(){
-    int numberOfMessages = 2;
+    int numberOfMessages = 3;
     srand(time(NULL));
     int message = rand()%numberOfMessages;
 
@@ -869,13 +904,16 @@ string Battle::getVictoryMessage(){
         case 1:
             return "You wrecked the enemy's world!";
             break;
+        case 2:
+            return "You floss all over the enemy's corpses!";
+            break;
         default:
             return "You are winner!";
             break;
     }
 }
 string Battle::getDefeatMessage(){
-    int numberOfMessages = 10;
+    int numberOfMessages = 14;
     srand(time(NULL));
     int message = rand()%numberOfMessages;
 
@@ -909,6 +947,18 @@ string Battle::getDefeatMessage(){
             break;
         case 9:
             return "Return to kindergarten!";
+            break;
+        case 10:
+            return "Aw, you'll get 'em next time... JK OF COURSE YOU WON'T!";
+            break;
+        case 11:
+            return "The enemy shoves your head into a dung heap!";
+            break;
+        case 12:
+            return "The enemy makes you lick their feet clean!";
+            break;
+        case 13:
+            return "The enemy hangs you upside down and throws eggs in your face!";
             break;
         default:
             return "You a noob!";
