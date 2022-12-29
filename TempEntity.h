@@ -1,12 +1,17 @@
 #include <iostream>
 #include <string>
 
+#include "Passives.h"
+
 #pragma once
 class TempEntity{
     private:
         std::string username;
         //Stats***********************************************************************************
         int maxHealth, health, armor, magicResistance, physicalDamageMin, physicalDamageMax, magicDamageMin, magicDamageMax, agility, stealth, stamina, naturalEnergy, maxMind, mind, psychicDamageMin, psychicDamageMax;
+        //battle temporary stats******************************************************************
+        int bHealth = 0;
+        
         //the following data is used to update the user's saved data on the server (need to create getters and setters)
         //Stats added*********************************************************************************************************************
         int addedHealth, addedarmor, addedMagicResistance, addedPhysicalDamageMin, addedPhysicalDamageMax, addedMagicDamageMin, addedMagicDamageMax, addedAgility, addedStealth, addedStamina, addedNaturalEnergy, addedMaxMind, addedMind, addedPsychicDamageMin, addedPsychicDamageMax;
@@ -27,6 +32,8 @@ class TempEntity{
         int inventory[24]; //if inventory changes, this number should be updated
         int inventorySize = 12; //Spaces in your starting pack; as you upgrade your pack you can carry more
         int primaryHand, offHand; //these values will be set to the weapon number
+
+        Passives passives;
     public:
         TempEntity(std::string currentUsername);
         TempEntity(std::string currentUsername, bool NewTempEntityProccess);
@@ -142,6 +149,21 @@ class TempEntity{
         void addInventoryItem(int itemNum);
         void sortInventory();
         int dropItem();
+
+
+        //battle functions
+        void battleInitialize();
+        int calculatePhysicalDamage();
+        int calculateMagicalDamage();
+        void receiveDamage(int damage);
+
+        void statPassives();//maybe redundant
+        void offensePassives();//These will inflict status effects on an enemy
+        void defensePassives();//These will mitigate damage from an enemy
+        void postBattlePassives();
+        void setStunned(bool stun);
+
+        Passives getPassives();
 
         //Richards old and outdated and completely unusued (totally lame) functions:
         std::string getName();//This one is not useless anymore
