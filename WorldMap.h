@@ -18,8 +18,6 @@ class WorldMap{
         string getTravelMessage(int location, int direction);
         void travel(int direction, bool &failedTravel);
         void travelLandmark(int direction, bool &failedTravel);
-        //TempEntity getPlayer(){ return player; }
-        //void setPlayer(TempEntity playerE){ player = playerE; }
 
         /*
         void locationsRecord(int locationCount, int y, int x);

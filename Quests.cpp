@@ -486,7 +486,6 @@ void Quests::doQuest(string username, int location, int quest){
 void Quests::quest1(string username, int step){
     //Menu menu;
     Battle battle;
-    //TempEntity player{username};
     cout << "\n";
     switch(step){
         case 0:

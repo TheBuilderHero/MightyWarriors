@@ -9,7 +9,6 @@ using namespace std;
 class Quests{
     private:
         Account account;
-        //TempEntity player;
         int NUMBER_OF_QUESTS = 7;
         bool availableQuests[7];
     public:
@@ -26,7 +25,4 @@ class Quests{
         void quest5(string username, int step);
         void quest6(string username, int step);
         void quest7(string username, int step);
-
-        //TempEntity getPlayer(){ return player ;}
-        //void setPlayer(TempEntity playerE){ player = playerE; }
 };

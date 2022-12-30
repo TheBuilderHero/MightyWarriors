@@ -1281,9 +1281,6 @@ string Menu::numberFormatting(double decimalNumber, int numberOfDecimals) { //fo
 	return formatNumberOutput;
 }
 
-//void Menu::setPlayer(TempEntity playerE){player = playerE;}
-//TempEntity Menu::getPlayer(){return player;}
-
 void Menu::options(){
     Main main;
     bool exitOptions = false;

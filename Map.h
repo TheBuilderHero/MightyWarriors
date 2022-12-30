@@ -6,7 +6,6 @@
 
 class Map{
     private:
-        //TempEntity player;
         int optionsHeight = 6;
         int maxRow, minRow;
         int maxColumn, minColumn;
@@ -64,10 +63,6 @@ class Map{
         void writeLandmarks();
         void writeLandmarksObjects(/*int objectCount*/);
 
-
-
-        //TempEntity getPlayer(){ return player;}
-        //void setPlayer(TempEntity playerE){ player = playerE;}
 
         bool isCityLocation(int locationValue);
         bool isLandmarkObjectInteractiveLocation(int locationValue);

@@ -166,7 +166,7 @@ TempEntity::TempEntity(string currentUsername, bool NewTempEntityProccess){ //in
     runConstructorValueSetup(currentUsername,true);
 }
 TempEntity::TempEntity(){//blank constructor if no username has been provided so far
-    menu.displayMessageWithPause(0,0,"running constructor");
+    //menu.displayMessageWithPause(0,0,"TempEntity running constructor");
     health = armor = magicResistance = physicalDamageMin = physicalDamageMax = magicDamageMin = magicDamageMax = agility = stealth = stamina = naturalEnergy = 0;
     location = map.getWorldStartLocation();
     landmarkLocation = map.getCityStartLocation();
