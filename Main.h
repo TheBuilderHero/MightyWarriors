@@ -19,7 +19,7 @@ extern Menu menu;
 extern Map map;
 extern Interactions interactions;
 extern DataGuard guard;
-//extern WorldMap worldMap;
+extern TempEntity player;
 extern std::vector<NPC> npcs;
 extern unsigned int setUIDForNPC();
 extern unsigned int getLastAssignedUIDForNPC();

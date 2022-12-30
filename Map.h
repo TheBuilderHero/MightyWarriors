@@ -6,7 +6,7 @@
 
 class Map{
     private:
-        TempEntity player;
+        //TempEntity player;
         int optionsHeight = 6;
         int maxRow, minRow;
         int maxColumn, minColumn;
@@ -66,12 +66,8 @@ class Map{
 
 
 
-        TempEntity getPlayer(){ return player;}
-        void setPlayer(TempEntity playerE){ 
-            player = playerE; 
-            std::cout << "updated pos MP" << std::endl;
-            system("pause");
-        }
+        //TempEntity getPlayer(){ return player;}
+        //void setPlayer(TempEntity playerE){ player = playerE;}
 
         bool isCityLocation(int locationValue);
         bool isLandmarkObjectInteractiveLocation(int locationValue);

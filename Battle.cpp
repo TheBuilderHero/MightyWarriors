@@ -299,7 +299,7 @@ void Battle::questBattle(string username, int quest, int step){
     //Initalize all variables
     try {
         playerLevelAtStartOfFight = player.getLevel();
-        guard.updateGuardData(player);
+        guard.updateGuardData();
         //code.decipherS(server.sendToServer(code.cipher("6", username, guard.getInventoryString()))); //request the current stats of this user from the server //pull info from the server to get the Player's Character info
         player.battleInitialize();
         playerHealth = player.getHealth(); //set player health
@@ -563,8 +563,9 @@ void Battle::questBattle(string username, int quest, int step){
             if(playerLevelAtStartOfFight < currentPlayerLevel){ //runs the level update for stats
                 //shiny new code
                 //putting this here temporarily, we should probably load xp data client-side
-                TempEntity playerE{username, false};
-                setPlayer(playerE);
+                //player.runConstructorValueSetup(username, true);
+                //TempEntity playerE{username, false};
+                //setPlayer(playerE);
 
                 player.levelUp();
                 
@@ -776,13 +777,13 @@ void Battle::questBattle(string username, int quest, int step){
 }
 */
 
-void Battle::tempEntBattle(TempEntity player){
-    setPlayer(player); //load in the players stats from tempentity data
+void Battle::tempEntBattle(TempEntity &player){
+    //setPlayer(player); //load in the players stats from tempentity data
     standardBattle(player);
 }
 
 //probably not needed since the quest battle function does everything we need. I would like to use this and make one for travel combat.
-void Battle::standardBattle(TempEntity player){
+void Battle::standardBattle(TempEntity &player){
     menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
     TempEntity battlingStatsOfPlayer;

@@ -8,7 +8,7 @@ class Battle{//This class will have all the functions needed for the algorythms 
         //This is causing a issue if the server is offline:
         //TempEntity player{"kota"};
         //need to have this be an argument instead and then change the other functions that take this value and use it to use that instead.
-        TempEntity player;
+        //TempEntity player;
         bool lazyZeroPressCheck = false;
         bool lazyLPressCheck = false;
     
@@ -20,11 +20,11 @@ class Battle{//This class will have all the functions needed for the algorythms 
         void waitForButtonPress(std::string username, std::string &enemyName, bool &zeroKeyPressedLastLoop, bool &lPressKeyPressedLastLoop,bool &qKeyPressedLastLoop, bool &wKeyPressedLastLoop, bool &eKeyPressedLastLoop, bool &rKeyPressedLastLoop, bool &playerBlocking, int playerHealth, int &enemyHealth, int &ultimateUses, int &combatVal, int &playerAttack, int &enemyBlocking, std::string &playerAttackType);
         int getPlayerHealth();
 
-        void tempEntBattle(TempEntity player); //for battle testing purposes
-        void standardBattle(TempEntity player);
+        void tempEntBattle(TempEntity &player); //for battle testing purposes
+        void standardBattle(TempEntity &player);
 
-        TempEntity getPlayer(){ return player ;}
-        void setPlayer(TempEntity playerE){ player = playerE; }
+        //TempEntity getPlayer(){ return player ;}
+        //void setPlayer(TempEntity &playerE){ player = playerE; }
 
         std::string getVictoryMessage();
         std::string getDefeatMessage();

@@ -506,9 +506,9 @@ void Quests::quest1(string username, int step){
             cout << "\nThe shadow cackles horribly, and slowly fades from your senses. But The Void Cat approaches...\n";
             menu.waitForEnter(menu.getEnterKeyState());
             
-            battle.setPlayer(player);
+            //battle.setPlayer(player);
             battle.questBattle(username, 1, step);
-            setPlayer(battle.getPlayer());
+            //setPlayer(battle.getPlayer());
 
             //If the battle was won, we should run this code:
             if(player.getBattleResult()){
@@ -537,9 +537,9 @@ void Quests::quest1(string username, int step){
             cout << "\nYou pause. \"...No way! You gotta die, son!\"\n";
             menu.waitForEnter(menu.getEnterKeyState());
             
-            battle.setPlayer(player);
+            //battle.setPlayer(player);
             battle.questBattle(username, 1, step);
-            setPlayer(battle.getPlayer());
+            //setPlayer(battle.getPlayer());
 
             //A problem occurs if there's any server connection issues in the middle of a battle
             //Player health will trigger the quest completion, so I added a battle result boolean
@@ -563,9 +563,9 @@ void Quests::quest1(string username, int step){
             cout << "\n\"I know you hunt me. Ready yourself.\"\n";
             menu.waitForEnter(menu.getEnterKeyState());
             
-            battle.setPlayer(player);
+            //battle.setPlayer(player);
             battle.questBattle(username, 1, step);
-            setPlayer(battle.getPlayer());
+            //setPlayer(battle.getPlayer());
 
             if(player.getBattleResult()){
                 cout << "\nThe Orc collapses to the ground, eyes closed. He fought with honor.\n";
@@ -603,9 +603,9 @@ void Quests::quest1(string username, int step){
             cout << "\nSomeone kicks you in the head! It's the Black Night! You scramble for your weapon!\n";
             menu.waitForEnter(menu.getEnterKeyState());
             
-            battle.setPlayer(player);
+            //battle.setPlayer(player);
             battle.questBattle(username, 1, step);
-            setPlayer(battle.getPlayer());
+            //setPlayer(battle.getPlayer());
 
             if(player.getBattleResult()){
                 cout << "\nThe Black Night shall ride no more. You read the enchanted parchment once again.\n";
@@ -625,9 +625,9 @@ void Quests::quest1(string username, int step){
             cout << "\nA blast of fire just barely misses your shoulder. You wheel around, drawing your weapon!\n";
             menu.waitForEnter(menu.getEnterKeyState());
             
-            battle.setPlayer(player);
+            //battle.setPlayer(player);
             battle.questBattle(username, 1, step);
-            setPlayer(battle.getPlayer());
+            //setPlayer(battle.getPlayer());
 
             if(player.getBattleResult()){
                 cout << "\nThe wizard collapses, but no body hits the ground. His robes simply crumple in the grass, \nwith his pointy hat perched neatly on top.\n";
@@ -655,9 +655,9 @@ void Quests::quest1(string username, int step){
             cout << "\nIn your mind, you are about to be fighting the mountain itself...";
             menu.waitForEnter(menu.getEnterKeyState());
             
-            battle.setPlayer(player);
+            //battle.setPlayer(player);
             battle.questBattle(username, 1, step);
-            setPlayer(battle.getPlayer());
+            //setPlayer(battle.getPlayer());
 
             if(player.getBattleResult()){
                 cout << "\nIncredibly, the titanic being crashes into the snow. Hands shaking, you check the parchment.\n";
@@ -687,9 +687,9 @@ void Quests::quest1(string username, int step){
             cout << "\nYou can feel it is the very embodiment of death itself.\n";
             menu.waitForEnter(menu.getEnterKeyState());
             
-            battle.setPlayer(player);
+            //battle.setPlayer(player);
             battle.questBattle(username, 1, step);
-            setPlayer(battle.getPlayer());
+            //setPlayer(battle.getPlayer());
 
             if(player.getBattleResult()){
                 cout << "\nThe Necromancer screams, beams of light splitting his body apart, and he explodes into dust.\n";
@@ -718,9 +718,9 @@ void Quests::quest1(string username, int step){
             cout << "Meh, guess like a dragon showed up or some junk\n";
             menu.waitForEnter(menu.getEnterKeyState());
             
-            battle.setPlayer(player);
+            //battle.setPlayer(player);
             battle.questBattle(username, 1, step);
-            setPlayer(battle.getPlayer());
+            //setPlayer(battle.getPlayer());
 
             if(player.getBattleResult()){
                 cout << "\nHuzzah, the dragon is like dead or whatever\n";
@@ -754,9 +754,9 @@ void Quests::quest2(string username, int step){
         cout << "\nAs you are being a normal person doing normal things, a normal potato appears out of nowhere.\n";
         menu.waitForEnter(menu.getEnterKeyState());
 
-        battle.setPlayer(player);
+        //battle.setPlayer(player);
         battle.questBattle(username, 2, 0);
-        setPlayer(battle.getPlayer());
+        //setPlayer(battle.getPlayer());
 
         if(player.getBattleResult()){
             cout << "\nUNBELIEVABLE! You defeated a Normal Potato!\n";
@@ -778,9 +778,9 @@ void Quests::quest3(string username, int step){
         cout << "\nQuest 3 is a garbage quest for testing.\n";
         menu.waitForEnter(menu.getEnterKeyState());
 
-        battle.setPlayer(player);
+        //battle.setPlayer(player);
         battle.questBattle(username, 3, 0);
-        setPlayer(battle.getPlayer());
+        //setPlayer(battle.getPlayer());
 
         if(player.getBattleResult()){
             cout << "\nQuest 3 is repeatable.\n";
@@ -797,9 +797,9 @@ void Quests::quest4(string username, int step){
         cout << "\nQuest 4 is a garbage quest for testing.\n";
         menu.waitForEnter(menu.getEnterKeyState());
 
-        battle.setPlayer(player);
+        //battle.setPlayer(player);
         battle.questBattle(username, 4, 0);
-        setPlayer(battle.getPlayer());
+        //setPlayer(battle.getPlayer());
 
         if(player.getBattleResult()){
             cout << "\nQuest 4 is repeatable.\n";
@@ -816,9 +816,9 @@ void Quests::quest5(string username, int step){
         cout << "\nQuest 5 is a garbage quest for testing.\n";
         menu.waitForEnter(menu.getEnterKeyState());
 
-        battle.setPlayer(player);
+        //battle.setPlayer(player);
         battle.questBattle(username, 5, 0);
-        setPlayer(battle.getPlayer());
+        //setPlayer(battle.getPlayer());
 
         if(player.getBattleResult()){
             cout << "\nQuest 5 is repeatable.\n";
@@ -835,9 +835,9 @@ void Quests::quest6(string username, int step){
         cout << "\nQuest 6 is a garbage quest for testing.\n";
         menu.waitForEnter(menu.getEnterKeyState());
 
-        battle.setPlayer(player);
+        //battle.setPlayer(player);
         battle.questBattle(username, 6, 0);
-        setPlayer(battle.getPlayer());
+        //setPlayer(battle.getPlayer());
 
         if(player.getBattleResult()){
             cout << "\nQuest 6 is repeatable.\n";
@@ -854,9 +854,9 @@ void Quests::quest7(string username, int step){
         cout << "\nQuest 7 is a garbage quest for testing.\n";
         menu.waitForEnter(menu.getEnterKeyState());
 
-        battle.setPlayer(player);
+        //battle.setPlayer(player);
         battle.questBattle(username, 7, 0);
-        setPlayer(battle.getPlayer());
+        //setPlayer(battle.getPlayer());
 
         if(player.getBattleResult()){
             cout << "\nQuest 7 is repeatable.\n";

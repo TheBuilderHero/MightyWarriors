@@ -2,8 +2,10 @@
 
 #include "TempEntity.h"
 #include "Menu.h"
+#include "Main.h"
 
 #pragma once
+extern TempEntity player;
 
 //Reason for this is to setup
 
@@ -17,7 +19,7 @@ private:
 
 public:
     DataGuard();
-    void updateGuardData(TempEntity player) { playerData = player; }; //updates the data to be guarded
+    void updateGuardData() { playerData = player; }; //updates the data to be guarded
     void on(std::string username) { 
         dataSaveingOn = true;
         playerUsername = username;

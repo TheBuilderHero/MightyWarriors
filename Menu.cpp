@@ -50,6 +50,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
     //the following is program close code:
     atexit(fnExit);
     guard.on(username);
+    //review if this is needed:
     //guard.updateGuardData(getPlayer());
     //end of program close code.
 
@@ -148,7 +149,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         switch (value)
         {
         case 0:{
-            guard.updateGuardData(player);
+            guard.updateGuardData();
             exit(1);
             break;
         }
@@ -158,9 +159,9 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
             display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
             system("cls");
             //map.listAvalibleLocations(username);
-            quest.setPlayer(player);
+            //quest.setPlayer(player);
             quest.getAvailableQuests();
-            setPlayer(quest.getPlayer());
+            //setPlayer(quest.getPlayer());
             break;
         }
         case 2:{//travel option
@@ -338,9 +339,9 @@ void Menu::travelMenu(string username){ //bring up the menu for travel
             case 3:
             case 4:
                 ClearConsoleInputBuffer();
-                worldMap.setPlayer(player);
+                //worldMap.setPlayer(player);
                 worldMap.travel(value, lastLoopFailedTravel); //changes current location
-                setPlayer(worldMap.getPlayer());
+                //setPlayer(worldMap.getPlayer());
 
                 //cout << "still Traveling? " << getStillSimpleTraveling(); // for testing
                 //waitForEnter(getEnterKeyState());// for testing
@@ -377,6 +378,7 @@ void Menu::cityTravelMenu(string username){ //bring up the menu for travel
     int messageRow = map.getMapCityStandardMaxRow()/2;
     int messageColumn = map.getMapCityStandardMaxColumn()+1;
     if (map.getCurrentLandmarkLocation() < 1) map.setCurrentLandmarkLocation(map.getCityStartLocation());
+    map.setCurrentLandmarkLocation(map.getCityStartLocation());
     do{
         //for testing:
         //displayMessageWithPause(0, 0, "Current location a Landmark: " + to_string(map.isLandmarkObjectInteractiveLocation(map.getCurrentLandmarkLocation())), false, false);
@@ -463,9 +465,9 @@ void Menu::cityTravelMenu(string username){ //bring up the menu for travel
         case 3:
         case 4:
             ClearConsoleInputBuffer();
-            worldMap.setPlayer(player);
+            //worldMap.setPlayer(player);
             worldMap.travelLandmark(value, lastLoopFailedTravel); //changes current location
-            setPlayer(worldMap.getPlayer());
+            //setPlayer(worldMap.getPlayer());
             break;
         default:
             display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
@@ -781,9 +783,9 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         break;
     }
     case 9:{
-        battle.setPlayer(player);
+        //battle.setPlayer(player);
         battle.questBattle(username, 100, 0);
-        setPlayer(battle.getPlayer());
+        //setPlayer(battle.getPlayer());
         player.setBattleResult(false);
         break;
     }
@@ -1279,12 +1281,8 @@ string Menu::numberFormatting(double decimalNumber, int numberOfDecimals) { //fo
 	return formatNumberOutput;
 }
 
-void Menu::setPlayer(TempEntity playerE){
-    player = playerE;
-}
-TempEntity Menu::getPlayer(){
-    return player;
-}
+//void Menu::setPlayer(TempEntity playerE){player = playerE;}
+//TempEntity Menu::getPlayer(){return player;}
 
 void Menu::options(){
     Main main;
