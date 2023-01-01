@@ -299,7 +299,7 @@ void Battle::questBattle(string username, int quest, int step){
     //Initalize all variables
     try {
         playerLevelAtStartOfFight = player.getLevel();
-        guard.updateGuardData(player);
+        guard.updateGuardData();
         //code.decipherS(server.sendToServer(code.cipher("6", username, guard.getInventoryString()))); //request the current stats of this user from the server //pull info from the server to get the Player's Character info
         player.battleInitialize();
         playerHealth = player.getHealth(); //set player health
@@ -570,16 +570,8 @@ void Battle::questBattle(string username, int quest, int step){
             if(playerLevelAtStartOfFight < currentPlayerLevel){ //runs the level update for stats
                 //shiny new code
                 //putting this here temporarily, we should probably load xp data client-side
-                TempEntity playerE{username, false};
-                setPlayer(playerE);
 
                 player.levelUp();
-                
-                //old code
-                /*account.levelUp(username, currentPlayerLevel);
-                TempEntity playerE{username, false};
-                setPlayer(playerE);
-                */
             }else{
                 player.setCurrentXP(account.getCurrentXPForNextLevel(username));//This was added because XP was not updating in player stats after battles
             }
@@ -603,193 +595,14 @@ void Battle::questBattle(string username, int quest, int step){
     //system("pause");
 }
 
-//Old code in case we have to roll back at any time
-/*
-void Battle::questBattle(string username, int quest, int step){
-    menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
-    system("cls");
-    bool qKeyPressedLastLoop = false, wKeyPressedLastLoop = false, eKeyPressedLastLoop = false, rKeyPressedLastLoop = false;
-    bool playerBlocking = false;
-    int playerHealth, enemyHealth, playerMind, enemyMind, XPDrop;
-    int playerLevelAtStartOfFight = 0;
-    int ultimateUses = 1;
-    string enemyName = "";
-    int enemyNum = 0;
-    string answer;
-    bool fightWon = false, fightLost = false;
-    int location = player.getLocation();
-    ReachOutToServer server;
-    Cipher code;
-    Account account;
 
-    //Oh boy I'm trying some monster groups now
-    srand(time(NULL));
-    int numberOfEnemies = (rand()%20) + 1;
-    cout << "You will be fighting " << numberOfEnemies << " enemies..." << endl;
-    system("pause");
-    system("cls");
-    std::vector<TempEntity> enemies(numberOfEnemies);
-    
-    //**************************
-    //Initalize all variables
-    try {
-        playerLevelAtStartOfFight = player.getLevel();
-        guard.updateGuardData(player);
-        code.decipherS(server.sendToServer(code.cipher("6", username, guard.getInventoryString()))); //request the current stats of this user from the server //pull info from the server to get the Player's Character info
-        playerHealth = stoi(code.getItemS(1)); //set player health
-        playerMind = stoi(code.getItemS(10));
-        //player.setHealth(playerHealth);
-        fightWon = fightLost = false; //set both lost and won to false
-        code.decipherS(server.sendToServer(code.cipher("7", username, to_string(quest), to_string(step)))); //request the current stats of a enemy from the server //pull data from the server regarding the enemy to fight
-        enemyHealth = stoi(code.getItemS(2)); //set enemy health
-        enemyMind = stoi(code.getItemS(8));
-        enemyName = code.getItemS(1);
-        enemyNum = stoi(code.getItemS(7));
-        XPDrop = stoi(code.getItemS(9));
-        if(enemyNum == 2){
-            if(enemyHealth > 10)
-                enemyHealth = 10;
-        }
-    } catch(std::invalid_argument) {
-        cout << "Battle initialization failed";
-        system("pause");
-        return;
-    }
-    //**************************
-    //Start Battle clearing the screen
-    while (!fightWon && !fightLost){//loop through displaying the stats and having the player pick options until the fight is won or lost
-        int combatVal = 0;
-        int playerAttack = 0;
-        string playerAttackType;//set in the genius optionsOutput function
-        int enemyBlocking = 0;
-        optionsOutput(username, enemyName, playerHealth, enemyHealth, playerMind, enemyMind); //outputs the options for battle
-        
-        //loops till the player presses one of Q W E R
-        waitForButtonPress(username,enemyName,qKeyPressedLastLoop,wKeyPressedLastLoop,eKeyPressedLastLoop,rKeyPressedLastLoop,playerBlocking,playerHealth,enemyHealth,ultimateUses,combatVal,playerAttack,enemyBlocking,playerAttackType);
-        if(playerAttackType == "Psychic"){
-            enemyMind -= playerAttack;
-            cout << "Your mental attack hits the enemy's mind for " << playerAttack << " damage" << endl;
-            system("pause");
-        }else{
-            cout << "Your attack hits the enemy for " << playerAttack << " damage" << endl;
-            system("pause");
-        }
-
-        //check if enemy is dead:
-        if (enemyHealth <= 0 || enemyMind <= 0){
-            fightWon = true;
-            break;
-        }
-
-        //reprint the stats and info:
-        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
-        system("cls");
-        optionsOutput(username, enemyName, playerHealth, enemyHealth, playerMind, enemyMind);
-
-        //Enemy's turn to attack:
-        code.decipherS(server.sendToServer(code.cipher("10", username, enemyName, to_string(playerBlocking))));
-        int enemyAttack = stoi(code.getItemS(1));
-        enemyAttack = (enemyBlocking) ? 0 : enemyAttack; //set attack to 0 damage if enemy is blocking
-        string enemyAttackType = code.getItemS(2);
-
-        //check during battle passives:
-        Passives passive;
-        passive.duringBattleEnemyAttackPassives();
-
-        if(enemyAttackType == "Psychic"){
-            cout << "The enemy's mental attack hits your mind for " << enemyAttack << " damage" << endl;
-            system("pause");
-            playerMind -= enemyAttack;
-            player.setMind(playerMind);
-            enemyAttack = 0;
-        }else{
-            cout << "The enemies attack hits you for " << enemyAttack << " damage" << endl;
-            system("pause");
-            playerHealth -= enemyAttack;
-            player.setHealth(playerHealth);
-            enemyAttack = 0;
-        }
-
-        if (playerHealth <= 0 || playerMind <= 0) {
-            fightLost = true;
-            break;
-        }
-    }
-    //print out the result of the fight
-    if (fightWon) { //the player has won the fight
-        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
-        system("cls");
-        //increase user xp, since fight was won.
-        string playerLevel = server.sendToServer(code.cipher("14", username, to_string(enemyNum), "WillNeedToFeedBackEnemyLevel")); //this will need to send the enemy level later on.
-        if(enemyMind <= 0){
-            cout <<  setfill(' ') << setw(60) << "You broke the Enemy's mind!" << endl;
-        }else{
-            cout <<  setfill(' ') << setw(60) << "You kicked the Enemy's brass!" << endl;
-        }
-        cout <<  setfill(' ') << setw(57) << "You won the Battle!" << endl;
-        cout <<  setfill(' ') << setw(47) << "You earned " << XPDrop << " experience!" << endl;
-        int itemDrop = 0;
-        srand(time(NULL));
-        if(rand() % 5 == 0){
-            Items item;
-            itemDrop = (rand() % 8) + 1;
-            if(itemDrop == 8 && rand() % 4 > 0){
-
-            }else{
-                cout << setfill(' ') << setw(47) << "The Enemy dropped a " << item.getName(itemDrop) << "!" << endl;
-            }
-        }
-        system("pause");
-        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
-        system("cls"); 
-        int currentPlayerLevel = account.getLevel(username);
-        if(playerLevelAtStartOfFight < currentPlayerLevel){ //runs the level update for stats
-            //shiny new code
-            //putting this here temporarily, we should probably load xp data client-side
-            TempEntity playerE{username, false};
-            setPlayer(playerE);
-
-            player.levelUp();
-            
-            //old code
-            /*account.levelUp(username, currentPlayerLevel);
-            TempEntity playerE{username, false};
-            setPlayer(playerE);
-            *//*
-        }else{
-            player.setCurrentXP(account.getCurrentXPForNextLevel(username));//This was added because XP was not updating in player stats after battles
-        }
-        
-        if(itemDrop > 0) player.addInventoryItem(itemDrop); //need to put this after the level up otherwise item will be lost
-        player.setBattleResult(true);
-        player.setLocation(location);
-        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
-        system("cls");
-    } else if (fightLost){ //the enemy has won the fight
-        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
-        system("cls");
-        if(playerMind <= 0){
-            cout <<  setfill(' ') << setw(60) << "The Enemy broke your mind!" << endl;
-        }else{
-            cout <<  setfill(' ') << setw(60) << "The Enemy kicked your brass!" << endl;
-        }
-        cout <<  setfill(' ') << setw(58) << "You Lost the Battle!" << endl;
-        system("pause");
-        menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
-        system("cls");
-    }
-    //cout << "Player ended Battle with " << player.getHealth() << " health!\n";
-    //system("pause");
-}
-*/
-
-void Battle::tempEntBattle(TempEntity player){
-    setPlayer(player); //load in the players stats from tempentity data
-    standardBattle(player);
+void Battle::tempEntBattle(){
+    //setPlayer(player); //load in the players stats from tempentity data
+    standardBattle();
 }
 
 //probably not needed since the quest battle function does everything we need. I would like to use this and make one for travel combat.
-void Battle::standardBattle(TempEntity player){
+void Battle::standardBattle(){
     menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
     TempEntity battlingStatsOfPlayer;

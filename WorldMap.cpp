@@ -294,9 +294,9 @@ void WorldMap::travel(int direction, bool &failedTravel){
             menu.display(16, 2, "ENCOUNTER!");
             menu.waitForEnter(menu.getEnterKeyState());
             Battle battle;
-            battle.setPlayer(player);
+            //battle.setPlayer(player);
             battle.questBattle(player.getUsername(), 100, 10);
-            setPlayer(battle.getPlayer());
+            //setPlayer(battle.getPlayer());
             if(!player.getBattleResult()){
                 menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
                 system("cls");

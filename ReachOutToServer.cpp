@@ -234,7 +234,7 @@ string ReachOutToServer::getIPFromHostName(char * hostname) {
     // Before using any of the winsock constructs, the library must be initialized by calling the WSAStartup function. 
     res = WSAStartup ( MAKEWORD(2, 2), &ws );
     if ( res != 0 )
-  {
+    {
         cout << "Failed to initialize winsock : " << res;
         return "failed";
     }

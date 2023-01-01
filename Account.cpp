@@ -478,8 +478,8 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
     //add it an inital stat personalization
     string wasAbleToSave = server.sendToServer(code.cipher("5", username, to_string(initHealth), to_string(initArmor), to_string(initMagicResistance), to_string(initPhysicalDamage), to_string(initMagicDamage), to_string(initAgility),
     to_string(initStealth), to_string(initStamina), to_string(initNaturalEnergy), to_string(initMind), to_string(initPsychicDamage))); //These send the data to the server to be saved properly in the [username].stat file
-    TempEntity player{username};
-    menu.setPlayer(player);
+    player.runConstructorValueSetup(username);
+    //menu.setPlayer(player);
     menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
     introStory(raceChoice, username); //send the user to the intro story
@@ -811,8 +811,9 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
                 validLogon = stoi(server.sendToServer(code.cipher("3", usernameE, passwordE)));
                 if (validLogon == 1){//logon is valid
-                    TempEntity player{usernameE, true};
-                    menu.setPlayer(player); //setup temp entity to be used in the whole program
+                    player.runConstructorValueSetup(usernameE, true);//setup temp entity to be used in the whole program
+                    //TempEntity player{usernameE, true};
+                    //menu.setPlayer(player); 
                     menu.menu(usernameE);
                 } else {
                     string invalidMessage = "Invalid Username or Password...";

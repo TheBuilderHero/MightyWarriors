@@ -5,7 +5,6 @@
 
 class Menu {
     private: 
-        TempEntity player;
         bool exitAdminMenu = false;
         bool stillTraveling = false;
         bool stillSimpleTraveling = false;// for the do while loop so we do not have to refresh the whole cmd
@@ -37,10 +36,7 @@ class Menu {
         void clearDisplayRow(int row, int startingColumn = 0);
         std::string numberFormatting(double decimalNumber, int numberOfDecimals);
         void options();
-
-        void setPlayer(TempEntity playerE);
-        TempEntity getPlayer();
-
+        
         void setStillSimpleTraveling(bool trueFalse) { stillSimpleTraveling = trueFalse; }
         bool getStillSimpleTraveling() { return stillSimpleTraveling; }
         void setStillLandmarkSimpleTraveling(bool trueFalse) { stillLandmarkSimpleTraveling = trueFalse; }

@@ -35,10 +35,48 @@ class TempEntity{
 
         Passives passives;
     public:
+        void runConstructorValueSetup(std::string currentUsername, bool NewTempEntityProccess = false);
         TempEntity(std::string currentUsername);
         TempEntity(std::string currentUsername, bool NewTempEntityProccess);
         TempEntity();
         ~TempEntity();
+
+        /* breaks other code:
+        TempEntity operator= (TempEntity &tempItem){
+            TempEntity output;
+            output.health = tempItem.getHealth();
+            output.armor = tempItem.getArmor();
+            output.magicResistance = tempItem.getMagicResistance();
+            output.physicalDamageMin = tempItem.getPhysicalDamageMin();
+            output.physicalDamageMax = tempItem.getPhysicalDamageMax();
+            output.magicDamageMin = tempItem.getMagicDamageMin();
+            output.magicDamageMax = tempItem.getMagicDamageMax();
+            output.agility = tempItem.getAgility();
+            output.stealth = tempItem.getStealth();
+            output.stamina = tempItem.getStamina();
+            output.naturalEnergy = tempItem.getNaturalEnergy();
+            output.location = tempItem.getLocation();
+            output.landmarkLocation = tempItem.getLandmarkLocation();
+            for(int i = 0; i < tempItem.NUMBER_OF_QUESTS; i++){
+                output.quest1Progress[i] = tempItem.getQuest1Progress(i);
+            }
+            for(int i = 0; i < tempItem.INVENTORY_SPACES; i++){
+                output.inventory[i] = tempItem.getInventory(i);
+            }
+            output.primaryHand = tempItem.getPrimaryHand();
+            output.offHand = tempItem.getOffHand();
+            output.level = tempItem.getLevel();
+            output.currentXP = tempItem.getCurrentXP();
+            output.XPForNextLevel = tempItem.getXPForNextLevel();
+            output.name = tempItem.getName();
+            output.username = tempItem.getUsername();
+            output.race = tempItem.getRace();
+            output.kit = tempItem.getKit();
+            output.weapon = tempItem.getWeapon();
+            return output;
+        }
+        */
+
 
         //getter functions:
         std::string getUsername() { return username; }

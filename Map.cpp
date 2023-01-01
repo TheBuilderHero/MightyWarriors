@@ -24,15 +24,15 @@ Map::Map(){
     unsigned short value = 5;
     if(isCityUID(value)) inCityLocations.at(1).emplace_back(value);
     value = 6;
-    if(isCityUID(value)) inCityLocations.at(2).push_back(value);
+    if(isCityUID(value)) inCityLocations.at(2).emplace_back(value);
     value = 7;    
-    if(isCityUID(value)) inCityLocations.at(3).push_back(value);
+    if(isCityUID(value)) inCityLocations.at(3).emplace_back(value);
     value = 8;
-    if(isCityUID(value)) inCityLocations.at(4).push_back(value);
+    if(isCityUID(value)) inCityLocations.at(4).emplace_back(value);
     value = 9;
-    if(isCityUID(value)) inCityLocations.at(5).push_back(value);
+    if(isCityUID(value)) inCityLocations.at(5).emplace_back(value);
     value = 10;
-    if(isCityUID(value)) inCityLocations.at(6).push_back(value);
+    if(isCityUID(value)) inCityLocations.at(6).emplace_back(value);
 
     CityCount = ((int)inCityLocations.size()-1);
     static int i = 0;

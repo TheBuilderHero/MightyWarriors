@@ -21,6 +21,8 @@ Interactions interactions;
 //WorldMap worldMap; //Map map;
 std::vector<NPC> npcs;
 static int currentID = 0;
+TempEntity player;
+//End global variable declaration
  
 void Main::attemptStartGame(){
     string answer;

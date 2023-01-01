@@ -8,7 +8,7 @@
 using namespace std;
 class WorldMap{
     private:
-        TempEntity player;
+        //TempEntity player;
         bool encounter;
         string travelMessage1, travelMessage2;
         int mapLocationValue;
@@ -18,11 +18,6 @@ class WorldMap{
         string getTravelMessage(int location, int direction);
         void travel(int direction, bool &failedTravel);
         void travelLandmark(int direction, bool &failedTravel);
-        TempEntity getPlayer(){ return player; }
-        void setPlayer(TempEntity playerE){ 
-            player = playerE; 
-            menu.displayMessageWithPause(0,0,"updated pos wMP"+to_string(player.getLandmarkLocation()));
-            }
 
         /*
         void locationsRecord(int locationCount, int y, int x);
