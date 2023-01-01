@@ -10,6 +10,8 @@ class Passives{
 
         //negative effects
         bool stunned = false;
+        bool poisoned = false;
+
     public:
         //call to passives before, during, and after battle
         void preBattlePassives();
@@ -35,5 +37,10 @@ class Passives{
         bool isStunned();
         void setStunned(bool stun);
 
+        void setEffect(int effect, bool status);
+        bool getEffectStatus(int effect);
+
         void setAllTrue();
+
+        static const int STUN = 0, POISON = 1;
 };

@@ -37,6 +37,8 @@ void Passives::stealStats(){
 
 
 int Passives::getBonusHealth(){
+    bonusHealth = 0;
+
     if(tough){
         bonusHealth += 30;
     }
@@ -50,6 +52,8 @@ bool Passives::isEthereal(){
     return ethereal;
 }
 float Passives::getXPMultiplier(){
+    XPMultiplier = 0.0f;
+    
     if(learning){
         XPMultiplier += 0.5f;
     }
@@ -69,4 +73,21 @@ void Passives::setAllTrue(){
     stunAttack = true;
     ethereal = true;
     learning = true;
+}
+
+void Passives::setEffect(int effect, bool status){
+    if(effect == STUN){
+        stunned = status;
+    }else if(effect == POISON){
+        poisoned = status;
+    }
+}
+bool Passives::getEffectStatus(int effect){
+    if(effect == STUN){
+        return stunned;
+    }else if(effect == POISON){
+        return poisoned;
+    }
+
+    return false;
 }

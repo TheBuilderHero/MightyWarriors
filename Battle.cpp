@@ -541,7 +541,14 @@ void Battle::questBattle(string username, int quest, int step){
         menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         menu.display(24, 1, getVictoryMessage());
-        menu.display(24, 2, "You earned " + to_string(XPDrop) + " experience!", false);
+        string expString = "You earned " + to_string(XPDrop) + " experience!";
+        int multiplier = player.getPassives().getXPMultiplier();
+        if(multiplier > 0){
+            expString += " You got an additional " + to_string((XPDrop*multiplier)) + " experience from passives!";
+            XPDrop *= multiplier;
+            menu.display(8, 16, to_string(XPDrop));
+        }
+        menu.display(24, 2, expString, false);
         int itemDrop = 0;
         srand(time(NULL));
         if(rand() % 5 == 0){
