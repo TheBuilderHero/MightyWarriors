@@ -387,12 +387,16 @@ void Battle::questBattle(string username, int quest, int step){
                     menu.display(50, cursor, "   ");
                     if(cursor > 1){
                         cursor--;
+                    }else{
+                        cursor = numberOfEnemies;
                     }
                     menu.display(50, cursor, "-->");
                 }else if(choice == 3){
                     menu.display(50, cursor, "   ");
                     if(cursor < numberOfEnemies){
                         cursor++;
+                    }else{
+                        cursor = 1;
                     }
                     menu.display(50, cursor, "-->");
                 }
@@ -475,6 +479,14 @@ void Battle::questBattle(string username, int quest, int step){
             if(killCount >= numberOfEnemies){
                 fightWon = true;
                 break;
+            }
+
+            if(player.rollExtraAttack()){
+                menu.display(8, 24, "You got an extra attack!", false);
+                system("pause");
+                menu.display(8, 24, "                                  ");
+                menu.display(8, 25, "                                                             ");
+                continue;
             }
         }
 
@@ -573,11 +585,10 @@ void Battle::questBattle(string username, int quest, int step){
         system("cls");
         menu.display(24, 1, getVictoryMessage());
         string expString = "You earned " + to_string(XPDrop) + " experience!";
-        int multiplier = player.getPassives().getXPMultiplier();
-        if(multiplier > 0){
-            expString += " You got an additional " + to_string((XPDrop*multiplier)) + " experience from passives!";
-            XPDrop *= multiplier;
-            menu.display(8, 16, to_string(XPDrop));
+        int addXP = player.getPassives().getXPMultiplier() * XPDrop;
+        if(addXP > 0){
+            expString += " You got an additional " + to_string(addXP) + " experience from passives!";
+            XPDrop += addXP;
         }
         menu.display(24, 2, expString, false);
         int itemDrop = 0;

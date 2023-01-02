@@ -6,7 +6,8 @@
 class Passives{
     private:
         //all passive booleans, determines active or inactive
-        bool tough = false, stunAttack = false, ethereal = false, learning = false;
+        bool tough = false, stunAttack = false, extraAttack = false, ethereal = false, learning = false;
+        bool extraAttackUsed = false;
         
         //stat bonuses
         int bonusHealth = 0;
@@ -47,6 +48,10 @@ class Passives{
 
         bool isStunned();
         void setStunned(bool stun);
+
+        bool rollExtraAttack();
+        bool checkExtraAttack();
+        void setExtraAttack(bool value);
 
         void setEffect(int effect, bool status);
         bool getEffectStatus(int effect);

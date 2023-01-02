@@ -201,6 +201,7 @@ class TempEntity{
         void defensePassives();//These will mitigate damage from an enemy
         void postBattlePassives();
         void setStunned(bool stun);
+        bool rollExtraAttack();
 
         void addActiveDebuff(int debuff);
         void removeActiveDebuff(int debuff);

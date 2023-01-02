@@ -401,6 +401,7 @@ void TempEntity::levelUp(){
             menu.display(51, cursor, " ");
             menu.display(54, cursor, " ");
             if(cursor > 4) cursor--;            
+            else cursor = 14;
             break;
         case 2:
             if(statPoints > 0){
@@ -422,6 +423,7 @@ void TempEntity::levelUp(){
             menu.display(51, cursor, " ");
             menu.display(54, cursor, " ");
             if(cursor < 14) cursor++;
+            else cursor = 4;
             break;
         case 4:
         if(statPoints < level){
@@ -600,6 +602,9 @@ int TempEntity::calculatePhysicalDamage(){
 
 void TempEntity::setStunned(bool stun){
     passives.setStunned(stun);
+}
+bool TempEntity::rollExtraAttack(){
+    return passives.rollExtraAttack();
 }
 
 void TempEntity::addActiveDebuff(int debuff){

@@ -70,9 +70,31 @@ void Passives::setStunned(bool stun){
     stunned = stun;
 }
 
+bool Passives::rollExtraAttack(){
+    if(extraAttack){
+        if(!extraAttackUsed){
+            srand(time(NULL));
+            if(rand()%10 == 0){
+                extraAttackUsed = true;
+                return true;
+            }
+        }else{
+            extraAttackUsed = false;
+        }
+    }
+    return false;
+}
+bool Passives::checkExtraAttack(){
+    return extraAttack;
+}
+void Passives::setExtraAttack(bool value){
+    extraAttack = value;
+}
+
 void Passives::setAllTrue(){
     tough = true;
     stunAttack = true;
+    extraAttack = true;
     ethereal = true;
     learning = true;
 }
