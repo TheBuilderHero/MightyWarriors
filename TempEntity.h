@@ -34,6 +34,7 @@ class TempEntity{
         int primaryHand, offHand; //these values will be set to the weapon number
 
         Passives passives;
+        
     public:
         void runConstructorValueSetup(std::string currentUsername, bool NewTempEntityProccess = false);
         TempEntity(std::string currentUsername);
@@ -196,10 +197,13 @@ class TempEntity{
         void receiveDamage(int damage);
 
         void statPassives();//maybe redundant
-        void offensePassives();//These will inflict status effects on an enemy
+        int getOffensePassive(int index);//These will inflict status effects on an enemy
         void defensePassives();//These will mitigate damage from an enemy
         void postBattlePassives();
         void setStunned(bool stun);
+
+        void addActiveDebuff(int debuff);
+        void removeActiveDebuff(int debuff);
 
         Passives getPassives();
 

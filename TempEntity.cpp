@@ -584,6 +584,7 @@ int TempEntity::dropItem(){
 
 void TempEntity::battleInitialize(){
     passives.setAllTrue();
+    passives.addAllOffense();
 
     health = maxHealth + passives.getBonusHealth();
     mind = maxMind;
@@ -599,6 +600,13 @@ int TempEntity::calculatePhysicalDamage(){
 
 void TempEntity::setStunned(bool stun){
     passives.setStunned(stun);
+}
+
+void TempEntity::addActiveDebuff(int debuff){
+    passives.addActiveDebuff(debuff);
+}
+void TempEntity::removeActiveDebuff(int debuff){
+    passives.removeActiveDebuff(debuff);
 }
 
 Passives TempEntity::getPassives(){
