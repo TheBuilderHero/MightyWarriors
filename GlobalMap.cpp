@@ -18,8 +18,9 @@ void GlobalMap::displayMap(){
         previousIndexWasWater = false;
         for(int i2 = 0; i2 < mapping.at(i).size(); i2++){
             //all values greater than 0 will be land and those less than 0 will be water
-            if(mapping.at(i).at(i2)) {
-                menu.display(getConsoleXFromMapX(i2), getConsoleYFromMapY(i), unfilledMapIcon, true, false, 43);
+            //Note: other values greater than 89 have other useful purposes like 99 for city locations 
+            if(mapping.at(i).at(i2) < 90 && mapping.at(i).at(i2) > 0) { //PLAIN LAND
+                menu.display(getConsoleXFromMapX(i2), getConsoleYFromMapY(i), UNFILLED_MAP_ICON, true, false, 43);
                 if(previousIndexWasLand){ //for setting green in between locations but not on the far side of the islands
                     menu.display(getConsoleXFromMapX(i2)-1, getConsoleYFromMapY(i)," ", true, false, 43);
                 }
@@ -28,7 +29,17 @@ void GlobalMap::displayMap(){
                 }
                 previousIndexWasLand = true;
                 previousIndexWasWater = false;
-            } else {
+            } else if(mapping.at(i).at(i2) == LANDMARK_LOCATION) { //CITY LOCATIONS
+                menu.display(getConsoleXFromMapX(i2), getConsoleYFromMapY(i), LANDMARK_MAP_ICON, true, false, 43);
+                if(previousIndexWasLand){ //for setting green in between locations but not on the far side of the islands
+                    menu.display(getConsoleXFromMapX(i2)-1, getConsoleYFromMapY(i)," ", true, false, 43);
+                }
+                if(previousIndexWasWater){//for filling in the water
+                    menu.display(getConsoleXFromMapX(i2)-1, getConsoleYFromMapY(i)," ", true, false, 16);
+                }
+                previousIndexWasLand = true;
+                previousIndexWasWater = false;
+            } else {                                              //WATER LOCATIONS
                 menu.display(getConsoleXFromMapX(i2), getConsoleYFromMapY(i)," ", true, false, 16);
                 if(previousIndexWasWater){ //for filling in the water
                     menu.display(getConsoleXFromMapX(i2)-1, getConsoleYFromMapY(i)," ", true, false, 16);
@@ -73,6 +84,9 @@ void GlobalMap::displayMapOutline(){
         menu.display(posColumn,setY,"-");
     }
 }
+void GlobalMap::displayMapLandmarks(){
+
+}
 void GlobalMap::displayPlayerPostion(){
     int x = player.getMapLocationX();
     int y = player.getMapLocationY();
@@ -116,7 +130,16 @@ int GlobalMap::getMapY(int location){
     int i = ceil((double)location / 55.0);
     return i;
 }
-
+string GlobalMap::icon(int mapX, int mapY){
+    int locationValue = mapping.at(mapY).at(mapX);
+    if(locationValue < 90 && locationValue > 0){
+        return UNFILLED_MAP_ICON;
+    } else if (locationValue == LANDMARK_LOCATION){
+        return LANDMARK_MAP_ICON;
+    } else {
+        return UNFILLED_MAP_ICON;
+    }
+}
 
 void GlobalMap::travelMap(){
         string failedTravelMSG = "Failed Travel!";
@@ -196,6 +219,6 @@ void GlobalMap::travelMap(){
         //display new player position:
         displayPlayerPostion();
         //write map icon to old player position if they traveled to a new location successfully:
-        if(canTravel) menu.display(getConsoleXFromMapX(oldX), getConsoleYFromMapY(oldY), unfilledMapIcon, true, false, 43);
+        if(canTravel) menu.display(getConsoleXFromMapX(oldX), getConsoleYFromMapY(oldY), icon(oldX,oldY), true, false, 43);
     }
 }
