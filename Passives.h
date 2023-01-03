@@ -26,7 +26,7 @@ class Passives{
 
     public:
         //static const int STUN = 1, POISON = 2, DIZZY = 3;
-        enum effect {STUN, POISON, DIZZY};
+        enum effect {FIXED, STUN, POISON, DIZZY};
 
         //call to passives before, during, and after battle
         void preBattlePassives();
