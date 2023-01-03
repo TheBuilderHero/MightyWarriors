@@ -23,6 +23,7 @@
                 "Main.cpp",
                 "Interactions.cpp",
                 "NPCData\\NPC.cpp",
+                "GlobalMap.cpp",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
                 " -lws2_32",

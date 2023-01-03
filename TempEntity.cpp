@@ -192,6 +192,14 @@ void TempEntity::setUsername(string newUsername) {
 void TempEntity::setLocation(int currentLocationValue){
     location = currentLocationValue;
 }
+void TempEntity::setMapLocation(int mapX, int mapY){
+    //std::cout << "set X: " + to_string(mapX) << std::endl;
+    //system("pause");
+    //std::cout << "set Y: " + to_string(mapY) << std::endl;
+    //system("pause");
+    mapLocation.x = mapX;
+    mapLocation.y = mapY;
+}
 void TempEntity::setLandmarkLocation(int currentLandmarkLocationValue){
     landmarkLocation = currentLandmarkLocationValue;
 }

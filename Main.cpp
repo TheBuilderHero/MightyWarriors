@@ -8,6 +8,10 @@
 #include "Battle.h"
 #include "DataGuard.h"
 
+//for testing:
+#include "GlobalMap.h"
+//end of testing
+
 #include "NPCData/NPC.h"
 #include <vector>
 
@@ -103,12 +107,18 @@ void Main::setTextSize(int scaleX, int scaleY){
 }
 
 void Main::preLoadGameTest(){
+    GlobalMap globalmap;
+    /*
     ReachOutToServer server;
     Cipher code;
     cout << "message:" << endl;
     string info = server.sendToServer("~27~");
     cout << info << endl;
-    system("pause");
+    */
+    globalmap.displayMap();
+    globalmap.displayMapOutline();
+    globalmap.displayPlayerPostion();
+    globalmap.travelMap();
 }
 
 void Main::maxsc()

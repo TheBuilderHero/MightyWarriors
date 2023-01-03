@@ -23,6 +23,10 @@ class TempEntity{
         int level, currentXP, XPForNextLevel;
         std::string race, kit, weapon, qDamageType, wDamageType, eDamageType, rDamageType;
         int location, landmarkLocation, quest1Progress[7];
+        struct{
+            int x;
+            int y;
+        } mapLocation;
         //int quest1Progress[2];
         std::string name;
         bool battleWon = false;
@@ -81,6 +85,8 @@ class TempEntity{
         //getter functions:
         std::string getUsername() { return username; }
         int getLocation() { return location; }
+        int getMapLocationX() { return mapLocation.x; }
+        int getMapLocationY() { return mapLocation.y; }
         int getLandmarkLocation() { return landmarkLocation; }
         int getQuest1Progress(int questNumber){ return quest1Progress[questNumber - 1]; }
         //stats:
@@ -122,6 +128,7 @@ class TempEntity{
         //setter functions:
         void setUsername(std::string newUsername);
         void setLocation(int currentLocationValue);
+        void setMapLocation(int mapX, int mapY);
         void setLandmarkLocation(int currentLandmarkLocationValue);
         void setQuest1Progress(int questNumber, int newProgress);
         //stats:
