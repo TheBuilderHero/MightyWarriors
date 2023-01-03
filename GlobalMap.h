@@ -5,13 +5,14 @@ class GlobalMap {
     private:
         std::string UNFILLED_MAP_ICON = " ";
         std::string LANDMARK_MAP_ICON = "C";
+        std::string PLAYER_MAP_ICON = "X";
         //unfilledMapIcon = " ";
         int rowOffset = 7;
         int columnOffset = 3;
         int COLUMN_SCALER = 2;
         int OUTLINE_OFFSET = 1;
-        unsigned int LD = 99;              //this is the same as LANDMARK_LOCATION but is shorter to be used on the map
-        unsigned int LANDMARK_LOCATION = LD; 
+        unsigned int LD = 99;              //this is the same as LANDMARK_LOCATION_VALUE but is shorter to be used on the map
+        unsigned int LANDMARK_LOCATION_VALUE = LD; 
         std::vector<std::vector<unsigned int>> mapping{//height of 41 width of 110
         //   0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//0
@@ -100,14 +101,31 @@ class GlobalMap {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//40
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//41
         };
+        std::vector<std::vector<unsigned int>> landmarkMapping{
+            //0  1  2  3  4  5  6  7  8  9
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//0
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//1
+            { 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},//2
+            { 0, 0, 0, 1, 1, 1, 1, 0, 0, 0},//3
+            { 1, 1, 1, 1, 1, 1, 1, 0, 0, 0},//4
+            { 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},//5
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//6
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//7
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//8
+            { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//9
+        };
     public:
         GlobalMap();
         void displayMap();
+        void displayLandmarkMap();
         void displayMapOutline();
-        void displayMapLandmarks();
+        void displayLandmarkMapOutline();
         void displayPlayerPostion();
+        void displayPlayerLandmarkPostion(int x, int y);
         int getMapMaxPositionX();
         int getMapMaxPositionY();
+        int getLandmarkMapMaxPositionX();
+        int getLandmarkMapMaxPositionY();
         int getConsoleXFromMapX(int mapX);
         int getConsoleYFromMapY(int mapY);
         int getConsoleXFromLocation(int location);
@@ -115,6 +133,13 @@ class GlobalMap {
         int getMapX(int location);
         int getMapY(int location);
         std::string icon(int mapX, int mapY);
+        std::string iconLandmark(int mapX, int mapY);
+        std::string playerIcon(int mapX, int mapY);
+        std::string playerIconLandmark(int mapX, int mapY);
+        bool isLocationLandmark();
+        bool isLocationInteractive(int x, int y);
+        void travelLandmark();
+        void promptInteraction();
         //int getPlayerLocation(int mapX, int mapY);
         void travelMap();
 };

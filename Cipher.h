@@ -71,6 +71,6 @@ class Cipher {
     std::string getItemS(int itemNumberToReturn);
 
     //vector sending and reciving:
-    std::vector<std::string>* decipherVector(std::string* message);
+    //std::vector<std::string>* decipherVector(std::string* message);
 
 };

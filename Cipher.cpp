@@ -750,7 +750,8 @@ string Cipher::getItemS(int itemNumberToReturn){
     }
 }
 
+/* //Not used
 vector<string>* Cipher::decipherVector(string* message){
-
     return &recivedMessage;
 }
+*/

@@ -115,9 +115,6 @@ void Main::preLoadGameTest(){
     string info = server.sendToServer("~27~");
     cout << info << endl;
     */
-    globalmap.displayMap();
-    globalmap.displayMapOutline();
-    globalmap.displayPlayerPostion();
     globalmap.travelMap();
 }
 
