@@ -105,25 +105,40 @@ void Passives::addAllOffense(){
     addActiveOffensePassive(3);
 }
 
-void Passives::setEffect(int effect, bool status){
-    if(effect == STUN){
-        stunned = status;
-    }else if(effect == POISON){
-        poisoned = status;
-    }else if(effect == DIZZY){
-        dizzied = status;
+void Passives::setEffect(effect chosenEffect, bool status){
+    switch (chosenEffect){
+        case STUN:{
+            stunned = status;
+            break;
+        }
+        case POISON:{
+            poisoned = status;
+            break;
+        }
+        case DIZZY:{
+            dizzied = status;
+            break;
+        }
+
+        default: //not recognized effect
+            break;
     }
 }
-bool Passives::getEffectStatus(int effect){
-    if(effect == STUN){
-        return stunned;
-    }else if(effect == POISON){
-        return poisoned;
-    }else if(effect == DIZZY){
-        return dizzied;
+bool Passives::getEffectStatus(effect chosenEffect){
+    
+    switch (chosenEffect){
+        case STUN:{
+            return stunned;
+        }
+        case POISON:{
+            return poisoned;
+        }
+        case DIZZY:{
+            return dizzied;
+        }
+        default: //not recognized effect
+            return false;
     }
-
-    return false;
 }
 
 int Passives::getActiveOffensePassivesCount(){
@@ -132,7 +147,7 @@ int Passives::getActiveOffensePassivesCount(){
 int Passives::getActiveOffensePassive(int index){
     return offensePassivesList[index];
 }
-string Passives:: getActiveOffensePassiveName(int index){
+string Passives::getActiveOffensePassiveName(int index){
     int passive = offensePassivesList[index];
     switch(passive){
         case 1:

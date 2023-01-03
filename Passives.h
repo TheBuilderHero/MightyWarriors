@@ -25,6 +25,9 @@ class Passives{
         bool dizzied = false;
 
     public:
+        static const int STUN = 1, POISON = 2, DIZZY = 3;
+        static const enum effect {STUN, POISON, DIZZY};
+
         //call to passives before, during, and after battle
         void preBattlePassives();
         void duringBattlePlayerAttackPassives();
@@ -53,8 +56,8 @@ class Passives{
         bool checkExtraAttack();
         void setExtraAttack(bool value);
 
-        void setEffect(int effect, bool status);
-        bool getEffectStatus(int effect);
+        void setEffect(effect chosenEffect, bool status);
+        bool getEffectStatus(effect chosenEffect);
 
         void setAllTrue();
         void addAllOffense();
@@ -75,6 +78,4 @@ class Passives{
 
         std::string getOffensePassiveMessage(int index);
         std::string getDebuffMessage(int index);
-
-        static const int STUN = 1, POISON = 2, DIZZY = 3;
 };
