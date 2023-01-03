@@ -261,6 +261,16 @@ void Battle::questBattle(string username, int quest, int step){
     ReachOutToServer server;
     Cipher code;
     Account account;
+    Passives passives;
+
+    player.battleInitialize();
+    cout << "\n Your passives have been set to: \n\n";
+    for(int i = 0; i < player.getPassives().getActiveOffensePassivesCount(); i++){
+        cout << " " << player.getPassives().getActiveOffensePassiveName(i) << " attack" << endl;
+    }
+    cout << endl;
+    system("pause");
+    system("cls");
 
     //Oh boy I'm trying some monster groups now
     int numberOfEnemies;
@@ -301,7 +311,6 @@ void Battle::questBattle(string username, int quest, int step){
         playerLevelAtStartOfFight = player.getLevel();
         guard.updateGuardData();
         //code.decipherS(server.sendToServer(code.cipher("6", username, guard.getInventoryString()))); //request the current stats of this user from the server //pull info from the server to get the Player's Character info
-        player.battleInitialize();
         playerHealth = player.getHealth(); //set player health
         playerMind = player.getMind();
         //player.setHealth(playerHealth);
@@ -378,12 +387,16 @@ void Battle::questBattle(string username, int quest, int step){
                     menu.display(50, cursor, "   ");
                     if(cursor > 1){
                         cursor--;
+                    }else{
+                        cursor = numberOfEnemies;
                     }
                     menu.display(50, cursor, "-->");
                 }else if(choice == 3){
                     menu.display(50, cursor, "   ");
                     if(cursor < numberOfEnemies){
                         cursor++;
+                    }else{
+                        cursor = 1;
                     }
                     menu.display(50, cursor, "-->");
                 }
@@ -435,9 +448,17 @@ void Battle::questBattle(string username, int quest, int step){
             }else{
                 enemies.at(cursor-1).updateHealth(-playerAttack);
                 menu.display(8, 24, "Your attack hits the " + enemyName + " for " + to_string(playerAttack) + " damage", false);
+                int currentLine = 1;
+                for(int j = 0; j < player.getPassives().getActiveOffensePassivesCount(); j++){
+                    string msg = "Your attack " + player.getPassives().getOffensePassiveMessage(j) + " the " + enemyName;
+                    enemies.at(cursor-1).addActiveDebuff(player.getPassives().getActiveOffensePassive(j));
+                    menu.display(8, 24 + currentLine, msg, false);
+                    currentLine++;
+                }
                 system("pause");
-                menu.display(8, 24, "                                                                              ");
-                menu.display(8, 25, "                                                                              ");
+                for(int i = 24; i <= 24 + currentLine; i++){
+                    menu.display(8, i, "                                                                              ");
+                }
                 
                 menu.display(80, cursor, "        ");
                 if(enemies.at(cursor-1).getHealth() <= 0){
@@ -459,6 +480,14 @@ void Battle::questBattle(string username, int quest, int step){
                 fightWon = true;
                 break;
             }
+
+            if(player.rollExtraAttack()){
+                menu.display(8, 24, "You got an extra attack!", false);
+                system("pause");
+                menu.display(8, 24, "                                  ");
+                menu.display(8, 25, "                                                             ");
+                continue;
+            }
         }
 
         code.decipher(server.sendToServer(code.cipher("26", username, code.subCipher(to_string(enemies.at(0).getEnemyNumber()), to_string(enemies.at(1).getEnemyNumber()), to_string(enemies.at(2).getEnemyNumber()), to_string(enemies.at(3).getEnemyNumber()), to_string(enemies.at(4).getEnemyNumber()),
@@ -467,12 +496,6 @@ void Battle::questBattle(string username, int quest, int step){
         for(int i = 0; i < numberOfEnemies; i++){
             //Enemy's turn to attack:
             if(enemies.at(i).getHealth() > 0 && enemies.at(i).getMind() > 0){
-                bool stun = false;
-                if(rand()%4 == 0){
-                    stun = true;
-                    player.setStunned(stun);
-                }
-
                 int enemyAttack = stoi(code.getItem(i+2, 1));
                 string emenyName;
                 if(enemies.at(i).getEnemyNumber() == 13){
@@ -486,17 +509,32 @@ void Battle::questBattle(string username, int quest, int step){
                 string enemyAttackType = code.getItem(i+2, 2);
 
                 //check during battle passives:
-                Passives passive;
-                passive.duringBattleEnemyAttackPassives();
+                //Passives passive;
+                //passive.duringBattleEnemyAttackPassives();
+                //Lol this is not how to do passives ^^^
+
+                if(enemies.at(i).getPassives().getActiveDebuffCount() > 0){
+                    int currentLine = 0;
+                    for(int j = 0; j < enemies.at(i).getPassives().getActiveDebuffCount(); j++){
+                        menu.display(8, 24 + currentLine, "The " + emenyName + " is " + enemies.at(i).getPassives().getDebuffMessage(j), false);
+                        currentLine++;
+                    }
+                    system("pause");
+                    
+                    for(int j = 24; j <= 24 + currentLine; j++){
+                        menu.display(8, j, "                                                                              ");
+                    }
+                }
+
 
                 if(enemies.at(i).getPassives().isStunned()){
-                    menu.display(8, 24, "The " + emenyName + " is stunned, so it does not attack.", false);
-                    system("pause");
-                    menu.display(8, 24, "                                                                                  ");
-                    menu.display(8, 25, "                                                                                  ");
-                    enemies.at(i).setStunned(false);
-                }
-                if(enemyAttackType == "Psychic"){
+                    enemies.at(i).removeActiveDebuff(passives.STUN);
+                }else if(enemyAttackType == "Psychic"){
+                    bool stun = false;
+                    if(rand()%20 == 0){
+                        stun = true;
+                        player.setStunned(stun);
+                    }
                     menu.display(8, 24, "The " + emenyName + "'s mental attack hits your mind for " + to_string(enemyAttack) + " damage", false);
                     if(stun){
                         menu.display(8, 25, "You are stunned!", false);
@@ -513,6 +551,11 @@ void Battle::questBattle(string username, int quest, int step){
                     menu.display(22, 3, "        ");
                     menu.display(22, 3, to_string(playerMind));
                 }else{
+                    bool stun = false;
+                    if(rand()%20 == 0){
+                        stun = true;
+                        player.setStunned(stun);
+                    }
                     menu.display(8, 24, "The " + emenyName + "'s attack hits you for " + to_string(enemyAttack) + " damage", false);
                     if(stun){
                         menu.display(8, 25, "You are stunned!", false);
@@ -541,7 +584,13 @@ void Battle::questBattle(string username, int quest, int step){
         menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         menu.display(24, 1, getVictoryMessage());
-        menu.display(24, 2, "You earned " + to_string(XPDrop) + " experience!", false);
+        string expString = "You earned " + to_string(XPDrop) + " experience!";
+        int addXP = player.getPassives().getXPMultiplier() * XPDrop;
+        if(addXP > 0){
+            expString += " You got an additional " + to_string(addXP) + " experience from passives!";
+            XPDrop += addXP;
+        }
+        menu.display(24, 2, expString, false);
         int itemDrop = 0;
         srand(time(NULL));
         if(rand() % 5 == 0){
