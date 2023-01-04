@@ -161,11 +161,9 @@ void GlobalMap::displayLandmarkMapOutline(){
 void GlobalMap::displayPlayerPostion(){
     int x = player.getMapLocationX();
     int y = player.getMapLocationY();
-    //int location = player.getLocation();
-    //x = getConsoleXFromMapX(getMapX(location));
-    //y = getConsoleYFromMapY(getMapY(location));
-    //menu.displayMessageWithPause(0,0,"x:"+to_string(x),false, true);
-    //menu.displayMessageWithPause(0,1,"y:"+to_string(y),false, true);
+
+    //menu.displayMessageWithPause(0,0,"x:"+to_string(x));
+    //menu.displayMessageWithPause(0,0,"y:"+to_string(y));
     
     menu.display(getConsoleXFromMapX(x),getConsoleYFromMapY(y), playerIcon(x,y),true,false,41);
 }
@@ -298,6 +296,7 @@ void GlobalMap::travelLandmark(){
             displayLandmarkMap();
             displayLandmarkMapOutline();
             displayPlayerLandmarkPostion(x,y);
+            printMap = false;
         }
         int pressedKey = menu.arrowPressWait(true);
         if(!canTravel) menu.display(TRAVEL_MESSAGE_ERROR_X,TRAVEL_MESSAGE_ERROR_Y, string(failedTravelMSG.length(), ' '));
@@ -311,7 +310,8 @@ void GlobalMap::travelLandmark(){
                 if(y>0) {
                     if(landmarkMapping.at(y-1).at(x)) {
                     canTravel = true;
-                    player.setMapLocation(x,--y);
+                    --y;
+                    //player.setMapLocation(x,--y);
                     } else {
                         menu.display(TRAVEL_MESSAGE_ERROR_X,TRAVEL_MESSAGE_ERROR_Y,failedTravelMSG);
                     }
@@ -325,7 +325,8 @@ void GlobalMap::travelLandmark(){
                 if(x<landmarkMapping.at(y).size()) {
                     if(landmarkMapping.at(y).at(x+1)) {
                     canTravel = true;
-                    player.setMapLocation(++x,y);
+                    ++x;
+                    //player.setMapLocation(++x,y);
                     } else {
                         menu.display(TRAVEL_MESSAGE_ERROR_X,TRAVEL_MESSAGE_ERROR_Y,failedTravelMSG);
                     }
@@ -339,7 +340,8 @@ void GlobalMap::travelLandmark(){
                 if(y<landmarkMapping.size()) {
                     if(landmarkMapping.at(y+1).at(x)) {
                     canTravel = true;
-                    player.setMapLocation(x,++y);
+                    ++y;
+                    //player.setMapLocation(x,++y);
                     } else {
                         menu.display(TRAVEL_MESSAGE_ERROR_X,TRAVEL_MESSAGE_ERROR_Y,failedTravelMSG);
                     }
@@ -353,7 +355,8 @@ void GlobalMap::travelLandmark(){
                 if(x>0) {
                     if(landmarkMapping.at(y).at(x-1)) {
                     canTravel = true;
-                    player.setMapLocation(--x,y);
+                    --x;
+                    //player.setMapLocation(--x,y);
                     } else {
                         menu.display(TRAVEL_MESSAGE_ERROR_X,TRAVEL_MESSAGE_ERROR_Y,failedTravelMSG);
                     }
@@ -363,14 +366,15 @@ void GlobalMap::travelLandmark(){
                 break;
             }
         }
-        
-        //display new player position:
-        displayPlayerLandmarkPostion(x,y);
-        //write map icon to old player position if they traveled to a new location successfully:
-        if(canTravel) menu.display(getConsoleXFromMapX(oldX), getConsoleYFromMapY(oldY), icon(oldX,oldY), true, false, 43);
-        if(isLocationInteractive(x,y)) {
-            printMap = true;
-            promptInteraction();
+        if(!leaveMapTravling){
+            //display new player position:
+            displayPlayerLandmarkPostion(x,y);
+            //write map icon to old player position if they traveled to a new location successfully:
+            if(canTravel) menu.display(getConsoleXFromMapX(oldX), getConsoleYFromMapY(oldY), icon(oldX,oldY), true, false, 43);
+            if(isLocationInteractive(x,y)) {
+                printMap = true;
+                promptInteraction();
+            }
         }
     }
 }
@@ -404,9 +408,6 @@ void GlobalMap::travelMap(){
         //Now that a new option has been selected clear the Failed Travel message
         if(!canTravel) menu.display(TRAVEL_MESSAGE_ERROR_X,TRAVEL_MESSAGE_ERROR_Y, string(failedTravelMSG.length(), ' '));
 
-        //int currentLocation = player.getLocation();
-        //x = getMapX(currentLocation);
-        //y = getMapY(currentLocation);
         switch(pressedKey){
             case 0:{
                 leaveMapTravling = true;
@@ -469,13 +470,15 @@ void GlobalMap::travelMap(){
                 break;
             }
         }
-        //display new player position:
-        displayPlayerPostion(); 
-        //write map icon to old player position if they traveled to a new location successfully:
-        if(canTravel) menu.display(getConsoleXFromMapX(oldX), getConsoleYFromMapY(oldY), icon(oldX,oldY), true, false, 43);
-        if(isLocationLandmark()) {
-            printMap = true;
-            travelLandmark();
+        if(!leaveMapTravling){
+            //display new player position:
+            displayPlayerPostion(); 
+            //write map icon to old player position if they traveled to a new location successfully:
+            if(canTravel) menu.display(getConsoleXFromMapX(oldX), getConsoleYFromMapY(oldY), icon(oldX,oldY), true, false, 43);
+            if(isLocationLandmark()) {
+                printMap = true;
+                travelLandmark();
+            }
         }
     }
 }

@@ -130,6 +130,7 @@ class TempEntity{
         void setUsername(std::string newUsername);
         void setLocation(int currentLocationValue);
         void setMapLocation(int mapX, int mapY);
+        void setLandmarkMapLocation(int mapX, int mapY);
         void setLandmarkLocation(int currentLandmarkLocationValue);
         void setQuest1Progress(int questNumber, int newProgress);
         //stats:
