@@ -4,7 +4,7 @@
 #include <limits>
 #include <vector>
 
-#include "Main.h"
+#include "GlobalVariables.h"
 #include "Account.h"
 #include "ReachOutToServer.h"
 #include "Cipher.h"

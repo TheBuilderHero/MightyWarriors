@@ -7,7 +7,7 @@
 #include <ctime> 
 #include <sstream> //for the use of the cout being better with double numbers
 
-#include "Main.h"
+#include "GlobalVariables.h"
 #include "Account.h"
 #include "ReachOutToServer.h"
 #include "Cipher.h"

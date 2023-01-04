@@ -1,6 +1,6 @@
 #include "ReachOutToServer.h"
 #include "Cipher.h"
-#include "Main.h"
+#include "GlobalVariables.h"
 #include <string>
 
 using namespace std;

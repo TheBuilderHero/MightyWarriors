@@ -1,7 +1,7 @@
 #include <string>
 #include <vector>
 
-#include "Main.h"
+#include "GlobalVariables.h"
 #include "Cipher.h"
 #include "Menu.h" //including for the display funciton
 

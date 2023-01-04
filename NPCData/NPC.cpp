@@ -1,5 +1,5 @@
 #include "NPC.h"
-#include "../Main.h"
+#include "../GlobalVariables.h"
 #include "../Cipher.h"
 #include <iostream>
 #include <vector>

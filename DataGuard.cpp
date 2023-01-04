@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "Main.h"
+#include "GlobalVariables.h"
 #include "TempEntity.h"
 #include "DataGuard.h"
 #include "Cipher.h"

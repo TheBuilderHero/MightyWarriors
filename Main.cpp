@@ -1,15 +1,19 @@
 #include <string.h>
 
+#include "GlobalVariables.h"
 #include "Main.h"
+
 #include "ReachOutToServer.h"
 #include "Account.h"
 #include "Cipher.h"
+/*
 #include "Menu.h"
 #include "Battle.h"
 #include "DataGuard.h"
+*/
 
 //for testing:
-#include "GlobalMap.h"
+
 //end of testing
 
 #include "NPCData/NPC.h"
@@ -22,6 +26,7 @@ Menu menu;
 Map map;
 DataGuard guard;
 Interactions interactions;
+GlobalMap globalmap;
 //WorldMap worldMap; //Map map;
 std::vector<NPC> npcs;
 static int currentID = 0;
@@ -107,15 +112,8 @@ void Main::setTextSize(int scaleX, int scaleY){
 }
 
 void Main::preLoadGameTest(){
-    GlobalMap globalmap;
-    /*
-    ReachOutToServer server;
-    Cipher code;
-    cout << "message:" << endl;
-    string info = server.sendToServer("~27~");
-    cout << info << endl;
-    */
-    globalmap.travelMap();
+    //testing:
+
 }
 
 void Main::maxsc()
@@ -136,6 +134,11 @@ void Main::fullsc()
 
 unsigned int setUIDForNPC(){
     return currentID++;
+}
+
+void Main::getGameVersion(){
+    menu.display(3, 3, "Client Version: " + to_string(gameVersion) + "." + to_string(gameMajorBuild) + "." + to_string(gameMinorBuild) + "." + to_string(gamePatch), false);
+    system("pause");
 }
 
 unsigned int getLastAssignedUIDForNPC(){

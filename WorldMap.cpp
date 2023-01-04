@@ -5,8 +5,7 @@
 #include "Menu.h"
 #include "Map.h"
 #include "DataGuard.h"
-
-#include "Main.h"
+#include "GlobalVariables.h"
 
 using namespace std;
 

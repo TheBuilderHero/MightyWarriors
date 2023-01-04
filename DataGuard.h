@@ -2,7 +2,7 @@
 
 #include "TempEntity.h"
 #include "Menu.h"
-#include "Main.h"
+#include "GlobalVariables.h"
 
 #pragma once
 extern TempEntity player;

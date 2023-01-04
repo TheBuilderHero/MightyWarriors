@@ -7,6 +7,7 @@
 #include <sstream>
 
 #include "Main.h"
+#include "GlobalVariables.h"
 #include "Account.h"
 #include "ReachOutToServer.h"
 #include "Cipher.h"
@@ -41,10 +42,6 @@ void Menu::ClearConsoleInputBuffer()
     delete[] ClearingVar1;
 }
 
-void Menu::getGameVersion(){
-    display(3, 3, "Client Version: " + to_string(gameVersion) + "." + to_string(gameMajorBuild) + "." + to_string(gameMinorBuild) + "." + to_string(gamePatch), false);
-    system("pause");
-}
 
 void Menu::menu(string username){ //bring up the menu for the passing in the username
     //the following is program close code:
@@ -168,10 +165,13 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
             display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
             system("cls");
             ClearConsoleInputBuffer();
+            globalmap.travelMap(); //new map
+            /*
             stillTraveling = true;
             do {
-            travelMenu(username);
+                travelMenu(username);
             } while(stillTraveling);
+            */
             break;
         }
         case 3:{//display stats
@@ -670,13 +670,16 @@ void Menu::accountInfo(string username){
         ClearConsoleInputBuffer();
         account.logonScreen();
         break;
-    case 3://display version and info
+    case 3:{
+        //display version and info
+        Main main;
         display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         ClearConsoleInputBuffer();
-        getGameVersion();
+        main.getGameVersion();
         //menu(username);
         break;
+    }
     default:
         display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
@@ -736,12 +739,15 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         usernameE = "";
         //adminMenu(username);
         break;
-    case 4://display version and info
+    case 4:{
+        Main main;
+        //display version and info
         display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
-        getGameVersion();
+        main.getGameVersion();
         //adminMenu(username);
         break;
+    }
     case 5:{ //test Quests
         display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
@@ -753,9 +759,7 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
     case 6:{
         display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
-        //Map map;
-        map.displayMapOutline(map.getMapStandardMaxColumn(), map.getMapStandardMaxRow());
-        waitForEnter(getEnterKeyState());
+        globalmap.travelMap(); //new map
         break;
     }
     case 7:{
@@ -1220,7 +1224,7 @@ void Menu::waitForEnter(int enterCurrentlyPressed){ //waits for a user to click 
     }
     ClearConsoleInputBuffer();
 }
-//I am shaking my head at my own function //Lol... You did good...
+//I am shaking my head at my own function //Lol... You did good...Main
 int Menu::getEnterKeyState(){
     return GetKeyState(VK_RETURN);
 }

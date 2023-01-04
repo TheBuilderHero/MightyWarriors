@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "Main.h"
+#include "GlobalVariables.h"
 #include "Map.h"
 #include "WorldMap.h"
 #include "Menu.h"

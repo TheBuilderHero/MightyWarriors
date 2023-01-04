@@ -5,7 +5,7 @@
 #include "Items.h"
 #include "Cipher.h"
 #include "ReachOutToServer.h"
-#include "Main.h"
+#include "GlobalVariables.h"
 
 using namespace std;
 

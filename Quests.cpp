@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-#include "Main.h"
+#include "GlobalVariables.h"
 #include "Quests.h"
 #include "Battle.h"
 #include "Account.h"
