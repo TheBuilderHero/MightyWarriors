@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Main.h"
-#include<Windows.h>
+#include <Windows.h>
 
 using namespace std;  //so I dont have to type "std::"
 

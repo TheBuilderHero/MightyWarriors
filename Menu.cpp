@@ -48,7 +48,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
     atexit(fnExit);
     guard.on(username);
     //review if this is needed:
-    //guard.updateGuardData(getPlayer());
+    guard.updateGuardData();
     //end of program close code.
 
     bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, fiveKeyPressedLastLoop = false, sixKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false,
@@ -222,7 +222,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         }
     }
 }
-
+/*
 //We need to make the map smaller so it fits in a windowed console
 void Menu::travelMenu(string username){ //bring up the menu for travel
     display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
@@ -480,7 +480,7 @@ void Menu::cityTravelMenu(string username){ //bring up the menu for travel
     } while (getStillLandmarkSimpleTraveling());
     
 }
-
+*/
 void Menu::displayStats(){
     Items itemHandler;
     string physicalDamageAbilities = "Physical Damage Abilities: ";

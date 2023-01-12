@@ -5,6 +5,8 @@
 
 class Cipher {
     private:
+    //for min and max values:
+    std::string delimiterMinMax = " - ";
     std::string delimiterLayer1 = "~"; //a character that marks the beginning or end of a unit of data
     std::string delimiterLayer2 = "="; //a character that marks the beginning or end of a unit of data
     std::string delimiterLayer3 = "|";
@@ -18,7 +20,7 @@ class Cipher {
 
     public:
     enum SEND_TYPE { VECTOR_SEND };
-    enum DATA_TYPE { DIALOGUE_INFO, STAT_INFO, ENEMY_INFO };
+    enum DATA_TYPE { NONE, DIALOGUE_INFO, STAT_INFO, ENEMY_INFO, LOCATION_INFO, RACE_KIT_WEAPON_INFO, QUEST_PROGRESS, INVENTORY_INFO, ABILITY_TYPES_INFO, LEVEL_XP_INFO };
     //enumeration convertion:
     enum SEND_TYPE convertToSEND_TYPE(std::string &input){
         //if these are changed we need to then update them on the server side:
@@ -31,7 +33,13 @@ class Cipher {
         if (input == "dialogue") return DIALOGUE_INFO;
         if (input == "stats") return STAT_INFO;
         if (input == "enemyinfo") return ENEMY_INFO;
-        return DIALOGUE_INFO;
+        if (input == "locationinfo") return LOCATION_INFO;
+        if (input == "racekitweaponinfo") return RACE_KIT_WEAPON_INFO;
+        if (input == "questinfo") return QUEST_PROGRESS;
+        if (input == "inventoryinfo") return INVENTORY_INFO;
+        if (input == "abilitytypeinfo") return ABILITY_TYPES_INFO;
+        if (input == "levelxpinfo") return LEVEL_XP_INFO;
+        return NONE;
     }
     //enumeration convertion:
     std::string convertSEND_TYPEToString(const enum SEND_TYPE &input){
@@ -44,10 +52,17 @@ class Cipher {
     std::string convertDATA_TYPEToString(const enum DATA_TYPE &input){
         //if these are changed we need to then update them on the client side:
         switch(input){
-            case 0: return "dialogue"; 
-            case 1: return "stats"; 
-            case 2: return "enemyinfo";
-            default: return ""; 
+            case 0: return "none"; 
+            case 1: return "dialogue"; 
+            case 2: return "stats"; 
+            case 3: return "enemyinfo";
+            case 4: return "locationinfo";
+            case 5: return "racekitweaponinfo";
+            case 6: return "questinfo";
+            case 7: return "inventoryinfo";
+            case 8: return "abilitytypeinfo";
+            case 9: return "levelxpinfo";
+            default: return "failed"; 
         }
     }
 
@@ -62,6 +77,7 @@ class Cipher {
     std::string subCipher(std::string item1= "", std::string item2= "", std::string item3= "", std::string item4= "", std::string item5= "", std::string item6= "", std::string item7= "", std::string item8= "", std::string item9= "", std::string item10= "", std::string item11= "", std::string item12= "", std::string item13= "", std::string item14= "", std::string item15= "", std::string item16= "", std::string item17= "", std::string item18= "", std::string item19= "", std::string item20= "", std::string item21= "", std::string item22= "");// the default values have been set to "" in case no input is given
 
     //return for the private variables:
+    std::string getDelimiterMinMax() { return delimiterMinMax; }
     std::string getDelimiterLayer1() { return delimiterLayer1; }
     std::string getDelimiterLayer2() { return delimiterLayer2; }
     std::string getDelimiterLayer3() { return delimiterLayer3; }

@@ -257,7 +257,8 @@ void Battle::questBattle(string username, int quest, int step){
     int enemyNum = 0;
     string answer;
     bool fightWon = false, fightLost = false;
-    int location = player.getLocation();
+    int locationX = player.getMapLocationX();
+    int locationY = player.getMapLocationY();
     ReachOutToServer server;
     Cipher code;
     Account account;
@@ -621,7 +622,7 @@ void Battle::questBattle(string username, int quest, int step){
         
         if(itemDrop > 0) player.addInventoryItem(itemDrop); //need to put this after the level up otherwise item will be lost
         player.setBattleResult(true);
-        player.setLocation(location);
+        player.setMapLocation(locationX,locationY);
         menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
     } else if (fightLost){ //the enemy has won the fight

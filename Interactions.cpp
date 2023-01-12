@@ -16,10 +16,10 @@ Interactions::Interactions(){ //build all character interactions by getting them
     //std::cout << "Constructor 1 running!" << std::endl;
 }
 
-void Interactions::interact(int location){ //
+void Interactions::interact(int mapX,int mapY){ //
     menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
     system("cls");
-    string name = npcs.at(0).getNPCforLocation(location);
+    string name = npcs.at(0).getNPCforMapXY(mapX, mapY);
     int cuttentNPCID = npcs.at(0).getNPCIDforName(name);
     menu.displayMessageWithPause(25, 10, name);
     int startingRow = 11;
@@ -57,5 +57,5 @@ void Interactions::setLocationInteractionDialogue(std::string line){
 
 void Interactions::pullInteractionsAndNPCs(){
     ReachOutToServer server;
-    server.requestFromServer("27");
+    server.requestFromServer(server.GET_ALL_DIALOGUE_DATA);
 }

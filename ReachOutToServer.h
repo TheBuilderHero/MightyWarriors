@@ -10,8 +10,10 @@ private:
     SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
 
 public:
+    enum RequestIDs {LOAD_ALL_PLAYER_DATA = 28, GET_ALL_DIALOGUE_DATA = 27};
     std::string sendToServer(std::string aMessage);
     std::string getIPFromHostName(char * hostname);
-    void requestFromServer(std::string requestID);
+    void requestFromServer(RequestIDs requestID);
+    std::string convertRequestIDEnumToString(RequestIDs id);
 
 };

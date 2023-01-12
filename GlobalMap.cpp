@@ -1,6 +1,7 @@
 #include <cmath>
 //#include "GlobalMap.h"
 #include "GlobalVariables.h"
+#include "Battle.h"
 #include "Menu.h"
 
 #include <string>
@@ -8,6 +9,7 @@
 using namespace std;
 
 GlobalMap::GlobalMap(){ //sets the players starting position on the map
+    //this order can only be changed by changing the order in enum LandmarkMapChoice:
     landmarkMaps.emplace_back(landmark_City); //city is index 0
     landmarkMaps.emplace_back(landmark_Cave); //cave is index 1
     if(true){
@@ -287,7 +289,56 @@ bool GlobalMap::isLocationinLandmarkInteractive(int x, int y){
 }
 
 void GlobalMap::promptInteraction(){
+    //prompt for player to enter city:
+    menu.display(getLandmarkMapMaxPositionX()+4, (getLandmarkMapMaxPositionY()/2)+5, "Would you like to talk with the Villager? (Y/N)", true);
+    char interact = menu.yesOrNo(); //returns y or n
+    if (interact == 'y'){
+        //leavingVillage = true;
+        interactions.interact(player.getMapLocationX(), player.getMapLocationY()); //add location in city to this
+    } else {//do not enter city
+        menu.clearDisplayRow(getLandmarkMapMaxPositionX()+5, (getLandmarkMapMaxPositionY()-(2*ROW_OFFSET_LANDMARK_MAP)));
+    }
+}
 
+bool GlobalMap::checkForEncounter(){
+    //the following is code for the other travel system that probably needs some slight adjustments to the current system:
+    bool encounter = false;
+    srand(time(NULL)); 
+    if(rand() % 14 == 0){ //1 in 15
+        encounter = true;
+    }
+    //does not seem we need the folowing:
+    //int locationX = player.getMapLocationX();
+    //int locationY = player.getMapLocationY();
+    //getTravelMessage(player.getLocation(), direction);
+    if(encounter){
+        menu.setStillSimpleTraveling(false);//no longer simple traveling (The cmd will have to re-output the travel menu.)
+        menu.clearDisplayRow(2);
+        menu.display(30, 2, "ENCOUNTER!");
+        menu.waitForEnter(menu.getEnterKeyState());
+        Battle battle;
+        //battle.setPlayer(player);
+        battle.questBattle(player.getUsername(), 100, 10);
+        //setPlayer(battle.getPlayer());
+        if(!player.getBattleResult()){
+            menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
+            system("cls");
+            menu.display(30, 2, "Having been defeated, you return crying to whence you came.");
+            menu.waitForEnter(menu.getEnterKeyState());
+            //cout << "still Traveling? " << menu.getStillSimpleTraveling();
+            //menu.waitForEnter(menu.getEnterKeyState());
+            return true;
+        }else{
+            //cout << "still Traveling? " << menu.getStillSimpleTraveling();
+            menu.display(30, 2, "You may resume travelling now.");
+            menu.waitForEnter(menu.getEnterKeyState());
+            player.setBattleResult(false);
+        }        
+    } else {
+        //menu.clearDisplayRow(2);
+        menu.display(30, 4, "You moved hooray!");
+    }
+    return encounter;
 }
 
 void GlobalMap::travelLandmark(){
@@ -439,8 +490,11 @@ void GlobalMap::travelMap(){
                 canTravel = false;
                 if(y>0) {
                     if(mapping.at(y-1).at(x)) {
-                    canTravel = true;
-                    player.setMapLocation(x,--y);
+                        canTravel = true;
+                        player.setMapLocation(x,--y);
+                        guard.setPlayerMapLocationX(x);
+                        guard.setPlayerMapLocationY(y);
+                        if(checkForEncounter()) printMap = true;
                     } else {
                         menu.display(TRAVEL_MESSAGE_ERROR_X,TRAVEL_MESSAGE_ERROR_Y,failedTravelMSG);
                     }
@@ -453,8 +507,11 @@ void GlobalMap::travelMap(){
                 canTravel = false;
                 if(x<mapping.at(y).size()-1) {
                     if(mapping.at(y).at(x+1)) {
-                    canTravel = true;
-                    player.setMapLocation(++x,y);
+                        canTravel = true;
+                        player.setMapLocation(++x,y);
+                        guard.setPlayerMapLocationX(x);
+                        guard.setPlayerMapLocationY(y);
+                        if(checkForEncounter()) printMap = true;
                     } else {
                         menu.display(TRAVEL_MESSAGE_ERROR_X,TRAVEL_MESSAGE_ERROR_Y,failedTravelMSG);
                     }
@@ -467,8 +524,11 @@ void GlobalMap::travelMap(){
                 canTravel = false;
                 if(y<mapping.size()-1) {
                     if(mapping.at(y+1).at(x)) {
-                    canTravel = true;
-                    player.setMapLocation(x,++y);
+                        canTravel = true;
+                        player.setMapLocation(x,++y);
+                        guard.setPlayerMapLocationX(x);
+                        guard.setPlayerMapLocationY(y);
+                        if(checkForEncounter()) printMap = true;
                     } else {
                         menu.display(TRAVEL_MESSAGE_ERROR_X,TRAVEL_MESSAGE_ERROR_Y,failedTravelMSG);
                     }
@@ -481,8 +541,11 @@ void GlobalMap::travelMap(){
                 canTravel = false;
                 if(x>0) {
                     if(mapping.at(y).at(x-1)) {
-                    canTravel = true;
-                    player.setMapLocation(--x,y);
+                        canTravel = true;
+                        player.setMapLocation(--x,y);
+                        guard.setPlayerMapLocationX(x);
+                        guard.setPlayerMapLocationY(y);
+                        if(checkForEncounter()) printMap = true;
                     } else {
                         menu.display(TRAVEL_MESSAGE_ERROR_X,TRAVEL_MESSAGE_ERROR_Y,failedTravelMSG);
                     }

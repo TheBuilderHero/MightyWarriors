@@ -10,6 +10,16 @@
 using namespace std;
 
 void TempEntity::runConstructorValueSetup(string currentUsername, bool NewTempEntityProccess){
+    setUsername(currentUsername);
+    ReachOutToServer server;
+    Cipher code;
+    try{
+        server.requestFromServer(server.LOAD_ALL_PLAYER_DATA);
+    }
+    catch(invalid_argument){
+            
+    }
+    /*
     if(NewTempEntityProccess){ //use only one server request
         try{
 
@@ -158,6 +168,7 @@ void TempEntity::runConstructorValueSetup(string currentUsername, bool NewTempEn
             system("pause");
         }
     }
+    */
 }
 TempEntity::TempEntity(string currentUsername){
     runConstructorValueSetup(currentUsername);
@@ -168,8 +179,11 @@ TempEntity::TempEntity(string currentUsername, bool NewTempEntityProccess){ //in
 TempEntity::TempEntity(){//blank constructor if no username has been provided so far
     //menu.displayMessageWithPause(0,0,"TempEntity running constructor");
     health = armor = magicResistance = physicalDamageMin = physicalDamageMax = magicDamageMin = magicDamageMax = agility = stealth = stamina = naturalEnergy = 0;
-    location = map.getWorldStartLocation();
-    landmarkLocation = map.getCityStartLocation();
+    //sets starting position
+    mapLocation.x = globalmap.getWorldStartLocationX();
+    mapLocation.y = globalmap.getWorldStartLocationY();
+    //location = map.getWorldStartLocation();
+    //landmarkLocation = map.getCityStartLocation();
     for(int i = 0; i < NUMBER_OF_QUESTS; i++){
         quest1Progress[i] = 0;
     }
@@ -185,13 +199,89 @@ TempEntity::TempEntity(){//blank constructor if no username has been provided so
 TempEntity::~TempEntity(){
 }
 
+
+ 
+TempEntity& TempEntity::operator=(const TempEntity& tempE)
+{
+    //Stats:
+    this->username = tempE.username;
+    this->maxHealth = tempE.maxHealth;
+    this->health = tempE.health;
+    this->armor = tempE.armor;
+    this->magicResistance = tempE.magicResistance;
+    this->physicalDamageMin = tempE.physicalDamageMin;
+    this->physicalDamageMax = tempE.physicalDamageMax;
+    this->magicDamageMin = tempE.magicDamageMin;
+    this->magicDamageMax = tempE.magicDamageMax;
+    this->agility = tempE.agility;
+    this->stealth = tempE.stealth;
+    this->stamina = tempE.stamina;
+    this->naturalEnergy = tempE.naturalEnergy;
+    this->maxMind = tempE.maxMind;
+    this->mind = tempE.mind;
+    this->psychicDamageMin = tempE.psychicDamageMin;
+    this->psychicDamageMax = tempE.psychicDamageMax;
+    this->bHealth = tempE.bHealth;
+    //added Stats
+    this->addedHealth = tempE.addedHealth;
+    this->addedarmor = tempE.addedarmor;
+    this->addedMagicResistance = tempE.addedMagicResistance;
+    this->addedPhysicalDamageMin = tempE.addedPhysicalDamageMin;
+    this->addedPhysicalDamageMax = tempE.addedPhysicalDamageMax;
+    this->addedMagicDamageMin = tempE.addedMagicDamageMin;
+    this->addedMagicDamageMax = tempE.addedMagicDamageMax;
+    this->addedAgility = tempE.addedAgility;
+    this->addedStealth = tempE.addedStealth;
+    this->addedStamina = tempE.addedStamina;
+    this->addedNaturalEnergy = tempE.addedNaturalEnergy;
+    this->addedMaxMind = tempE.addedMind;
+    this->addedPsychicDamageMin = tempE.addedPsychicDamageMin;
+    this->addedPsychicDamageMax = tempE.addedPsychicDamageMax;
+    //weapon Additions:
+    this->addedWeaponIron = tempE.addedWeaponIron;
+    this->addedWeaponWood = tempE.addedWeaponWood;
+    this->addedWeaponGems = tempE.addedWeaponGems;
+    this->addedWeaponFeet = tempE.addedWeaponFeet;
+    this->addedWeaponFruit = tempE.addedWeaponFruit;
+    this->addedWeaponBrains = tempE.addedWeaponBrains;
+    //others:
+    this->NUMBER_OF_QUESTS = tempE.NUMBER_OF_QUESTS;
+    this->level = tempE.level;
+    this->currentXP = tempE.currentXP;
+    this->XPForNextLevel = tempE.XPForNextLevel;
+    this->race = tempE.race;
+    this->kit = tempE.kit;
+    this->weapon = tempE.weapon;
+    this->qDamageType = tempE.qDamageType;
+    this->wDamageType = tempE.wDamageType;
+    this->eDamageType = tempE.eDamageType;
+    this->rDamageType = tempE.rDamageType;
+    for(int i = 0; i < 7; i++)
+    this->quest1Progress[i] = tempE.quest1Progress[i];
+    this->mapLocation.x = tempE.mapLocation.x;
+    this->mapLocation.y = tempE.mapLocation.y;
+    //for some reason this causes the program to crash:
+    //this->name = tempE.name;
+    this->battleWon = tempE.battleWon;
+    this->enemyNumber = tempE.enemyNumber;
+    this->INVENTORY_SPACES = tempE.INVENTORY_SPACES;
+    this->inventorySize = tempE.inventorySize;
+    for(int i = 0; i < inventorySize; i++)
+    this->inventory[i] = tempE.inventory[i];
+    this->primaryHand = tempE.primaryHand;
+    this->offHand = tempE.offHand;
+    this->passives = tempE.passives;
+    return *this;
+}
+
 //setter functions:
 void TempEntity::setUsername(string newUsername) {
     username = newUsername;
 }
+/*
 void TempEntity::setLocation(int currentLocationValue){
     location = currentLocationValue;
-}
+}*/
 void TempEntity::setMapLocation(int mapX, int mapY){
     //std::cout << "set X: " + to_string(mapX) << std::endl;
     //system("pause");
@@ -201,7 +291,7 @@ void TempEntity::setMapLocation(int mapX, int mapY){
     mapLocation.y = mapY;
 }
 void TempEntity::setLandmarkLocation(int currentLandmarkLocationValue){
-    landmarkLocation = currentLandmarkLocationValue;
+    //landmarkLocation = currentLandmarkLocationValue;
 }
 void TempEntity::setQuest1Progress(int questNumber, int newProgress){
     quest1Progress[questNumber] = newProgress;

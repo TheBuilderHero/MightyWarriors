@@ -22,12 +22,14 @@ class TempEntity{
         int NUMBER_OF_QUESTS = 7;
         int level, currentXP, XPForNextLevel;
         std::string race, kit, weapon, qDamageType, wDamageType, eDamageType, rDamageType;
-        int location, landmarkLocation, quest1Progress[7];
+        //int location, landmarkLocation;
+        int quest1Progress[7];
         struct{
             int x;
             int y;
         } mapLocation;
         //int quest1Progress[2];
+        //we are unable to copy name to another instance of the tempentity class for some unknown reason.
         std::string name;
         bool battleWon = false;
         int enemyNumber = 0;//This is for tempEntities in group battles
@@ -45,50 +47,15 @@ class TempEntity{
         TempEntity(std::string currentUsername, bool NewTempEntityProccess);
         TempEntity();
         ~TempEntity();
-
-        /* breaks other code:
-        TempEntity operator= (TempEntity &tempItem){
-            TempEntity output;
-            output.health = tempItem.getHealth();
-            output.armor = tempItem.getArmor();
-            output.magicResistance = tempItem.getMagicResistance();
-            output.physicalDamageMin = tempItem.getPhysicalDamageMin();
-            output.physicalDamageMax = tempItem.getPhysicalDamageMax();
-            output.magicDamageMin = tempItem.getMagicDamageMin();
-            output.magicDamageMax = tempItem.getMagicDamageMax();
-            output.agility = tempItem.getAgility();
-            output.stealth = tempItem.getStealth();
-            output.stamina = tempItem.getStamina();
-            output.naturalEnergy = tempItem.getNaturalEnergy();
-            output.location = tempItem.getLocation();
-            output.landmarkLocation = tempItem.getLandmarkLocation();
-            for(int i = 0; i < tempItem.NUMBER_OF_QUESTS; i++){
-                output.quest1Progress[i] = tempItem.getQuest1Progress(i);
-            }
-            for(int i = 0; i < tempItem.INVENTORY_SPACES; i++){
-                output.inventory[i] = tempItem.getInventory(i);
-            }
-            output.primaryHand = tempItem.getPrimaryHand();
-            output.offHand = tempItem.getOffHand();
-            output.level = tempItem.getLevel();
-            output.currentXP = tempItem.getCurrentXP();
-            output.XPForNextLevel = tempItem.getXPForNextLevel();
-            output.name = tempItem.getName();
-            output.username = tempItem.getUsername();
-            output.race = tempItem.getRace();
-            output.kit = tempItem.getKit();
-            output.weapon = tempItem.getWeapon();
-            return output;
-        }
-        */
+        TempEntity& operator=(const TempEntity& tempE);
 
 
         //getter functions:
         std::string getUsername() { return username; }
-        int getLocation() { return location; }
+        //int getLocation() { return location; }
         int getMapLocationX() { return mapLocation.x; }
         int getMapLocationY() { return mapLocation.y; }
-        int getLandmarkLocation() { return landmarkLocation; }
+        //int getLandmarkLocation() { return landmarkLocation; }
         int getQuest1Progress(int questNumber){ return quest1Progress[questNumber - 1]; }
         //stats:
         int getMaxHealth(){ return maxHealth; }
@@ -130,7 +97,7 @@ class TempEntity{
         void setUsername(std::string newUsername);
         void setLocation(int currentLocationValue);
         void setMapLocation(int mapX, int mapY);
-        void setLandmarkMapLocation(int mapX, int mapY);
+        //void setLandmarkMapLocation(int mapX, int mapY);
         void setLandmarkLocation(int currentLandmarkLocationValue);
         void setQuest1Progress(int questNumber, int newProgress);
         //stats:

@@ -251,19 +251,7 @@ string WorldMap::getTravelMessage(int location, int direction){
 
 void WorldMap::travel(int direction, bool &failedTravel){
     
-    /* //Old movement code
-    if(canTravel(location, direction)){
-        if(direction == 1){
-            player.setLocation(location - 3);
-        }else if(direction == 2){
-            player.setLocation(location + 1);
-        }else if(direction == 3){
-            player.setLocation(location + 3);
-        }else if(direction == 4){
-            player.setLocation(location - 1);
-        }
-    }
-    */
+    /* 
     bool ableToMove = true;
     if(direction == 1){
         ableToMove = map.canMoveFromCurrentLocation(direction);
@@ -278,7 +266,7 @@ void WorldMap::travel(int direction, bool &failedTravel){
         failedTravel = false;
         //cout << "move success!" << endl;
         //system("pause");
-        guard.setPlayerMapLocation(map.getCurrentLocation()); //this is for saving location to the server when then program is shut down.
+        //guard.setPlayerMapLocation(map.getCurrentLocation()); //this is for saving location to the server when then program is shut down.
         //the following is code for the other travel system that probably needs some slight adjustments to the current system:
         encounter = false;
         srand(time(NULL)); 
@@ -320,8 +308,10 @@ void WorldMap::travel(int direction, bool &failedTravel){
         int messageFailureLength = messageFailure.length();
         menu.displayMessageWithPause(0, 0, messageFailure);
     }
+*/
 }
 void WorldMap::travelLandmark(int direction, bool &failedTravel){
+    /*
     bool ableToMove = true;
     if(direction == 1){
         ableToMove = map.canMoveFromCurrentLocationCity(direction);
@@ -347,4 +337,5 @@ void WorldMap::travelLandmark(int direction, bool &failedTravel){
         int messageFailureLength = messageFailure.length();
         menu.displayMessageWithPause(0, 0, messageFailure);
     }
+    */
 }

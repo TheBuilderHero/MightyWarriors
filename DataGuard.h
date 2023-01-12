@@ -15,7 +15,8 @@ private:
     std::string playerUsername;
     bool dataSaveingOn = false;
     int maxHealth = 0, health = 0, armor = 0, magicResistance = 0, maxPhysicalDamage = 0, minPhysicalDamage = 0, maxMagicDamage = 0, minMagicDamage = 0, agility = 0, stealth = 0, stamina = 0, naturalEnergy = 0, maxMind = 0, mind = 0, maxPsychicDamage = 0, minPsychicDamage = 0;
-    int level, xp, locationNum;
+    int level, xp, locationX, locationY;
+    //int locationNum; //old way to use location
 
 public:
     DataGuard();
@@ -53,7 +54,9 @@ public:
 
     //Setters:
     //Map Data:
-    void setPlayerMapLocation(int num);
+    //void setPlayerMapLocation(int num);
+    void setPlayerMapLocationX(int numX);
+    void setPlayerMapLocationY(int numY);
     
     //Data saving getter functions:
     //Stats:
@@ -77,7 +80,9 @@ public:
     //Other:
     int getSaveValueCurrentXP(){ return playerData.getCurrentXP(); }
     int getSaveValueLevel(){ return playerData.getLevel(); }
-    int getPlayerMapLocation() { return locationNum; }
+    //trying to move away from map location and to X Y coords
+    int getPlayerMapLocationX() { return locationX; }
+    int getPlayerMapLocationY() { return locationY; }
     std::string getInventoryString(); //this is for data saving purposes, not for client use
 
     void saveAllData();

@@ -6,7 +6,7 @@
 
 using namespace std;
 
-NPC::NPC(string name, int assignedLandmark, string& dialogueMissionList){
+NPC::NPC(string name, int assignedLandmarkX, int assignedLandmarkY, string& dialogueMissionList){
     //cout << "started NPC contructor..." << endl;
     Cipher code;
     string token;
@@ -45,7 +45,8 @@ NPC::NPC(string name, int assignedLandmark, string& dialogueMissionList){
         //dialogue.at(i3).emplace_back(tempLayer4);
     }
     //cout << "variable assignment .." << endl;
-    this->assignedLandmark = assignedLandmark;
+    this->assignedLandmarkX = assignedLandmarkX;
+    this->assignedLandmarkY = assignedLandmarkY;
     this->name = name;
     npcID = setUIDForNPC();
 }
@@ -67,10 +68,10 @@ string NPC::getAllDialogue(){
     return "stuff";
 }
 
-string NPC::getNPCforLocation(int location){
+string NPC::getNPCforMapXY(int mapX, int mapY){
 
     for (int i = 0; i < map.getLocationCountLandmark(); i++){
-        if (location == npcs.at(i).assignedLandmark){
+        if (mapX == npcs.at(i).assignedLandmarkX && mapY == npcs.at(i).assignedLandmarkY){
             return npcs.at(i).getName();
         }
     }

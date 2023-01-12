@@ -3,6 +3,10 @@
 
 class GlobalMap {
     private:
+        //start info:
+        int WORLD_START_X = 1;
+        int WORLD_START_Y = 10;
+
         //Main map objects:
         std::string UNFILLED_MAP_ICON = " ";
         std::string LANDMARK_MAP_ICON = "C";
@@ -16,7 +20,7 @@ class GlobalMap {
         //note that items 90 - 99 are reserved for the below:
         int RESERVED_MAP_VALUE_MIN = 90;
         int RESERVED_MAP_VALUE_MAX = 99;
-        enum LandmarkMapChoice{CITY,CAVE};
+        enum LandmarkMapChoice{CITY,CAVE}; //this is then set correspondingly in the constructor
         unsigned int L1 = 99;              //this is the same as LANDMARK_LOCATION_VALUE but is shorter to be used on the map
         unsigned int LANDMARK_LOCATION_VALUE_CITY = L1; 
         unsigned int L2 = 98;              //this is the same as LANDMARK_LOCATION_VALUE but is shorter to be used on the map
@@ -47,7 +51,7 @@ class GlobalMap {
             {0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//7
             {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//8
             {0, 1, 1, 1, 1, 1, 1, 1,L1, 1,L1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//9
-            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,L2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//10
+            {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,L2,L2,L2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//10
             {0, 1, 1, 1, 1, 1, 1, 1,L1, 1,L1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//11
             {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//12
             {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},//13
@@ -175,6 +179,8 @@ class GlobalMap {
         int getConsoleYFromLocation(int location);
         int getMapX(int location);
         int getMapY(int location);
+        int getWorldStartLocationX() {return WORLD_START_X;};
+        int getWorldStartLocationY() {return WORLD_START_Y;};
 
         unsigned int getLandmarkMapChoice() { return landmarkMapChoice; };
 
@@ -192,4 +198,5 @@ class GlobalMap {
         void promptInteraction();
         //int getPlayerLocation(int mapX, int mapY);
         void travelMap();
+        bool checkForEncounter();
 };

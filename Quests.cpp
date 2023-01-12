@@ -242,6 +242,7 @@ void Quests::getAvailableQuests(){//TempEntity based quest call
 
     cout << endl;
 
+    /* This needs to be refactored to work with X Y instead of location value
     switch(player.getLocation()){
         case 1:
             if(quest1Step == 0){
@@ -329,7 +330,7 @@ void Quests::getAvailableQuests(){//TempEntity based quest call
             
             break;
     }
-
+    */
     if(noQuests){
         cout << "There are no Quests to do here.";
         menu.waitForEnter(menu.getEnterKeyState());
@@ -383,7 +384,10 @@ void Quests::makeChoice(){//I am thinking we should handle quests as an array
     }else{
         menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
+        //need to refact the following to work with X Y instead of location value
+        /*
         doQuest(player.getUsername(), player.getLocation(), questOption[choice - 1]);
+        */
     }
 }
 

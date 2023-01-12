@@ -1,4 +1,4 @@
-#include <string>
+#include <string>     // std::string, std::stoi
 #include <WinSock2.h>
 #include <ws2tcpip.h>
 #include <sstream>
@@ -284,14 +284,12 @@ string ReachOutToServer::getIPFromHostName(char * hostname) {
     return inet_ntoa(addr);
 }
 
-void ReachOutToServer::requestFromServer(string requestID){
+void ReachOutToServer::requestFromServer(RequestIDs requestID){
     Cipher code;
-    std::string serverData = sendToServer("~"+requestID+"~");
+    std::string serverData = sendToServer(code.getDelimiterLayer1()+convertRequestIDEnumToString(requestID)+code.getDelimiterLayer1()+player.getUsername()+code.getDelimiterLayer1());
     string token;
     size_t posLayer1 = 0; // position variable for removing the delimiters to view the message
-    size_t posLayer2 = 0; // position variable for removing the delimiters to view the message
     vector<string> layer1;
-    vector<string> layer2;
     //cout << "STarting Phase 1 interations:" << endl;
     //remove the server send value first before processing the rest of the data:
     posLayer1 = serverData.find(code.getDelimiterLayer1());
@@ -303,69 +301,294 @@ void ReachOutToServer::requestFromServer(string requestID){
         token = serverData.substr(0, posLayer1);
         layer1.emplace_back(token);
         serverData.erase(0, posLayer1 + code.getDelimiterLayer1().length());
+        //cout << token << endl; //was for troubleshooting to determine the data coming from the server in each layer 1 section
     }
     bool lastLoopWasDIALOGUE_INFO = false;
-    bool lastLoopWasENEMY_INFO= false;
     bool lastLoopWasSTAT_INFO = false;
-    //cout << "STarting Phase 2 interations:" << endl;
-    //run through the lower layers and convert them into the needed formats and places
-    //cout << "layer 1 size: " << layer1.size() << endl;
+    bool lastLoopWasENEMY_INFO= false;
+    bool lastLoopWasLOCATION_INFO= false;
+    bool lastLoopWasRACE_KIT_WEAPON_INFO= false;
+    bool lastLoopWasQUEST_PROGRESS= false;
+    bool lastLoopWasINVENTORY_INFO= false;
+    bool lastLoopWasABILITY_TYPES_INFO= false;
+    bool lastLoopWasLEVEL_XP_INFO= false;
+    
     for(int i = 0; i < layer1.size(); i++){
-        //cout << "STarting Phase 3 interations:" << endl;
-        //cout << "current layer 1: " << layer1.at(i) << endl;
+        //also more testing output:
+        //cout << "Loop #" << i << endl;
+        //cout << "Loop Info: " << layer1.at(i) << endl;
+        //complete
+        size_t posLayer2DIALOGUE_INFO = 0; // position variable for removing the delimiters to view the message
+        vector<string> layer2DIALOGUE_INFO;
         if (code.convertToDATA_TYPE(layer1.at(i)) == code.DIALOGUE_INFO && !lastLoopWasDIALOGUE_INFO){
-            //cout << "STarting Phase if interations:" << endl;
-
             lastLoopWasDIALOGUE_INFO = true;
             continue;
         } else if (lastLoopWasDIALOGUE_INFO){
-            //cout << "STarting Phase else interations:" << endl;
 
             //then we create all the NPCs with the data from the current deliminations
             bool secondLoopLayer2 = false;
             lastLoopWasDIALOGUE_INFO = false;
-            //remove the first delimiter at the start or the later2 information:
-            if ((posLayer2 = layer1.at(i).find(code.getDelimiterLayer2())) != std::string::npos) layer1.at(i).erase(0, posLayer2 + code.getDelimiterLayer2().length());
+            //remove the first delimiter at the start or the layer2DIALOGUE_INFO information:
+            if ((posLayer2DIALOGUE_INFO = layer1.at(i).find(code.getDelimiterLayer2())) != std::string::npos) layer1.at(i).erase(0, posLayer2DIALOGUE_INFO + code.getDelimiterLayer2().length());
             //then run through all the other data and add it to the vector: 
-            while ((posLayer2 = layer1.at(i).find(code.getDelimiterLayer2())) != std::string::npos) {
-                token = layer1.at(i).substr(0, posLayer2);
-                layer2.emplace_back(token);
-                layer1.at(i).erase(0, posLayer2 + code.getDelimiterLayer2().length());
+            while ((posLayer2DIALOGUE_INFO = layer1.at(i).find(code.getDelimiterLayer2())) != std::string::npos) {
+                token = layer1.at(i).substr(0, posLayer2DIALOGUE_INFO);
+                layer2DIALOGUE_INFO.emplace_back(token);
+                layer1.at(i).erase(0, posLayer2DIALOGUE_INFO + code.getDelimiterLayer2().length());
             }
             string npcName = "";
-            string npcLocation = "";
+            string npcLocationX = "";
+            string npcLocationY = "";
             //cout << "STarting Phase 4 interations:" << endl;
-            //cout << "size of layer 2: " << layer2.size() << endl;
+            //cout << "size of layer 2: " << layer2DIALOGUE_INFO.size() << endl;
             //for every chracter recived we run through determining their conversations:
-            for(int i2 = 0; i2 < layer2.size(); i2++){
+            for(int i2 = 0; i2 < layer2DIALOGUE_INFO.size(); i2++){
                 //set name of character since the first iteration will be the name of the character:
                 //then increment the current vector position to access the character's location
-                npcName = layer2.at(i2++);
+                npcName = layer2DIALOGUE_INFO.at(i2++);
                 
                 //set location of character since the second iteration will be the assigned location of the character:
                 //then increment the current vector position to access the character's multple missions of serverData
-                npcLocation = layer2.at(i2++);
+                npcLocationX = layer2DIALOGUE_INFO.at(i2++); //X
+                npcLocationY = layer2DIALOGUE_INFO.at(i2++); //Y
                 
                 try{//create the NPCs:
-                    string lines = layer2.at(i2);
-                    npcs.emplace_back(npcName,stoi(npcLocation),lines);
+                    string lines = layer2DIALOGUE_INFO.at(i2);
+                    npcs.emplace_back(npcName,stoi(npcLocationX),stoi(npcLocationY),lines);
                 }
-                catch(invalid_argument){
-                    cout << "Critical Failure in \"Interactions::Interactions()\" -> npcs.emplace_back(npcName,stoi(npcLocation),layer2.at(i2));" << endl;
-                    system("pause");
+                catch(invalid_argument){                
+                    menu.displayMessageWithPause(0,0,"Critical Failure in ReachOutToServer.cpp -> if (code.convertToDATA_TYPE(layer1.at(i)) == code.DIALOGUE_INFO && !lastLoopWasDIALOGUE_INFO)");
                 }
             }
         }
-        //cout << "End interations:" << endl;
+        //complete
+        size_t posLayer2STAT_INFO = 0; // position variable for removing the delimiters to view the message
+        vector<string> layer2STAT_INFO;
+        if (code.convertToDATA_TYPE(layer1.at(i)) == code.STAT_INFO && !lastLoopWasSTAT_INFO){
+            lastLoopWasSTAT_INFO = true;
+            continue;
+        } else if (lastLoopWasSTAT_INFO){
+            lastLoopWasSTAT_INFO = false;
+            //remove the first delimiter at the start or the layer2 information:
+            if ((posLayer2STAT_INFO = layer1.at(i).find(code.getDelimiterLayer2())) != std::string::npos) layer1.at(i).erase(0, posLayer2STAT_INFO + code.getDelimiterLayer2().length());
+            
+            //then run through all the data and add it to the layer 2 vector: 
+            while ((posLayer2STAT_INFO = layer1.at(i).find(code.getDelimiterLayer2())) != std::string::npos) {
+                token = layer1.at(i).substr(0, posLayer2STAT_INFO);
+                layer2STAT_INFO.emplace_back(token);
+                layer1.at(i).erase(0, posLayer2STAT_INFO + code.getDelimiterLayer2().length());
+            }
+            //new we have the player's stats arranged in order in the vector: health, armor, magicresistance, physicaldamage (min and max), magicdamage (min and max), agility, stealth, NaturalEnergy, mind and, psychicdamage (min and max)
 
+            //Se we can set all the players stats as follows:
+            int positionForSTAT_INFO = 0;
+            try{
+                player.setHealth(stoi(layer2STAT_INFO.at(positionForSTAT_INFO)));
+                player.setMaxHealth(stoi(layer2STAT_INFO.at(positionForSTAT_INFO++)));//same as the min health
+                player.setArmor(stoi(layer2STAT_INFO.at(positionForSTAT_INFO++)));
+                player.setMagicResistance(stoi(layer2STAT_INFO.at(positionForSTAT_INFO++)));
+                //find the seperator and pull the values out of it for the min and max:
+                string tempPhysicalDamageString = layer2STAT_INFO.at(positionForSTAT_INFO++);
+                size_t pos1 = tempPhysicalDamageString.find(code.getDelimiterMinMax());
+                player.setPhysicalDamageMin(stoi(tempPhysicalDamageString.substr(0, pos1)));
+                tempPhysicalDamageString.erase(0, pos1 + code.getDelimiterMinMax().length());
+                player.setPhysicalDamageMax(stoi(tempPhysicalDamageString));
+                //find the seperator and pull the values out of it for the min and max:
+                string tempMagicDamageString = layer2STAT_INFO.at(positionForSTAT_INFO++);
+                pos1 = tempMagicDamageString.find(code.getDelimiterMinMax());
+                player.setMagicDamageMin(stoi(tempMagicDamageString.substr(0, pos1)));
+                tempMagicDamageString.erase(0, pos1 + code.getDelimiterMinMax().length());
+                player.setMagicDamageMax(stoi(tempMagicDamageString));
 
-        //maybe we could use this for other things and have it make decisions based on that info:
-        /*
-        if (code.convertToDATA_TYPE(layer1.at(i)) == code.ENEMY_INFO);
-        if (code.convertToDATA_TYPE(layer1.at(i)) == code.STAT_INFO);
-        */
+                player.setAgility(stoi(layer2STAT_INFO.at(positionForSTAT_INFO++)));
+                player.setStealth(stoi(layer2STAT_INFO.at(positionForSTAT_INFO++)));
+                player.setNaturalEnergy(stoi(layer2STAT_INFO.at(positionForSTAT_INFO++)));
+                player.setMind(stoi(layer2STAT_INFO.at(positionForSTAT_INFO)));
+                player.setMaxMind(stoi(layer2STAT_INFO.at(positionForSTAT_INFO++)));//same as min mind
+                //find the seperator and pull the values out of it for the min and max:
+                string tempPsychicDamageString = layer2STAT_INFO.at(positionForSTAT_INFO++);
+                pos1 = tempPsychicDamageString.find(code.getDelimiterMinMax());
+                player.setPsychicDamageMin(stoi(tempPsychicDamageString.substr(0, pos1)));
+                tempPsychicDamageString.erase(0, pos1 + code.getDelimiterMinMax().length());
+                player.setPsychicDamageMax(stoi(tempPsychicDamageString));
+
+            }
+            catch(invalid_argument){
+                menu.displayMessageWithPause(0,0,"Critical Failure in ReachOutToServer.cpp -> if (code.convertToDATA_TYPE(layer1.at(i)) == code.STAT_INFO && !lastLoopWasSTAT_INFO)");
+            }
+            catch(out_of_range){
+                menu.displayMessageWithPause(0,0,"Critical Failure in ReachOutToServer.cpp -> if (code.convertToDATA_TYPE(layer1.at(i)) == code.STAT_INFO && !lastLoopWasSTAT_INFO)");
+            }
+
+        }
+        //need to determine best way to load dynamic number of enemies:
+        if (code.convertToDATA_TYPE(layer1.at(i)) == code.ENEMY_INFO && !lastLoopWasENEMY_INFO){
+            lastLoopWasENEMY_INFO = true;
+            continue;
+        } else if (lastLoopWasENEMY_INFO){
+            lastLoopWasENEMY_INFO = false;
+
+        }
+        //complete
+        size_t posLayer2LOCATION_INFO = 0; // position variable for removing the delimiters to view the message
+        if (code.convertToDATA_TYPE(layer1.at(i)) == code.LOCATION_INFO && !lastLoopWasLOCATION_INFO){
+            lastLoopWasLOCATION_INFO = true;
+            continue;
+        } else if (lastLoopWasLOCATION_INFO){
+            lastLoopWasLOCATION_INFO = false;
+            
+            //remove the first delimiter at the start or the layer2 information:
+            if ((posLayer2LOCATION_INFO = layer1.at(i).find(code.getDelimiterLayer2())) != std::string::npos) layer1.at(i).erase(0, posLayer2LOCATION_INFO + code.getDelimiterLayer2().length());
+
+            try{
+                posLayer2LOCATION_INFO = layer1.at(i).find(code.getDelimiterLayer2());
+                token = layer1.at(i).substr(0, posLayer2LOCATION_INFO);
+                int x = stoi(token);
+                layer1.at(i).erase(0, posLayer2LOCATION_INFO + code.getDelimiterLayer2().length());
+                
+                posLayer2LOCATION_INFO = layer1.at(i).find(code.getDelimiterLayer2());
+                token = layer1.at(i).substr(0, posLayer2LOCATION_INFO);
+                int y = stoi(token);
+                layer1.at(i).erase(0, posLayer2LOCATION_INFO + code.getDelimiterLayer2().length());
+
+                player.setMapLocation(x,y);
+            }
+            catch(invalid_argument){
+                menu.displayMessageWithPause(0,0,"Critical Failure in ReachOutToServer.cpp -> if (code.convertToDATA_TYPE(layer1.at(i)) == code.LOCATION_INFO && !lastLoopWasLOCATION_INFO)");
+            }
+
+        }
+        // probably complete
+        size_t posLayer2RACE_KIT_WEAPON_INFO = 0; // position variable for removing the delimiters to view the message
+        vector<string> layer2RACE_KIT_WEAPON_INFO;
+        if (code.convertToDATA_TYPE(layer1.at(i)) == code.RACE_KIT_WEAPON_INFO && !lastLoopWasRACE_KIT_WEAPON_INFO){
+            lastLoopWasRACE_KIT_WEAPON_INFO = true;
+            continue;
+        } else if (lastLoopWasRACE_KIT_WEAPON_INFO){
+            lastLoopWasRACE_KIT_WEAPON_INFO = false;
+            
+            //remove the first delimiter at the start or the layer2RACE_KIT_WEAPON_INFO information:
+            if ((posLayer2RACE_KIT_WEAPON_INFO = layer1.at(i).find(code.getDelimiterLayer2())) != std::string::npos) layer1.at(i).erase(0, posLayer2RACE_KIT_WEAPON_INFO + code.getDelimiterLayer2().length());
+
+            //then run through all the data and add it to the layer 2 vector: 
+            while ((posLayer2RACE_KIT_WEAPON_INFO = layer1.at(i).find(code.getDelimiterLayer2())) != std::string::npos) {
+                token = layer1.at(i).substr(0, posLayer2RACE_KIT_WEAPON_INFO);
+                layer2RACE_KIT_WEAPON_INFO.emplace_back(token);
+                layer1.at(i).erase(0, posLayer2RACE_KIT_WEAPON_INFO + code.getDelimiterLayer2().length());
+            }
+            int positionForRACE_KIT_WEAPON_INFO = 0;
+            string race = layer2RACE_KIT_WEAPON_INFO.at(positionForRACE_KIT_WEAPON_INFO++);
+            string kit = layer2RACE_KIT_WEAPON_INFO.at(positionForRACE_KIT_WEAPON_INFO++);
+            string weapon = layer2RACE_KIT_WEAPON_INFO.at(positionForRACE_KIT_WEAPON_INFO++);
+            player.setRace(race);
+            player.setKit(kit);
+            player.setWeapon(weapon);
+        }
+        //probably complete
+        size_t posLayer2QUEST_PROGRESS = 0; // position variable for removing the delimiters to view the message
+        vector<string> layer2QUEST_PROGRESS;
+        if (code.convertToDATA_TYPE(layer1.at(i)) == code.QUEST_PROGRESS && !lastLoopWasQUEST_PROGRESS){
+            lastLoopWasQUEST_PROGRESS = true;
+            continue;
+        } else if (lastLoopWasQUEST_PROGRESS){
+            lastLoopWasQUEST_PROGRESS = false;
+            
+            //remove the first delimiter at the start or the layer2QUEST_PROGRESS information:
+            if ((posLayer2QUEST_PROGRESS = layer1.at(i).find(code.getDelimiterLayer2())) != std::string::npos) layer1.at(i).erase(0, posLayer2QUEST_PROGRESS + code.getDelimiterLayer2().length());
+
+            //then run through all the data and add it to the layer 2 vector: 
+            while ((posLayer2QUEST_PROGRESS = layer1.at(i).find(code.getDelimiterLayer2())) != std::string::npos) {
+                token = layer1.at(i).substr(0, posLayer2QUEST_PROGRESS);
+                layer2QUEST_PROGRESS.emplace_back(token);
+                layer1.at(i).erase(0, posLayer2QUEST_PROGRESS + code.getDelimiterLayer2().length());
+            }
+            unsigned short indexQUEST_PROGRESS = 0;
+            //save to player info:
+            player.setQuest1Progress(stoi(layer2QUEST_PROGRESS.at(indexQUEST_PROGRESS++)),stoi(layer2QUEST_PROGRESS.at(indexQUEST_PROGRESS++))); //quest number, progress
+        }
+        //probably complete
+        size_t posLayer2INVENTORY_INFO = 0; // position variable for removing the delimiters to view the message
+        vector<string> layer2INVENTORY_INFO;
+        if (code.convertToDATA_TYPE(layer1.at(i)) == code.INVENTORY_INFO && !lastLoopWasINVENTORY_INFO){
+            lastLoopWasINVENTORY_INFO = true;
+            continue;
+        } else if (lastLoopWasINVENTORY_INFO){
+            lastLoopWasINVENTORY_INFO = false;
+            
+            //remove the first delimiter at the start or the layer2INVENTORY_INFO information:
+            if ((posLayer2INVENTORY_INFO = layer1.at(i).find(code.getDelimiterLayer2())) != std::string::npos) layer1.at(i).erase(0, posLayer2INVENTORY_INFO + code.getDelimiterLayer2().length());
+
+            //then run through all the data and add it to the layer 2 vector: 
+            while ((posLayer2INVENTORY_INFO = layer1.at(i).find(code.getDelimiterLayer2())) != std::string::npos) {
+                token = layer1.at(i).substr(0, posLayer2INVENTORY_INFO);
+                layer2INVENTORY_INFO.emplace_back(token);
+                layer1.at(i).erase(0, posLayer2INVENTORY_INFO + code.getDelimiterLayer2().length());
+            }
+            unsigned short indexINVENTORY_INFO = 0;
+            //save to player info:
+            for (int index = 0; index < layer2INVENTORY_INFO.size(); index++ ){
+                //adds every weapon to the inventory in the order in which they were stored in the file
+                player.setInventory(index,stoi(layer2INVENTORY_INFO.at(index)));
+            }
+
+        }
+        //probably complete
+        size_t posLayer2ABILITY_TYPES_INFO = 0; // position variable for removing the delimiters to view the message
+        vector<string> layer2ABILITY_TYPES_INFO;
+        if (code.convertToDATA_TYPE(layer1.at(i)) == code.ABILITY_TYPES_INFO && !lastLoopWasABILITY_TYPES_INFO){
+            lastLoopWasABILITY_TYPES_INFO = true;
+            continue;
+        } else if (lastLoopWasABILITY_TYPES_INFO){
+            lastLoopWasABILITY_TYPES_INFO = false;
+            
+            //remove the first delimiter at the start or the layer2ABILITY_TYPES_INFO information:
+            if ((posLayer2ABILITY_TYPES_INFO = layer1.at(i).find(code.getDelimiterLayer2())) != std::string::npos) layer1.at(i).erase(0, posLayer2ABILITY_TYPES_INFO + code.getDelimiterLayer2().length());
+
+            //then run through all the data and add it to the layer 2 vector: 
+            while ((posLayer2ABILITY_TYPES_INFO = layer1.at(i).find(code.getDelimiterLayer2())) != std::string::npos) {
+                token = layer1.at(i).substr(0, posLayer2ABILITY_TYPES_INFO);
+                layer2ABILITY_TYPES_INFO.emplace_back(token);
+                layer1.at(i).erase(0, posLayer2ABILITY_TYPES_INFO + code.getDelimiterLayer2().length());
+            }
+            unsigned short indexABILITY_TYPES_INFO = 0;
+            //save to player info:
+            player.setQDamageType(layer2ABILITY_TYPES_INFO.at(indexABILITY_TYPES_INFO++));
+            player.setWDamageType(layer2ABILITY_TYPES_INFO.at(indexABILITY_TYPES_INFO++));
+            player.setEDamageType(layer2ABILITY_TYPES_INFO.at(indexABILITY_TYPES_INFO++));
+            player.setRDamageType(layer2ABILITY_TYPES_INFO.at(indexABILITY_TYPES_INFO++));
+        }
+        //probably complete
+        //first level, then current xp, then xp till next level
+        size_t posLayer2LEVEL_XP_INFO = 0; // position variable for removing the delimiters to view the message
+        vector<string> layer2LEVEL_XP_INFO;
+        if (code.convertToDATA_TYPE(layer1.at(i)) == code.LEVEL_XP_INFO && !lastLoopWasLEVEL_XP_INFO){
+            lastLoopWasLEVEL_XP_INFO = true;
+            continue;
+        } else if (lastLoopWasLEVEL_XP_INFO){
+            lastLoopWasLEVEL_XP_INFO = false;
+            
+            //remove the first delimiter at the start or the layer2LEVEL_XP_INFO information:
+            if ((posLayer2LEVEL_XP_INFO = layer1.at(i).find(code.getDelimiterLayer2())) != std::string::npos) layer1.at(i).erase(0, posLayer2LEVEL_XP_INFO + code.getDelimiterLayer2().length());
+
+            //then run through all the data and add it to the layer 2 vector: 
+            while ((posLayer2LEVEL_XP_INFO = layer1.at(i).find(code.getDelimiterLayer2())) != std::string::npos) {
+                token = layer1.at(i).substr(0, posLayer2LEVEL_XP_INFO);
+                layer2LEVEL_XP_INFO.emplace_back(token);
+                layer1.at(i).erase(0, posLayer2LEVEL_XP_INFO + code.getDelimiterLayer2().length());
+            }
+            unsigned short indexLEVEL_XP_INFO = 0;
+            //save to player info:
+            player.setLevel(stoi(layer2LEVEL_XP_INFO.at(indexLEVEL_XP_INFO++)));
+            player.setCurrentXP(stoi(layer2LEVEL_XP_INFO.at(indexLEVEL_XP_INFO++)));
+            player.setXPForNextLevel(stoi(layer2LEVEL_XP_INFO.at(indexLEVEL_XP_INFO++)));
+
+        }
     }
     //output all NPC data for testing:
     //cout << "NPCS size: " << npcs.size() << endl;
-    npcs.at(0).getAllDialogue();
+    //npcs.at(0).getAllDialogue();
+}
+
+string ReachOutToServer::convertRequestIDEnumToString(RequestIDs id){
+    return to_string(id);
 }
