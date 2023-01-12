@@ -13,8 +13,8 @@
 #include "Cipher.h"
 #include "Menu.h"
 #include "Battle.h"
-#include "Map.h"
-#include "WorldMap.h"
+//#include "Map.h"
+//#include "WorldMap.h"
 #include "Quests.h"
 #include "DataGuard.h"
 #include "Items.h"
@@ -28,7 +28,7 @@ using namespace std;
 Cipher code; //declare the new instance of Cipher class
 Account account;
 Battle battle;
-WorldMap worldMap;
+//WorldMap worldMap;
 //Map map;
 Quests quest;
 

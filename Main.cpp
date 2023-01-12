@@ -23,7 +23,7 @@ using namespace std;
 
 //global variable declarations:
 Menu menu;
-Map map;
+//Map map;
 DataGuard guard;
 Interactions interactions;
 GlobalMap globalmap;

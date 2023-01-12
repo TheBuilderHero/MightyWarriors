@@ -70,7 +70,7 @@ string NPC::getAllDialogue(){
 
 string NPC::getNPCforMapXY(int mapX, int mapY){
 
-    for (int i = 0; i < map.getLocationCountLandmark(); i++){
+    for (int i = 0; i < npcs.size(); i++){
         if (mapX == npcs.at(i).assignedLandmarkX && mapY == npcs.at(i).assignedLandmarkY){
             return npcs.at(i).getName();
         }

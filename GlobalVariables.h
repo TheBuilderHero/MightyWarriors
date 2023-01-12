@@ -1,6 +1,6 @@
 #pragma once
 #include "Menu.h"
-#include "Map.h"
+//#include "Map.h"
 #include "Interactions.h"
 #include "DataGuard.h"
 #include <vector>
@@ -11,7 +11,7 @@
 //This file holds the global variables for the program.
 /************Global Variables to be shared**************/
 extern Menu menu;
-extern Map map;
+//extern Map map;
 extern Interactions interactions;
 extern DataGuard guard;
 extern TempEntity player;
