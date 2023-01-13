@@ -31,6 +31,7 @@ GlobalMap globalmap;
 std::vector<NPC> npcs;
 static int currentID = 0;
 TempEntity player;
+bool exitingGame = false;
 //End global variable declaration
  
 void Main::attemptStartGame(){
@@ -53,7 +54,7 @@ void Main::attemptStartGame(){
             //pull interaction data:
             interactions.pullInteractionsAndNPCs(); //get all npc dialogue from the server
             //present the logon screen:
-            account.logonScreen(); //ask whether the user has an account or not
+            while(!exitingGame) account.logonScreen(); //ask whether the user has an account or not
         } else if (runningCurrentVersion == "FailedConnect") { //If the client is unable to connect to the server inform the client
             cout << "The Server is currently Offline for either maintanance or other reasons..." << endl << "Would you like to try connecting again? (Y/N) [Attempt: " << attempts << "]\n>";
             answer = menu.yesOrNo();

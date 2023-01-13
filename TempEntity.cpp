@@ -557,7 +557,7 @@ void TempEntity::levelUp(){
     updateStealth(stealthBonus);
     updateStamina(staminaBonus);
     updateNaturalEnergy(nEnergyBonus);
-    updateMind(mindBonus);
+    updateMaxMind(mindBonus);
     updatePsychicDamageMin(psychDamBonus);
     updatePsychicDamageMax(psychDamBonus);
 

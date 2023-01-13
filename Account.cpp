@@ -6,6 +6,7 @@
 #include <cstdlib> //this and ctime are for the random number generator
 #include <ctime> 
 #include <sstream> //for the use of the cout being better with double numbers
+#include <conio.h> //used for taking char inputs
 
 #include "GlobalVariables.h"
 #include "Account.h"
@@ -792,37 +793,92 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
     int validLogon;
     switch (type){
         case 1:{
-            bool firstTimeAccount = false;
+            unsigned int UsernameLength = 38;
+            unsigned int passwordLength = 38;
+            unsigned short int cursorPos = 3; //starts with username
+            bool makingDecision = true;
             menu.display(37, 1, "Logon Screen");
-            menu.display(12, 2, "Please enter your username or type \"no\" if you do not have an account");
+            menu.display(12, 2, "Please enter your username and password (Use tab to switch or press ESC for new account)");
+            string UsernameString = "Username:";
+            menu.display(37-UsernameString.length(), 3, UsernameString);
             menu.display(37, 3, "> ", false, false);
-            cin >> usernameE;
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
-            if(usernameE == newaccountMenu1 || usernameE == newaccountMenu2 || usernameE == newaccountMenu3 || usernameE == newaccountMenu4) {
-                createNewAccount();
-                firstTimeAccount = true;
+            string passString = "Password:";
+            menu.display(37-passString.length(), 5, passString);
+            menu.display(37, 5, "> ", false, false);
+            char input;
+            menu.display(UsernameLength, cursorPos, "", false, false); //inital cursor start position
+            bool currentSelectionUsername = true;
+            vector<char> username;
+            vector<char> password;
+            while(makingDecision){//swaps between username and password
+                input = _getch();
+                
+                menu.display(0,0,"                                  ");
+                if(cursorPos == 3) menu.display(UsernameLength, cursorPos, "", false, false); //this brings you back to either one of the two positions
+                if(cursorPos == 5) menu.display(passwordLength, cursorPos, "", false, false); //this brings you back to either one of the two positions
+
+                if (input == 9){
+                    if(currentSelectionUsername){
+                        cursorPos = 5;
+                        menu.display(passwordLength, cursorPos, "", false, false); //this brings you back to either one of the two positions
+                        currentSelectionUsername = false;
+                    } else {
+                        cursorPos = 3;
+                        menu.display(UsernameLength, cursorPos, "", false, false); //this brings you back to either one of the two positions
+                        currentSelectionUsername = true;
+                    }
+                } else if (input == 8){
+                    if(cursorPos == 3){
+                        if(username.size() > 0) {
+                            username.pop_back();
+                            menu.display(UsernameLength, cursorPos, " ", false, false); //this brings you back to either one of the two positions
+                            UsernameLength--;
+                            menu.display(UsernameLength, cursorPos, "", false, false); //this brings you back to either one of the two positions
+                        }
+                    } else if(cursorPos == 5){
+                        if(password.size() > 0) {
+                            password.pop_back();
+                            menu.display(passwordLength, cursorPos, " ", false, false); //this brings you back to either one of the two positions
+                            passwordLength--;
+                            menu.display(passwordLength, cursorPos, "", false, false); //this brings you back to either one of the two positions
+                        }
+                    }
+                } else if (input == 27){
+                    //menu.displayMessageWithPause(20,20,"Escape");
+                    createNewAccount();
+                } else { //backspace == 8 //esc == 27
+                    if (GetKeyState(VK_RETURN) < 0){ //check for password completion
+                        while(GetKeyState(VK_RETURN) < 0){}
+                        makingDecision = false;
+                        break;
+                    } else if (cursorPos == 5){
+                        password.emplace_back(input);
+                        cout << "*";
+                        passwordLength++;
+                    } else if (cursorPos == 3){
+                        username.emplace_back(input);
+                        cout << input;
+                        UsernameLength++;
+                    }
+                }/*
+                menu.display(0,0,"This is the char: " + to_string(input));
+                if(cursorPos == 3) menu.display(UsernameLength, cursorPos, " ", false, false); //this brings you back to either one of the two positions
+                if(cursorPos == 5) menu.display(passwordLength, cursorPos, " ", false, false); //this brings you back to either one of the two positions*/
             }
-            if (!firstTimeAccount){
-                menu.display(12, 4, "Please enter the password for the account");
-                menu.display(37, 5, "> ", false, false);
-                cin >> passwordE;
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
-                validLogon = stoi(server.sendToServer(code.cipher("3", usernameE, passwordE)));
-                if (validLogon == 1){//logon is valid
-                    player.runConstructorValueSetup(usernameE, true);//setup temp entity to be used in the whole program
-                    //TempEntity player{usernameE, true};
-                    //menu.setPlayer(player); 
-                    menu.menu(usernameE);
-                } else {
-                    string invalidMessage = "Invalid Username or Password...";
-                    menu.display(12, 0, invalidMessage, false, true);
-                    menu.display(12+invalidMessage.length(), 1, "", false, true);
-                    system("pause");
-                    //logon is invalid
-                    logonScreen();
-                }
+            for(int i = 0; i < username.size(); i++) usernameE += username.at(i);
+            for(int i = 0; i < password.size(); i++) passwordE += password.at(i);
+            validLogon = stoi(server.sendToServer(code.cipher("3", usernameE, passwordE)));
+            if (validLogon == 1){//logon is valid
+                player.runConstructorValueSetup(usernameE, true);//setup temp entity to be used in the whole program
+                //TempEntity player{usernameE, true};
+                //menu.setPlayer(player); 
+                menu.menu(usernameE);
+            } else {
+                string invalidMessage = "Invalid Username or Password...";
+                menu.display(12, 0, invalidMessage, false, true);
+                menu.displayMessageWithPause(12+invalidMessage.length(), 1, "", false);
+                //logon is invalid
+                logonScreen();
             }
             break;
         }

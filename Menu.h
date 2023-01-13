@@ -10,6 +10,8 @@ class Menu {
         bool stillSimpleTraveling = false;// for the do while loop so we do not have to refresh the whole cmd
         bool stillLandmarkSimpleTraveling = false;
         bool cityTraveling = false;
+        bool stayInMenu = true;
+        bool firstTimeMenuEntry = true;
     public:
         void menu(std::string username);
         void travelMenu(std::string username);

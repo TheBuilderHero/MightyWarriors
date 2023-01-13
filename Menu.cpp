@@ -45,7 +45,10 @@ void Menu::ClearConsoleInputBuffer()
 
 void Menu::menu(string username){ //bring up the menu for the passing in the username
     //the following is program close code:
-    atexit(fnExit);
+    if(firstTimeMenuEntry) {
+        atexit(fnExit);
+        firstTimeMenuEntry = false;
+    }
     guard.on(username);
     //review if this is needed:
     guard.updateGuardData();
@@ -55,7 +58,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
     nKeyPressedLastLoop = false, iKeyPressedLastLoop = false, aKeyPressedLastLoop = false, 
     controlKeyPressedLastLoop = false, altKeyPressedLastLoop = false ,kKeyPressedLastLoop = false;
     int value;
-    bool stayInMenu = true;
+    stayInMenu = true;
     while(stayInMenu){
         display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
@@ -147,6 +150,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         {
         case 0:{
             guard.updateGuardData();
+            exitingGame = true;
             exit(1);
             break;
         }
@@ -222,265 +226,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         }
     }
 }
-/*
-//We need to make the map smaller so it fits in a windowed console
-void Menu::travelMenu(string username){ //bring up the menu for travel
-    display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
-    system("cls");
 
-    display(50, 1, "Travel");
-    //display(16, 2, worldMap.getMapDescription(player.getLocation()));//This is unneeded with the new map system
-    display(32, 2, "Use Arrow Keys to navegate the Map");
-    display(32, 3, "Press 0 to Return to Menu");
-    map.displayMapOutline(map.getMapStandardMaxColumn(), map.getMapStandardMaxRow()); //draw the map outline to the screen
-    map.fillInMap();
-    map.writeLandmarks();
-    setStillSimpleTraveling(true);// for the do while loop so we do not have to refresh the whole cmd
-    int tempCurrentLocation = -1; //no location
-    bool lastLoopFailedTravel = false;
-    bool leavingVillage = false;
-    do{
-        clearDisplayRow(0);
-        if (tempCurrentLocation == -1){
-            tempCurrentLocation = map.getCurrentLocation();
-            if(map.isCityLocation(map.getCurrentLocation()) && !leavingVillage){
-                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false,41);
-                //prompt for player to enter city:
-                int messageRow = map.getMapStandardMaxRow()/2;
-                int messageColumn = map.getMapStandardMaxColumn()+1;
-                display(messageColumn, messageRow, "Would you like to enter the Village? (Y/N)", true, false);
-                char entercity = yesOrNo(); //returns y or n
-                if (entercity == 'y'){
-                    display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
-                    system("cls");
-                    do{
-                        cityTravelMenu(username);
-                    } while (cityTraveling);
-                    setStillSimpleTraveling(false);
-                    leavingVillage = true;
-                } else {
-                    //do not enter city
-                    clearDisplayRow(messageRow, messageColumn);
-                }
-            } else {
-                display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false,41);
-            }
-        } else {
-            if (!lastLoopFailedTravel){
-                if(map.isCityLocation(tempCurrentLocation) && !leavingVillage && map.isCityLocation(map.getCurrentLocation())){
-                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapCity(), true, false, 47);
-                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false,41);
-                    tempCurrentLocation = map.getCurrentLocation();
-                    //prompt for player to enter city:
-                    int messageRow = map.getMapStandardMaxRow()/2;
-                    int messageColumn = map.getMapStandardMaxColumn()+1;
-                    display(messageColumn, messageRow, "Would you like to enter the Village? (Y/N)", false, false);
-                    char entercity = yesOrNo(); //returns y or n
-                    if (entercity == 'y'){
-                        display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
-                        system("cls");
-                        do{
-                            cityTravelMenu(username);
-                        } while (cityTraveling);
-                        setStillSimpleTraveling(false);
-                        leavingVillage = true;
-                    } else {
-                        //do not enter city
-                        clearDisplayRow(messageRow, messageColumn);
-                    }
-                } else if(map.isCityLocation(tempCurrentLocation) && !leavingVillage){
-                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapCity(), true, false, 47);
-                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false,41);
-                    tempCurrentLocation = map.getCurrentLocation(); 
-                } else if (map.isCityLocation(map.getCurrentLocation()) && !leavingVillage){
-                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false,41);
-                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapCity(),true,false,41);
-                    tempCurrentLocation = map.getCurrentLocation();
-                    //prompt for player to enter city:
-                    int messageRow = map.getMapStandardMaxRow()/2;
-                    int messageColumn = map.getMapStandardMaxColumn()+1;
-                    display(messageColumn, messageRow, "Would you like to enter the Village? (Y/N)", false, false);
-                    char entercity = yesOrNo(); //returns y or n
-                    if (entercity == 'y'){
-                        display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
-                        system("cls");
-                        do{
-                            cityTravelMenu(username);
-                        } while (cityTraveling);
-                        setStillSimpleTraveling(false);
-                        leavingVillage = true;
-                    } else {
-                        //do not enter city
-                        clearDisplayRow(messageRow, messageColumn);
-                    }
-
-                    //if yes then enter city.
-                } else {
-                    display(map.getPossibleTravelLocationsX(tempCurrentLocation), map.getPossibleTravelLocationsY(tempCurrentLocation), map.getMapUnfilled(), true, false,41);
-                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation()), map.getMapFilled(),true,false,41);
-                    tempCurrentLocation = map.getCurrentLocation(); 
-                }
-            } else {
-                for(int i = 0; i <= 50; i+=5){
-                    display(i,0, "     ");
-                }
-                lastLoopFailedTravel = false;
-            }
-        }
-        if (!leavingVillage){
-            int value = arrowPressWait(true);
-            switch (value){
-            case 0://Return to menu
-                stillTraveling = false;
-                setStillSimpleTraveling(false);
-                break;
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                ClearConsoleInputBuffer();
-                //worldMap.setPlayer(player);
-                worldMap.travel(value, lastLoopFailedTravel); //changes current location
-                //setPlayer(worldMap.getPlayer());
-
-                //cout << "still Traveling? " << getStillSimpleTraveling(); // for testing
-                //waitForEnter(getEnterKeyState());// for testing
-                //map.setCurrentLocation(1);
-                //menu(username);
-                break;
-            default:
-                display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
-                system("cls");
-                ClearConsoleInputBuffer();
-                display(3, 3, "menu value somehow set impossibly!", false);
-                system("pause");
-                //menu(username);
-                break;
-            }
-        }
-    } while (getStillSimpleTraveling());
-    
-}
-
-void Menu::cityTravelMenu(string username){ //bring up the menu for travel
-    display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
-    system("cls");
-    display(50, 1, "City Travel");
-    //display(16, 2, worldMap.getMapDescription(player.getLocation()));//Dakota please help me load the user's current location
-    display(32, 4, "Use Arrow Keys to navegate the City");
-    display(32, 5, "Press 0 to Return to Menu");
-    map.displayMapOutline(map.getMapCityStandardMaxColumn(), map.getMapCityStandardMaxRow(), map.getMapCityStandardMinColumn(), map.getMapCityStandardMinRow()); //draw the map outline to the screen
-    map.fillInLandmarkMap();
-    map.writeLandmarksObjects();
-    setStillLandmarkSimpleTraveling(true);// for the do while loop so we do not have to refresh the whole cmd
-    int tempCurrentLocation = -1; //no location
-    bool lastLoopFailedTravel = false;
-    int messageRow = map.getMapCityStandardMaxRow()/2;
-    int messageColumn = map.getMapCityStandardMaxColumn()+1;
-    if (map.getCurrentLandmarkLocation() < 1) map.setCurrentLandmarkLocation(map.getCityStartLocation());
-    map.setCurrentLandmarkLocation(map.getCityStartLocation());
-    do{
-        //for testing:
-        //displayMessageWithPause(0, 0, "Current location a Landmark: " + to_string(map.isLandmarkObjectInteractiveLocation(map.getCurrentLandmarkLocation())), false, false);
-        if (tempCurrentLocation == -1){//if they have not yet traveled
-            tempCurrentLocation = map.getCurrentLandmarkLocation();
-            if(map.isLandmarkObjectInteractiveLocation(map.getCurrentLandmarkLocation())){//is the current location a city/generic landmark location
-                display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapCity(),true,false,41);
-                //prompt for player to enter city:
-                display(messageColumn, messageRow, "Would you like to talk with the Villager? (Y/N)", false, false);
-                char interact = yesOrNo(); //returns y or n
-                if (interact == 'y'){
-                    //leavingVillage = true;
-                    interactions.interact(map.getCurrentLocation()); //add location in city to this
-                    setStillLandmarkSimpleTraveling(false); //gonna need this for the map getting refreshed
-                    setCityTraveling(true);
-                    break;
-                } else {
-                    //do not enter city
-                    clearDisplayRow(messageRow, messageColumn);
-                }
-            } else {
-                display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapFilled(),true,false,41);
-            }
-        } else {
-            if (!lastLoopFailedTravel){
-                if(map.isLandmarkObjectInteractiveLocation(tempCurrentLocation) && map.isLandmarkObjectInteractiveLocation(map.getCurrentLandmarkLocation())){
-                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), tempCurrentLocation), map.getPossibleTravelLocationsY(map.getCurrentLocation(), tempCurrentLocation), map.getMapCity(), true, false, 47);
-                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapCity(),true,false,41);
-                    tempCurrentLocation = map.getCurrentLandmarkLocation();
-                    //prompt for player to enter city:
-                    display(messageColumn, messageRow, "Would you like to talk with the Villager? (Y/N)", false, false);
-                    char interact = yesOrNo(); //returns y or n
-                    if (interact == 'y'){
-                        //leavingVillage = true;
-                        interactions.interact(map.getCurrentLocation());
-                        setStillLandmarkSimpleTraveling(false); //gonna need this for the map getting refreshed
-                        setCityTraveling(true);
-                        break;
-                    } else {
-                        //do not enter city
-                        clearDisplayRow(messageRow, messageColumn);
-                    } 
-                } else if(map.isLandmarkObjectInteractiveLocation(tempCurrentLocation)){
-                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), tempCurrentLocation), map.getPossibleTravelLocationsY(map.getCurrentLocation(), tempCurrentLocation), map.getMapCity(), true, false, 47);
-                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapFilled(),true,false,41);
-                    tempCurrentLocation = map.getCurrentLandmarkLocation(); 
-                } else if (map.isLandmarkObjectInteractiveLocation(map.getCurrentLandmarkLocation())){
-                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), tempCurrentLocation), map.getPossibleTravelLocationsY(map.getCurrentLocation(), tempCurrentLocation), map.getMapUnfilled(), true, false,47);
-                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapCity(),true,false,41);
-                    tempCurrentLocation = map.getCurrentLandmarkLocation();
-                    //prompt for player to enter city:
-                    display(messageColumn, messageRow, "Would you like to talk with the Villager? (Y/N)", false, false);
-                    char interact = yesOrNo(); //returns y or n
-                    if (interact == 'y'){
-                        //leavingVillage = true;
-                        interactions.interact(map.getCurrentLocation());
-                        setStillLandmarkSimpleTraveling(false); //gonna need this for the map getting refreshed
-                        setCityTraveling(true);
-                        break;
-                    } else {
-                        //do not enter city
-                        clearDisplayRow(messageRow, messageColumn);
-                    }
-                } else {
-                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), tempCurrentLocation), map.getPossibleTravelLocationsY(map.getCurrentLocation(), tempCurrentLocation), map.getMapUnfilled(), true, false,47);
-                    display(map.getPossibleTravelLocationsX(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getPossibleTravelLocationsY(map.getCurrentLocation(), map.getCurrentLandmarkLocation()), map.getMapFilled(),true,false,41);
-                    tempCurrentLocation = map.getCurrentLandmarkLocation(); 
-                }
-            } else {
-                for(int i = 0; i <= 50; i+=5){
-                    display(i,0, "     ");
-                }
-                lastLoopFailedTravel = false;
-            }
-        }
-        int value = arrowPressWait(true);
-        switch (value){
-        case 0://Return to menu
-            setCityTraveling(false);
-            setStillLandmarkSimpleTraveling(false);
-            break;
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-            ClearConsoleInputBuffer();
-            //worldMap.setPlayer(player);
-            worldMap.travelLandmark(value, lastLoopFailedTravel); //changes current location
-            //setPlayer(worldMap.getPlayer());
-            break;
-        default:
-            display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
-            system("cls");
-            ClearConsoleInputBuffer();
-            display(3, 3, "menu value somehow set impossibly!", false);
-            system("pause");
-            break;
-        }
-    } while (getStillLandmarkSimpleTraveling());
-    
-}
-*/
 void Menu::displayStats(){
     Items itemHandler;
     string physicalDamageAbilities = "Physical Damage Abilities: ";
@@ -668,7 +414,8 @@ void Menu::accountInfo(string username){
         display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         ClearConsoleInputBuffer();
-        account.logonScreen();
+        stayInMenu = false;
+        //account.logonScreen();
         break;
     case 3:{
         //display version and info
