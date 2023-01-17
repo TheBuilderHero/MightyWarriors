@@ -24,4 +24,5 @@ class Quests{
         void quest5(std::string username, int step);
         void quest6(std::string username, int step);
         void quest7(std::string username, int step);
+        void quest8(string username, int step);
 };
