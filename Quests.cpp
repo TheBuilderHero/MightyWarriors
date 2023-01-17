@@ -430,6 +430,11 @@ void Quests::doQuest(string username, int location, int quest){
                     noQuests = false;
                 }
                 break;
+            case 7:
+                if(quest1Step == 8){
+                    quest1(username, quest1Step);
+                    noQuests = false;
+                }
             default:
                 cout << "It looks like you are nowhere...";
                 break;
@@ -474,6 +479,14 @@ void Quests::doQuest(string username, int location, int quest){
         if(location == 3){
             if(player.getQuest1Progress(7) == 0){
                 quest7(username, 0);
+                noQuests = false;
+            }
+        }
+    }
+    else if(quest == 8){
+        if(location == 2){
+            if(player.getQuest1Progress(8) == 0){
+                quest8(username, 0);
                 noQuests = false;
             }
         }
@@ -865,6 +878,28 @@ void Quests::quest7(string username, int step){
             cout << "\nQuest 7 is repeatable.\n";
             menu.waitForEnter(menu.getEnterKeyState());
             player.setBattleResult(false);
+        }
+    }
+}
+
+void Quests::quest8(string username, int step){
+    Battle battle;
+    if(step == 0){
+        cout << "\nYou stumble upon a gaggle of skunks!!!\n";
+        menu.waitForEnter(menu.getEnterKeyState());
+
+        battle.setPlayer(player);
+        battle.questBattle(username, 8, 0);
+        setPlayer(battle.getPlayer());
+
+        if(player.getBattleResult()){
+            cout << "\nYou defeat the skunks and escape with your life. But also with a nasty smell.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
+            player.setQuest1Progress(1, 1);
+            player.setBattleResult(false);
+        }else{
+            cout << "\nThe skunks lay you to waste. You are dead and embarassed.\n";
+            menu.waitForEnter(menu.getEnterKeyState());
         }
     }
 }
