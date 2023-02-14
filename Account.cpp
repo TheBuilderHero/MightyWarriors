@@ -812,8 +812,6 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
             vector<char> password;
             while(makingDecision){//swaps between username and password
                 input = _getch();
-                
-                menu.display(0,0,"                                  ");
                 if(cursorPos == 3) menu.display(UsernameLength, cursorPos, "", false, false); //this brings you back to either one of the two positions
                 if(cursorPos == 5) menu.display(passwordLength, cursorPos, "", false, false); //this brings you back to either one of the two positions
 
@@ -860,10 +858,7 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
                         cout << input;
                         UsernameLength++;
                     }
-                }/*
-                menu.display(0,0,"This is the char: " + to_string(input));
-                if(cursorPos == 3) menu.display(UsernameLength, cursorPos, " ", false, false); //this brings you back to either one of the two positions
-                if(cursorPos == 5) menu.display(passwordLength, cursorPos, " ", false, false); //this brings you back to either one of the two positions*/
+                }
             }
             for(int i = 0; i < username.size(); i++) usernameE += username.at(i);
             for(int i = 0; i < password.size(); i++) passwordE += password.at(i);

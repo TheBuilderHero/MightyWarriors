@@ -289,12 +289,11 @@ bool GlobalMap::isLocationinLandmarkInteractive(int x, int y){
 }
 
 void GlobalMap::promptInteraction(){
-    //prompt for player to enter city:
-    menu.display(getLandmarkMapMaxPositionX()+4, (getLandmarkMapMaxPositionY()/2)+5, "Would you like to talk with the Villager? (Y/N)", true);
+    //prompt for player to talk with person in city/cave/other:
+    menu.display(getLandmarkMapMaxPositionX()+4, (getLandmarkMapMaxPositionY()/2)+5, "Would you like to talk with "+npcs.at(0).getNPCforMapXY(player.getMapLocationX(), player.getMapLocationY(), player.getLandmarkLocationX(), player.getLandmarkLocationY())+"? (Y/N)", true);
     char interact = menu.yesOrNo(); //returns y or n
     if (interact == 'y'){
-        //leavingVillage = true;
-        interactions.interact(player.getMapLocationX(), player.getMapLocationY()); //add location in city to this
+        interactions.interact(); //add location in city to this
     } else {//do not enter city
         menu.clearDisplayRow(getLandmarkMapMaxPositionX()+5, (getLandmarkMapMaxPositionY()-(2*ROW_OFFSET_LANDMARK_MAP)));
     }
@@ -347,8 +346,8 @@ void GlobalMap::travelLandmark(){
     bool printMap = true;
     string failedTravelMSG = "Failed Travel!";
     //starting x,y
-    int x = 4;
-    int y = 4;
+    int x = player.getLandmarkLocationX();
+    int y = player.getLandmarkLocationY();
     int TRAVEL_MESSAGE_ERROR_X = 42;
     int TRAVEL_MESSAGE_ERROR_Y = 4;
     //Now that a new option has been selected clear the Failed Travel message
@@ -382,7 +381,7 @@ void GlobalMap::travelLandmark(){
                     if(landmarkMaps.at(landmarkMapChoice).at(y-1).at(x)) {
                         canTravel = true;
                         --y;
-                        //player.setMapLocation(x,--y);
+                        player.setLandmarkLocation(x,y); //this is only updated so that we can check the player's location through other functions 
                     } else {
                         menu.display(TRAVEL_MESSAGE_ERROR_X,TRAVEL_MESSAGE_ERROR_Y,failedTravelMSG);
                     }
@@ -397,7 +396,7 @@ void GlobalMap::travelLandmark(){
                     if(landmarkMaps.at(landmarkMapChoice).at(y).at(x+1)) {
                         canTravel = true;
                         ++x;
-                        //player.setMapLocation(++x,y);
+                        player.setLandmarkLocation(x,y); //this is only updated so that we can check the player's location through other functions 
                     } else {
                         menu.display(TRAVEL_MESSAGE_ERROR_X,TRAVEL_MESSAGE_ERROR_Y,failedTravelMSG);
                     }
@@ -412,7 +411,7 @@ void GlobalMap::travelLandmark(){
                     if(landmarkMaps.at(landmarkMapChoice).at(y+1).at(x)) {
                         canTravel = true;
                         ++y;
-                        //player.setMapLocation(x,++y);
+                        player.setLandmarkLocation(x,y); //this is only updated so that we can check the player's location through other functions 
                     } else {
                         menu.display(TRAVEL_MESSAGE_ERROR_X,TRAVEL_MESSAGE_ERROR_Y,failedTravelMSG);
                     }
@@ -427,7 +426,7 @@ void GlobalMap::travelLandmark(){
                     if(landmarkMaps.at(landmarkMapChoice).at(y).at(x-1)) {
                         canTravel = true;
                         --x;
-                        //player.setMapLocation(--x,y);
+                        player.setLandmarkLocation(x,y); //this is only updated so that we can check the player's location through other functions 
                     } else {
                         menu.display(TRAVEL_MESSAGE_ERROR_X,TRAVEL_MESSAGE_ERROR_Y,failedTravelMSG);
                     }
@@ -562,6 +561,7 @@ void GlobalMap::travelMap(){
             if(canTravel) menu.display(getConsoleXFromMapXForMap(oldX), getConsoleYFromMapYForMap(oldY), icon(oldX,oldY), true, false, 43);
             if(isLocationLandmark()) {
                 printMap = true;
+                player.setLandmarkLocation(LANDMARK_START_X,LANDMARK_START_Y);
                 travelLandmark();
             }
         }

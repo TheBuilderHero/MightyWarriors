@@ -9,7 +9,7 @@ class Interactions{
     public:
         Interactions(int name/*std::vector<std::string> &test*/);
         Interactions();
-        void interact(int mapX, int mapY); //used for any interactions with anything in the same when just dialogue is invloved.
+        void interact(); //used for any interactions with anything in the same when just dialogue is invloved.
         void setLocationInteractionDialogue(std::string line);
         void pullInteractionsAndNPCs();
 };

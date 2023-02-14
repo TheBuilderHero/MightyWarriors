@@ -888,9 +888,7 @@ void Quests::quest8(string username, int step){
         cout << "\nYou stumble upon a gaggle of skunks!!!\n";
         menu.waitForEnter(menu.getEnterKeyState());
 
-        battle.setPlayer(player);
         battle.questBattle(username, 8, 0);
-        setPlayer(battle.getPlayer());
 
         if(player.getBattleResult()){
             cout << "\nYou defeat the skunks and escape with your life. But also with a nasty smell.\n";

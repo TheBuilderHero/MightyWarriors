@@ -337,8 +337,10 @@ void ReachOutToServer::requestFromServer(RequestIDs requestID){
                 layer1.at(i).erase(0, posLayer2DIALOGUE_INFO + code.getDelimiterLayer2().length());
             }
             string npcName = "";
-            string npcLocationX = "";
-            string npcLocationY = "";
+            string npcMapX = "";
+            string npcMapY = "";
+            string npcLandmarkX = "";
+            string npcLandmarkY = "";
             //cout << "STarting Phase 4 interations:" << endl;
             //cout << "size of layer 2: " << layer2DIALOGUE_INFO.size() << endl;
             //for every chracter recived we run through determining their conversations:
@@ -349,12 +351,15 @@ void ReachOutToServer::requestFromServer(RequestIDs requestID){
                 
                 //set location of character since the second iteration will be the assigned location of the character:
                 //then increment the current vector position to access the character's multple missions of serverData
-                npcLocationX = layer2DIALOGUE_INFO.at(i2++); //X
-                npcLocationY = layer2DIALOGUE_INFO.at(i2++); //Y
+                npcMapX = layer2DIALOGUE_INFO.at(i2++); //mapX
+                npcMapY = layer2DIALOGUE_INFO.at(i2++); //mapY
+                npcLandmarkX = layer2DIALOGUE_INFO.at(i2++); //landmarkX
+                npcLandmarkY = layer2DIALOGUE_INFO.at(i2++); //landmarkY
                 
                 try{//create the NPCs:
                     string lines = layer2DIALOGUE_INFO.at(i2);
-                    npcs.emplace_back(npcName,stoi(npcLocationX),stoi(npcLocationY),lines);
+                    //trying to find issue to some error
+                    npcs.emplace_back(npcName,stoi(npcMapX),stoi(npcMapY),stoi(npcLandmarkX),stoi(npcLandmarkY),lines);
                 }
                 catch(invalid_argument){                
                     menu.displayMessageWithPause(0,0,"Critical Failure in ReachOutToServer.cpp -> if (code.convertToDATA_TYPE(layer1.at(i)) == code.DIALOGUE_INFO && !lastLoopWasDIALOGUE_INFO)");

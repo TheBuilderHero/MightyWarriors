@@ -28,6 +28,10 @@ class TempEntity{
             int x;
             int y;
         } mapLocation;
+        struct{
+            int x;
+            int y;
+        } landmarkLocation;
         //int quest1Progress[2];
         //we are unable to copy name to another instance of the tempentity class for some unknown reason.
         std::string name;
@@ -55,6 +59,8 @@ class TempEntity{
         //int getLocation() { return location; }
         int getMapLocationX() { return mapLocation.x; }
         int getMapLocationY() { return mapLocation.y; }
+        int getLandmarkLocationX() { return landmarkLocation.x; }
+        int getLandmarkLocationY() { return landmarkLocation.y; }
         //int getLandmarkLocation() { return landmarkLocation; }
         int getQuest1Progress(int questNumber){ return quest1Progress[questNumber - 1]; }
         //stats:
@@ -95,10 +101,8 @@ class TempEntity{
 
         //setter functions:
         void setUsername(std::string newUsername);
-        void setLocation(int currentLocationValue);
         void setMapLocation(int mapX, int mapY);
-        //void setLandmarkMapLocation(int mapX, int mapY);
-        void setLandmarkLocation(int currentLandmarkLocationValue);
+        void setLandmarkLocation(int landmarkX, int landmarkY);
         void setQuest1Progress(int questNumber, int newProgress);
         //stats:
         void setMaxHealth(int newHealth);

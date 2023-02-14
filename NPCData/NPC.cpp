@@ -5,8 +5,7 @@
 #include <vector>
 
 using namespace std;
-
-NPC::NPC(string name, int assignedLandmarkX, int assignedLandmarkY, string& dialogueMissionList){
+NPC::NPC(std::string inputName, int inputAssignedMapX, int inputAssignedMapY, int inputAssignedLandmarkX, int inputAssignedLandmarkY, std::string& inputDialogueMissionList){ //
     //cout << "started NPC contructor..." << endl;
     Cipher code;
     string token;
@@ -17,15 +16,15 @@ NPC::NPC(string name, int assignedLandmarkX, int assignedLandmarkY, string& dial
                 
     //declar vector for holding each mission:
     vector<string> tempLayer3;
-    //(dialogueMissionList).
+    //(inputDialogueMissionList).
 
     //remove the first delimiter at the start or the later3 information:
-    if ((posLayer3 = dialogueMissionList.find(code.getDelimiterLayer3())) != std::string::npos) dialogueMissionList.erase(0, posLayer3 + code.getDelimiterLayer3().length());
+    if ((posLayer3 = inputDialogueMissionList.find(code.getDelimiterLayer3())) != std::string::npos) inputDialogueMissionList.erase(0, posLayer3 + code.getDelimiterLayer3().length());
     //run through all the data adding it to the vector layer3
-    while ((posLayer3 = dialogueMissionList.find(code.getDelimiterLayer3())) != std::string::npos) {
-        token = dialogueMissionList.substr(0, posLayer3);
+    while ((posLayer3 = inputDialogueMissionList.find(code.getDelimiterLayer3())) != std::string::npos) {
+        token = inputDialogueMissionList.substr(0, posLayer3);
         tempLayer3.emplace_back(token);
-        dialogueMissionList.erase(0, posLayer3 + code.getDelimiterLayer3().length());
+        inputDialogueMissionList.erase(0, posLayer3 + code.getDelimiterLayer3().length());
     }
     //cout << "Starting STage 2" << endl;
     for(int i3 = 0; i3 < tempLayer3.size(); i3++){
@@ -45,12 +44,13 @@ NPC::NPC(string name, int assignedLandmarkX, int assignedLandmarkY, string& dial
         //dialogue.at(i3).emplace_back(tempLayer4);
     }
     //cout << "variable assignment .." << endl;
-    this->assignedLandmarkX = assignedLandmarkX;
-    this->assignedLandmarkY = assignedLandmarkY;
-    this->name = name;
+    this->assignedLandmarkX = inputAssignedLandmarkX;
+    this->assignedLandmarkY = inputAssignedLandmarkY;
+    this->assignedMapX = inputAssignedMapX;
+    this->assignedMapY = inputAssignedMapY;
+    this->name = inputName;
     npcID = setUIDForNPC();
 }
-
 string NPC::getAllDialogue(){
     cout << "Output of NPCs: ";
     for (int i = 0; i < 7; i ++) cout << to_string(npcs.at(i).getNpcID()) << " ";
@@ -68,15 +68,18 @@ string NPC::getAllDialogue(){
     return "stuff";
 }
 
-string NPC::getNPCforMapXY(int mapX, int mapY){
-
+string NPC::getNPCforMapXY(int mapX, int mapY, int landmarkX, int landmarkY){
     for (int i = 0; i < npcs.size(); i++){
-        if (mapX == npcs.at(i).assignedLandmarkX && mapY == npcs.at(i).assignedLandmarkY){
-            return npcs.at(i).getName();
+        //menu.displayMessageWithPause(0,0,"NPC: x:" + to_string(npcs.at(i).assignedMapX)+ "y:" + to_string(npcs.at(i).assignedMapY));
+        //menu.displayMessageWithPause(0,1,"Player: x:" + to_string(mapX)+ "y:" + to_string(mapY));
+        if (mapX == npcs.at(i).assignedMapX && mapY == npcs.at(i).assignedMapY){
+            if(landmarkX == npcs.at(i).assignedLandmarkX && landmarkY == npcs.at(i).assignedLandmarkY) return npcs.at(i).getName();
+            //menu.displayMessageWithPause(0,0,"NPC Landmark: x:" + to_string(npcs.at(i).assignedLandmarkX)+ "y:" + to_string(npcs.at(i).assignedLandmarkY));
+            //menu.displayMessageWithPause(0,1,"Player Landmark: x:" + to_string(landmarkX)+ "y:" + to_string(landmarkY));
         }
     }
 
-    return "none";
+    return "Random Nobody";
 }
 
 int NPC::getNPCIDforName(string characterName){

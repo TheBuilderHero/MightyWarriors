@@ -3,17 +3,25 @@
 
 class GlobalMap {
     private:
+        //Location data:
+        struct Location {
+            unsigned short x;
+            unsigned short y;
+        };
+
         //start info:
         int WORLD_START_X = 1;
         int WORLD_START_Y = 10;
+        int LANDMARK_START_X = 4;
+        int LANDMARK_START_Y = 4;
 
         //Main map objects:
         std::string UNFILLED_MAP_ICON = " ";
         std::string LANDMARK_MAP_ICON = "C";
-        std::string PLAYER_MAP_ICON = "X";
-        int ROW_OFFSET = 7;
-        int COLUMN_OFFSET = 3;
-        int COLUMN_SCALER = 2;
+        std::string PLAYER_MAP_ICON   = "X";
+        int ROW_OFFSET     = 7;
+        int COLUMN_OFFSET  = 3;
+        int COLUMN_SCALER  = 2;
         int OUTLINE_OFFSET = 1;
         // for every added LANDMARK update the function "bool GlobalMap::isLocationLandmark()"
         //Also change "icon(int mapX, int mapY)" function when adding more
@@ -21,9 +29,9 @@ class GlobalMap {
         int RESERVED_MAP_VALUE_MIN = 90;
         int RESERVED_MAP_VALUE_MAX = 99;
         enum LandmarkMapChoice{CITY,CAVE}; //this is then set correspondingly in the constructor
-        unsigned int L1 = 99;              //this is the same as LANDMARK_LOCATION_VALUE but is shorter to be used on the map
+        unsigned int L1 = 99;              //this is the same as LANDMARK_LOCATION_VALUE_CITY but is shorter to be used on the map
         unsigned int LANDMARK_LOCATION_VALUE_CITY = L1; 
-        unsigned int L2 = 98;              //this is the same as LANDMARK_LOCATION_VALUE but is shorter to be used on the map
+        unsigned int L2 = 98;              //this is the same as LANDMARK_LOCATION_VALUE_CAVE but is shorter to be used on the map
         unsigned int LANDMARK_LOCATION_VALUE_CAVE = L2;
         unsigned int landmarkMapChoice = 0; //initialize to city index of landmarkMaps vector
         //Landmark map objects:
@@ -37,7 +45,7 @@ class GlobalMap {
         //for all reserved items in landmark //Note make sure to update "iconsInLandmark(int mapX, int mapY)" function when adding more
         int RESERVED_LANDMARK_VALUE_MIN = 90;
         int RESERVED_LANDMARK_VALUE_MAX = 99;
-        unsigned int P1 = 99;              //this is the same as LANDMARK_LOCATION_VALUE but is shorter to be used on the map
+        unsigned int P1 = 99;              //this is the same as INTERACTION_LOCATION_VALUE but is shorter to be used on the map
         unsigned int INTERACTION_LOCATION_VALUE = P1; 
         std::vector<std::vector<unsigned int>> mapping{//height of 41 width of 110
         //   0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
@@ -129,7 +137,7 @@ class GlobalMap {
         };
         std::vector<std::vector<unsigned int>> landmark_City{
             //0  1  2  3  4  5  6  7  8  9
-            {P1, 1, 1, 1, 1, 1, 1, 1, 1, 1},//0
+            {P1,P1,P1,P1,P1,P1,P1,P1,P1,P1},//0
             { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},//1
             { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},//2
             { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},//3

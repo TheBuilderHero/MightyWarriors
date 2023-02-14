@@ -415,7 +415,7 @@ void Menu::accountInfo(string username){
         system("cls");
         ClearConsoleInputBuffer();
         stayInMenu = false;
-        //account.logonScreen();
+        fnExit();//to save all data for current user back to server
         break;
     case 3:{
         //display version and info
