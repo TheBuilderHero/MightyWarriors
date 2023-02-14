@@ -23,7 +23,7 @@
                 "${workspaceFolder}\\NPCData\\NPC.cpp",
                 "${workspaceFolder}\\GlobalMap.cpp",
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "${workspaceFolder}\\source.exe",
                 " -lws2_32",
                 " -ladvapi32"
             ],
