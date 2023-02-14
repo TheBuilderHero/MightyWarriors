@@ -40,7 +40,7 @@ void Main::attemptStartGame(){
     Account account; //declare a new instance of the Account class
     Cipher code;
     double attempts = 0;
-    while (!(answer == "n" || answer == "N")) { //This do while loop is intended to get them connected to the server.  If it fails it will prompt the user Y/N to retry connecting.
+    do { //This do while loop is intended to get them connected to the server.  If it fails it will prompt the user Y/N to retry connecting.
         menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         //answer = ""; // set the answer variable to some other value on the start of each loop.
@@ -69,7 +69,7 @@ void Main::attemptStartGame(){
             system("pause");
         }
         attempts++;
-    } //; //while the user has not selected to stop trying to connect loop
+    } while (!(answer == "n" || answer == "N"));//while the user has not selected to stop trying to connect loop
 }
 
 void Main::setupConsole(){
