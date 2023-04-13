@@ -51,8 +51,6 @@ void Main::attemptStartGame(){
             //this was causing an issues with pausing the logon screen from apearing//menu.ClearConsoleInputBuffer();//clear keyboard input from the yesNo prompt - this seems to remove the keyboard input
             //This is the start of the program
             menu.ClearConsoleInputBuffer();
-            //pull interaction data:
-            interactions.pullInteractionsAndNPCs(); //get all npc dialogue from the server
             //present the logon screen:
             while(!exitingGame) account.logonScreen(); //ask whether the user has an account or not
         } else if (runningCurrentVersion == "FailedConnect") { //If the client is unable to connect to the server inform the client

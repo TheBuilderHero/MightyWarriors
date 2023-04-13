@@ -13,8 +13,8 @@ using namespace std;
 
 string ReachOutToServer::sendToServer(string aMessage) {
     Cipher code; // declare a new Decipher class
-    char SERVER_HOSTNAME[] = {"kotaserver.xyz"};
-    string ipAddress = getIPFromHostName(SERVER_HOSTNAME);//"174.86.238.171"; //(as of 8/8/2022)
+    char SERVER_HOSTNAME[] = {"kotaserver.online"}; //updated as of 4/12/2023
+    string ipAddress = getIPFromHostName(SERVER_HOSTNAME);
     if(ipAddress == "failed"){
         system("pause");
         return "FailedConnect";

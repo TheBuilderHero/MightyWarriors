@@ -782,6 +782,20 @@ void Account::displayStats(std::string username, int bypass ,string usernameA){
     }
 }*/
 
+void Account::displayLogonMessage(unsigned int *ptUsernameLength, unsigned short int *ptCursorPos, string *ptUsernameString, string *ptPassString){
+    //setup inital values:
+    *ptUsernameLength = 38;
+    *ptCursorPos = 3; //starts with username
+
+    menu.display(37, 1, "Logon Screen");
+    menu.display(12, 2, "Please enter your username and password (Use tab to switch or press ESC for new account)");
+    menu.display(37-(*ptUsernameString).length(), 3, *ptUsernameString);
+    menu.display(37, 3, "> ", false, false);
+    menu.display(37-(*ptPassString).length(), 5, *ptPassString);
+    menu.display(37, 5, "> ", false, false);
+    menu.display(*ptUsernameLength, *ptCursorPos, "", false, false); //inital cursor start position
+}
+
 void Account::logonScreen(int type){ //defualt is case 1 - that is a standard logon... Case 2 is change password logon
     Cipher code;
     //Menu menu;
@@ -793,26 +807,27 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
     int validLogon;
     switch (type){
         case 1:{
-            unsigned int UsernameLength = 38;
+            unsigned int usernameLength = 38;
             unsigned int passwordLength = 38;
+            string usernameString = "Username:";
+            string passString = "Password:";
             unsigned short int cursorPos = 3; //starts with username
             bool makingDecision = true;
-            menu.display(37, 1, "Logon Screen");
-            menu.display(12, 2, "Please enter your username and password (Use tab to switch or press ESC for new account)");
-            string UsernameString = "Username:";
-            menu.display(37-UsernameString.length(), 3, UsernameString);
-            menu.display(37, 3, "> ", false, false);
-            string passString = "Password:";
-            menu.display(37-passString.length(), 5, passString);
-            menu.display(37, 5, "> ", false, false);
             char input;
-            menu.display(UsernameLength, cursorPos, "", false, false); //inital cursor start position
             bool currentSelectionUsername = true;
             vector<char> username;
             vector<char> password;
+
+            //display the logon menu to the user:
+            unsigned int *ptUsernameLength = &usernameLength;
+            unsigned short int *ptCursorPos = &cursorPos;
+            string *ptUsernameString = &usernameString;
+            string *ptPassString = &passString;
+            displayLogonMessage(ptUsernameLength, ptCursorPos, ptUsernameString, ptPassString);
+
             while(makingDecision){//swaps between username and password
                 input = _getch();
-                if(cursorPos == 3) menu.display(UsernameLength, cursorPos, "", false, false); //this brings you back to either one of the two positions
+                if(cursorPos == 3) menu.display(usernameLength, cursorPos, "", false, false); //this brings you back to either one of the two positions
                 if(cursorPos == 5) menu.display(passwordLength, cursorPos, "", false, false); //this brings you back to either one of the two positions
 
                 if (input == 9){
@@ -822,16 +837,16 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
                         currentSelectionUsername = false;
                     } else {
                         cursorPos = 3;
-                        menu.display(UsernameLength, cursorPos, "", false, false); //this brings you back to either one of the two positions
+                        menu.display(usernameLength, cursorPos, "", false, false); //this brings you back to either one of the two positions
                         currentSelectionUsername = true;
                     }
                 } else if (input == 8){
                     if(cursorPos == 3){
                         if(username.size() > 0) {
                             username.pop_back();
-                            menu.display(UsernameLength, cursorPos, " ", false, false); //this brings you back to either one of the two positions
-                            UsernameLength--;
-                            menu.display(UsernameLength, cursorPos, "", false, false); //this brings you back to either one of the two positions
+                            menu.display(usernameLength, cursorPos, " ", false, false); //this brings you back to either one of the two positions
+                            usernameLength--;
+                            menu.display(usernameLength, cursorPos, "", false, false); //this brings you back to either one of the two positions
                         }
                     } else if(cursorPos == 5){
                         if(password.size() > 0) {
@@ -841,9 +856,11 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
                             menu.display(passwordLength, cursorPos, "", false, false); //this brings you back to either one of the two positions
                         }
                     }
-                } else if (input == 27){
+                } else if (input == 27){ //ESCAPE has been pressed for new account Creation:
                     //menu.displayMessageWithPause(20,20,"Escape");
                     createNewAccount();
+                    displayLogonMessage(ptUsernameLength, ptCursorPos, ptUsernameString, ptPassString); //redisplay the logon stuffs.
+
                 } else { //backspace == 8 //esc == 27
                     if (GetKeyState(VK_RETURN) < 0){ //check for password completion
                         while(GetKeyState(VK_RETURN) < 0){}
@@ -856,22 +873,33 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
                     } else if (cursorPos == 3){
                         username.emplace_back(input);
                         cout << input;
-                        UsernameLength++;
+                        usernameLength++;
                     }
                 }
             }
             for(int i = 0; i < username.size(); i++) usernameE += username.at(i);
             for(int i = 0; i < password.size(); i++) passwordE += password.at(i);
-            validLogon = stoi(server.sendToServer(code.cipher("3", usernameE, passwordE)));
+
+            //verify length of both username and password:
+            if(username.size() >= usernameMinLength && password.size() >= passwordMinLength){
+                validLogon = stoi(server.sendToServer(code.cipher("3", usernameE, passwordE)));
+            } else {
+                validLogon = 0; //invalid
+            }
+
+            //run valid of invalid reponse:
             if (validLogon == 1){//logon is valid
+                //pull interaction data:
+                interactions.pullInteractionsAndNPCs(); //get all npc dialogue from the server
+                //setup player:
                 player.runConstructorValueSetup(usernameE, true);//setup temp entity to be used in the whole program
                 //TempEntity player{usernameE, true};
                 //menu.setPlayer(player); 
                 menu.menu(usernameE);
             } else {
                 string invalidMessage = "Invalid Username or Password...";
-                menu.display(12, 0, invalidMessage, false, true);
-                menu.displayMessageWithPause(12+invalidMessage.length(), 1, "", false);
+                menu.display(37-(*ptUsernameString).length(), 6, invalidMessage, false, true);
+                menu.displayMessageWithPause(36-(*ptPassString).length(), 7, "", false, false);
                 //logon is invalid
                 logonScreen();
             }
@@ -950,26 +978,25 @@ void Account::createNewAccount(){ //runs through the code to create a new user a
     system("cls");
 
     //check to make sure the username is valid and not already taken
-    if (username.find(code.getDelimiterLayer1()) != std::string::npos || username.find("&") != std::string::npos || username.find("=") != std::string::npos || username.find("'") != std::string::npos || username.find("-") != std::string::npos|| username.find("+") != std::string::npos|| username.find(",") != std::string::npos|| username.find("<") != std::string::npos|| username.find(">") != std::string::npos|| username.find("..") != std::string::npos|| username.find("^") != std::string::npos|| username.find(".") != std::string::npos|| username.find(code.getDelimiterLayer1()) != std::string::npos || username.find(code.getDelimiterLayer2()) != std::string::npos || username.find(code.getDelimiterLayer3()) != std::string::npos || username.find(code.getDelimiterLayer4()) != std::string::npos) { // make sure the username is not using the delimiter and a few other characters //this list was taken from https://support.google.com/mail/answer/9211434?hl=en
+    if (username.find(code.getDelimiterLayer1()) != std::string::npos || username.find("&") != std::string::npos || username.find("=") != std::string::npos || username.find("'") != std::string::npos || username.find("-") != std::string::npos|| username.find("+") != std::string::npos|| username.find(",") != std::string::npos|| username.find("<") != std::string::npos|| username.find(">") != std::string::npos|| username.find("..") != std::string::npos|| username.find("^") != std::string::npos|| username.find(".") != std::string::npos|| username.find(code.getDelimiterLayer1()) != std::string::npos || username.find(code.getDelimiterLayer2()) != std::string::npos || username.find(code.getDelimiterLayer3()) != std::string::npos || username.find(code.getDelimiterLayer4()) != std::string::npos || username.length() < usernameMinLength) { // make sure the username is not using the delimiter and a few other characters //this list was taken from https://support.google.com/mail/answer/9211434?hl=en
         menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
-        menu.display(1, 1, "The username " + username + " is not valid Please enter a different username.", false, true);
+        menu.display(1, 1, "The username " + username + " is not valid. Please enter a different username of at least length 4.", false, true);
         system("pause");
-        logonScreen();
+        //logonScreen();
     } else {
         valid = stoi(server.sendToServer(code.cipher("1", username))); // the response for this will either be 1 or 0 as a string (1 meaning the username is valid, 0 meaning the username is taken)
-        if (username == newaccountMenu1 || username == newaccountMenu2 || username == newaccountMenu3 || username == newaccountMenu4) valid = 0; //set valid to false if they try to use no in any of the forms
+        //These are no longer used:
+        //if (username == newaccountMenu1 || username == newaccountMenu2 || username == newaccountMenu3 || username == newaccountMenu4) valid = 0; //set valid to false if they try to use no in any of the forms
         switch (valid){
-            case 0:
-            //the username is invalid so restart the process
+            case 0: //the username is invalid so restart the process
             menu.display(1, 1, "The username " + username + " is not valid. Please enter a different username.", false, true);
             system("pause");
             menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
             system("cls");
-            logonScreen();
+            //logonScreen();
             break;
-            case 1:{
-            //username is valid
+            case 1:{ //username is valid
             //Menu menu;
             string createAccountCheck;
             menu.display(1, 1, "The username " + username + " is valid and you can use it as your username.", false, false);
@@ -985,11 +1012,11 @@ void Account::createNewAccount(){ //runs through the code to create a new user a
             } else if (createAccountCheck == "N" || createAccountCheck == "n"){
                 menu.display(1, 3, "Account will not be created.", false, true);
                 system("pause");
-                logonScreen();
+                //logonScreen();
             } else {
                 menu.display(1, 3, "Input not recognized.", false, true);
                 system("pause");
-                logonScreen();
+                //logonScreen();
             }
             break;
             }

@@ -565,7 +565,7 @@ void Menu::changePass(string username){ //changes the users password
         cin.ignore(numeric_limits<streamsize>::max(), '\n');// clear out cin buffer
         int len = sizeof(nonValidPasswordCharacters)/sizeof(nonValidPasswordCharacters[0]); //length of array of non valid password Charaters
         for (int lengthOfArray = len; lengthOfArray >= 0; lengthOfArray--){ //loop through all the nonValidPasswordCharacters to make sure the user is not trying to use any of them.
-            if (passwordNew.find(nonValidPasswordCharacters[lengthOfArray]) != std::string::npos || passwordNew.length() < 4 || passwordNew.find(username) != std::string::npos) {
+            if (passwordNew.find(nonValidPasswordCharacters[lengthOfArray]) != std::string::npos || passwordNew.length() < account.getPasswordMinLength() || passwordNew.find(username) != std::string::npos) {
                 //found the character
                 //password is invalid
                 validPassword = false;

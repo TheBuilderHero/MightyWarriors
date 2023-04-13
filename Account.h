@@ -4,6 +4,8 @@
 
 class Account {
     private:
+    unsigned short int usernameMinLength = 4;
+    unsigned short int passwordMinLength = 4;
     bool HasGoneThroughInitalSetup; //this will be used to make sure they have added the inital 3 stat points - This needs to be defualted to false in the user account creation on the server.
     bool restartLevelUp = false; //used in levelUp function
     std::string username;
@@ -38,6 +40,7 @@ class Account {
         int getNaturalEnergy(std::string username);
         int getMind(std::string username);
         int getPsychicDamage(std::string username);
+        int getPasswordMinLength(){ return passwordMinLength; };
         std::string getPsychicDamageString(std::string username);
         std::string getMagicDamgeAbilities(std::string username);
         std::string getPhysicalDamgeAbilities(std::string username);
@@ -55,6 +58,7 @@ class Account {
 
         void newOrExistingAccout();
         void createNewAccount();
+        void displayLogonMessage(unsigned int *ptUsernameLength, unsigned short int *ptCursorPos, std::string *ptUsernameString, std::string *ptPassString);
         void logonScreen(int type = 1); //this allows us to use the logon screen function at the end of this function and pass in the defualt value of 1
         void introStory(int raceChoice, std::string username);
         std::string storyTree(int raceChoice, int i1);
