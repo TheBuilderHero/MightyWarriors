@@ -859,6 +859,8 @@ void Account::logonScreen(int type){ //defualt is case 1 - that is a standard lo
                 } else if (input == 27){ //ESCAPE has been pressed for new account Creation:
                     //menu.displayMessageWithPause(20,20,"Escape");
                     createNewAccount();
+                    menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
+                    system("cls"); //clear screen
                     displayLogonMessage(ptUsernameLength, ptCursorPos, ptUsernameString, ptPassString); //redisplay the logon stuffs.
 
                 } else { //backspace == 8 //esc == 27
