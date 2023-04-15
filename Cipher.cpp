@@ -755,3 +755,46 @@ vector<string>* Cipher::decipherVector(string* message){
     return &recivedMessage;
 }
 */
+
+//vector send:
+
+
+//Vector send Layer1:
+void Cipher::vectorDeliminateLayer1Head(const enum SEND_TYPE &input){ //adds delivery location information to the vector
+    string sendID = convertSEND_TYPEToString(input);
+    MESSAGE.emplace(MESSAGE.begin(),delimiterLayer1+sendID);
+}
+void Cipher::vectorDeliminateLayer1OpenNewInputOrSwitchDownLayer(string input){ //adds delimiter to the begining only //can be used to place new information (note ends previous information entry field)
+    MESSAGE.emplace_back(delimiterLayer1+input);
+}
+void Cipher::vectorDeliminateLayer1OpenNewInputOrSwitchDownLayer(const enum DATA_TYPE &input){//breaks the vector up into chunks of information that the client can then distinguish between for different uses
+    string output = convertDATA_TYPEToString(input);
+    MESSAGE.emplace_back(delimiterLayer1+output);
+
+}
+void Cipher::vectorDeliminateLayer1EndInput(){ //adds delimiter to the end of vector
+    MESSAGE.emplace_back(delimiterLayer1);
+}
+
+//Layer 2:
+void Cipher::vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(std::string input){ //breaks the vector up into chunks of information that the client can then distinguish between for different uses
+    MESSAGE.emplace_back(delimiterLayer2+input);
+}
+void Cipher::vectorDeliminateLayer2EndInput(){ //adds delimiter to the end of vector
+    MESSAGE.emplace_back(delimiterLayer2);
+}
+//Layer 3:
+void Cipher::vectorDeliminateLayer3OpenNewInputOrSwitchDownLayer(std::string input){ //breaks the vector up into chunks of information that the client can then distinguish between for different uses
+    MESSAGE.emplace_back(delimiterLayer3+input);
+}
+void Cipher::vectorDeliminateLayer3EndInput(){ //adds delimiter to the end of vector
+    MESSAGE.emplace_back(delimiterLayer3);
+}
+//Layer 4:
+void Cipher::vectorDeliminateLayer4OpenNewInputOrSwitchDownLayer(std::string input){ //breaks the vector up into chunks of information that the client can then distinguish between for different uses
+    MESSAGE.emplace_back(delimiterLayer4+input);
+}
+void Cipher::vectorDeliminateLayer4EndInput(){ //adds delimiter to the end of vector
+    MESSAGE.emplace_back(delimiterLayer4);
+}
+

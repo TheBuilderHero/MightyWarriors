@@ -54,6 +54,10 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
     guard.updateGuardData();
     //end of program close code.
 
+    //test saveAllDataVector() function:
+    guard.saveAllDataVector();
+    displayMessageWithPause(0,0,"Testing saveAllDataVector() function...");
+
     bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, fiveKeyPressedLastLoop = false, sixKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false,
     nKeyPressedLastLoop = false, iKeyPressedLastLoop = false, aKeyPressedLastLoop = false, 
     controlKeyPressedLastLoop = false, altKeyPressedLastLoop = false ,kKeyPressedLastLoop = false;
@@ -607,18 +611,20 @@ char Menu::yesOrNo(){ //waits for a user to click the y or n key
     bool yKeyPressedLastLoop = true;
     bool nKeyPressedLastLoop = true;
     while (1){
-        if (GetKeyState('Y') < 0 /*|| GetKeyState('y') < 0 */&& !yKeyPressedLastLoop) { //checks to make sure that the 3 key is pressed and makes sure it was not pressed last check
+        if (GetKeyState('Y') < 0 && !yKeyPressedLastLoop) { //checks to make sure that the 3 key is pressed and makes sure it was not pressed last check
             yKeyPressedLastLoop = true;
+            while(GetKeyState('Y') < 0){} //stay here until they release the key
             ClearConsoleInputBuffer();
             return 'y';
-        } else if (/*GetKeyState('y') >= 0 || */GetKeyState('Y') >= 0){ // else 1 not pressed
+        } else if (GetKeyState('Y') >= 0){ // else 1 not pressed
             yKeyPressedLastLoop = false;
         }
-        if (GetKeyState('N') < 0 || GetKeyState('n') < 0 && !nKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
+        if (GetKeyState('N') < 0 && !nKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
             nKeyPressedLastLoop = true;
+            while(GetKeyState('N') < 0){} //stay here until they release the key
             ClearConsoleInputBuffer();
             return 'n';
-        } else if (GetKeyState('n') >= 0 || GetKeyState('n') >= 0){ // else 1 not pressed
+        } else if (GetKeyState('N') >= 0){ // else 1 not pressed
             nKeyPressedLastLoop = false;
         }
     }

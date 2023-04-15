@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
 #include "Passives.h"
 
@@ -23,6 +24,7 @@ class TempEntity{
         int level, currentXP, XPForNextLevel;
         std::string race, kit, weapon, qDamageType, wDamageType, eDamageType, rDamageType;
         //int location, landmarkLocation;
+        std::vector<int> questProgress;
         int quest1Progress[7];
         struct{
             int x;
@@ -32,7 +34,6 @@ class TempEntity{
             int x;
             int y;
         } landmarkLocation;
-        //int quest1Progress[2];
         //we are unable to copy name to another instance of the tempentity class for some unknown reason.
         std::string name;
         bool battleWon = false;
@@ -62,7 +63,9 @@ class TempEntity{
         int getLandmarkLocationX() { return landmarkLocation.x; }
         int getLandmarkLocationY() { return landmarkLocation.y; }
         //int getLandmarkLocation() { return landmarkLocation; }
-        int getQuest1Progress(int questNumber){ return quest1Progress[questNumber - 1]; }
+        int getQuest1Progress(int questNumber){ return quest1Progress[questNumber - 1]; } //trying to remove the quest1Progress functions and usage and change it to questProgress
+        int getQuestProgress(int questNumber){ return questProgress[questNumber - 1]; }
+        int getQuestCount(){ return questProgress.size(); }; //this outputs the number of quests because it gives the size of the vector
         //stats:
         int getMaxHealth(){ return maxHealth; }
         int getHealth(){ return health; }
@@ -104,6 +107,7 @@ class TempEntity{
         void setMapLocation(int mapX, int mapY);
         void setLandmarkLocation(int landmarkX, int landmarkY);
         void setQuest1Progress(int questNumber, int newProgress);
+        void setQuestProgress(int questNumber, int newProgress);
         //stats:
         void setMaxHealth(int newHealth);
         void setHealth(int newHealth);

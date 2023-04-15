@@ -28,8 +28,12 @@ void Interactions::interact(){ //
     menu.display(25, 10, name);
     int startingRow = 11;
     int mission = 0;
+    int missionStage = player.getQuestProgress(mission);
+    //probably need to swap mission out for mission stage when it is all working correctly
     if(currentNPCID >= 0){
         if(npcs.at(currentNPCID).getDialoguePartCount() > 0){
+            //currently this only gets mission = 0 and nothing else:
+            //we need to have this reach out to "mission control" to determine the current mission
             for (int i = 0; i < npcs.at(currentNPCID).getDialogueCount(mission); i++) {
                 menu.display(25, startingRow++, npcs.at(currentNPCID).getDialogue(mission,i),false,true);
                 system("pause");
@@ -37,16 +41,16 @@ void Interactions::interact(){ //
             }
             menu.display(25,startingRow++, "End of Dialogue...");
             char exiting;
-            bool backForth = true;
+            string exitMessage = "Exit? (Y/N)";
+            string addToExitMessage = "";
             do{
-                if(backForth){
-                    menu.display(25,startingRow+1, "            ");
-                    menu.display(25,startingRow++, "Exit? (Y/N)");
-                    backForth = false;
+                menu.clearDisplayRow(startingRow, 25);
+                if(addToExitMessage.length() < 4){
+                    menu.display(25,startingRow, exitMessage + addToExitMessage);
+                    addToExitMessage += ".";
                 } else {
-                    menu.display(25,startingRow-1, "            ");
-                    menu.display(25,startingRow--, "Exit? (Y/N)");
-                    backForth = true;
+                    menu.display(25,startingRow, exitMessage + addToExitMessage);
+                    addToExitMessage = "";
                 }
                 exiting = menu.yesOrNo();
             } while(exiting != 'y');

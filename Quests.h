@@ -8,7 +8,7 @@
 class Quests{
     private:
         Account account;
-        int NUMBER_OF_QUESTS = 7;
+        static const int NUMBER_OF_QUESTS = 7;
         bool availableQuests[7];
     public:
         std::string getQuestDescription(std::string username, int quest);

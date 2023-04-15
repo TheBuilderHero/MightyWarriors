@@ -86,4 +86,5 @@ public:
     std::string getInventoryString(); //this is for data saving purposes, not for client use
 
     void saveAllData();
+    void saveAllDataVector();
 };
