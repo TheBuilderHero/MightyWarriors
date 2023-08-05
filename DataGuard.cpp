@@ -141,6 +141,7 @@ void DataGuard::saveAllDataVector(){
     
     //add the stats data to message:
     codeVector.vectorDeliminateLayer1OpenNewInputOrSwitchDownLayer(codeVector.STAT_INFO); //next input item
+    //IF YOU ADD MORE ITEMS TO STATS BE SURE TO UPDATE: TRANSMITTED_STAT_COUNT (ON THE SERVER SIDE IN CIPHER class)
     codeVector.vectorDeliminateLayer1OpenNewInputOrSwitchDownLayer(); //use this if moving down to new lower layer
     //moved to data layer 2
     codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(player.getMaxHealth()));

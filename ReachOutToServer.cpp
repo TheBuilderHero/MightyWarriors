@@ -507,9 +507,13 @@ void ReachOutToServer::requestFromServer(RequestIDs requestID){
                 layer2QUEST_PROGRESS.emplace_back(token);
                 layer1.at(i).erase(0, posLayer2QUEST_PROGRESS + code.getDelimiterLayer2().length());
             }
-            unsigned short indexQUEST_PROGRESS = 0;
+            //unsigned short indexQUEST_PROGRESS = 0;
             //save to player info:
-            player.setQuest1Progress(stoi(layer2QUEST_PROGRESS.at(indexQUEST_PROGRESS++)),stoi(layer2QUEST_PROGRESS.at(indexQUEST_PROGRESS++))); //quest number, progress
+            
+            for(int i = 0; i+1 < layer2QUEST_PROGRESS.size(); i++){
+                player.setQuest1Progress(stoi(layer2QUEST_PROGRESS.at(i)),stoi(layer2QUEST_PROGRESS.at(++i))); //quest number, progress
+            }
+            //quest number, progress
         }
         //probably complete
         size_t posLayer2INVENTORY_INFO = 0; // position variable for removing the delimiters to view the message

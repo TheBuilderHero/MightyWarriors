@@ -44,15 +44,13 @@ class Cipher {
     //std::vector<std::string>* decipherVector(std::string* message);
 
     
-    enum SEND_TYPE { VECTOR_RECIEVE, VECTOR_SEND = 29 };
+    enum SEND_TYPE { VECTOR_RECEIVE, VECTOR_SEND = 29 };
     enum DATA_TYPE { NONE, DIALOGUE_INFO, STAT_INFO, ENEMY_INFO, LOCATION_INFO, RACE_KIT_WEAPON_INFO, QUEST_PROGRESS, INVENTORY_INFO, ABILITY_TYPES_INFO, LEVEL_XP_INFO };
     //enumeration convertion:
     enum SEND_TYPE convertToSEND_TYPE(std::string &input){
         //if these are changed we need to then update them on the server side:
         if(input == "7"){
-            return VECTOR_RECIEVE;
-        } else if(input == "7"){
-            return VECTOR_RECIEVE;
+            return VECTOR_RECEIVE;
         }
     }
     enum DATA_TYPE convertToDATA_TYPE(std::string &input){

@@ -762,7 +762,8 @@ vector<string>* Cipher::decipherVector(string* message){
 //Vector send Layer1:
 void Cipher::vectorDeliminateLayer1Head(const enum SEND_TYPE &input){ //adds delivery location information to the vector
     string sendID = convertSEND_TYPEToString(input);
-    MESSAGE.emplace(MESSAGE.begin(),delimiterLayer1+sendID);
+    MESSAGE.emplace(MESSAGE.begin(),delimiterLayer1+player.getUsername()); //add username
+    MESSAGE.emplace(MESSAGE.begin(),delimiterLayer1+sendID); //then before that place send ID
 }
 void Cipher::vectorDeliminateLayer1OpenNewInputOrSwitchDownLayer(string input){ //adds delimiter to the begining only //can be used to place new information (note ends previous information entry field)
     MESSAGE.emplace_back(delimiterLayer1+input);
