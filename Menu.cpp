@@ -504,7 +504,7 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
         system("cls");
         Quests tempQuest;
         int tempStep  = numberPressWait(8, true);//enter step number
-        tempQuest.quest1(username, tempStep);
+        //tempQuest.quest1(username, tempStep); //need to place run quest test here.
         //adminMenu(username);
         break;}
     case 6:{

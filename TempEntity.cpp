@@ -184,11 +184,11 @@ TempEntity::TempEntity(){//blank constructor if no username has been provided so
     mapLocation.y = globalmap.getWorldStartLocationY();
     //location = map.getWorldStartLocation();
     //landmarkLocation = map.getCityStartLocation();
-    for(int i = 0; i < NUMBER_OF_QUESTS; i++){
+    /*for(int i = 0; i < NUMBER_OF_QUESTS; i++){
         quest1Progress[i] = 0;
-    }
-    for(int i = 0; i < questProgress.size(); i++){
-        questProgress[i] = 0;
+    }*/ //removed due to change in questing class
+    for(int i = 0; i < questList.size(); i++){
+        questList[i].setProgress(0);
     }
     for(int i = 0; i < INVENTORY_SPACES; i++){
         inventory[i] = 0;
@@ -259,11 +259,11 @@ TempEntity& TempEntity::operator=(const TempEntity& tempE)
     this->wDamageType = tempE.wDamageType;
     this->eDamageType = tempE.eDamageType;
     this->rDamageType = tempE.rDamageType;
-    for(int i = 0; i < 7; i++){
+    /*for(int i = 0; i < 7; i++){
         this->quest1Progress[i] = tempE.quest1Progress[i];
-    }
-    for(int i = 0; i < tempE.questProgress.size(); i++){
-        this->questProgress.emplace_back(tempE.questProgress[i]);
+    }*/ // removed due to change in questing class.
+    for(int i = 0; i < tempE.questList.size(); i++){
+        this->questList.emplace_back(tempE.questList[i]); //This needs to supply all information from a quest data specific load.
     }
     this->mapLocation.x = tempE.mapLocation.x;
     this->mapLocation.y = tempE.mapLocation.y;
@@ -298,10 +298,10 @@ void TempEntity::setLandmarkLocation(int landmarkX, int landmarkY){
     landmarkLocation.y = landmarkY;
 }
 void TempEntity::setQuest1Progress(int questNumber, int newProgress){ //trying to impliment new setQuest function -- Dont use this one.
-    quest1Progress[questNumber] = newProgress;
+    questList[questNumber].setProgress(newProgress);
 }
 void TempEntity::setQuestProgress(int questNumber, int newProgress){
-    questProgress[questNumber] = newProgress;
+    questList[questNumber].setProgress(newProgress);
 }
 
 //stats:

@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "Passives.h"
+#include "Quests.h"
 
 #pragma once
 class TempEntity{
@@ -24,8 +25,9 @@ class TempEntity{
         int level, currentXP, XPForNextLevel;
         std::string race, kit, weapon, qDamageType, wDamageType, eDamageType, rDamageType;
         //int location, landmarkLocation;
-        std::vector<int> questProgress;
-        int quest1Progress[7];
+        std::vector<Quests> questList; //This will be the list holding all quests.
+        //std::vector<int> questProgress; //updating the quest class to allow for holding quest data which will be held in a vector of quests.
+        //int quest1Progress[7];
         struct{
             int x;
             int y;
@@ -63,9 +65,9 @@ class TempEntity{
         int getLandmarkLocationX() { return landmarkLocation.x; }
         int getLandmarkLocationY() { return landmarkLocation.y; }
         //int getLandmarkLocation() { return landmarkLocation; }
-        int getQuest1Progress(int questNumber){ return quest1Progress[questNumber - 1]; } //trying to remove the quest1Progress functions and usage and change it to questProgress
-        int getQuestProgress(int questNumber){ return questNumber ? questProgress[questNumber - 1] : 0; } //this will return no progress for questnumber 0
-        int getQuestCount(){ return questProgress.size(); }; //this outputs the number of quests because it gives the size of the vector
+        int getQuest1Progress(int questNumber){ return questList[questNumber - 1].getProgress(); } //trying to remove the quest1Progress functions and usage and change it to questProgress
+        int getQuestProgress(int questNumber){ return questNumber ? questList[questNumber - 1].getProgress() : 0; } //this will return no progress for questnumber 0
+        int getQuestCount(){ return questList.size(); }; //this outputs the number of quests because it gives the size of the vector
         //stats:
         int getMaxHealth(){ return maxHealth; }
         int getHealth(){ return health; }

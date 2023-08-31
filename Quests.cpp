@@ -3,8 +3,7 @@
 
 #include "GlobalVariables.h"
 #include "Quests.h"
-#include "Battle.h"
-#include "Account.h"
+//#include "Battle.h" //Will likely need 
 #include "Menu.h"
 using namespace std;
 
@@ -393,6 +392,8 @@ void Quests::makeChoice(){//I am thinking we should handle quests as an array
 
 void Quests::doQuest(string username, int location, int quest){
     //Menu menu;
+    //Need to change this to fit new quest design.
+    /*
     int quest1Step = player.getQuest1Progress(1);
     bool noQuests = true;
 
@@ -498,8 +499,10 @@ void Quests::doQuest(string username, int location, int quest){
         menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
     }
+    */
 }
 
+/*
 void Quests::quest1(string username, int step){
     //Menu menu;
     Battle battle;
@@ -901,3 +904,4 @@ void Quests::quest8(string username, int step){
         }
     }
 }
+*/
