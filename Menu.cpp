@@ -30,7 +30,7 @@ Account account;
 Battle battle;
 //WorldMap worldMap;
 //Map map;
-Quests quest;
+//Quests quest;
 
 void fnExit(); //prototype from source.cpp
 
@@ -165,7 +165,16 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
             system("cls");
             //map.listAvalibleLocations(username);
             //quest.setPlayer(player);
-            quest.getAvailableQuests();
+            //display all quests: (Note, all are stored in the temp entity "player" questList vector)
+            int startY = 2;
+            display(1,startY++, "Quest List", true, false);
+            for(int i = 0; i < player.getQuestCount(); i++){
+                display(1,startY++, "Name: " + player.getQuest(i).getQuestName() + "; ID: " + to_string(player.getQuest(i).getID()) + "; Progress: " + to_string(player.getQuestProgress(i)), true,false);
+            }
+            displayMessageWithPause(1,startY, "Complete",false,true);
+
+
+            //quest.getAvailableQuests();
             //setPlayer(quest.getPlayer());
             break;
         }
@@ -502,7 +511,7 @@ void Menu::adminMenu (string username){ //The admin menu that will have more adv
     case 5:{ //test Quests
         display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
-        Quests tempQuest;
+        //Quests tempQuest;
         int tempStep  = numberPressWait(8, true);//enter step number
         //tempQuest.quest1(username, tempStep); //need to place run quest test here.
         //adminMenu(username);

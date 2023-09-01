@@ -16,8 +16,11 @@ void TempEntity::runConstructorValueSetup(string currentUsername, bool NewTempEn
     try{
         server.requestFromServer(server.LOAD_ALL_PLAYER_DATA);
     }
-    catch(invalid_argument){
-            
+    catch(const std::invalid_argument & ex1){
+        cerr << ex1.what() << endl;
+    }
+    catch(const std::exception & ex){
+        cerr << ex.what() << endl;
     }
     /*
     if(NewTempEntityProccess){ //use only one server request
@@ -203,7 +206,7 @@ TempEntity::~TempEntity(){
 }
 
 
- 
+ //copy to new class instance:
 TempEntity& TempEntity::operator=(const TempEntity& tempE)
 {
     //Stats:

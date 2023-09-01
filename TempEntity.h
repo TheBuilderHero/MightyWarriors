@@ -68,6 +68,7 @@ class TempEntity{
         int getQuest1Progress(int questNumber){ return questList[questNumber - 1].getProgress(); } //trying to remove the quest1Progress functions and usage and change it to questProgress
         int getQuestProgress(int questNumber){ return questNumber ? questList[questNumber - 1].getProgress() : 0; } //this will return no progress for questnumber 0
         int getQuestCount(){ return questList.size(); }; //this outputs the number of quests because it gives the size of the vector
+        Quests getQuest(int questNumber) {return questList[questNumber]; }
         //stats:
         int getMaxHealth(){ return maxHealth; }
         int getHealth(){ return health; }
@@ -173,6 +174,7 @@ class TempEntity{
         void addInventoryItem(int itemNum);
         void sortInventory();
         int dropItem();
+        void addQuest(int questID, int progress, std::string questName, std::string questDescription) { questList.emplace_back(questID, progress, questName, questDescription); }
 
 
         //battle functions

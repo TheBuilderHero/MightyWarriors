@@ -509,9 +509,14 @@ void ReachOutToServer::requestFromServer(RequestIDs requestID){
             }
             //unsigned short indexQUEST_PROGRESS = 0;
             //save to player info:
-            
-            for(int i = 0; i+1 < layer2QUEST_PROGRESS.size(); i++){
-                player.setQuest1Progress(stoi(layer2QUEST_PROGRESS.at(i)),stoi(layer2QUEST_PROGRESS.at(++i))); //quest number, progress
+            try{
+                for(int i = 0; i+1 < layer2QUEST_PROGRESS.size(); i++){
+                    player.addQuest(stoi(layer2QUEST_PROGRESS.at(i)), stoi(layer2QUEST_PROGRESS.at(++i)), "[NAME]", "DESC...");
+                    //player.setQuest1Progress(stoi(layer2QUEST_PROGRESS.at(i)),stoi(layer2QUEST_PROGRESS.at(++i))); //quest number, progress
+                }
+            } catch(const std::exception & ex){
+                cerr << endl << ex.what() << endl;
+                system("pause");
             }
             //quest number, progress
         }

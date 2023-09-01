@@ -7,9 +7,16 @@
 #include "Menu.h"
 using namespace std;
 
-string Quests::getQuestDescription(string username, int quest){
+Quests::Quests(int questID, int progress, std::string questName, std::string questDescription){
+    this->questID = questID;
+    this->progress = progress;
+    this->questName = questName;
+    this->questDescription = questDescription;
+}
+
+std::string Quests::getQuestDescription(){
     //Menu menu;
-    switch(quest){
+    switch(questID){
         case 1:
             switch(player.getQuest1Progress(1)){
                 case 0:
@@ -122,13 +129,13 @@ string Quests::getQuestDescription(string username, int quest){
     }
 }
 
-void Quests::getQuestLog(string username, int quest){
+void Quests::getQuestLog(){
     //Menu menu;
-    int quest1Step = player.getQuest1Progress(1);
+    //int questStep = player.getQuestProgress(1);
     string output = "";
-    switch(quest){
-        case 1:
-            switch(quest1Step){
+    //switch(questID){
+    //    case 1:
+            switch(questID){
                 case 8:
                     output = "\nUpon defeating The Dragon in Lake Argentus, the enchanted parchment slowly crumbled into dust.\n This Quest is complete.";
                 case 7:
@@ -150,11 +157,11 @@ void Quests::getQuestLog(string username, int quest){
                     output = "There was a problem loading your Quest 1 log...";
                     break;
             }
-            break;
-        default:
-            output = "There was a problem loading any Quest logs...";
-            break;
-    }
+    //        break;
+    //    default:
+    //        output = "There was a problem loading any Quest logs...";
+    //        break;
+    //}
 
     cout << output;
     menu.waitForEnter(menu.getEnterKeyState());
@@ -375,8 +382,8 @@ void Quests::makeChoice(){//I am thinking we should handle quests as an array
         menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
         for(int i = 0; i < options; i++){
-            if(getQuestDescription(player.getUsername(), questOption[i]) != ""){
-                cout << endl << getQuestDescription(player.getUsername(), questOption[i]);
+            if(getQuestDescription(/*player.getUsername(), questOption[i]*/) != ""){
+                cout << endl << getQuestDescription(/*player.getUsername(), questOption[i]*/);
             }
         }
         menu.waitForEnter(menu.getEnterKeyState());
