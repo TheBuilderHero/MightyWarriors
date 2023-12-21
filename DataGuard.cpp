@@ -12,7 +12,12 @@ using namespace std;
 
 void fnExit(){
     if(guard.getDataSave()){ //if data daving is on then we will save all data to the server.
-        guard.saveAllData();
+        //guard.saveAllData(); OUTDATED SAVE OF DATA 
+        ///DO NOT USE!!!! IT NO LONGER WORKS ON SERVER AND WILL BREAK THE FILE SAVING.
+
+
+        //NEW METHOD:
+        guard.saveAllDataVector();
         std::cout << "You are closing the application..." << std::endl;
         std::cout << "1" << std::endl;
         std::cout << "2" << std::endl;
@@ -151,6 +156,7 @@ void DataGuard::saveAllDataVector(){
     codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(player.getMagicDamageMin())+codeVector.getDelimiterMinMax()+to_string(player.getMagicDamageMax())); //need to make sure it accepts both max and min damage
     codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(player.getAgility()));
     codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(player.getStealth()));
+    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(player.getStamina()));
     codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(player.getNaturalEnergy()));
     codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(player.getMaxMind()));
     codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(player.getPsychicDamageMin())+codeVector.getDelimiterMinMax()+to_string(player.getPsychicDamageMax())); //need to make sure it accepts both max and min damage

@@ -460,6 +460,7 @@ void ReachOutToServer::requestFromServer(RequestIDs requestID){
             }
             catch(invalid_argument){
                 menu.displayMessageWithPause(0,0,"Critical Failure in ReachOutToServer.cpp -> if (code.convertToDATA_TYPE(layer1.at(i)) == code.LOCATION_INFO && !lastLoopWasLOCATION_INFO)");
+                menu.displayMessageWithPause(0,0,"ISSUE VALUE: " + token, false, true);
             }
 
         }

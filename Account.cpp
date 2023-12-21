@@ -476,9 +476,51 @@ void Account::createPlayer(string username){ //This is the inital user setup (sh
 
     server.sendToServer(code.cipher("8", username, to_string(raceChoice), to_string(kitChoice), to_string(weaponChoice))); //write race and kit to .dat file on server
 
+    /*
+    OLD SAVE STATS SEND METHOD BELOW:
     //add it an inital stat personalization
     string wasAbleToSave = server.sendToServer(code.cipher("5", username, to_string(initHealth), to_string(initArmor), to_string(initMagicResistance), to_string(initPhysicalDamage), to_string(initMagicDamage), to_string(initAgility),
     to_string(initStealth), to_string(initStamina), to_string(initNaturalEnergy), to_string(initMind), to_string(initPsychicDamage))); //These send the data to the server to be saved properly in the [username].stat file
+    */
+
+    //new stat send method:
+    Cipher codeVector;
+
+    //add the stats data to message:
+    //Note this line says we are using vector send: (NEEEDED!)
+    //This also auto feeds in the username through the player object:
+    player.setUsername(username); //that is why we have to set this first.
+    codeVector.vectorDeliminateLayer1Head(codeVector.VECTOR_SEND);
+    codeVector.vectorDeliminateLayer1OpenNewInputOrSwitchDownLayer(codeVector.STAT_INFO); //next input item
+    //IF YOU ADD MORE ITEMS TO STATS BE SURE TO UPDATE: TRANSMITTED_STAT_COUNT (ON THE SERVER SIDE IN CIPHER class)
+    codeVector.vectorDeliminateLayer1OpenNewInputOrSwitchDownLayer(); //use this if moving down to new lower layer
+    //moved to data layer 2
+    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(initHealth));
+    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(initArmor));
+    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(initMagicResistance));
+    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(initPhysicalDamage)+codeVector.getDelimiterMinMax()+to_string(initPhysicalDamage)); //need to make sure it accepts both max and min damage
+    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(initMagicDamage)+codeVector.getDelimiterMinMax()+to_string(initMagicDamage)); //need to make sure it accepts both max and min damage
+    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(initAgility));
+    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(initStealth));
+    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(initStamina));
+    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(initNaturalEnergy));
+    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(initMind));
+    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(initPsychicDamage)+codeVector.getDelimiterMinMax()+to_string(initPsychicDamage)); //need to make sure it accepts both max and min damage
+    codeVector.vectorDeliminateLayer2EndInput();
+    //end vector:
+    codeVector.vectorDeliminateLayer1EndInput();
+
+    
+    string returnMessage = "";
+    //add all items in MESSAGE vector to return message to client
+    for(int i = 0; i < codeVector.getMESSAGESize(); i++){
+        returnMessage += codeVector.getMESSAGE(i);
+    }
+    
+    server.sendToServer(returnMessage);// returnMessage.c_str(), returnMessage.length()+1);//send message back to the client
+
+
+
     player.runConstructorValueSetup(username);
     //menu.setPlayer(player);
     menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
