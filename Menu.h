@@ -33,6 +33,7 @@ class Menu {
         void clearDisplayRow(int row, int startingColumn = 0);
         std::string numberFormatting(double decimalNumber, int numberOfDecimals);
         void options();
+        int richardMenu(int xOffset, int yOffset);
         
         void setStillSimpleTraveling(bool trueFalse) { stillSimpleTraveling = trueFalse; }
         bool getStillSimpleTraveling() { return stillSimpleTraveling; }

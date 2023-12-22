@@ -1093,3 +1093,38 @@ void Menu::options(){
         }
     } while(!exitOptions);
 }
+
+int Menu::richardMenu(int xOffset, int yOffset){
+    boolean keepLooping = true;
+    int cursor = 0;
+    while(keepLooping){
+        display(xOffset, cursor + yOffset, "-->");
+    }
+
+    return cursor + yOffset;
+    
+    /* (From the battle code, just here as a reference)
+    while(!enemyPicked){//outputs the options for battle
+                int choice = menu.arrowPressWait(true);
+                if(choice == 0){
+                    enemyPicked = true;
+                }else if(choice == 1){
+                    menu.display(50, cursor, "   ");
+                    if(cursor > 1){
+                        cursor--;
+                    }else{
+                        cursor = numberOfEnemies;
+                    }
+                    menu.display(50, cursor, "-->");
+                }else if(choice == 3){
+                    menu.display(50, cursor, "   ");
+                    if(cursor < numberOfEnemies){
+                        cursor++;
+                    }else{
+                        cursor = 1;
+                    }
+                    menu.display(50, cursor, "-->");
+                }
+            }
+    */
+}
