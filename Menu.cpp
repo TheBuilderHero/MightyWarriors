@@ -66,7 +66,8 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
     while(stayInMenu){
         display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls");
-        display(50, 1, "Menu");
+        display(50, 1, "Menu (Press '0' to confirm)");
+        /*
         display(32, 2, "Go Questing");          display(53, 2, "(Press \"1\")");
         display(32, 3, "Travel");               display(53, 3, "(Press \"2\")");
         display(32, 4, "Stats");                display(53, 4, "(Press \"3\")");
@@ -74,7 +75,9 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
         display(32, 6, "Account Info");         display(53, 6, "(Press \"5\")");
         display(32, 7, "Options");              display(53, 7, "(Press \"6\")");
         display(32, 8, "Exit");                 display(53, 8, "(Press \"0\")");
-        while (1){
+        */
+        value = richardMenu(50, 3, "Go Questing@Travel@Stats@Inventory@Account Info@Options@Exit@");
+        /*while (1){
             if (GetKeyState('0') < 0 && !zeroKeyPressedLastLoop) { //checks to make sure that the 2 key is pressed and makes sure it was not pressed last check
                 zeroKeyPressedLastLoop = true;
             } else if (GetKeyState('0') >= 0 && zeroKeyPressedLastLoop){ // else 1 not pressed
@@ -149,10 +152,10 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
                 altKeyPressedLastLoop = false;
                 kKeyPressedLastLoop = false;
             }
-        }
+        }*/
         switch (value)
         {
-        case 0:{
+        case 7:{
             guard.updateGuardData();
             exitingGame = true;
             exit(1);
@@ -1094,15 +1097,45 @@ void Menu::options(){
     } while(!exitOptions);
 }
 
-int Menu::richardMenu(int xOffset, int yOffset){
+int Menu::richardMenu(int xOffset, int yOffset, string menuItems){
+    string delimiter = "@";
+    int pos = 0, rows = 0;
+
+    while(menuItems.length() > 0){
+        pos = menuItems.find(delimiter);
+        display(xOffset, yOffset + rows, menuItems.substr(0, pos));
+        rows++;
+        menuItems.erase(0, pos + 1);
+    }
+    
     boolean keepLooping = true;
     int cursor = 0;
+    display(xOffset - 3, cursor + yOffset, "-->");
+
     while(keepLooping){
-        display(xOffset, cursor + yOffset, "-->");
+        int choice = arrowPressWait(true);
+        if(choice == 0){
+            keepLooping = false;
+        }else if(choice == 1){
+            display(xOffset - 3, cursor + yOffset, "   ");
+            if(cursor > 0){
+                cursor--;
+            }else{
+                cursor = rows - 1;
+            }
+        }else if(choice == 3){
+            display(xOffset - 3, cursor + yOffset, "   ");
+            if(cursor < rows - 1){
+                cursor++;
+            }else{
+                cursor = 0;
+            }
+        }
+        display(xOffset - 3, cursor + yOffset, "-->");
     }
 
-    return cursor + yOffset;
-    
+    return cursor + 1;
+
     /* (From the battle code, just here as a reference)
     while(!enemyPicked){//outputs the options for battle
                 int choice = menu.arrowPressWait(true);
