@@ -223,7 +223,7 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
             system("pause");
             break;
         }
-        case 15:{
+        case 99:{
             display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
             system("cls");
             ClearConsoleInputBuffer();
@@ -917,7 +917,7 @@ int Menu::numberPressWaitSpecial(int maxRange, char key1, char key2, char key3, 
     }
 }
 int Menu::arrowPressWait(bool hasZeroOption, bool hasUpOption, bool hasRightOption, bool hasDownOption, bool hasLeftOption, bool hasROption){ //returns a value based on the key pressed starting at 1 - UP going around clockwise to 4 - Left
-    bool upKeyPressedLastLoop = false, rightKeyPressedLastLoop = false, downKeyPressedLastLoop = false, leftKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false, rKeyPressedLastLoop = false;
+    bool upKeyPressedLastLoop = false, rightKeyPressedLastLoop = false, downKeyPressedLastLoop = false, leftKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false, rKeyPressedLastLoop = false, ctrlLastLoop = false, kLastLoop = false;
     while (1){
         if (hasUpOption == true){
         if (GetKeyState(VK_UP) < 0 && !upKeyPressedLastLoop) { //checks to make sure that the VK_UP key is pressed and makes sure it was not pressed last check
@@ -972,6 +972,16 @@ int Menu::arrowPressWait(bool hasZeroOption, bool hasUpOption, bool hasRightOpti
                 return  0;
                 break;
             }
+        }
+        //Special Option
+        if(GetKeyState('K') < 0 && !kLastLoop && GetKeyState(VK_CONTROL) < 0 && !ctrlLastLoop){
+            kLastLoop = true;
+            ctrlLastLoop = true;
+        }else if(GetKeyState('K') >= 0 && kLastLoop && GetKeyState(VK_CONTROL) >= 0 && ctrlLastLoop){
+            kLastLoop = false;
+            ctrlLastLoop = false;
+            return 6;
+            break;
         }
     }
 }
@@ -1130,6 +1140,9 @@ int Menu::richardMenu(int xOffset, int yOffset, string menuItems){
             }else{
                 cursor = 0;
             }
+        }else if(choice == 6){
+            cursor = 98;
+            keepLooping = false;
         }
         display(xOffset - 3, cursor + yOffset, "-->");
     }

@@ -280,7 +280,7 @@ void Battle::questBattle(string username, int quest, int step){
         numberOfEnemies = 1;
     }else{
         srand(time(NULL));
-        numberOfEnemies = (rand()%6) + 1;
+        numberOfEnemies = (rand()%2) + 1;
         for(int i = 0; i < 4; i++){
             if(rand()%4 == 0){
                 numberOfEnemies += 1;
