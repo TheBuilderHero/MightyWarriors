@@ -607,20 +607,30 @@ void Battle::questBattle(string username, int quest, int step){
         menu.display(1,1," ", true, false);//this is require to keep the cls from making the whole screen an odd color.
         system("cls"); 
         //increase user xp, since fight was won.
-        for(int i = 0; i < numberOfEnemies; i++){
-            string playerLevel = server.sendToServer(code.cipher("14", username, to_string(enemies.at(i).getEnemyNumber()), "WillNeedToFeedBackEnemyLevel")); //this will need to send the enemy level later on.
-            int currentPlayerLevel = account.getLevel(username);
-            if(playerLevelAtStartOfFight < currentPlayerLevel){ //runs the level update for stats
-                //shiny new code
-                //putting this here temporarily, we should probably load xp data client-side
 
-                player.levelUp();
-            }else{
-                //moved --> player.setCurrentXP(account.getCurrentXPForNextLevel(username));//This was added because XP was not updating in player stats after battles
-                //This was moved out of this else statement to try and fix the issue of recalling levelup function.
-            }
-                player.setCurrentXP(account.getCurrentXPForNextLevel(username));//This was added because XP was not updating in player stats after battles
+        //This code ensures you level up after every combat, for testing purposes
+        int xpMinusOne = player.getXPForNextLevel() - player.getCurrentXP() - 1;
+        server.sendToServer(code.cipher("14", username, "-1", to_string(xpMinusOne)));
+
+        /*I think this is irrelevant now
+        for(int i = 0; i < numberOfEnemies; i++){
+            string playerLevel = server.sendToServer(code.cipher("14", username, to_string(enemies.at(i).getEnemyNumber()), "WillNeedToFeedBackEnemyLevel")); //this will need to send the enemy level later on.            
+            player.setCurrentXP(account.getCurrentXPForNextLevel(username));//This was added because XP was not updating in player stats after battles
         }
+        */
+       
+        server.sendToServer(code.cipher("14", username, "-1", to_string(XPDrop)));
+        int currentPlayerLevel = account.getLevel(username);
+        player.setLevel(currentPlayerLevel);
+        if(playerLevelAtStartOfFight < currentPlayerLevel){ //runs the level update for stats
+            //shiny new code
+            //putting this here temporarily, we should probably load xp data client-side
+            player.levelUp();
+        }//else{
+            //moved --> player.setCurrentXP(account.getCurrentXPForNextLevel(username));//This was added because XP was not updating in player stats after battles
+            //This was moved out of this else statement to try and fix the issue of recalling levelup function.
+        //}
+        
         
         if(itemDrop > 0) player.addInventoryItem(itemDrop); //need to put this after the level up otherwise item will be lost
         player.setBattleResult(true);

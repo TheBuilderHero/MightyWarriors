@@ -303,7 +303,7 @@ bool GlobalMap::checkForEncounter(){
     //the following is code for the other travel system that probably needs some slight adjustments to the current system:
     bool encounter = false;
     srand(time(NULL)); 
-    if(rand() % 14 == 0){ //1 in 15
+    if(rand() % 2 == 0){ //1 in 15
         encounter = true;
     }
     //does not seem we need the folowing:

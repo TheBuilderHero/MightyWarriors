@@ -460,6 +460,7 @@ void TempEntity::updateLevel(int addLevel){
 void TempEntity::levelUp(){
     //Probably should have the level increase occur here
     //level++; 
+    
     int cursor = 4, statPoints = getLevel();
     bool finished = false;
     int healthBonus = 0, armorBonus = 0, magicResBonus = 0, physDamBonus = 0, magDamBonus = 0, agilityBonus = 0, stealthBonus = 0, staminaBonus = 0, nEnergyBonus = 0, mindBonus = 0, psychDamBonus = 0;
