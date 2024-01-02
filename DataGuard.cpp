@@ -149,17 +149,18 @@ void DataGuard::saveAllDataVector(){
     //IF YOU ADD MORE ITEMS TO STATS BE SURE TO UPDATE: TRANSMITTED_STAT_COUNT (ON THE SERVER SIDE IN CIPHER class)
     codeVector.vectorDeliminateLayer1OpenNewInputOrSwitchDownLayer(); //use this if moving down to new lower layer
     //moved to data layer 2
-    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(player.getMaxHealth()));
-    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(player.getArmor()));
-    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(player.getMagicResistance()));
-    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(player.getPhysicalDamageMin())+codeVector.getDelimiterMinMax()+to_string(player.getPhysicalDamageMax())); //need to make sure it accepts both max and min damage
-    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(player.getMagicDamageMin())+codeVector.getDelimiterMinMax()+to_string(player.getMagicDamageMax())); //need to make sure it accepts both max and min damage
-    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(player.getAgility()));
-    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(player.getStealth()));
-    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(player.getStamina()));
-    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(player.getNaturalEnergy()));
-    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(player.getMaxMind()));
-    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(player.getPsychicDamageMin())+codeVector.getDelimiterMinMax()+to_string(player.getPsychicDamageMax())); //need to make sure it accepts both max and min damage
+    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(guard.getSaveValueMaxHealth()));
+    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(guard.getSaveValueArmor()));
+    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(guard.getSaveValueMagicResistance()));
+    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(guard.getSaveValuePhysicalDamageMin())+codeVector.getDelimiterMinMax()+to_string(guard.getSaveValuePhysicalDamageMax())); //need to make sure it accepts both max and min damage
+    // this was for testing::: menu.displayMessageWithPause(0,0,"value: " + to_string(guard.getSaveValuePhysicalDamageMin())+codeVector.getDelimiterMinMax()+to_string(guard.getSaveValuePhysicalDamageMax()));
+    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(guard.getSaveValueMagicDamageMin())+codeVector.getDelimiterMinMax()+to_string(guard.getSaveValueMagicDamageMax())); //need to make sure it accepts both max and min damage
+    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(guard.getSaveValueAgility()));
+    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(guard.getSaveValueStealth()));
+    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(guard.getSaveValueStamina()));
+    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(guard.getSaveValueNaturalEnergy()));
+    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(guard.getSaveValueMaxMind()));
+    codeVector.vectorDeliminateLayer2OpenNewInputOrSwitchDownLayer(to_string(guard.getSaveValuePsychicDamageMin())+codeVector.getDelimiterMinMax()+to_string(guard.getSaveValuePsychicDamageMax())); //need to make sure it accepts both max and min damage
     codeVector.vectorDeliminateLayer2EndInput();
     //move back up to layer 1
     //get player location data************************************************************************************************

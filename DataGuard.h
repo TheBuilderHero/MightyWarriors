@@ -64,7 +64,7 @@ public:
     int getSaveValueHealth(){ return health; }
     int getSaveValueArmor(){ return armor; }
     int getSaveValueMagicResistance(){ return magicResistance; }
-    int getSaveValuePhysicalDamageMin(){ return minPsychicDamage; }
+    int getSaveValuePhysicalDamageMin(){ return minPhysicalDamage; }
     int getSaveValuePhysicalDamageMax(){ return maxPhysicalDamage; }
     int getSaveValueMagicDamageMin(){ return minMagicDamage; }
     int getSaveValueMagicDamageMax(){ return maxMagicDamage; }

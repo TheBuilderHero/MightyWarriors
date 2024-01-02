@@ -574,14 +574,17 @@ void TempEntity::levelUp(){
     guard.updateSaveValueMaxHealth(healthBonus);
     guard.updateSaveValueArmor(armorBonus);
     guard.updateSaveValuePhysicalDamageMax(physDamBonus);
+    guard.updateSaveValuePhysicalDamageMin(physDamBonus);
     guard.updateSaveValueMagicResistance(magicResBonus);
     guard.updateSaveValueMagicDamageMax(magDamBonus);
+    guard.updateSaveValueMagicDamageMin(magDamBonus);
     guard.updateSaveValueAgility(agilityBonus);
     guard.updateSaveValueStealth(stealthBonus);
     guard.updateSaveValueStamina(staminaBonus);
     guard.updateSaveValueNaturalEnergy(nEnergyBonus);
     guard.updateSaveValueMaxMind(mindBonus);
     guard.updateSaveValuePsychicDamageMax(psychDamBonus);
+    guard.updateSaveValuePsychicDamageMin(psychDamBonus);
     
 }
 

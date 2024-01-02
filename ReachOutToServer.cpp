@@ -19,7 +19,7 @@ string ReachOutToServer::sendToServer(string aMessage) {
         system("pause");
         return "FailedConnect";
     }
-    int port = 7000;                    //Listening Port # of Server
+    int port = 7001;                    //Listening Port # of Server
     std::string s[2];
     std::stringstream ss;
 

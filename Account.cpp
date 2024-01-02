@@ -570,14 +570,17 @@ void Account::levelUp(std::string username, int numOfStatPoints){
     guard.updateSaveValueMaxHealth(initHealth);
     guard.updateSaveValueArmor(initArmor);
     guard.updateSaveValuePhysicalDamageMax(initPhysicalDamage);
+    guard.updateSaveValuePhysicalDamageMin(initPhysicalDamage);
     guard.updateSaveValueMagicResistance(initMagicResistance);
     guard.updateSaveValueMagicDamageMax(initMagicDamage);
+    guard.updateSaveValueMagicDamageMin(initMagicDamage);
     guard.updateSaveValueAgility(initAgility);
     guard.updateSaveValueStealth(initStealth);
     guard.updateSaveValueStamina(initStamina);
     guard.updateSaveValueNaturalEnergy(initNaturalEnergy);
     guard.updateSaveValueMaxMind(initMind);
     guard.updateSaveValuePsychicDamageMax(initPsychicDamage);
+    guard.updateSaveValuePsychicDamageMin(initPsychicDamage);
     //also update the current stats:
     
     //player.

@@ -616,8 +616,10 @@ void Battle::questBattle(string username, int quest, int step){
 
                 player.levelUp();
             }else{
-                player.setCurrentXP(account.getCurrentXPForNextLevel(username));//This was added because XP was not updating in player stats after battles
+                //moved --> player.setCurrentXP(account.getCurrentXPForNextLevel(username));//This was added because XP was not updating in player stats after battles
+                //This was moved out of this else statement to try and fix the issue of recalling levelup function.
             }
+                player.setCurrentXP(account.getCurrentXPForNextLevel(username));//This was added because XP was not updating in player stats after battles
         }
         
         if(itemDrop > 0) player.addInventoryItem(itemDrop); //need to put this after the level up otherwise item will be lost

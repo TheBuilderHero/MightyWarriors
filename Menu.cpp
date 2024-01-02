@@ -54,9 +54,9 @@ void Menu::menu(string username){ //bring up the menu for the passing in the use
     guard.updateGuardData();
     //end of program close code.
 
-    //test saveAllDataVector() function:
-    guard.saveAllDataVector();
-    displayMessageWithPause(0,0,"Testing saveAllDataVector() function...");
+    //test saveAllDataVector() function: This was removed because it duplicates the data of the user.
+    //guard.saveAllDataVector();
+    //displayMessageWithPause(0,0,"Testing saveAllDataVector() function...");
 
     bool oneKeyPressedLastLoop = false, twoKeyPressedLastLoop = false, threeKeyPressedLastLoop = false, fourKeyPressedLastLoop = false, fiveKeyPressedLastLoop = false, sixKeyPressedLastLoop = false, zeroKeyPressedLastLoop = false,
     nKeyPressedLastLoop = false, iKeyPressedLastLoop = false, aKeyPressedLastLoop = false, 
