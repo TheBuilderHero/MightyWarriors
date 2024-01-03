@@ -609,8 +609,8 @@ void Battle::questBattle(string username, int quest, int step){
         //increase user xp, since fight was won.
 
         //This code ensures you level up after every combat, for testing purposes
-        int xpMinusOne = player.getXPForNextLevel() - player.getCurrentXP() - 1;
-        server.sendToServer(code.cipher("14", username, "-1", to_string(xpMinusOne)));
+        //int xpMinusOne = player.getXPForNextLevel() - player.getCurrentXP() - 1;
+        //server.sendToServer(code.cipher("14", username, "-1", to_string(xpMinusOne)));
 
         /*I think this is irrelevant now
         for(int i = 0; i < numberOfEnemies; i++){
@@ -618,19 +618,21 @@ void Battle::questBattle(string username, int quest, int step){
             player.setCurrentXP(account.getCurrentXPForNextLevel(username));//This was added because XP was not updating in player stats after battles
         }
         */
-       
+
         server.sendToServer(code.cipher("14", username, "-1", to_string(XPDrop)));
+        player.updateCurrentXP(XPDrop);
         int currentPlayerLevel = account.getLevel(username);
         player.setLevel(currentPlayerLevel);
         if(playerLevelAtStartOfFight < currentPlayerLevel){ //runs the level update for stats
             //shiny new code
             //putting this here temporarily, we should probably load xp data client-side
             player.levelUp();
+            player.updateCurrentXP(player.getXPForNextLevel()*-1);
         }//else{
             //moved --> player.setCurrentXP(account.getCurrentXPForNextLevel(username));//This was added because XP was not updating in player stats after battles
             //This was moved out of this else statement to try and fix the issue of recalling levelup function.
         //}
-        
+        player.setXPForNextLevel((int)account.getTotalXPForNextLevel(username));
         
         if(itemDrop > 0) player.addInventoryItem(itemDrop); //need to put this after the level up otherwise item will be lost
         player.setBattleResult(true);
